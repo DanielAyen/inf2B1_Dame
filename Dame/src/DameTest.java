@@ -7,6 +7,7 @@ public class DameTest {
 		System.out.println("Test");
 System.out.println("Test");
 System.out.println("Test III");
+System.out.println("Test IV");
 	}
 
 }
