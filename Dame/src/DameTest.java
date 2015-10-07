@@ -5,7 +5,7 @@ public class DameTest {
 		System.out.println("Test");
 		System.out.println("Zweiter Test");
 		System.out.println("Test");
-
+System.out.println();
 	}
 
 }
