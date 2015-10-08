@@ -1,10 +1,13 @@
 public class Spielbrett {
 
+	// Unten links schwarz a1 und oben rechts schwarz h8
+
 	/**
 	 * 
 	 */
+	private Spielfeld spielfeld;
 
-	private String[][] Brett = new String[12][12];
+	private Spielfeld[][] Brett = new Spielfeld[12][12];
 
 	public void sysoBrett() {
 
@@ -17,4 +20,9 @@ public class Spielbrett {
 		}
 
 	}
+
+	public Spielfeld getSpielfeld() {
+		return spielfeld;
+	}
+
 }
