@@ -9,20 +9,32 @@ public class Spielbrett {
 
 	private Spielfeld[][] Brett = new Spielfeld[12][12];
 
-	public void sysoBrett() {
+	public Spielfeld getSpielfeld() {
+		return spielfeld;
+	}
+
+	public String getBrett() {
+
+		String s = "";
 
 		for (int i = 0; i < Brett.length; i++) {
-			System.out.println(Brett[i]);
+			// System.out.println(Brett[i]);
 
 			for (int j = 0; j < Brett[i].length; j++) {
-				System.out.println(Brett[i][j]);
+				// System.out.println(Brett[i][j]);
+
+				s = Brett[i][j] + "  ";
+
 			}
 		}
+		return s;
 
 	}
 
-	public Spielfeld getSpielfeld() {
-		return spielfeld;
+	public String toString() {
+
+		return "";
+
 	}
 
 }
