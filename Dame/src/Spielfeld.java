@@ -1,6 +1,7 @@
 
 public class Spielfeld {
 	
+	
 	private Spielbrett Brett;
 	private Spielfigur spielfigur;
 	private String id;
