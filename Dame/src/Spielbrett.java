@@ -7,7 +7,7 @@ public class Spielbrett {
 	 */
 	private Spielfeld spielfeld;
 
-	private Spielfeld[][] Brett = new Spielfeld[12][12];
+	private Spielfeld[][] brett = new Spielfeld[12][12];
 
 	public Spielfeld getSpielfeld() {
 		return spielfeld;
@@ -17,18 +17,23 @@ public class Spielbrett {
 
 		String s = "";
 
-		for (int i = 0; i < Brett.length; i++) {
+		for (int i = 0; i < brett.length; i++) {
 			// System.out.println(Brett[i]);
 
-			for (int j = 0; j < Brett[i].length; j++) {
+			for (int j = 0; j < brett[i].length; j++) {
 				// System.out.println(Brett[i][j]);
 
-				s = Brett[i][j] + "  ";
+				s = brett[i][j] + "  ";
 
 			}
 		}
 		return s;
 
+	}
+
+	public Object getEinzelFeld(int x, int y) {
+
+		return brett[x][y];
 	}
 
 	public String toString() {
