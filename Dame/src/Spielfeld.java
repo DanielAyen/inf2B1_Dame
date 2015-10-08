@@ -1,6 +1,7 @@
 
 public class Spielfeld {
 	
-private Spieler spieler;
+
+	private Spieler spieler;
 
 }
