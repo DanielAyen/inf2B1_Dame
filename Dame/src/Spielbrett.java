@@ -52,7 +52,8 @@ public class Spielbrett {
 	 */
 	public Object getEinzelFeld(int x, int y) {
 
-		return brett[x][y];
+		String s="";
+		return s+brett[x][y];
 	}
 
 	/**
