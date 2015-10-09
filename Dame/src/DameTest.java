@@ -12,6 +12,7 @@ public class DameTest {
 	
 		
 		
+		
 		System.out.println(Spieler.getAnzahl());
 		System.out.println(s1.getName());
 		System.out.println(s1.getFarbe());
