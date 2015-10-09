@@ -10,14 +10,20 @@ public class Spielfeld {
 	
 	public Spielfeld(String id){
 		Spielfeld[][] brett = new Spielfeld[12][12];
-		for ( int i = 0; i<=11; i++){
-			
-			for (int j = 0; j<=11; j++){
-				
-			}
+		for ( int i = 1; i<=12; i++){
+			for (int j = 1; j<=12; j++){
+		brett[i][j].setid("A" + i);
+		if (i >= 12 && j>= 12 ){
+			brett[i][j].setid("B" + i);
 		}
-		this.setid(id);
-	}
+		if (i >= 12 && j>= 12 ){
+			brett[i][j].setid("C" + i);	
+			}
+		if (i >= 12 && j>= 12 ){
+			brett[i][j].setid("D" + i);
+		}
+			}
+	}}
 	
 	public Spielfeld ( String id, Spieler spieler){
 		
