@@ -7,6 +7,7 @@ public class DameTest {
 		Spieler s2=new Spieler("Bui",FarbEnum.WEIß);
 		System.out.println(s1.getSchwarz());
 		System.out.println(s1.getWeiß());
+		System.out.println("Test");
 		
 	
 	
