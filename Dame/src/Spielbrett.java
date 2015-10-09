@@ -37,14 +37,6 @@ public class Spielbrett {
 
 	/**
 	 * 
-	 * @return gibt das Spielfed zurueck
-	 */
-	public Spielfeld getSpielfeld() {
-		return spielfeld;
-	}
-
-	/**
-	 * 
 	 * @return Gibt das komplette Spielbrett mit seinen Feldern auf der Konsole
 	 *         aus
 	 */
