@@ -13,7 +13,7 @@ public class DameTest {
 		System.out.println(s1.getWeiß());
 		System.out.println("Test");
 		
-	
+	System.out.println("MergeTest");
 
 		
 	
