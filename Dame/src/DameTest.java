@@ -14,7 +14,6 @@ public class DameTest {
 		System.out.println("Test");
 		
 
-	System.out.println("MergeTest<Hey>");
 
 		System.out.println("Test...");
 
