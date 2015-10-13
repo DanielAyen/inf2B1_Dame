@@ -17,7 +17,14 @@ public class Stein extends Spielfigur{
 		x = x;
 		x= x;
 		x=x;
-		x=x;
+		x=x;#ihigogzugzuuiugigzgzigzij9#
+		j9
+		uj9ju9uj9j+ß#
+		9+hj
+		9hj+
+		
+		9hj
+		uj9+9hjß+ßj9+9jß#
 
 	}
 	
