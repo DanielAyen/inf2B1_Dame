@@ -15,6 +15,9 @@ public class Stein extends Spielfigur{
 	public Stein(int id, FarbEnum farbe) {
 		super(id, farbe);
 		System.out.println("Servus");
+		System.out.println("!egee");
+		System.out.println("Test");
+		System.out.println("egbehge");
 
 	}
 
