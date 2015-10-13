@@ -14,7 +14,12 @@ public class Stein extends Spielfigur{
 	private int x= 1;
 	public Stein(int id, FarbEnum farbe) {
 		super(id, farbe);
+		x = x;
+		x= x;
+		x=x;
+		x=x;
 
 	}
+	
 
 }
