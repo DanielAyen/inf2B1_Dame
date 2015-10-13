@@ -12,7 +12,11 @@ public class Stein extends Spielfigur{
 	 */
 	public Stein(int id, FarbEnum farbe) {
 		super(id, farbe);
+		System.out.println("Servus");
 
 	}
+
+	
+	
 
 }
