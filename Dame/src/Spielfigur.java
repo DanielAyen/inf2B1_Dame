@@ -3,7 +3,7 @@
  * @author Baris, Daniel, Simon
  *
  */
-public class Spielfigur {
+public abstract class Spielfigur {
 
 	public Spielfigur() {
 
