@@ -1,32 +1,44 @@
+/**
+ * 
+ * @author Baris, Daniel, Simon
+ *
+ */
 public class Spielbrett {
 
 	// Unten links schwarz a1 und oben rechts schwarz h8
 
+	// private Spielfeld spielfeld;
 	/**
-	 * Spielfelnd spielfelnd Brett kennt Feld Spielfeld[][] Das Brett Array
-	 * gefüllt mit Feldern
+	 * @param Spielfeld
+	 *          [][] brett Array für die Spielfelder 12x12 bestehend aus
+	 *          Spielfeldern
+	 * @param maxBrett
+	 *          Max Brettanzahl (1)
+	 * @param anzBrett
+	 *          Derzeitige Anzahl an Spielbrettern
+	 * 
 	 * 
 	 */
-	//private Spielfeld spielfeld;
-
 	private Spielfeld[][] brett = new Spielfeld[12][12];
 
 	private final int maxBrett = 1;
 	private int anzBrett = 0;
 
+	/**
+	 * Konstruktor für das Spielbrett, es darf max ein Brett existieren
+	 */
 	public Spielbrett() {
 		if (anzBrett < maxBrett) {
-			
-			for(int i=0;i<brett.length;i++){
-				for(int j=0;j<brett[i].length;j++){
-					
-					Spielfeld feld=new Spielfeld (this);
-					brett[i][j]=feld;
-					
+
+			for (int i = 0; i < brett.length; i++) {
+				for (int j = 0; j < brett[i].length; j++) {
+
+					Spielfeld feld = new Spielfeld(this);
+					brett[i][j] = feld;
+
 				}
-				
+
 			}
-			
 
 		} else {
 
@@ -36,7 +48,10 @@ public class Spielbrett {
 	}
 
 	/**
+	 *
 	 * 
+	 * @param s
+	 *          wird benutzt um das Brett auszugeben
 	 * @return Gibt das komplette Spielbrett mit seinen Feldern auf der Konsole
 	 *         aus
 	 */
@@ -81,7 +96,7 @@ public class Spielbrett {
 
 	}
 
-	// ////
+	//// ////
 
 	String[][] erstesArray = { { "a12", "b12", "c12", "d12", "e12", "f12", "g12", "h12", "i12", "j12", "k12", "l12" }, { "a11", "b11", "c11", "d11", "e11", "f11", "g11", "h11", "i11", "j11", "k11", "l11" }, { "a10", "b10", "c10", "d10", "e10", "f10", "g10", "h10", "i10", "j10", "k10", "l10" },
 			{ "a9", "b9", "c9", "d9", "e9", "f9", "g9", "h9", "i9", "j9", "k9", "l9" }, { "a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8", "i8", "j8", "k8", "l8" }, { "a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7", "i7", "j7", "k7", "l7" },

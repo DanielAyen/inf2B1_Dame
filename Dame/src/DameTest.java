@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * @author Baris, Daniel, Simon
+ *
+ */
 public class DameTest {
 
 	public static void main(String[] args) {
