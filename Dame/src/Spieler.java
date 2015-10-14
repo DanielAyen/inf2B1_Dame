@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * 
  * @author Baris, Daniel, Simon
@@ -20,12 +22,14 @@ public class Spieler {
 	 *          vergeben)
 	 * 
 	 */
+	private ArrayList<Spielfigur> figuren = new ArrayList<Spielfigur>();
 	private String name;
 	private static final int maxSpieler = 2;
 	private static int anzSpieler = 0;
 	private static boolean weiß = false;
 	private static boolean schwarz = false;
 	private FarbEnum farbe;
+	private Stein stein;
 
 	/**
 	 * Konstruktor für einen Spieler
@@ -63,11 +67,12 @@ public class Spieler {
 			if ((farbe == FarbEnum.SCHWARZ && schwarz == false) && (name.length() >= 2)) {
 				this.setName(name);
 				this.setFarbeSchwarz(farbe);
-
+				stein.Stein(12,farbe);
 			} else {
 				if ((farbe == FarbEnum.WEIß && weiß == false) && (name.length() >= 2)) {
 					this.setFarbeWeiß(farbe);
 					this.setName(name);
+					stein.
 				} else {
 					System.out.println("Farbe schon vergeben oder Name ungültig");
 					anzSpieler--;
@@ -158,4 +163,4 @@ public class Spieler {
 	}
 
 }
-// Boolean einbauen damit man Spielerprüfen nicht bescheissen kann
+// Boolean einbauen damit man Spielerprüfen nicht bescheissen kann...oder einfach private??!?!?!(SETTER)
