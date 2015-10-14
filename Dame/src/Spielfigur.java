@@ -17,6 +17,8 @@ public abstract class Spielfigur {
 	private int id;
 	private int counter = 0; // Wird später benötigt
 	private Spieler spieler;
+	private boolean istDame=false;
+	
 
 	/**
 	 * Konstruktor
@@ -28,10 +30,21 @@ public abstract class Spielfigur {
 	 *          übergeben
 	 */
 
-	public Spielfigur(int id, FarbEnum farbe) {
+	public Spielfigur(int id, FarbEnum farbe, boolean istDame) {
 		this.setFarbe(farbe);
+		this.setDame(istDame);
 	}
 
+	public void setDame(boolean istDame) {
+
+		this.istDame=istDame;
+	}
+
+	public boolean getDame(int id){
+		return istDame;
+		
+	}
+	
 	/**
 	 * Getter für Farbe
 	 * 
