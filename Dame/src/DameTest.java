@@ -30,6 +30,7 @@ public class DameTest {
 		Spielbrett b1=new Spielbrett();
 		
 		b1.display();
+		System.out.println(b1.getEinzelFeld(4, 0));
 		
 	}
 

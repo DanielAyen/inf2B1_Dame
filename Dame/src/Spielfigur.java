@@ -13,11 +13,13 @@ public abstract class Spielfigur {
 	 */
 
 	private FarbEnum farbe;
-	private int position; // Wird später benötigt
-	private int id;
-	private int counter = 0; // Wird später benötigt
+	//private int position; // Wird später benötigt
+	//private int id; macht keinen Sinn, da Daten niemals benötigt
+//	private int counter = 0; // Wird später benötigt
 	private Spieler spieler;
 	private boolean istDame=false;
+	private int posX;
+	private int posY;
 	
 
 	/**
@@ -30,20 +32,14 @@ public abstract class Spielfigur {
 	 *          übergeben
 	 */
 
-	public Spielfigur(int id, FarbEnum farbe, boolean istDame) {
+	public Spielfigur(FarbEnum farbe, int posX,int posY) {
 		this.setFarbe(farbe);
-		this.setDame(istDame);
-	}
-
-	public void setDame(boolean istDame) {
-
-		this.istDame=istDame;
-	}
-
-	public boolean getDame(int id){
-		return istDame;
+		this.posX=posX;
+		this.posY=posY;
 		
 	}
+
+	
 	
 	/**
 	 * Getter für Farbe
@@ -67,21 +63,11 @@ public abstract class Spielfigur {
 
 	/**
 	 * Getter für ID
+	 * @return 
 	 * 
 	 * @return id
 	 */
 
-	public int getId() {
-		return id;
-	}
 
-	/**
-	 * Setter für die id
-	 * 
-	 * @param id
-	 */
-
-	public void setId(int id) {
-		this.id = id;
-	}
+public abstract void Spielzug();
 }

@@ -36,7 +36,7 @@ public class Spielbrett {
 				for (int j = 0; j < brett[i].length; j++) {
 
 					//Spielfeld feld = new Spielfeld(this, feldSchwarz);
-					brett[i][j] = new Spielfeld(this, feldSchwarz, i, j);
+					this.brett[i][j] = new Spielfeld(this, feldSchwarz, i, j);
 					feldSchwarz = !feldSchwarz;
 
 				}
@@ -52,12 +52,13 @@ public class Spielbrett {
 	}
 
 	/**
-	 *
+	 * VERALTET, ersetzt durch die DisplayMethode
 	 * 
 	 * @param s
 	 *          wird benutzt um das Brett auszugeben
 	 * @return Gibt das komplette Spielbrett mit seinen Feldern auf der Konsole
 	 *         aus
+	 *        
 	 */
 	public String getBrett() {
 

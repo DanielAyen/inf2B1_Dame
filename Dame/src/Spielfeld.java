@@ -34,11 +34,15 @@ public class Spielfeld {
 	 *          Das Spielbrett
 	 */
 	public Spielfeld(Spielbrett spielbrett, boolean istSchwarz, int x, int y) {
-		this.spielbrett = spielbrett;
-		this.istSchwarz = istSchwarz;
-		this.posX = x;
-		this.posY = y;
-		setId();
+		if(spielbrett!=null){
+			this.spielbrett = spielbrett;
+			this.istSchwarz = istSchwarz;
+			this.posX = x;
+			this.posY = y;
+			setId();
+		}
+		
+		
 
 	}
 
@@ -59,9 +63,8 @@ public class Spielfeld {
 
 	private void setId() {
 
-		this.id = "" + (char)(65+this.getPosX());
-		this.id += this.getPosY()+1;
-		
+		this.id = "" + (char)(65+this.getPosY())+(this.getPosX()+1);
+				
 	}
 
 	public Spielfigur getSpielfigur() {
