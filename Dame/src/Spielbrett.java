@@ -35,8 +35,8 @@ public class Spielbrett {
 			for (int i = 0; i < brett.length; i++) {
 				for (int j = 0; j < brett[i].length; j++) {
 
-					Spielfeld feld = new Spielfeld(this, feldSchwarz);
-					brett[i][j] = feld;
+					//Spielfeld feld = new Spielfeld(this, feldSchwarz);
+					brett[i][j] = new Spielfeld(this, feldSchwarz, i, j);
 					feldSchwarz = !feldSchwarz;
 
 				}
@@ -108,13 +108,14 @@ public class Spielbrett {
 	 * @param x
 	 */
 	public void display() {
-		for (int zeile = 0; zeile < brett.length; zeile++) {
+		System.out.println("o=weiß x=schwarz  Array bei der Ausgabe gedreht");
+		for (int zeile = brett.length-1; zeile >=0; zeile--) {
 
 			if (brett[zeile] != null) {
 				for (int spalte = 0; spalte < brett[zeile].length; spalte++) {
 					
 				
-					System.out.print(brett[zeile][spalte] + "\t");
+					System.out.print(brett[zeile][spalte] + "  ");
 				}
 			}
 			System.out.println();

@@ -1,16 +1,17 @@
 import static org.junit.Assert.*;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 
 public class SpielerTest {
 
-	private Spieler s1;
-	private Spieler s2;
+	private static Spieler s1;
+	private static Spieler s2;
 
-	@Before
-	public void VorMethode() {
+	@BeforeClass
+	public static void VorMethode() {
 		s1 = new Spieler("Werner", FarbEnum.WEIß);
 		s2 = new Spieler("Eckhart", FarbEnum.SCHWARZ);
 	}

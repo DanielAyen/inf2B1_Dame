@@ -1,17 +1,21 @@
-
 /**
  * 
  * @author Baris, Daniel, Simon
  *
  */
 public class Spielfeld {
-	
+
 	/**
-	 * @param spielbrett Das Spielbrett
-	 * @param spielfigur Die Spielfigur
-	 * @param id die ID des Spielfelds
-	 * @param istBelegt bool wert ob ein Spielfeld besetzt ist oder nicht
-	 * @param farbe die Farbe des Spielfelds
+	 * @param spielbrett
+	 *          Das Spielbrett
+	 * @param spielfigur
+	 *          Die Spielfigur
+	 * @param id
+	 *          die ID des Spielfelds
+	 * @param istBelegt
+	 *          bool wert ob ein Spielfeld besetzt ist oder nicht
+	 * @param farbe
+	 *          die Farbe des Spielfelds
 	 * 
 	 */
 	private Spielbrett spielbrett;
@@ -19,33 +23,52 @@ public class Spielfeld {
 	private String id;
 	private boolean istBelegt;
 	private FarbEnum farbe;
- private boolean istSchwarz;
+	private boolean istSchwarz;
+	private int posX;
+	private int posY;
+
 	/**
 	 * Konstruktor für die Spielfelder
 	 * 
-	 * @param spielbrett Das Spielbrett
+	 * @param spielbrett
+	 *          Das Spielbrett
 	 */
-	public Spielfeld(Spielbrett spielbrett, boolean istSchwarz){
+	public Spielfeld(Spielbrett spielbrett, boolean istSchwarz, int x, int y) {
 		this.spielbrett = spielbrett;
-		this.istSchwarz=istSchwarz;
-			
-		}
+		this.istSchwarz = istSchwarz;
+		this.posX = x;
+		this.posY = y;
+		setId();
 
+	}
 
-	
-	public String getid(){
-		return id;
+	public int getPosX() {
+
+		return this.posX;
+	}
+
+	public int getPosY() {
+
+		return this.posY;
+	}
+
+	public String getId() {
+		return this.id;
+
+	}
+
+	private void setId() {
+
+		this.id = "" + (char)(65+this.getPosX());
+		this.id += this.getPosY()+1;
 		
 	}
-	private void setid(String id) {
-		this.id = id;
-		
-	}
-	public Spielfigur getSpielfigur(){
+
+	public Spielfigur getSpielfigur() {
 		return this.spielfigur;
 	}
-	
-	private void setSpielfigur(){
+
+	private void setSpielfigur() {
 		this.spielfigur = spielfigur;
 	}
 
@@ -56,16 +79,25 @@ public class Spielfeld {
 	public void setIstBelegt(boolean istBelegt) {
 		this.istBelegt = istBelegt;
 	}
+
 	@Override
-	public String toString(){
-		return ("schwarz " + getIstSchwarz());
+	public String toString() {
+
+		if (getIstSchwarz() == true)
+			return "o "+this.getId();
+					//+ "[" + getPosX() + "," + getPosY() + "]";
+		else
+			return "x "+this.getId();
+					//+ "[" + getPosX() + "," + getPosY() + "]";
+
 	}
 
-
-
 	private boolean getIstSchwarz() {
-		
+
 		return this.istSchwarz;
 	}
 
 }
+/*
+ * Spielfeld ansprechen mit char
+ */
