@@ -3,11 +3,11 @@
  * @author Baris, Daniel, Simon
  *
  */
-public abstract class KI extends Spieler {
+abstract class KI extends Spieler {
 
-	public KI(String name, FarbEnum farbe) {
+	KI(String name, FarbEnum farbe) {
 		super(name, farbe);
-		
+
 	}
 
 }

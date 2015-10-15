@@ -30,8 +30,9 @@ public class Spieler {
 	private static boolean schwarz = false;
 	private FarbEnum farbe;
 
-
 	/**
+	 * erstellen der Spieler muss in der Spielklasse erfolgen
+	 * 
 	 * Konstruktor für einen Spieler
 	 * 
 	 * @param name
@@ -39,13 +40,16 @@ public class Spieler {
 	 * @param farbe
 	 *          Spielerfarbe aus dem FarbEnum
 	 */
-	public Spieler(String name, FarbEnum farbe) {
-		if (anzSpieler < maxSpieler) {
-			anzSpieler++;
-			spielerPrüfen(name, farbe);
 
-		} else
-			System.out.println("Max Spieleranzahl erreicht");
+	public Spieler(String name, FarbEnum farbe) {
+		
+			if (anzSpieler < maxSpieler && (spielerPrüfen(name, farbe))) {
+				anzSpieler++;
+
+			} else if (anzSpieler >= maxSpieler) {
+				System.out.println("Max Spieleranzahl erreicht");
+
+			}
 	}
 
 	/**
@@ -57,25 +61,30 @@ public class Spieler {
 	 * @param farbe
 	 *          Spielerfarbe aus dem FarbEnum
 	 */
-	public void spielerPrüfen(String name, FarbEnum farbe) {
+	public boolean spielerPrüfen(String name, FarbEnum farbe) {
 
 		if (name == null) {
-			anzSpieler--;
-			System.out.println("Du musst einen Namen übergeben");
-		} else {
 
-			if ((farbe == FarbEnum.SCHWARZ && schwarz == false) && (name.length() >= 2)) {
+			System.out.println("Du musst einen Namen übergeben");
+			throw new RuntimeException("Error");
+			
+		} else {
+			if (name.length() < 2) {
+				System.out.println("Name zu kurz!");
+				throw new RuntimeException("Error");
+			} else if ((farbe == FarbEnum.SCHWARZ && schwarz == false)) {
 				this.setName(name);
 				this.setFarbeSchwarz(farbe);
-				//spielfigur.Stein(12,farbe);
+				// spielfigur.Stein(12,farbe);
+				return true;
 			} else {
-				if ((farbe == FarbEnum.WEIß && weiß == false) && (name.length() >= 2)) {
+				if ((farbe == FarbEnum.WEIß && weiß == false)) {
 					this.setFarbeWeiß(farbe);
 					this.setName(name);
-					
+					return true;
 				} else {
-					System.out.println("Farbe schon vergeben oder Name ungültig");
-					anzSpieler--;
+					System.out.println("Farbe schon vergeben!");
+					throw new RuntimeException("Error");
 				}
 			}
 
@@ -112,7 +121,7 @@ public class Spieler {
 	 * @param name
 	 *          Spielername
 	 */
-	public void setName(String name) {
+	private void setName(String name) {
 
 		this.name = name;
 
@@ -123,7 +132,8 @@ public class Spieler {
 	 * @return name Gibt Spielername zurück
 	 */
 	public String getName() {
-		return name;
+
+		return this.name;
 	}
 
 	/**
@@ -163,4 +173,5 @@ public class Spieler {
 	}
 
 }
-// Boolean einbauen damit man Spielerprüfen nicht bescheissen kann...oder einfach private??!?!?!(SETTER)
+// Boolean einbauen damit man Spielerprüfen nicht bescheissen kann...oder
+// einfach private??!?!?!(SETTER)
