@@ -29,7 +29,7 @@ public class Spieler {
 	private static boolean weiß = false;
 	private static boolean schwarz = false;
 	private FarbEnum farbe;
-	private Stein stein;
+
 
 	/**
 	 * Konstruktor für einen Spieler
@@ -67,12 +67,12 @@ public class Spieler {
 			if ((farbe == FarbEnum.SCHWARZ && schwarz == false) && (name.length() >= 2)) {
 				this.setName(name);
 				this.setFarbeSchwarz(farbe);
-				stein.Stein(12,farbe);
+				//spielfigur.Stein(12,farbe);
 			} else {
 				if ((farbe == FarbEnum.WEIß && weiß == false) && (name.length() >= 2)) {
 					this.setFarbeWeiß(farbe);
 					this.setName(name);
-					stein.
+					
 				} else {
 					System.out.println("Farbe schon vergeben oder Name ungültig");
 					anzSpieler--;

@@ -19,19 +19,18 @@ public class Spielfeld {
 	private String id;
 	private boolean istBelegt;
 	private FarbEnum farbe;
+ private boolean istSchwarz;
 	/**
 	 * Konstruktor für die Spielfelder
 	 * 
 	 * @param spielbrett Das Spielbrett
 	 */
-	public Spielfeld(Spielbrett spielbrett){
+	public Spielfeld(Spielbrett spielbrett, boolean istSchwarz){
 		this.spielbrett = spielbrett;
+		this.istSchwarz=istSchwarz;
 			
 		}
-	
-	public Spielfeld ( String id, Spielfigur spielfigur){
-		
-	}
+
 
 	
 	public String getid(){
@@ -56,6 +55,17 @@ public class Spielfeld {
 
 	public void setIstBelegt(boolean istBelegt) {
 		this.istBelegt = istBelegt;
+	}
+	@Override
+	public String toString(){
+		return ("schwarz " + getIstSchwarz());
+	}
+
+
+
+	private boolean getIstSchwarz() {
+		
+		return this.istSchwarz;
 	}
 
 }
