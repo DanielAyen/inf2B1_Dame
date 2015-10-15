@@ -13,7 +13,8 @@ public class DameTest {
 		System.out.println(s1.getWeiß());
 		System.out.println("Test");
 		System.out.println("Hallo");
-		System.out.println("Test da fehler"));
+		System.out.println("Test da fehler");
+		System.out.println("Jetzt sollte es wieder tun");
 		
 
 
