@@ -29,7 +29,7 @@ public class Spielbrett {
 	 */
 	public Spielbrett() {
 		if (anzBrett < maxBrett) {
-
+			anzBrett++;
 			boolean feldSchwarz = false;
 
 			for (int i = 0; i < brett.length; i++) {
@@ -46,7 +46,7 @@ public class Spielbrett {
 
 		} else {
 
-			System.out.println("Es existiert bereits ein Spielbrett!");
+			throw new RuntimeException("Es existiert bereits ein Spielbrett!");
 		}
 
 	}
