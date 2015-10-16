@@ -19,7 +19,7 @@ public class Spielbrett {
 	 * 
 	 * 
 	 */
-	private Spielfeld[][] brett = new Spielfeld[12][12];
+	private Spielfeld[][] brett;
 
 	private final int maxBrett = 1;
 	private int anzBrett = 0;
@@ -28,30 +28,32 @@ public class Spielbrett {
 	 * Konstruktor für das Spielbrett, es darf max ein Brett existieren Das brett
 	 * ist ein 2Dim Array welches mit Feldern gefüllt wird
 	 */
-	public Spielbrett() {
+	public Spielbrett(int groesse) {
 		if (anzBrett < maxBrett) {
-			anzBrett++;
-			boolean feldSchwarz = false;
+			if (groesse == 8 || groesse == 10 || groesse == 12) {
+				anzBrett++;
+				boolean feldSchwarz = false;
+				brett = new Spielfeld[groesse][groesse];
 
-			for (int i = 0; i < brett.length; i++) {
-				for (int j = 0; j < brett[i].length; j++) {
+				for (int i = 0; i < brett.length; i++) {
+					for (int j = 0; j < brett[i].length; j++) {
 
-					this.brett[i][j] = new Spielfeld(this, feldSchwarz, i, j);
+						this.brett[i][j] = new Spielfeld(this, feldSchwarz, i, j);
+						feldSchwarz = !feldSchwarz;
+
+					}
 					feldSchwarz = !feldSchwarz;
 
 				}
-				feldSchwarz = !feldSchwarz;
-
+			} else {
+				throw new RuntimeException("Das Spielfeld darf nur die Groessen 8, 10 oder 12 haben!");
 			}
-
 		} else {
 
 			throw new RuntimeException("Es existiert bereits ein Spielbrett!");
 		}
 
 	}
-
-	
 
 	/**
 	 * Gibt ein einzelnes Feld anhand der Pos im Array zurueck
@@ -60,7 +62,7 @@ public class Spielbrett {
 	 *          ArrayIndex 1
 	 * @param y
 	 *          ArrayIndex 2
-	 *          
+	 * 
 	 * @return Gibt ein einzelnes Feld anhand des Index zurueck
 	 */
 	public Object getEinzelFeld(int x, int y) {
@@ -70,7 +72,7 @@ public class Spielbrett {
 	}
 
 	/**
-	 * toString  z.Z unnoetig
+	 * toString z.Z unnoetig
 	 */
 	public String toString() {
 
@@ -103,9 +105,9 @@ public class Spielbrett {
 			System.out.println();
 		}
 
-		
-		////
+		// //
 	}
+
 	/**
 	 * VERALTET, ersetzt durch die DisplayMethode
 	 * 
