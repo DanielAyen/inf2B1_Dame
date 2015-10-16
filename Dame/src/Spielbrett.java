@@ -25,7 +25,8 @@ public class Spielbrett {
 	private int anzBrett = 0;
 
 	/**
-	 * Konstruktor für das Spielbrett, es darf max ein Brett existieren
+	 * Konstruktor für das Spielbrett, es darf max ein Brett existieren Das brett
+	 * ist ein 2Dim Array welches mit Feldern gefüllt wird
 	 */
 	public Spielbrett() {
 		if (anzBrett < maxBrett) {
@@ -35,7 +36,6 @@ public class Spielbrett {
 			for (int i = 0; i < brett.length; i++) {
 				for (int j = 0; j < brett[i].length; j++) {
 
-					// Spielfeld feld = new Spielfeld(this, feldSchwarz);
 					this.brett[i][j] = new Spielfeld(this, feldSchwarz, i, j);
 					feldSchwarz = !feldSchwarz;
 
@@ -51,6 +51,61 @@ public class Spielbrett {
 
 	}
 
+	
+
+	/**
+	 * Gibt ein einzelnes Feld anhand der Pos im Array zurueck
+	 * 
+	 * @param x
+	 *          ArrayIndex 1
+	 * @param y
+	 *          ArrayIndex 2
+	 *          
+	 * @return Gibt ein einzelnes Feld anhand des Index zurueck
+	 */
+	public Object getEinzelFeld(int x, int y) {
+
+		String s = "";
+		return s + brett[x][y];
+	}
+
+	/**
+	 * toString  z.Z unnoetig
+	 */
+	public String toString() {
+
+		return "";
+
+	}
+
+	// // ////
+
+	/**
+	 * Anzeigemethode für das Array der Spielfelder
+	 * 
+	 * Geht durch das Array und gibt jedes einzelne Feld aus
+	 */
+	public void display() {
+		System.out.println("o=weiß x=schwarz  Array bei der Ausgabe gedreht(0|0 ist unten links)");
+		for (int zeile = brett.length - 1; zeile >= 0; zeile--) {
+
+			if (brett[zeile] != null) {
+				for (int spalte = 0; spalte < brett[zeile].length; spalte++) {
+					// Die if is dafür da dass das Brett so wie es z.Z.ist ( farbe in form
+					// von x/o und die notation h3) schön untereinander da steht
+					if (zeile > 8) { //
+						System.out.print(brett[zeile][spalte] + "  ");
+					} else { //
+						System.out.print(brett[zeile][spalte] + "   "); //
+					}
+				}
+			}
+			System.out.println();
+		}
+
+		
+		////
+	}
 	/**
 	 * VERALTET, ersetzt durch die DisplayMethode
 	 * 
@@ -75,56 +130,6 @@ public class Spielbrett {
 			}
 		}
 		return s;
-
-	}
-
-	/**
-	 * 
-	 * @param x
-	 *          ArrayIndex 1
-	 * @param y
-	 *          ArrayIndex 2
-	 * @return Gibt ein einzelnes Feld anhand des Index zurueck
-	 */
-	public Object getEinzelFeld(int x, int y) {
-
-		String s = "";
-		return s + brett[x][y];
-	}
-
-	/**
-	 * toString
-	 */
-	public String toString() {
-
-		return "";
-
-	}
-
-	// // ////
-
-	/**
-	 * Anzeigemethode für das Array der Spielfelder
-	 * 
-	 * @param x
-	 */
-	public void display() {
-		System.out.println("o=weiß x=schwarz  Array bei der Ausgabe gedreht(0|0 ist unten links)");
-		for (int zeile = brett.length - 1; zeile >= 0; zeile--) {
-
-			if (brett[zeile] != null) {
-				for (int spalte = 0; spalte < brett[zeile].length; spalte++) {
-					// Die if is dafür da dass das Brett so wie es z.Z.ist ( farbe in form
-					// von x/o und die notation h3) schön untereinander da steht
-					if (zeile > 8) { //
-						System.out.print(brett[zeile][spalte] + "  ");
-					} else { //
-						System.out.print(brett[zeile][spalte] + "   "); //
-					}
-				}
-			}
-			System.out.println();
-		}
 
 	}
 }

@@ -21,6 +21,13 @@ public class Spieler {
 	 *          gibt an ob die Farbe schwarz bereits vergeben ist (False==nicht
 	 *          vergeben)
 	 * 
+	 * @param farbe
+	 *          Die Farbe aus dem FarbEnum
+	 * 
+	 * @param figuren
+	 *          eine ArrayList für die Spielfiguren eines Spielers.// z.Z.
+	 *          unbenutzt
+	 * 
 	 */
 	private ArrayList<Spielfigur> figuren = new ArrayList<Spielfigur>();
 	private String name;
@@ -40,16 +47,15 @@ public class Spieler {
 	 * @param farbe
 	 *          Spielerfarbe aus dem FarbEnum
 	 */
-
 	public Spieler(String name, FarbEnum farbe) {
-		
-			if (anzSpieler < maxSpieler && (spielerPrüfen(name, farbe))) {
-				anzSpieler++;
 
-			} else if (anzSpieler >= maxSpieler) {
-				System.out.println("Max Spieleranzahl erreicht");
+		if (anzSpieler < maxSpieler && (spielerPrüfen(name, farbe))) {
+			anzSpieler++;
 
-			}
+		} else if (anzSpieler >= maxSpieler) {
+			System.out.println("Max Spieleranzahl erreicht");
+
+		}
 	}
 
 	/**
@@ -60,6 +66,8 @@ public class Spieler {
 	 *          Spielername
 	 * @param farbe
 	 *          Spielerfarbe aus dem FarbEnum
+	 * @return gibt einen boolean Wert zurueck ob das erstellen erfolgreich war
+	 *         oder nicht
 	 */
 	public boolean spielerPrüfen(String name, FarbEnum farbe) {
 
@@ -67,7 +75,7 @@ public class Spieler {
 
 			System.out.println("Du musst einen Namen übergeben");
 			throw new RuntimeException("Error");
-			
+
 		} else {
 			if (name.length() < 2) {
 				System.out.println("Name zu kurz!");
@@ -128,6 +136,7 @@ public class Spieler {
 	}
 
 	/**
+	 * Getter für den Spielernamen
 	 * 
 	 * @return name Gibt Spielername zurück
 	 */
@@ -145,6 +154,7 @@ public class Spieler {
 	}
 
 	/**
+	 * Gibt die derzeitige Anzahl der Spieler zurück
 	 * 
 	 * @return anzSpieler Gibt die Aktuelle Spieleranzahl zurück
 	 */
@@ -153,6 +163,7 @@ public class Spieler {
 	}
 
 	/**
+	 * Gibt zurueck ob die Farbe weiss verfuegbar ist
 	 * 
 	 * 
 	 * @return weiß gibt einen bool Wert zürck über die Verfügbarkeit der Farbe
@@ -163,7 +174,7 @@ public class Spieler {
 	}
 
 	/**
-	 * 
+	 * Gibt zurueck ob die Farbe schwarz verfuegbar ist
 	 * 
 	 * @return schwarz gibt einen bool Wert zürck über die Verfügbarkeit der Farbe
 	 */
