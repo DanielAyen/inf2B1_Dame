@@ -111,7 +111,7 @@ public class Spielfeld {
 	 * 
 	 * @return (true/false) besetzt/nicht besetzt
 	 */
-	public boolean isIstBelegt() {
+	public boolean getIstBelegt() {
 		return istBelegt;
 	}
 
