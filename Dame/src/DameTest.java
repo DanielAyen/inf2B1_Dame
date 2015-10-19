@@ -6,6 +6,7 @@
 public class DameTest {
 
 	public static void main(String[] args) {
+		/*
 		System.out.println(Spieler.getAnzahl());
 		try{
 		Spieler s1 = new Spieler("H", FarbEnum.SCHWARZ);
@@ -23,12 +24,14 @@ public class DameTest {
 
 		//System.out.println(s2.getName());
 		//System.out.println(s2.getFarbe());
-
+*/
 		Spielbrett b1=new Spielbrett(8);
-		
+	
+	
+		/*
 		b1.display();
 		System.out.println(b1.getEinzelFeld(4, 0));
-		
+		*/
 	}
 
 }

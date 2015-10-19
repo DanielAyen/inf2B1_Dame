@@ -17,6 +17,7 @@ public abstract class Spielfigur {
 	 *          y Koor der Fig.
 	 */
 
+
 	private FarbEnum farbe;
 	private Spieler spieler;
 	private int posX;
