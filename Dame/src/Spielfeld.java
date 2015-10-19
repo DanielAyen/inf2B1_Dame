@@ -103,7 +103,7 @@ public class Spielfeld {
 	 * Setzt die akt SPielfigur auf ein Feld
 	 */
 	private void setSpielfigur() {
-		this.spielfigur = spielfigur;
+	//	this.spielfigur = //parameter fehlt;
 	}
 
 	/**

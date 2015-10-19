@@ -26,7 +26,9 @@ public class DameTest {
 		//System.out.println(s2.getFarbe());
 */
 		Spielbrett b1=new Spielbrett(8);
-System.out.println(b1.getEinzelFeld(0, 0));
+		System.out.println(b1.getBrett(0,0).getPosX());
+		System.out.println(b1.getEinzelFeld(0,0));
+	b1.display();
 	
 	
 		/*

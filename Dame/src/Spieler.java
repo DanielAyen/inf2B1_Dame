@@ -169,7 +169,7 @@ public class Spieler {
 	 * @return weiß gibt einen bool Wert zürck über die Verfügbarkeit der Farbe
 	 */
 	public boolean getWeiß() {
-		System.out.print("Die Farbe Schwarz ist schon vergeben: ");
+		System.out.print("Die Farbe Weiß ist schon vergeben: ");
 		return weiß;
 	}
 

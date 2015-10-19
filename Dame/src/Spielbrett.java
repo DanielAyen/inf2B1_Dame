@@ -65,7 +65,21 @@ public class Spielbrett {
 	 * 
 	 * @return Gibt ein einzelnes Feld anhand des Index zurueck
 	 */
-	public Object getEinzelFeld(int x, int y) {
+	
+	// public Spielfeld getBrett(char c, int i)
+	// int hilf;
+	//switch (c){
+	// case 'a':
+	//case 'A': hilf=1;
+	// case 'b':
+	//
+	//...
+	//return Spielfeld(hilf,i)
+	
+	public Spielfeld getBrett(int x,int y){
+		return this.brett[x][y];
+	}
+	public String getEinzelFeld(int x, int y) {
 
 		String s = "";
 		return s + brett[x][y];
@@ -117,7 +131,7 @@ public class Spielbrett {
 	 *         aus
 	 * 
 	 */
-	public String getBrett() {
+	public String printBrett() {
 
 		String s = "";
 
