@@ -105,7 +105,7 @@ public class Spieler {
 	 * @param farbe
 	 *          Spielerfarbe
 	 */
-	public void setFarbeSchwarz(FarbEnum farbe) {
+	private void setFarbeSchwarz(FarbEnum farbe) {
 		schwarz = true;
 		this.farbe = farbe;
 	}
@@ -116,7 +116,7 @@ public class Spieler {
 	 * @param farbe
 	 *          Spielerfarbe
 	 */
-	public void setFarbeWeiß(FarbEnum farbe) {
+	private void setFarbeWeiß(FarbEnum farbe) {
 
 		weiß = true;
 		this.farbe = farbe;

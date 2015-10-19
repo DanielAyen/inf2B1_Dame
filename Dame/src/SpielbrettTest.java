@@ -22,17 +22,17 @@ public class SpielbrettTest {
 	
 	@Test 
 	public void FeldNichtNull(){
-		assertNotNull(sb.getEinzelFeld(0, 0));
-		assertNotNull(sb.getEinzelFeld(0, 11));
-		assertNotNull(sb.getEinzelFeld(11, 0));
-		assertNotNull(sb.getEinzelFeld(11, 11));
+		assertNotNull(sb.getBrett('A', 0));
+		assertNotNull(sb.getBrett('A', 11));
+		assertNotNull(sb.getBrett('L', 0));
+		assertNotNull(sb.getBrett('L', 11));
 		
 		
 	}
 	
 	@Test
 	public void Test(){
-		assertNotSame(sb.getEinzelFeld(3, 9), sb.getEinzelFeld(6, 6));
+		assertNotSame(sb.getBrett('D', 9), sb.getBrett('G', 6));
 	}
 	
 	@Test // Sollte nicht machbar sein
@@ -42,7 +42,7 @@ public class SpielbrettTest {
 	
 	@Test
 	public void  FeldNull(){
-		 assertNull(sb.getEinzelFeld(15, 13));
+		 assertNull(sb.getBrett('P', 13));
 	 }
 
 }

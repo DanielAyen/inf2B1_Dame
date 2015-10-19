@@ -58,33 +58,79 @@ public class Spielbrett {
 	/**
 	 * Gibt ein einzelnes Feld anhand der Pos im Array zurueck
 	 * 
-	 * @param x
+	 * @param c
 	 *          ArrayIndex 1
-	 * @param y
+	 * @param i
 	 *          ArrayIndex 2
 	 * 
 	 * @return Gibt ein einzelnes Feld anhand des Index zurueck
 	 */
-	
-	// public Spielfeld getBrett(char c, int i)
-	// int hilf;
-	//switch (c){
-	// case 'a':
-	//case 'A': hilf=1;
-	// case 'b':
-	//
-	//...
-	//return Spielfeld(hilf,i)
-	
-	public Spielfeld getBrett(int x,int y){
-		return this.brett[x][y];
-	}
-	public String getEinzelFeld(int x, int y) {
 
-		String s = "";
-		return s + brett[x][y];
+	public Spielfeld getBrett(char c, int i) {
+		int hilf;
+		switch (c) {
+		case 'a':// fall through
+		case 'A':
+			hilf = 0;
+			break;
+		case 'b':
+		case 'B':
+			hilf = 1;
+			break;
+		case 'c':
+		case 'C':
+			hilf = 2;
+			break;
+		case 'd':
+		case 'D':
+			hilf = 3;
+			break;
+		case 'e':
+		case 'E':
+			hilf = 4;
+			break;
+		case 'f':
+		case 'F':
+			hilf = 5;
+			break;
+		case 'g':
+		case 'G':
+			hilf = 6;
+			break;
+		case 'h':
+		case 'H':
+			hilf = 7;
+			break;
+		case 'i':
+		case 'I':
+			hilf = 8;
+			break;
+		case 'j':
+		case 'J':
+			hilf = 9;
+			break;
+		case 'k':
+		case 'K':
+			hilf = 10;
+			break;
+		case 'l':
+		case 'L':
+			hilf = 11;
+			break;
+		default:
+			throw new RuntimeException("Eingabe ausserhalb Feld");
+		}
+		return this.brett[hilf][i];
+
 	}
 
+	/*
+	 * 
+	 * public Spielfeld getBrett(int x,int y){ return this.brett[x][y]; } public
+	 * String getEinzelFeld(int x, int y) {
+	 * 
+	 * String s = ""; return s + brett[x][y]; }
+	 */
 	/**
 	 * toString z.Z unnoetig
 	 */
