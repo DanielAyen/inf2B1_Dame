@@ -6,8 +6,6 @@
 public class Spielbrett {
 
 	// Unten links schwarz a1 und oben rechts schwarz h8
-
-	// private Spielfeld spielfeld;
 	/**
 	 * @param Spielfeld
 	 *          [][] brett Array für die Spielfelder 12x12 bestehend aus
@@ -15,13 +13,10 @@ public class Spielbrett {
 	 * @param maxBrett
 	 *          Max Brettanzahl (1)
 	 * @param anzBrett
-	 *          Derzeitige Anzahl an Spielbrettern
-	 * 
-	 * 
+	 *          Derzeitige Anzahl an Spielbrettern 
 	 */
 	private Spielfeld[][] brett;
-
-	private final int maxBrett = 1;
+private final int maxBrett = 1;
 	private int anzBrett = 0;
 
 	/**
@@ -37,22 +32,17 @@ public class Spielbrett {
 
 				for (int i = 0; i < brett.length; i++) {
 					for (int j = 0; j < brett[i].length; j++) {
-
 						this.brett[i][j] = new Spielfeld(this, feldSchwarz, i, j);
 						feldSchwarz = !feldSchwarz;
-
 					}
 					feldSchwarz = !feldSchwarz;
-
 				}
 			} else {
 				throw new RuntimeException("Das Spielfeld darf nur die Groessen 8, 10 oder 12 haben!");
 			}
 		} else {
-
 			throw new RuntimeException("Es existiert bereits ein Spielbrett!");
 		}
-
 	}
 
 	/**
@@ -137,10 +127,7 @@ public class Spielbrett {
 	public String toString() {
 
 		return "";
-
 	}
-
-	// // ////
 
 	/**
 	 * Anzeigemethode für das Array der Spielfelder
@@ -164,8 +151,6 @@ public class Spielbrett {
 			}
 			System.out.println();
 		}
-
-		// //
 	}
 
 	/**

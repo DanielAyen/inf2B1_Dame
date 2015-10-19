@@ -46,8 +46,7 @@ public class Spielfeld {
 			this.posY = y;
 			setId();
 		}
-
-	}
+}
 
 	/**
 	 * Gibt x zurueck
@@ -55,8 +54,7 @@ public class Spielfeld {
 	 * @return die Arraypos X
 	 */
 	public int getPosX() {
-
-		return this.posX;
+return this.posX;
 	}
 
 	/**
@@ -65,8 +63,7 @@ public class Spielfeld {
 	 * @return die Arraypos Y
 	 */
 	public int getPosY() {
-
-		return this.posY;
+return this.posY;
 	}
 
 	/**
@@ -76,8 +73,7 @@ public class Spielfeld {
 	 */
 	public String getId() {
 		return this.id;
-
-	}
+		}
 
 	/**
 	 * Setzt die Id fuer ein Feld
@@ -85,10 +81,8 @@ public class Spielfeld {
 	 * id besteht aus einem Char mit der pos in Form einer Zahl
 	 */
 	private void setId() {
-
-		this.id = "" + (char) (65 + this.getPosY()) + (this.getPosX() + 1);
-
-	}
+this.id = "" + (char) (65 + this.getPosY()) + (this.getPosX() + 1);
+}
 
 	/**
 	 * Gibt die akt Spielfigur auf einem Feld zurueck
@@ -134,8 +128,7 @@ public class Spielfeld {
 	 */
 	@Override
 	public String toString() {
-
-		if (getIstSchwarz() == true)
+if (getIstSchwarz() == true)
 			return "o " + this.getId();
 		// + "[" + getPosX() + "," + getPosY() + "]";
 		else
@@ -150,9 +143,7 @@ public class Spielfeld {
 	 * @return Gibt einen Bool Wert zurueck ob ein Feld schwarz ist oder nicht
 	 */
 	private boolean getIstSchwarz() {
-
-		return this.istSchwarz;
+return this.istSchwarz;
 	}
-
 }
 

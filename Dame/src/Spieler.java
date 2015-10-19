@@ -51,10 +51,8 @@ public class Spieler {
 
 		if (anzSpieler < maxSpieler && (spielerPrüfen(name, farbe))) {
 			anzSpieler++;
-
 		} else if (anzSpieler >= maxSpieler) {
 			System.out.println("Max Spieleranzahl erreicht");
-
 		}
 	}
 
@@ -72,10 +70,8 @@ public class Spieler {
 	public boolean spielerPrüfen(String name, FarbEnum farbe) {
 
 		if (name == null) {
-
 			System.out.println("Du musst einen Namen übergeben");
 			throw new RuntimeException("Error");
-
 		} else {
 			if (name.length() < 2) {
 				System.out.println("Name zu kurz!");
@@ -83,7 +79,6 @@ public class Spieler {
 			} else if ((farbe == FarbEnum.SCHWARZ && schwarz == false)) {
 				this.setName(name);
 				this.setFarbeSchwarz(farbe);
-				// spielfigur.Stein(12,farbe);
 				return true;
 			} else {
 				if ((farbe == FarbEnum.WEIß && weiß == false)) {
@@ -95,7 +90,6 @@ public class Spieler {
 					throw new RuntimeException("Error");
 				}
 			}
-
 		}
 	}
 
@@ -117,10 +111,8 @@ public class Spieler {
 	 *          Spielerfarbe
 	 */
 	private void setFarbeWeiß(FarbEnum farbe) {
-
 		weiß = true;
 		this.farbe = farbe;
-
 	}
 
 	/**
@@ -130,9 +122,7 @@ public class Spieler {
 	 *          Spielername
 	 */
 	private void setName(String name) {
-
 		this.name = name;
-
 	}
 
 	/**
@@ -141,8 +131,7 @@ public class Spieler {
 	 * @return name Gibt Spielername zurück
 	 */
 	public String getName() {
-
-		return this.name;
+return this.name;
 	}
 
 	/**
