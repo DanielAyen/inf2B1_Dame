@@ -17,7 +17,7 @@ public class Spieler {
 	 * @param weiß
 	 *          gibt an ob die Farbe weiß bereits vergeben ist (False==nicht
 	 *          vergeben)
-	 * @param schwarz
+	 * @param schwarzvergeben
 	 *          gibt an ob die Farbe schwarz bereits vergeben ist (False==nicht
 	 *          vergeben)
 	 * 
@@ -33,8 +33,8 @@ public class Spieler {
 	private String name;
 	private static final int maxSpieler = 2;
 	private static int anzSpieler = 0;
-	private static boolean weiß = false;
-	private static boolean schwarz = false;
+	private static boolean weißvergeben = false;
+	private static boolean schwarzvergeben = false;
 	private FarbEnum farbe;
 
 	/**
@@ -76,12 +76,12 @@ public class Spieler {
 			if (name.length() < 2) {
 				System.out.println("Name zu kurz!");
 				throw new RuntimeException("Error");
-			} else if ((farbe == FarbEnum.SCHWARZ && schwarz == false)) {
+			} else if ((farbe == FarbEnum.SCHWARZ && schwarzvergeben == false)) {
 				this.setName(name);
 				this.setFarbeSchwarz(farbe);
 				return true;
 			} else {
-				if ((farbe == FarbEnum.WEIß && weiß == false)) {
+				if ((farbe == FarbEnum.WEIß && weißvergeben == false)) {
 					this.setFarbeWeiß(farbe);
 					this.setName(name);
 					return true;
@@ -100,7 +100,7 @@ public class Spieler {
 	 *          Spielerfarbe
 	 */
 	private void setFarbeSchwarz(FarbEnum farbe) {
-		schwarz = true;
+		schwarzvergeben = true;
 		this.farbe = farbe;
 	}
 
@@ -111,7 +111,7 @@ public class Spieler {
 	 *          Spielerfarbe
 	 */
 	private void setFarbeWeiß(FarbEnum farbe) {
-		weiß = true;
+		weißvergeben = true;
 		this.farbe = farbe;
 	}
 
@@ -159,7 +159,7 @@ return this.name;
 	 */
 	public boolean getWeiß() {
 		System.out.print("Die Farbe Weiß ist schon vergeben: ");
-		return weiß;
+		return weißvergeben;
 	}
 
 	/**
@@ -169,7 +169,7 @@ return this.name;
 	 */
 	public boolean getSchwarz() {
 		System.out.print("Die Farbe Schwarz ist schon vergeben: ");
-		return schwarz;
+		return schwarzvergeben;
 	}
 
 }

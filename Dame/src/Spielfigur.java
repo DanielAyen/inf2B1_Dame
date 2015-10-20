@@ -22,6 +22,7 @@ public abstract class Spielfigur {
 	private int posX;
 	private int posY;
 	private Spielbrett brett;
+	private boolean istDame;
 
 	/**
 	 * Konstruktor
@@ -34,11 +35,12 @@ public abstract class Spielfigur {
 	 *          setzt die y pos
 	 */
 
-	public Spielfigur(FarbEnum farbe, int posX, int posY,Spielbrett brett) {
+	public Spielfigur(FarbEnum farbe, int posX, int posY, Spielbrett brett, boolean istDame) {
 		this.setFarbe(farbe);
 		this.setPosX(posX);
 		this.setPosY(posY);
-		this.brett=brett;
+		this.brett = brett;
+		this.setDame(istDame);
 	}
 
 	/**
@@ -49,6 +51,16 @@ public abstract class Spielfigur {
 
 	public FarbEnum getFarbe() {
 		return farbe;
+	}
+
+	private void setDame(boolean istDame) {
+		// if(istDame==false||Figuramendedesfelds||Farbestimmt){ }
+		this.istDame = istDame;
+
+	}
+
+	public boolean getDame(Spielfigur fig) {
+		return this.istDame;
 	}
 
 	/**
@@ -66,9 +78,9 @@ public abstract class Spielfigur {
 	 * @param posX
 	 */
 	public void setPosX(int posX) {
-		if (posX < 0 || posX > brett.getBrettGroesse()) {///////////////////
-		}else
-		this.posX = posX;
+		if (posX < 0 || posX > brett.getBrettGroesse()) {// /////////////////
+		} else
+			this.posX = posX;
 	}
 
 	/**
@@ -86,7 +98,7 @@ public abstract class Spielfigur {
 	 * @param posY
 	 */
 	public void setPosY(int posY) {
-		if (posY < 0 || posY > brett.getBrettGroesse()) {//////////////////
+		if (posY < 0 || posY > brett.getBrettGroesse()) {// ////////////////
 		}
 		// Code für Überprüfung Spielbrettgröße
 		this.posY = posY;
