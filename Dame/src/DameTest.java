@@ -31,6 +31,8 @@ public class DameTest {
 		System.out.println(s1.getFarbe());
 		//System.out.println(b1.getEinzelFeld('A',0));
 	//b1.display();
+		System.out.println(b1.getBrettGroesse());
+		Stein ss1=new Stein(FarbEnum.WEIß, 5,5);
 	
 	
 		/*

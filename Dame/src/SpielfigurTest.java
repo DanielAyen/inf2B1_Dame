@@ -13,8 +13,10 @@ public class SpielfigurTest {
 	/**
 	 * Stein Dame
 	 */
+	private static Spielbrett b1;
 	private static Stein s;
 	private static Dame d;
+	
 
 	/**
 	 * Wird vor den Tests ausgeführt. Es werden ein Stein mit der Farbe Schwarz
@@ -24,8 +26,10 @@ public class SpielfigurTest {
 
 	@BeforeClass
 	public static void Methode() {
-		s = new Stein(FarbEnum.SCHWARZ, 1, 1);
-		d = new Dame(FarbEnum.WEIß, 0, 0);
+		b1 = new Spielbrett(12);
+		s = new Stein(FarbEnum.SCHWARZ, 8, 8);
+		d = new Dame(FarbEnum.WEIß, 5, 5);
+		
 	}
 
 	/**

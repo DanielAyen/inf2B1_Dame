@@ -14,14 +14,14 @@ public abstract class Spielfigur {
 	 * @param posX
 	 *          x Koord der Fig.
 	 * @param posY
-	 *          y Koor der Fig.
+	 *          y Koord der Fig.
 	 */
-
 
 	private FarbEnum farbe;
 	private Spieler spieler;
 	private int posX;
 	private int posY;
+	private Spielbrett brett;
 
 	/**
 	 * Konstruktor
@@ -65,9 +65,8 @@ public abstract class Spielfigur {
 	 * @param posX
 	 */
 	public void setPosX(int posX) {
-		if (posX < 0) {
+		if (posX < 0 || posX > brett.getBrettGroesse()) {////////////////////
 		}
-	//Code für Überprüfung Spielbrettgröße
 		this.posX = posX;
 	}
 
@@ -86,9 +85,9 @@ public abstract class Spielfigur {
 	 * @param posY
 	 */
 	public void setPosY(int posY) {
-		if (posY < 0) {
+		if (posY < 0 || posY > brett.getBrettGroesse()) {//////////////////
 		}
-		//Code für Überprüfung Spielbrettgröße
+		// Code für Überprüfung Spielbrettgröße
 		this.posY = posY;
 	}
 

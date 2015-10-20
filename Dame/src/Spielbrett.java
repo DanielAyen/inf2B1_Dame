@@ -152,7 +152,13 @@ private final int maxBrett = 1;
 			System.out.println();
 		}
 	}
-
+////////////////
+	public int getBrettGroesse(){
+		
+		return 12;
+		
+	}
+	///////////////
 	/**
 	 * VERALTET, ersetzt durch die DisplayMethode
 	 * 

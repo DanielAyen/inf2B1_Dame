@@ -67,14 +67,4 @@ public class SpielbrettTest {
 		sb2 = new Spielbrett(8);
 	}
 
-	/**
-	 * Test ob Spielfelder ausserhalb des Spielbrettes erstellt werden koennen.
-	 * Sollte nicht moeglich sein!
-	 */
-
-	@Test
-	public void FeldNull() {
-		assertNull(sb.getBrett('P', 13));
-	}
-
 }
