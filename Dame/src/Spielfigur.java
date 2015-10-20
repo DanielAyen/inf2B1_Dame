@@ -3,7 +3,7 @@
  * @author Baris, Daniel, Simon
  *
  */
-public abstract class Spielfigur {
+public class Spielfigur {
 	/**
 	 * Attribute
 	 * 
@@ -127,6 +127,7 @@ public abstract class Spielfigur {
 	/**
 	 * Zu überschreibende Methode für die erbenden Klassen Stein und Dame
 	 */
-	public abstract void Spielzug();
+	public void Spielzug() {
+	}
 
 }

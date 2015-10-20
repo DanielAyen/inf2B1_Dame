@@ -14,8 +14,8 @@ public class SpielfigurTest {
 	 * Stein Dame
 	 */
 	private static Spielbrett b1;
-	private static Stein s;
-	private static Dame d;
+	private static Spielfigur s;
+	private static Spielfigur d;
 	
 
 	/**
@@ -27,8 +27,8 @@ public class SpielfigurTest {
 	@BeforeClass
 	public static void Methode() {
 		b1 = new Spielbrett(12);
-		s = new Stein(FarbEnum.SCHWARZ, 8, 8,b1);
-		d = new Dame(FarbEnum.WEIß, 5, 5,b1);
+		s = new Spielfigur(FarbEnum.SCHWARZ, 8, 8,b1,false);
+		d = new Spielfigur(FarbEnum.WEIß, 5, 5,b1,true);
 		
 	}
 
