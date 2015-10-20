@@ -155,7 +155,7 @@ private final int maxBrett = 1;
 ////////////////
 	public int getBrettGroesse(){
 		
-		return 12;
+		return brett.length;
 		
 	}
 	///////////////

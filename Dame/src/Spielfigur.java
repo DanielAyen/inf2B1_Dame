@@ -34,10 +34,11 @@ public abstract class Spielfigur {
 	 *          setzt die y pos
 	 */
 
-	public Spielfigur(FarbEnum farbe, int posX, int posY) {
+	public Spielfigur(FarbEnum farbe, int posX, int posY,Spielbrett brett) {
 		this.setFarbe(farbe);
 		this.setPosX(posX);
 		this.setPosY(posY);
+		this.brett=brett;
 	}
 
 	/**
@@ -65,8 +66,8 @@ public abstract class Spielfigur {
 	 * @param posX
 	 */
 	public void setPosX(int posX) {
-		if (posX < 0 || posX > brett.getBrettGroesse()) {////////////////////
-		}
+		if (posX < 0 || posX > brett.getBrettGroesse()) {///////////////////
+		}else
 		this.posX = posX;
 	}
 

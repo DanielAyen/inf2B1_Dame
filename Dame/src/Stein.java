@@ -1,8 +1,8 @@
 
 public class Stein extends Spielfigur{
 
-	public Stein(FarbEnum farbe, int posX, int posY) {
-		super(farbe, posX, posY);
+	public Stein(FarbEnum farbe, int posX, int posY,Spielbrett brett) {
+		super(farbe, posX, posY,brett);
 	}
 
 	@Override
