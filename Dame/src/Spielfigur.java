@@ -36,10 +36,10 @@ public class Spielfigur {
 	 */
 
 	public Spielfigur(FarbEnum farbe, int posX, int posY, Spielbrett brett, boolean istDame) {
+		this.brett = brett;
 		this.setFarbe(farbe);
 		this.setPosX(posX);
 		this.setPosY(posY);
-		this.brett = brett;
 		this.setDame(istDame);
 	}
 
