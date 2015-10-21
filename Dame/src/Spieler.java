@@ -49,13 +49,18 @@ public class Spieler {
 	 * @param istKi
 	 *          ob der zu erstellende Spieler eine Ki sein soll oder nicht
 	 */
-	public Spieler(String name, FarbEnum farbe, boolean istKi) {
+	public Spieler(String name, FarbEnum farbe) {
 
-		if (anzSpieler < maxSpieler && (spielerPrüfen(name, farbe, istKi))) {
+		if (anzSpieler < maxSpieler && (spielerPrüfen(name, farbe))) {
 			anzSpieler++;
 		} else if (anzSpieler >= maxSpieler) {
 			System.out.println("Max Spieleranzahl erreicht");
 		}
+	}
+	public Spieler(String name,FarbEnum farbe,boolean istKi){
+		this(name,farbe);
+		erstelleKi(this.name,this.farbe);
+		
 	}
 
 	/**
@@ -69,7 +74,7 @@ public class Spieler {
 	 * @return gibt einen boolean Wert zurueck ob das erstellen erfolgreich war
 	 *         oder nicht
 	 */
-	public boolean spielerPrüfen(String name, FarbEnum farbe, boolean istKi) {
+	public boolean spielerPrüfen(String name, FarbEnum farbe) {
 
 		if (name == null) {
 			System.out.println("Du musst einen Namen übergeben");
@@ -79,25 +84,15 @@ public class Spieler {
 				System.out.println("Name zu kurz!");
 				throw new RuntimeException("Error");
 			} else if ((farbe == FarbEnum.SCHWARZ && schwarzvergeben == false)) {
-				if (istKi == true) {
-					erstelleKi(name, farbe);
-					erstelleFiguren(farbe);
-				} else {
-					this.setName(name);
+				this.setName(name);
 					this.setFarbeSchwarz(farbe);
 					erstelleFiguren(farbe);
-				}
 				return true;
 			} else {
 				if ((farbe == FarbEnum.WEIß && weißvergeben == false)) {
-					if (istKi == true) {
-						erstelleKi(name, farbe);
-						erstelleFiguren(farbe);
-					} else {
-						this.setFarbeWeiß(farbe);
+				this.setFarbeWeiß(farbe);
 						this.setName(name);
 						erstelleFiguren(farbe);
-					}
 					return true;
 				} else {
 					System.out.println("Farbe schon vergeben!");
@@ -126,6 +121,7 @@ public class Spieler {
 	 * @param farbe2
 	 */
 	private void erstelleKi(String nameKi, FarbEnum farbeKi) {
+		KI_Dame k1=new KI_Dame(nameKi,farbeKi);
 		// Sollte alles an KI gegeben werden
 		// this.setFarbeWeiß(farbeKi);
 		// this.setName(nameKi);
