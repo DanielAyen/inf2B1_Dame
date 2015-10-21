@@ -6,9 +6,16 @@
 public class Spiel implements iBediener {
 
 	/**
-	 * Aller erste Methode lässt Spieler hinzufuegen, erstellt Spielbrett, erstellt Figuren
+	 * Aller erste Methode erstellt Spielbrett,
 	 */
 	public void spielStarten() {
+
+	}
+
+	/**
+	 * fuegt spieler hinzu
+	 */
+	public void spielerhinzufuegen() {
 
 	}
 
@@ -17,6 +24,13 @@ public class Spiel implements iBediener {
 	 * geprueft) nur der SPieler der am zug ist darf auch ziehen
 	 */
 	public void figurBewegen() {
+
+	}
+
+	/**
+	 * falls mit der derzeitigen figur noch weitere zuege moeglich sind
+	 */
+	public void figurWeiterbewegen() {
 
 	}
 
@@ -56,6 +70,13 @@ public class Spiel implements iBediener {
 	}
 
 	/**
+	 * zug fruehzeitig beenden
+	 */
+	public void zugBeenden() {
+
+	}
+
+	/**
 	 * wird aufgerufen um spieler hinzuzufuegen
 	 */
 	public void spielerHinzufuegen() {
@@ -75,5 +96,16 @@ public class Spiel implements iBediener {
 	public void zugGueltig() {
 
 	}
+/**
+ * speichern
+ */
+	public void speichern() {
 
+	}
+/**
+ * laden
+ */
+	public void laden() {
+
+	}
 }
