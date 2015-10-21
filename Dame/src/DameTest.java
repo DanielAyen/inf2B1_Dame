@@ -3,7 +3,7 @@
  * @author Baris, Daniel, Simon
  *
  */
-public class DameTest {
+public class DameTest implements iBediener {
 
 	public static void main(String[] args) {
 		/*
@@ -25,21 +25,26 @@ public class DameTest {
 		//System.out.println(s2.getName());
 		//System.out.println(s2.getFarbe());
 */
-		Spielbrett b1=new Spielbrett(12);
+//		Spielbrett b1=new Spielbrett(12);
 		//System.out.println(b1.getBrett('l',0));
-		Spieler s1=new Spieler("Werner",FarbEnum.SCHWARZ, false);
-		KI_Dame k1=new KI_Dame("Horst",FarbEnum.WEIß,true);
-		System.out.println(s1.getFarbe());
+//		Spieler s1=new Spieler("Werner",FarbEnum.SCHWARZ, false);
+//		KI_Dame k1=new KI_Dame("Horst",FarbEnum.WEIß,true);
+//		System.out.println(s1.getFarbe());
 		//System.out.println(b1.getEinzelFeld('A',0));
 	//b1.display();
-		System.out.println(b1.getBrettGroesse());
-		Spielfigur ss1=new Spielfigur(FarbEnum.WEIß, 5,5,b1,false);
+//		System.out.println(b1.getBrettGroesse());
+//		Spielfigur ss1=new Spielfigur(FarbEnum.WEIß, 5,5,b1,false);
 	
 	
 		/*
 		b1.display();
 		System.out.println(b1.getEinzelFeld(4, 0));
 		*/
+		
+		System.out.println("________________________________________________________________________");
+		
+		Spiel spiel=new Spiel();
+		spiel.spielStarten();
 	}
 
 }
