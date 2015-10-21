@@ -27,7 +27,8 @@ public class DameTest {
 */
 		Spielbrett b1=new Spielbrett(12);
 		//System.out.println(b1.getBrett('l',0));
-		Spieler s1=new Spieler("Werner",FarbEnum.SCHWARZ);
+		Spieler s1=new Spieler("Werner",FarbEnum.SCHWARZ, false);
+		KI_Dame k1=new KI_Dame("Horst",FarbEnum.WEIß,true);
 		System.out.println(s1.getFarbe());
 		//System.out.println(b1.getEinzelFeld('A',0));
 	//b1.display();

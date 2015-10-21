@@ -5,8 +5,8 @@
  */
 abstract class KI extends Spieler {
 
-	KI(String name, FarbEnum farbe) {
-		super(name, farbe);
+	KI(String name, FarbEnum farbe,boolean istKi) {
+		super(name, farbe, istKi);
 
 	}
 

@@ -122,13 +122,15 @@ public class Spieler {
 	 * 
 	 * Ki erstell Methode gibt alles an die Ki klasse weiter
 	 * 
-	 * @param name2
-	 * @param farbe2
+	 * @param nameKi
+	 * @param farbeKi
 	 */
 	private void erstelleKi(String nameKi, FarbEnum farbeKi) {
 		// Sollte alles an KI gegeben werden
 		// this.setFarbeWeiß(farbeKi);
 		// this.setName(nameKi);
+		
+		KI_Dame k1=new KI_Dame(nameKi,farbeKi, istKi);
 
 	}
 
