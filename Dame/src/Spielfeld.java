@@ -148,7 +148,7 @@ public class Spielfeld {
 	 * 
 	 * @return Gibt einen Bool Wert zurueck ob ein Feld schwarz ist oder nicht
 	 */
-	private boolean getIstSchwarz() {
+	public boolean getIstSchwarz() {
 		return this.istSchwarz;
 	}
 }

@@ -15,12 +15,14 @@ public class Spiel implements iBediener {
 	private String name;
 	private String farbe = "ungesetzt";
 	private String ki = "ungesetzt";
-	private Spieler spieler;
 	private boolean spiellaeuft = false;
 	private boolean schwarzvergeben = false;
 	private boolean weissvergeben = false;
+
 	private Spielfigur fig;
 	private Spielbrett brett;
+	private Spieler spieler;
+	private Spielfeld spielfeld;
 
 	public void spielStarten() {
 
@@ -266,6 +268,27 @@ public class Spiel implements iBediener {
 	 * zug fruehzeitig beenden
 	 */
 	public void zugBeenden() {
+
+	}
+
+	public void erstelleFiguren(Spieler spieler, Spielbrett brett) {
+		if (spieler.getFarbe() == FarbEnum.SCHWARZ) {
+			for (int i = 0; i < brett.getBrettGroesse() / 2 - 1; i++) {
+				for (int j = 0; j < brett.getBrettGroesse() / 2 - 1; j++) {
+					if (spielfeld.getIstBelegt() == false && spielfeld.getIstSchwarz() == true) {
+						spieler.addSpielfigur(new Spielfigur(FarbEnum.SCHWARZ, i, j, brett, false));
+					}
+				}
+			}
+		} else {
+			for (int i = brett.getBrettGroesse(); i > brett.getBrettGroesse() / 2 - 1; i--) {
+				for (int j = brett.getBrettGroesse(); j > brett.getBrettGroesse() / 2 - 1; j--) {
+					if (spielfeld.getIstBelegt() == false && spielfeld.getIstSchwarz() == false) {
+						spieler.addSpielfigur(new Spielfigur(FarbEnum.WEIß, i, j, brett, false));
+					}
+				}
+			}
+		}
 
 	}
 
