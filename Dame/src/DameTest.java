@@ -48,6 +48,13 @@ public class DameTest implements iBediener {
 		
 		Spiel spiel=new Spiel();
 		spiel.spielStarten();
+		
+	}
+
+	@Override
+	public void spielStarten() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

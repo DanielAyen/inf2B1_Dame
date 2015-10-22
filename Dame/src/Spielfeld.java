@@ -46,12 +46,12 @@ public class Spielfeld {
 			this.posY = y;
 			setId();
 		}
-}
-	
-	public boolean getIstSchwarz(Spielfeld feld){
-		
+	}
+
+	public boolean getIstSchwarz(Spielfeld feld) {
+
 		return this.istSchwarz;
-		
+
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class Spielfeld {
 	 * @return die Arraypos X
 	 */
 	public int getPosX() {
-return this.posX;
+		return this.posX;
 	}
 
 	/**
@@ -69,7 +69,7 @@ return this.posX;
 	 * @return die Arraypos Y
 	 */
 	public int getPosY() {
-return this.posY;
+		return this.posY;
 	}
 
 	/**
@@ -79,7 +79,7 @@ return this.posY;
 	 */
 	public String getId() {
 		return this.id;
-		}
+	}
 
 	/**
 	 * Setzt die Id fuer ein Feld
@@ -87,8 +87,8 @@ return this.posY;
 	 * id besteht aus einem Char mit der pos in Form einer Zahl
 	 */
 	private void setId() {
-this.id = "" + (char) (65 + this.getPosY()) + (this.getPosX() + 1);
-}
+		this.id = "" + (char) (65 + this.getPosY()) + (this.getPosX() + 1);
+	}
 
 	/**
 	 * Gibt die akt Spielfigur auf einem Feld zurueck
@@ -103,7 +103,7 @@ this.id = "" + (char) (65 + this.getPosY()) + (this.getPosX() + 1);
 	 * Setzt die akt SPielfigur auf ein Feld
 	 */
 	private void setSpielfigur() {
-	//	this.spielfigur = //parameter fehlt;
+		// this.spielfigur = //parameter fehlt;
 	}
 
 	/**
@@ -112,7 +112,7 @@ this.id = "" + (char) (65 + this.getPosY()) + (this.getPosX() + 1);
 	 * @return (true/false) besetzt/nicht besetzt
 	 */
 	public boolean getIstBelegt() {
-		return istBelegt;
+		return this.istBelegt;
 	}
 
 	/**
@@ -134,7 +134,7 @@ this.id = "" + (char) (65 + this.getPosY()) + (this.getPosX() + 1);
 	 */
 	@Override
 	public String toString() {
-if (getIstSchwarz() == true)
+		if (getIstSchwarz() == true)
 			return "o " + this.getId();
 		// + "[" + getPosX() + "," + getPosY() + "]";
 		else
@@ -149,7 +149,6 @@ if (getIstSchwarz() == true)
 	 * @return Gibt einen Bool Wert zurueck ob ein Feld schwarz ist oder nicht
 	 */
 	private boolean getIstSchwarz() {
-return this.istSchwarz;
+		return this.istSchwarz;
 	}
 }
-
