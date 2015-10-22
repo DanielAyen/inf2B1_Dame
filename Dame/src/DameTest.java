@@ -35,6 +35,7 @@ public class DameTest implements iBediener {
 //		System.out.println(b1.getBrettGroesse());
 //		Spielfigur ss1=new Spielfigur(FarbEnum.WEIß, 5,5,b1,false);
 	
+		
 	
 		/*
 		b1.display();

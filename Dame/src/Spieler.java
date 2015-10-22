@@ -35,7 +35,7 @@ public class Spieler {
 	private static boolean weißvergeben = false;
 	private static boolean schwarzvergeben = false;
 	private FarbEnum farbe;
-	private boolean istKi;
+	private boolean istKi=false;
 
 	/**
 	 * erstellen der Spieler muss in der Spielklasse erfolgen
@@ -49,19 +49,23 @@ public class Spieler {
 	 * @param istKi
 	 *          ob der zu erstellende Spieler eine Ki sein soll oder nicht
 	 */
-	public Spieler(String name, FarbEnum farbe) {
+	public Spieler(String name, FarbEnum farbe, boolean istKi) {
 
+		if (!istKi){
+			
+		
 		if (anzSpieler < maxSpieler && (spielerPrüfen(name, farbe))) {
 			anzSpieler++;
 		} else if (anzSpieler >= maxSpieler) {
 			System.out.println("Max Spieleranzahl erreicht");
 		}
-	}
-
-	public Spieler(String name, FarbEnum farbe, boolean istKi) {
-		this(name, farbe);
-		erstelleKi(this.name, this.farbe);
-
+		if(istKi==true){
+			erstelleKi(this.name,this.farbe);
+		}
+		}
+		else{
+			
+		}
 	}
 
 	/**
@@ -109,6 +113,7 @@ public class Spieler {
 	 * @param farbeFiguren
 	 */
 	private void erstelleFiguren(FarbEnum farbeFiguren) {
+		
 		// bekommt die farbe gibt das an den figuren konst und erstellt dann alle
 		// figuren dieser farbe
 
@@ -224,7 +229,15 @@ public class Spieler {
 		return s;
 
 	}
-
+	/**
+	 * Methode um Spielfigur Objekte in das figurenArray hinzuzufügen
+	 * 
+	 * @param s
+	 */
+public void addSpielfigur(Spielfigur s){
+	figuren.add(s);
+}
+	
 	@Override
 	public String toString() {
 		return "Spieler: " + this.getName() + " mit der Farbe: " + this.getFarbe();

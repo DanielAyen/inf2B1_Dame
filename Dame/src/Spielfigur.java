@@ -75,7 +75,7 @@ public class Spielfigur {
 	/**
 	 * Setter für Position X
 	 * 
-	 * @param posX
+	 * @param posXg
 	 */
 	public void setPosX(int posX) {
 		if (posX < 0 || posX > brett.getBrettGroesse()) {// /////////////////
