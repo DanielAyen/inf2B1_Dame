@@ -13,10 +13,10 @@ public class Spielbrett {
 	 * @param maxBrett
 	 *          Max Brettanzahl (1)
 	 * @param anzBrett
-	 *          Derzeitige Anzahl an Spielbrettern 
+	 *          Derzeitige Anzahl an Spielbrettern
 	 */
 	private Spielfeld[][] brett;
-private final int maxBrett = 1;
+	private final int maxBrett = 1;
 	private int anzBrett = 0;
 
 	/**
@@ -152,13 +152,23 @@ private final int maxBrett = 1;
 			System.out.println();
 		}
 	}
-////////////////
-	public int getBrettGroesse(){
-		
-		return brett.length;
-		
+
+	public Spielfeld[][] getBrettArray() {
+
+		return brett;
 	}
-	///////////////
+
+	public Spielfeld getBrettFeld(int x, int y) {
+		return brett[x][y];
+	}
+
+	public int getBrettGroesse() {
+
+		return brett.length;
+
+	}
+
+	// /////////////
 	/**
 	 * VERALTET, ersetzt durch die DisplayMethode
 	 * 
@@ -185,4 +195,5 @@ private final int maxBrett = 1;
 		return s;
 
 	}
+	// //////////
 }
