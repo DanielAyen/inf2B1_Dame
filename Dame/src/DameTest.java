@@ -40,7 +40,9 @@ public class DameTest implements iBediener {
 		b1.display();
 		System.out.println(b1.getEinzelFeld(4, 0));
 		*/
-		
+//		Spieler s1 = new Spieler("Hwgw", FarbEnum.SCHWARZ);
+//		Spieler s2 = new Spieler("Bnmmmm", FarbEnum.WEIß);
+//		System.out.println(s1);
 		System.out.println("________________________________________________________________________");
 		
 		Spiel spiel=new Spiel();

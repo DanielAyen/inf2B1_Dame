@@ -16,6 +16,7 @@ public class Spiel implements iBediener {
 	private String farbe = "ungesetzt";
 	private String ki = "ungesetzt";
 	private Spieler spieler;
+	private boolean spiellaeft = false;
 
 	public void spielStarten() {
 
@@ -26,6 +27,12 @@ public class Spiel implements iBediener {
 			do {
 				eingabe = reader.readLine().toLowerCase();
 				switch (eingabe) {
+				case "help":
+					System.out.println("aufbauen : Erstellt ein Spielbrett, wird zum spielen benoetigt.\n");
+					System.out.println("spieler erstellen : Erlaubt dir einen Spieler zu erstellen, es werden 2 Spieler zum spielen benoetigt.\n");
+					System.out.println("start: Startet das Spiel, es wird ein erstelltes Spielbrett und zwei Spieler benoetigt.\n");
+					System.out.println("beenden : Das Spiel wird geschlossen.\n");
+					break;
 				// zum erstellen des spielfelds
 				case "aufbauen":
 					spielBauen();
@@ -40,16 +47,17 @@ public class Spiel implements iBediener {
 					if ((farbe.equals("s")) || (farbe.equals("w"))) {
 						if ((farbe.equals("s"))) {
 
-							System.out.println("Spielerart eingeben (m fuer mensch k fuer ki");
+							System.out.println("Spielerart eingeben (m fuer mensch k fuer ki)");
 							ki = reader.readLine();
 							if (ki.equals("m") || ki.equals("k")) {
 								if (ki.equals("m")) {
 
-									Spieler s1 = new Spieler(name, FarbEnum.SCHWARZ, false);
+									Spieler s1 = new Spieler(name, FarbEnum.SCHWARZ);
+									System.out.println(s1);
 
 								} else {
 									Spieler s1 = new Spieler(name, FarbEnum.SCHWARZ, true);
-
+									System.out.println(s1);
 								}
 
 							} else {
@@ -58,16 +66,16 @@ public class Spiel implements iBediener {
 							}
 
 						} else {
-							System.out.println("Spielerart eingeben (m fuer mensch k fuer ki");
+							System.out.println("Spielerart eingeben (m fuer mensch k fuer ki)");
 							ki = reader.readLine();
 							if (ki.equals("m") || ki.equals("k")) {
 								if (ki.equals("k")) {
 
-									Spieler s1 = new Spieler(name, FarbEnum.WEIß, false);
-
+									Spieler s2 = new Spieler(name, FarbEnum.WEIß);
+									System.out.println(s2);
 								} else {
-									Spieler s1 = new Spieler(name, FarbEnum.WEIß, true);
-
+									Spieler s2 = new Spieler(name, FarbEnum.WEIß, true);
+									System.out.println(s2);
 								}
 
 							} else {
@@ -121,7 +129,7 @@ public class Spiel implements iBediener {
 					// lässt das spiel beginnen
 				case "start":
 					if (spielAufgebaut == true && spielerAnzahl == 2) {
-
+						spiellaeft = true;
 						System.out.println("Das Spiel beginnt!");
 						// display?
 
@@ -129,6 +137,7 @@ public class Spiel implements iBediener {
 						System.err.println("Das Spiel kann noch nicht gestartet werden!!");
 					}
 					break;
+				// beendet das Spiel
 				case "beenden":
 					System.out.println("\n\n\t\tDas Spiel wird beendet.");
 					break;

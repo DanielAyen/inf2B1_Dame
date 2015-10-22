@@ -57,10 +57,11 @@ public class Spieler {
 			System.out.println("Max Spieleranzahl erreicht");
 		}
 	}
-	public Spieler(String name,FarbEnum farbe,boolean istKi){
-		this(name,farbe);
-		erstelleKi(this.name,this.farbe);
-		
+
+	public Spieler(String name, FarbEnum farbe, boolean istKi) {
+		this(name, farbe);
+		erstelleKi(this.name, this.farbe);
+
 	}
 
 	/**
@@ -85,17 +86,17 @@ public class Spieler {
 				throw new RuntimeException("Error");
 			} else if ((farbe == FarbEnum.SCHWARZ && schwarzvergeben == false)) {
 				this.setName(name);
-					this.setFarbeSchwarz(farbe);
-					erstelleFiguren(farbe);
+				this.setFarbeSchwarz(farbe);
+				erstelleFiguren(farbe);
 				return true;
 			} else {
 				if ((farbe == FarbEnum.WEIß && weißvergeben == false)) {
-				this.setFarbeWeiß(farbe);
-						this.setName(name);
-						erstelleFiguren(farbe);
+					this.setFarbeWeiß(farbe);
+					this.setName(name);
+					erstelleFiguren(farbe);
 					return true;
 				} else {
-					System.out.println("Farbe schon vergeben!");
+					System.out.println("Farbe schon vergeben!\n");
 					throw new RuntimeException("Error");
 				}
 			}
@@ -121,11 +122,10 @@ public class Spieler {
 	 * @param farbeKi
 	 */
 	private void erstelleKi(String nameKi, FarbEnum farbeKi) {
-		KI_Dame k1=new KI_Dame(nameKi,farbeKi);
+		KI_Dame k1 = new KI_Dame(nameKi, farbeKi);
 		// Sollte alles an KI gegeben werden
 		// this.setFarbeWeiß(farbeKi);
 		// this.setName(nameKi);
-		
 
 	}
 
@@ -222,6 +222,12 @@ public class Spieler {
 
 		}
 		return s;
+
+	}
+
+	@Override
+	public String toString() {
+		return "Spieler: " + this.getName() + " mit der Farbe: " + this.getFarbe();
 
 	}
 
