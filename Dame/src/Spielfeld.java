@@ -47,6 +47,12 @@ public class Spielfeld {
 			setId();
 		}
 }
+	
+	public boolean getIstSchwarz(Spielfeld feld){
+		
+		return this.istSchwarz;
+		
+	}
 
 	/**
 	 * Gibt x zurueck
