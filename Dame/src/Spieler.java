@@ -35,7 +35,7 @@ public class Spieler {
 	private static boolean weißvergeben = false;
 	private static boolean schwarzvergeben = false;
 	private FarbEnum farbe;
-	private boolean istKi=false;
+	private boolean istKi = false;
 
 	/**
 	 * erstellen der Spieler muss in der Spielklasse erfolgen
@@ -51,20 +51,23 @@ public class Spieler {
 	 */
 	public Spieler(String name, FarbEnum farbe, boolean istKi) {
 
-		if (!istKi){
-			
-		
-		if (anzSpieler < maxSpieler && (spielerPrüfen(name, farbe))) {
-			anzSpieler++;
-		} else if (anzSpieler >= maxSpieler) {
-			System.out.println("Max Spieleranzahl erreicht");
-		}
-		if(istKi==true){
-			erstelleKi(this.name,this.farbe);
-		}
-		}
-		else{
-			
+		if (!istKi) {
+
+			if (anzSpieler < maxSpieler && (spielerPrüfen(name, farbe))) {
+				anzSpieler++;
+				this.setName(name);
+				this.setFarbeSchwarz(farbe);
+				erstelleFiguren(farbe);
+			} else if (anzSpieler >= maxSpieler) {
+				System.out.println("Max Spieleranzahl erreicht");
+			} else {
+				throw new RuntimeException("Error");
+			}
+			if (istKi == true) {
+				erstelleKi(this.name, this.farbe);
+			}
+		} else {
+
 		}
 	}
 
@@ -83,25 +86,21 @@ public class Spieler {
 
 		if (name == null) {
 			System.out.println("Du musst einen Namen übergeben");
-			throw new RuntimeException("Error");
+			return false;
 		} else {
 			if (name.length() < 2) {
 				System.out.println("Name zu kurz!");
-				throw new RuntimeException("Error");
+				return false;
 			} else if ((farbe == FarbEnum.SCHWARZ && schwarzvergeben == false)) {
-				this.setName(name);
-				this.setFarbeSchwarz(farbe);
-				erstelleFiguren(farbe);
+
 				return true;
 			} else {
 				if ((farbe == FarbEnum.WEIß && weißvergeben == false)) {
-					this.setFarbeWeiß(farbe);
-					this.setName(name);
-					erstelleFiguren(farbe);
+
 					return true;
 				} else {
 					System.out.println("Farbe schon vergeben!\n");
-					throw new RuntimeException("Error");
+					return false;
 				}
 			}
 		}
@@ -113,7 +112,7 @@ public class Spieler {
 	 * @param farbeFiguren
 	 */
 	private void erstelleFiguren(FarbEnum farbeFiguren) {
-		
+
 		// bekommt die farbe gibt das an den figuren konst und erstellt dann alle
 		// figuren dieser farbe
 
@@ -229,15 +228,16 @@ public class Spieler {
 		return s;
 
 	}
+
 	/**
 	 * Methode um Spielfigur Objekte in das figurenArray hinzuzufügen
 	 * 
 	 * @param s
 	 */
-public void addSpielfigur(Spielfigur s){
-	figuren.add(s);
-}
-	
+	public void addSpielfigur(Spielfigur s) {
+		figuren.add(s);
+	}
+
 	@Override
 	public String toString() {
 		return "Spieler: " + this.getName() + " mit der Farbe: " + this.getFarbe();
