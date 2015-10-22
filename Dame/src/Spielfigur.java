@@ -119,9 +119,35 @@ public class Spielfigur {
 		return spieler;
 	}
 
+	public void display() {
+		
+		System.out.println("o=weiß x=schwarz  Array bei der Ausgabe gedreht(0|0 ist unten links)");
+		for (int zeile = brett.length - 1; zeile >= 0; zeile--) {
+
+			if (brett[zeile] != null) {
+				for (int spalte = 0; spalte < brett[zeile].length; spalte++) {
+					// Die if is dafür da dass das Brett so wie es z.Z.ist ( farbe in form
+					// von x/o und die notation h3) schön untereinander da steht
+					if (zeile > 8) { //
+						System.out.print(brett[zeile][spalte] + "  ");
+					} else { //
+						System.out.print(brett[zeile][spalte] + "   "); //
+					}
+				}
+			}
+			System.out.println();
+		}
+
+	}
+
 	@Override
 	public String toString() {
-		return "Spieler: " + getSpieler() + ", Farbe: " + getFarbe();
+		if (getFarbe() == FarbEnum.SCHWARZ)
+			return "x " + this.getPosX() + " " + this.getPosY();
+
+		else
+			return "o " + this.getPosX() + " " + this.getPosY();
+
 	}
 
 	/**

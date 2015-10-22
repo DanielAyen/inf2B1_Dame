@@ -135,10 +135,10 @@ public class Spielfeld {
 	@Override
 	public String toString() {
 		if (getIstSchwarz() == true)
-			return "o " + this.getId();
+			return "x " + this.getId();
 		// + "[" + getPosX() + "," + getPosY() + "]";
 		else
-			return "x " + this.getId();
+			return "o " + this.getId();
 		// + "[" + getPosX() + "," + getPosY() + "]";
 
 	}

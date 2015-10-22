@@ -27,7 +27,7 @@ public class Spielbrett {
 		if (anzBrett < maxBrett) {
 			if (groesse == 8 || groesse == 10 || groesse == 12) {
 				anzBrett++;
-				boolean feldSchwarz = false;
+				boolean feldSchwarz = true;
 				brett = new Spielfeld[groesse][groesse];
 
 				for (int i = 0; i < brett.length; i++) {
@@ -168,32 +168,4 @@ public class Spielbrett {
 
 	}
 
-	// /////////////
-	/**
-	 * VERALTET, ersetzt durch die DisplayMethode
-	 * 
-	 * @param s
-	 *          wird benutzt um das Brett auszugeben
-	 * @return Gibt das komplette Spielbrett mit seinen Feldern auf der Konsole
-	 *         aus
-	 * 
-	 */
-	public String printBrett() {
-
-		String s = "";
-
-		for (int i = 0; i < brett.length; i++) {
-			// System.out.println(Brett[i]);
-
-			for (int j = 0; j < brett[i].length; j++) {
-				// System.out.println(Brett[i][j]);
-
-				s = brett[i][j] + "  ";
-
-			}
-		}
-		return s;
-
-	}
-	// //////////
 }

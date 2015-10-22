@@ -229,6 +229,11 @@ public class Spieler {
 
 	}
 
+	public ArrayList<Spielfigur> getAlleFiguren(){
+		
+		return this.figuren;
+	}
+
 	/**
 	 * Methode um Spielfigur Objekte in das figurenArray hinzuzufügen
 	 * 

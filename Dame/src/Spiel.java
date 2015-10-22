@@ -48,10 +48,10 @@ public class Spiel implements iBediener {
 						spielBauen(8);
 						break;
 					} else if (groesse.equals("10")) {
-						spielBauen(8);
+						spielBauen(10);
 						break;
 					} else if (groesse.equals("12")) {
-						spielBauen(8);
+						spielBauen(12);
 						break;
 					} else {
 						System.out.println("Fehlerhafte Eingabe, bitte nur 8 , 10 oder 12 eingeben. Zurueck im Hauptmenue.\n");
@@ -84,11 +84,14 @@ public class Spiel implements iBediener {
 									Spieler s1 = new Spieler(name, FarbEnum.SCHWARZ, false);
 									schwarzvergeben = true;
 									System.out.println(s1);
+									erstelleFiguren(s1, brett);
+									fig.display();
 									break;
 								} else {
 									Spieler s1 = new Spieler(name, FarbEnum.SCHWARZ, true);
 									schwarzvergeben = true;
 									System.out.println(s1);
+									erstelleFiguren(s1, brett);
 									break;
 								}
 
@@ -106,10 +109,13 @@ public class Spiel implements iBediener {
 									Spieler s2 = new Spieler(name, FarbEnum.WEIß, false);
 									System.out.println(s2);
 									weissvergeben = true;
+									erstelleFiguren(s2, brett);
+
 									break;
 								} else {
 									Spieler s2 = new Spieler(name, FarbEnum.WEIß, true);
 									weissvergeben = true;
+									erstelleFiguren(s2, brett);
 									System.out.println(s2);
 									break;
 								}
@@ -272,10 +278,11 @@ public class Spiel implements iBediener {
 	}
 
 	public void erstelleFiguren(Spieler spieler, Spielbrett brett) {
+
 		if (spieler.getFarbe() == FarbEnum.SCHWARZ) {
 			for (int i = 0; i < brett.getBrettGroesse() / 2 - 1; i++) {
 				for (int j = 0; j < brett.getBrettGroesse() / 2 - 1; j++) {
-					if (spielfeld.getIstBelegt() == false && spielfeld.getIstSchwarz() == true) {
+					if (brett.getBrettFeld(i, j).getIstBelegt() == false && brett.getBrettFeld(i, j).getIstSchwarz() == true) {
 						spieler.addSpielfigur(new Spielfigur(FarbEnum.SCHWARZ, i, j, brett, false));
 					}
 				}
@@ -283,13 +290,12 @@ public class Spiel implements iBediener {
 		} else {
 			for (int i = brett.getBrettGroesse(); i > brett.getBrettGroesse() / 2 - 1; i--) {
 				for (int j = brett.getBrettGroesse(); j > brett.getBrettGroesse() / 2 - 1; j--) {
-					if (spielfeld.getIstBelegt() == false && spielfeld.getIstSchwarz() == false) {
+					if (brett.getBrettFeld(i, j).getIstBelegt() == false && brett.getBrettFeld(i, j).getIstSchwarz() == true) {
 						spieler.addSpielfigur(new Spielfigur(FarbEnum.WEIß, i, j, brett, false));
 					}
 				}
 			}
 		}
-
 	}
 
 	/**
