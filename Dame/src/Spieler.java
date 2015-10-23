@@ -35,7 +35,7 @@ public class Spieler {
 	private static boolean weißvergeben = false;
 	private static boolean schwarzvergeben = false;
 	private FarbEnum farbe;
-	private boolean istKi = false;
+	//private boolean istKi = false; wird nicht benötigt weil wenn ki==true beim Spieler erstellen, dann Ki_Objekt 
 
 	/**
 	 * erstellen der Spieler muss in der Spielklasse erfolgen
@@ -50,36 +50,31 @@ public class Spieler {
 	 *          ob der zu erstellende Spieler eine Ki sein soll oder nicht
 	 */
 	public Spieler(String name, FarbEnum farbe, boolean istKi) {
-
-		if (!istKi) {
-
-			if (anzSpieler < maxSpieler && (spielerPrüfen(name, farbe))) {
-				anzSpieler++;
-				
-				//if(Ki==true){
-				//erstelleKi(name,farbe,istKi);
-				//}else
-				this.setName(name);
-				if (farbe == FarbEnum.SCHWARZ) {
-					this.setFarbeSchwarz(farbe);
-				} else if (farbe == FarbEnum.WEIß) {
-					this.setFarbeWeiß(farbe);
-				}
-				
-				
-				erstelleFiguren(farbe);
-				
-			} else if (anzSpieler >= maxSpieler) {
-				System.out.println("Max Spieleranzahl erreicht");
-			} else {
-				throw new RuntimeException("Error");
-			}
-			if (istKi == true) {
-				erstelleKi(this.name, this.farbe);
-			}
-		} else {
-
+		if (anzSpieler < maxSpieler && (spielerPrüfen(name, farbe)) == 0) {
+			anzSpieler++;
 		}
+		if (spielerPrüfen(name, farbe) == 1) {
+			throw new RuntimeException("Du musst einen Namen übergeben");
+		}
+		if (spielerPrüfen(name, farbe) == 2) {
+			throw new RuntimeException("Name zu kurz!");
+		}
+		if (spielerPrüfen(name, farbe) == 3) {
+			throw new RuntimeException("Farbe schon vergeben!");
+		}
+		if (istKi == true) {
+			erstelleKi(name, farbe);
+		} else {
+			this.setName(name);
+		}
+		if (farbe == FarbEnum.SCHWARZ) {
+			this.setFarbeSchwarz(farbe);
+		} else if (farbe == FarbEnum.WEIß) {
+			this.setFarbeWeiß(farbe);
+
+		} else if (anzSpieler >= maxSpieler) {
+			throw new RuntimeException("Max Spieleranzahl erreicht");
+		} 
 	}
 
 	/**
@@ -93,38 +88,26 @@ public class Spieler {
 	 * @return gibt einen boolean Wert zurueck ob das erstellen erfolgreich war
 	 *         oder nicht
 	 */
-	public boolean spielerPrüfen(String name, FarbEnum farbe) {
+	public int spielerPrüfen(String name, FarbEnum farbe) {
 
 		if (name == null) {
 			System.out.println("Du musst einen Namen übergeben");
-			return false;
+			return 1;
 		} else {
 			if (name.length() < 2) {
 				System.out.println("Name zu kurz!");
-				return false;
+				return 2;
 			} else if ((farbe == FarbEnum.SCHWARZ && schwarzvergeben == false)) {
-				return true;
+				return 0;
 			} else {
 				if ((farbe == FarbEnum.WEIß && weißvergeben == false)) {
-					return true;
+					return 0;
 				} else {
 					System.out.println("Farbe schon vergeben!\n");
-					return false;
+					return 3;
 				}
 			}
 		}
-	}
-
-	/**
-	 * Ruft den figuren konstruktor auf
-	 * 
-	 * @param farbeFiguren
-	 */
-	private void erstelleFiguren(FarbEnum farbeFiguren) {
-
-		// bekommt die farbe gibt das an den figuren konst und erstellt dann alle
-		// figuren dieser farbe
-
 	}
 
 	/**
@@ -135,7 +118,7 @@ public class Spieler {
 	 * @param farbeKi
 	 */
 	private void erstelleKi(String nameKi, FarbEnum farbeKi) {
-		KI_Dame k1 = new KI_Dame(nameKi, farbeKi);
+		new KI_Dame(nameKi, farbeKi);
 		// Sollte alles an KI gegeben werden
 		// this.setFarbeWeiß(farbeKi);
 		// this.setName(nameKi);

@@ -4,20 +4,36 @@
  * @author Baris, Daniel, Simon
  *
  */
-abstract class KI extends Spieler {
+public abstract class KI {
+	
+	private String name;
+	private FarbEnum farbe;
 
 
 	
 	
 	KI(String name, FarbEnum farbe) {
-		super(name, farbe);
+		this.setName(name);
+		this.setFarbe(farbe);
 
 
 	}
 
+	public String getName(){
+		return name;
+	}
+	public FarbEnum getFarbe(){
+		return farbe;
+	}
+	public void setName(String name){
+		this.name=name;
+	}
+	public void setFarbe(FarbEnum farbe){
+		this.farbe=farbe;
+	}
 	
 	@Override
 	public String toString(){
-		return "Name: "+super.getName()+"Farbe: "+super.getFarbe();
+		return "Name: "+getName()+"Farbe: "+getFarbe();
 	}
 }
