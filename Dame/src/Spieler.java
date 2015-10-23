@@ -55,9 +55,20 @@ public class Spieler {
 
 			if (anzSpieler < maxSpieler && (spielerPrüfen(name, farbe))) {
 				anzSpieler++;
+				
+				//if(Ki==true){
+				//erstelleKi(name,farbe,istKi);
+				//}else
 				this.setName(name);
-				this.setFarbeSchwarz(farbe);
+				if (farbe == FarbEnum.SCHWARZ) {
+					this.setFarbeSchwarz(farbe);
+				} else if (farbe == FarbEnum.WEIß) {
+					this.setFarbeWeiß(farbe);
+				}
+				
+				
 				erstelleFiguren(farbe);
+				
 			} else if (anzSpieler >= maxSpieler) {
 				System.out.println("Max Spieleranzahl erreicht");
 			} else {
@@ -92,11 +103,9 @@ public class Spieler {
 				System.out.println("Name zu kurz!");
 				return false;
 			} else if ((farbe == FarbEnum.SCHWARZ && schwarzvergeben == false)) {
-
 				return true;
 			} else {
 				if ((farbe == FarbEnum.WEIß && weißvergeben == false)) {
-
 					return true;
 				} else {
 					System.out.println("Farbe schon vergeben!\n");
@@ -229,8 +238,8 @@ public class Spieler {
 
 	}
 
-	public ArrayList<Spielfigur> getAlleFiguren(){
-		
+	public ArrayList<Spielfigur> getAlleFiguren() {
+
 		return this.figuren;
 	}
 
