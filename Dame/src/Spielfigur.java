@@ -23,6 +23,7 @@ public class Spielfigur {
 	private int posY;
 	private Spielbrett brett;
 	private boolean istDame;
+	private static int i = 0;
 
 	/**
 	 * Konstruktor
@@ -41,6 +42,8 @@ public class Spielfigur {
 		this.setPosX(posX);
 		this.setPosY(posY);
 		this.setDame(istDame);
+		i++;
+		System.out.println("Spielfigur nr " + i +" "+this.getPosX()+ " " + this.getPosY());
 	}
 
 	/**
@@ -120,7 +123,7 @@ public class Spielfigur {
 	}
 
 	public void display() {
-		
+
 		System.out.println("o=weiß x=schwarz  Array bei der Ausgabe gedreht(0|0 ist unten links)");
 		for (int zeile = brett.length - 1; zeile >= 0; zeile--) {
 

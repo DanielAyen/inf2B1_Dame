@@ -284,8 +284,8 @@ public class Spiel implements iBediener {
 				}
 			}
 		} else {
-			for (int i = brett.getBrettGroesse(); i > brett.getBrettGroesse() / 2 - 1; i--) {
-				for (int j = brett.getBrettGroesse(); j > brett.getBrettGroesse(); j--) {
+			for (int i = brett.getBrettGroesse() - 1; i > brett.getBrettGroesse() / 2; i--) {
+				for (int j = 0; j < brett.getBrettGroesse(); j++) {
 					if (brett.getBrettFeld(i, j).getIstBelegt() == false && brett.getBrettFeld(i, j).getIstSchwarz() == true) {
 						spieler.addSpielfigur(new Spielfigur(FarbEnum.WEIß, i, j, brett, false));
 					}
@@ -335,17 +335,17 @@ public class Spiel implements iBediener {
 			xPosNeu4 = xPosFig - 1;
 			yPosNeu4 = yPosFig + 1;
 
-			if (xPosNeu1 > 0 && xPosNeu1 < brett.getBrettGroesse() && yPosNeu1 > 0 && yPosNeu1 < brett.getBrettGroesse()) {
+			if (xPosNeu1 > 0 && xPosNeu1 < brett.getBrettGroesse() && yPosNeu1 > 0 && yPosNeu1 < brett.getBrettGroesse()) {// OK
 
-			} else if (xPosNeu2 > 0 && xPosNeu2 < brett.getBrettGroesse() && yPosNeu2 > 0 && yPosNeu2 < brett.getBrettGroesse()) {
+			} else if (xPosNeu2 > 0 && xPosNeu2 < brett.getBrettGroesse() && yPosNeu2 > 0 && yPosNeu2 < brett.getBrettGroesse()) {// OK
 
-			} else if (xPosNeu3 > 0 && xPosNeu3 < brett.getBrettGroesse() && yPosNeu3 > 0 && yPosNeu3 < brett.getBrettGroesse()) {
+			} else if (xPosNeu3 > 0 && xPosNeu3 < brett.getBrettGroesse() && yPosNeu3 > 0 && yPosNeu3 < brett.getBrettGroesse()) {// OK
 
-			} else if (xPosNeu4 > 0 && xPosNeu4 < brett.getBrettGroesse() && yPosNeu4 > 0 && yPosNeu4 < brett.getBrettGroesse()) {
+			} else if (xPosNeu4 > 0 && xPosNeu4 < brett.getBrettGroesse() && yPosNeu4 > 0 && yPosNeu4 < brett.getBrettGroesse()) {// OK
 
 			}
 
-		} else {
+		} else {// NICH OK
 
 			// STEIN
 			xPosNeu1 = xPosFig + 1;
