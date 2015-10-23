@@ -109,6 +109,7 @@ public class Spiel implements iBediener {
 									Spieler s1 = new Spieler(name, FarbEnum.SCHWARZ, false);
 									schwarzvergeben = true;
 									System.out.println(s1);
+									System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
 									erstelleFiguren(s1, brett);
 									// fig.display();
 									break;
@@ -116,6 +117,7 @@ public class Spiel implements iBediener {
 									Spieler s1 = new Spieler(name, FarbEnum.SCHWARZ, true);
 									schwarzvergeben = true;
 									System.out.println(s1);
+									System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
 									erstelleFiguren(s1, brett);
 									break;
 								}
@@ -133,12 +135,14 @@ public class Spiel implements iBediener {
 									Spieler s2 = new Spieler(name, FarbEnum.WEIß, false);
 									weissvergeben = true;
 									System.out.println(s2);
+									System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
 									erstelleFiguren(s2, brett);
 									break;
 								} else {
 									Spieler s2 = new Spieler(name, FarbEnum.WEIß, true);
 									weissvergeben = true;
 									System.out.println(s2);
+									System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
 									erstelleFiguren(s2, brett);
 									break;
 								}
