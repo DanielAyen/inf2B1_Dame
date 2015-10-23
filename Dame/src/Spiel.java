@@ -110,7 +110,7 @@ public class Spiel implements iBediener {
 									schwarzvergeben = true;
 									System.out.println(s1);
 									erstelleFiguren(s1, brett);
-									fig.display();
+									// fig.display();
 									break;
 								} else {
 									Spieler s1 = new Spieler(name, FarbEnum.SCHWARZ, true);
@@ -129,19 +129,17 @@ public class Spiel implements iBediener {
 							System.out.println("Spielerart eingeben (m fuer mensch k fuer ki)");
 							ki = reader.readLine();
 							if (ki.equals("m") || ki.equals("k")) {
-								if (ki.equals("k")) {
-
+								if (ki.equals("m")) {
 									Spieler s2 = new Spieler(name, FarbEnum.WEIß, false);
-									System.out.println(s2);
 									weissvergeben = true;
+									System.out.println(s2);
 									erstelleFiguren(s2, brett);
-
 									break;
 								} else {
 									Spieler s2 = new Spieler(name, FarbEnum.WEIß, true);
 									weissvergeben = true;
-									erstelleFiguren(s2, brett);
 									System.out.println(s2);
+									erstelleFiguren(s2, brett);
 									break;
 								}
 
