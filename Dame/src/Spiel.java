@@ -12,7 +12,7 @@ public class Spiel implements iBediener {
 	private boolean spielAufgebaut = false;
 	private int spielerAnzahl = 0;
 	private String name;
-	private String farbes;
+	private String farbe;
 	private String ki;
 	private boolean spiellaeuft = false;
 	private boolean schwarzvergeben = false;
