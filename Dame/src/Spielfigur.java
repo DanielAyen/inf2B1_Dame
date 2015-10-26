@@ -24,7 +24,7 @@ public class Spielfigur {
 	private Spielbrett brett;
 	private boolean istDame;
 	private static int i = 0;
-
+	private int id=0;
 	/**
 	 * Konstruktor
 	 * 
@@ -43,7 +43,10 @@ public class Spielfigur {
 		this.setPosY(posY);
 		this.setDame(istDame);
 		i++;
-		System.out.println("Spielfigur nr " + i +" "+this.getPosX()+ " " + this.getPosY());
+		id=i;
+//		System.out.println("this is the ID :"+id);
+//		System.out.println("this is the Counter :"+i);
+		System.out.println("Spielfigur nr " + id +" "+this.getPosX()+ " " + this.getPosY());
 	}
 
 	/**
@@ -94,6 +97,10 @@ public class Spielfigur {
 	public int getPosY() {
 		return posY;
 	}
+	
+	public int getId() {
+		return this.id;
+	}
 
 	/**
 	 * Setter für Position Y
@@ -122,41 +129,15 @@ public class Spielfigur {
 		return spieler;
 	}
 
-	public void display() {
-
-		System.out.println("o=weiß x=schwarz  Array bei der Ausgabe gedreht(0|0 ist unten links)");
-		for (int zeile = brett.length - 1; zeile >= 0; zeile--) {
-
-			if (brett[zeile] != null) {
-				for (int spalte = 0; spalte < brett[zeile].length; spalte++) {
-					// Die if is dafür da dass das Brett so wie es z.Z.ist ( farbe in form
-					// von x/o und die notation h3) schön untereinander da steht
-					if (zeile > 8) { //
-						System.out.print(brett[zeile][spalte] + "  ");
-					} else { //
-						System.out.print(brett[zeile][spalte] + "   "); //
-					}
-				}
-			}
-			System.out.println();
-		}
-
-	}
-
+			
 	@Override
 	public String toString() {
 		if (getFarbe() == FarbEnum.SCHWARZ)
-			return "x " + this.getPosX() + " " + this.getPosY();
+			return "x " + this.id +this.getPosX() + " " + this.getPosY();
 
 		else
-			return "o " + this.getPosX() + " " + this.getPosY();
+			return "o " + this.id +this.getPosX() + " " + this.getPosY();
 
-	}
-
-	/**
-	 * Zu überschreibende Methode für die erbenden Klassen Stein und Dame
-	 */
-	public void Spielzug() {
 	}
 
 }

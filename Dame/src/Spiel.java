@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream.GetField;
 
 /**
  * 
@@ -73,7 +74,7 @@ public class Spiel implements iBediener {
 					// Zum anzeigen der Figuren
 				case "anzeigenf":
 					if (weissvergeben == true && schwarzvergeben == true) {
-						brett.display();
+						//brett.displayFigur();
 						System.out.println("\n");
 						break;
 					} else {
@@ -283,6 +284,9 @@ public class Spiel implements iBediener {
 			for (int i = 0; i < brett.getBrettGroesse() / 2 - 1; i++) {
 				for (int j = 0; j < brett.getBrettGroesse(); j++) {
 					if (brett.getBrettFeld(i, j).getIstBelegt() == false && brett.getBrettFeld(i, j).getIstSchwarz() == true) {
+
+						brett.getBrettFeld(i, j).setSpielfigur(FarbEnum.SCHWARZ, i, j, brett, false);
+
 						spieler.addSpielfigur(new Spielfigur(FarbEnum.SCHWARZ, i, j, brett, false));
 					}
 				}
@@ -291,6 +295,7 @@ public class Spiel implements iBediener {
 			for (int i = brett.getBrettGroesse() - 1; i > brett.getBrettGroesse() / 2; i--) {
 				for (int j = 0; j < brett.getBrettGroesse(); j++) {
 					if (brett.getBrettFeld(i, j).getIstBelegt() == false && brett.getBrettFeld(i, j).getIstSchwarz() == true) {
+						brett.getBrettFeld(i, j).setSpielfigur(FarbEnum.WEIß, i, j, brett, false);
 						spieler.addSpielfigur(new Spielfigur(FarbEnum.WEIß, i, j, brett, false));
 					}
 				}

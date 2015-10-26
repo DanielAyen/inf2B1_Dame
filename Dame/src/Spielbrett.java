@@ -113,7 +113,9 @@ public class Spielbrett {
 		return this.brett[hilf][i];
 
 	}
-
+	public Spielfeld getBrettFeld(int x, int y) {
+		return brett[x][y];
+	}
 	/*
 	 * 
 	 * public Spielfeld getBrett(int x,int y){ return this.brett[x][y]; } public
@@ -145,22 +147,44 @@ public class Spielbrett {
 					if (zeile > 8) { //
 						System.out.print(brett[zeile][spalte] + "  ");
 					} else { //
-						System.out.print(brett[zeile][spalte] + "   "); //
+						System.out.print(brett[zeile][spalte] + "   "); 
 					}
 				}
 			}
 			System.out.println();
 		}
 	}
+	/*
+		public void displayFigur() {
+			System.out.println("o=weiß x=schwarz  Array bei der Ausgabe gedreht(0|0 ist unten links)");
+			for (int zeile = brett.length - 1; zeile >= 0; zeile--) {
 
+				if (brett[zeile] != null) {
+					for (int spalte = 0; spalte < brett[zeile].length; spalte++) {
+						// Die if is dafür da dass das Brett so wie es z.Z.ist ( farbe in form
+						// von x/o und die notation h3) schön untereinander da steht
+//						if (zeile > 8) { //
+//							System.out.print(brett[zeile][spalte] + "  ");
+//						} else { //
+//							System.out.print(brett[zeile][spalte] + "   "); //
+//						}
+						if(brett[zeile][spalte].getIstBelegt()){
+														
+							System.out.println(brett[zeile][spalte].getSpielfigur().toString());
+						}
+					}
+				}
+				System.out.println();
+			}
+	}
+*/
 	public Spielfeld[][] getBrettArray() {
 
 		return brett;
 	}
 
-	public Spielfeld getBrettFeld(int x, int y) {
-		return brett[x][y];
-	}
+
+	
 
 	public int getBrettGroesse() {
 

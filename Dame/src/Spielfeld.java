@@ -21,7 +21,7 @@ public class Spielfeld {
 	private Spielbrett spielbrett;
 	private Spielfigur spielfigur;
 	private String id;
-	private boolean istBelegt;
+	private boolean istBelegt =false;
 	private boolean istSchwarz;
 	private int posX;
 	private int posY;
@@ -102,8 +102,9 @@ public class Spielfeld {
 	/**
 	 * Setzt die akt SPielfigur auf ein Feld
 	 */
-	private void setSpielfigur() {
-		// this.spielfigur = //parameter fehlt;
+	public void setSpielfigur(FarbEnum farbe,int x,int y,Spielbrett brett, boolean isDame) {
+		spielfigur = new Spielfigur(farbe,x,y,brett,isDame);
+		this.setIstBelegt(true);
 	}
 
 	/**
@@ -121,7 +122,7 @@ public class Spielfeld {
 	 * @param istBelegt
 	 *          setzt ob es belegt ist oder nicht
 	 */
-	public void setIstBelegt(boolean istBelegt) {
+	private void setIstBelegt(boolean istBelegt) {
 		this.istBelegt = istBelegt;
 	}
 
@@ -135,10 +136,10 @@ public class Spielfeld {
 	@Override
 	public String toString() {
 		if (getIstSchwarz() == true)
-			return "x " + this.getId();
+			return "x " + this.getId()+this.getSpielfigur();
 		// + "[" + getPosX() + "," + getPosY() + "]";
 		else
-			return "o " + this.getId();
+			return "o " + this.getId()+this.getSpielfigur();
 		// + "[" + getPosX() + "," + getPosY() + "]";
 
 	}
