@@ -44,7 +44,7 @@ public class SpielfeldTest {
 
 	@Test
 	public void posXnichtNulltest() {
-		assertNotNull(sb.getBrett('A', 1) != null);
+		assertNotNull(sb.getBrettFeldSchachnotation('A', 1) != null);
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class SpielfeldTest {
 
 	@Test
 	public void vergleichsTest() {
-		assertNotSame(sb.getBrett('A', 1), sb.getBrett('A', 11));
+		assertNotSame(sb.getBrettFeldSchachnotation('A', 1), sb.getBrettFeldSchachnotation('A', 11));
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class SpielfeldTest {
 
 	@Test
 	public void nochEinVergleich() {
-		assertSame(sb.getBrett('L', 10), sb.getBrett('L', 10));
+		assertSame(sb.getBrettFeldSchachnotation('L', 10), sb.getBrettFeldSchachnotation('L', 10));
 	}
 
 	/**
