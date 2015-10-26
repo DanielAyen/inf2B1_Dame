@@ -56,7 +56,7 @@ public class Spielbrett {
 	 * @return Gibt ein einzelnes Feld anhand des Index zurueck
 	 */
 
-	public Spielfeld getBrett(char c, int i) {
+	public Spielfeld getBrettFeldSchachnotation(char c, int i) {
 		int hilf;
 		switch (c) {
 		case 'a':// fall through

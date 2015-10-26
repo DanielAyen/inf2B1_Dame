@@ -42,10 +42,10 @@ public class SpielbrettTest {
 
 	@Test
 	public void FeldNichtNull() {
-		assertNotNull(sb.getBrett('A', 0));
-		assertNotNull(sb.getBrett('A', 11));
-		assertNotNull(sb.getBrett('L', 0));
-		assertNotNull(sb.getBrett('L', 11));
+		assertNotNull(sb.getBrettFeldSchachnotation('A', 0));
+		assertNotNull(sb.getBrettFeldSchachnotation('A', 11));
+		assertNotNull(sb.getBrettFeldSchachnotation('L', 0));
+		assertNotNull(sb.getBrettFeldSchachnotation('L', 11));
 
 	}
 
@@ -55,7 +55,7 @@ public class SpielbrettTest {
 
 	@Test
 	public void Test() {
-		assertNotSame(sb.getBrett('D', 9), sb.getBrett('G', 6));
+		assertNotSame(sb.getBrettFeldSchachnotation('D', 9), sb.getBrettFeldSchachnotation('G', 6));
 	}
 
 	/**
