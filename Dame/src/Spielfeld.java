@@ -122,7 +122,7 @@ public class Spielfeld {
 	 * @param istBelegt
 	 *          setzt ob es belegt ist oder nicht
 	 */
-	private void setIstBelegt(boolean istBelegt) {
+	public void setIstBelegt(boolean istBelegt) {
 		this.istBelegt = istBelegt;
 	}
 

@@ -25,8 +25,8 @@ public class SpielerTest {
 	 */
 	@BeforeClass
 	public static void VorMethode() {
-		s1 = new Spieler("Werner", FarbEnum.WEIß);
-		s2 = new Spieler("Eckhart", FarbEnum.SCHWARZ);
+		s1 = new Spieler("Werner", FarbEnum.WEIß, false);
+		s2 = new Spieler("Eckhart", FarbEnum.SCHWARZ, false);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class SpielerTest {
 
 	@Test
 	public void anzahltest() {
-		Spieler s3 = new Spieler("Röhrich", FarbEnum.WEIß);
+		Spieler s3 = new Spieler("Röhrich", FarbEnum.WEIß, false);
 		assertTrue(Spieler.getAnzahl() <= 2);
 
 	}
