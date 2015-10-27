@@ -1,7 +1,5 @@
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream.GetField;
 
 /**
  * 
@@ -208,7 +206,7 @@ public class Spiel implements iBediener {
 	/**
 	 * erste Methode erstellt Spielbrett,
 	 */
-	public void spielBauen(int x) {
+	private void spielBauen(int x) {
 		if (spielAufgebaut == true) {
 			System.out.println("Spielbrett wurde bereits aufgebaut!");
 		} else {
@@ -224,21 +222,21 @@ public class Spiel implements iBediener {
 	 * Der Spieler der am Zug ist darf seine Figur bewegen(wird durch zuggueltig
 	 * geprueft) nur der SPieler der am zug ist darf auch ziehen
 	 */
-	public void figurBewegen() {
+	private void figurBewegen() {
 
 	}
 
 	/**
 	 * falls mit der derzeitigen figur noch weitere zuege moeglich sind
 	 */
-	public void figurWeiterbewegen() {
+	private void figurWeiterbewegen() {
 
 	}
 
 	/**
 	 * wenn eine figur die eind pos erreicht hat wird sie zur dame(true)
 	 */
-	public void dameWerden() {
+	private void dameWerden() {
 		// wie bei zuggueltig TODO
 
 	}
@@ -246,39 +244,39 @@ public class Spiel implements iBediener {
 	/**
 	 * einen gegnerischen stein aus dem Spiel werfen
 	 */
-	public void steinSchlagen() {
+	private void steinSchlagen() {
 
 	}
 
 	/**
 	 * pusten halt
 	 */
-	public void pusten() {
+	private void pusten() {
 
 	}
 
 	/**
 	 * setzt den derzeitigen Spieler der am zug ist
 	 */
-	public void amZug() {
+	private void amZug() {
 
 		/**
 		 * der nächste spieler der am zug ist vlt unnoetig
 		 */
 	}
 
-	public void naechster() {
+	private void naechster() {
 
 	}
 
 	/**
 	 * zug fruehzeitig beenden
 	 */
-	public void zugBeenden() {
+	private void zugBeenden() {
 
 	}
 
-	public void erstelleFiguren(Spieler spieler, Spielbrett brett) {
+	private void erstelleFiguren(Spieler spieler, Spielbrett brett) {
 
 		if (spieler.getFarbe() == FarbEnum.SCHWARZ) {
 			for (int i = 0; i < brett.getBrettGroesse() / 2 - 1; i++) {
@@ -311,7 +309,7 @@ public class Spiel implements iBediener {
 
 	// eingabe ist die fig pos diese geht an das spielbrett, dieses gibt das feld
 	// zurueck an der pos x,y. uber getposX u posY bekommt man dann index werte.
-	public boolean zugGueltig(int x, int y, boolean istDame) {
+	private boolean zugGueltig(int x, int y, boolean istDame) {
 
 		int xPosFig;
 		int yPosFig;
@@ -379,14 +377,14 @@ public class Spiel implements iBediener {
 	/**
 	 * speichern
 	 */
-	public void speichern() {
+	private void speichern() {
 
 	}
 
 	/**
 	 * laden
 	 */
-	public void laden() {
+	private void laden() {
 
 	}
 
