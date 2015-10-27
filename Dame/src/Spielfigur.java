@@ -24,7 +24,8 @@ public class Spielfigur {
 	private Spielbrett brett;
 	private boolean istDame;
 	private static int i = 0;
-	private int id=0;
+	private int id = 0;
+
 	/**
 	 * Konstruktor
 	 * 
@@ -43,10 +44,10 @@ public class Spielfigur {
 		this.setPosY(posY);
 		this.setDame(istDame);
 		i++;
-		id=i;
-//		System.out.println("this is the ID :"+id);
-//		System.out.println("this is the Counter :"+i);
-		System.out.println("Spielfigur nr " + id +" "+this.getPosX()+ " " + this.getPosY());
+		id = i;
+		// System.out.println("this is the ID :"+id);
+		// System.out.println("this is the Counter :"+i);
+		System.out.println("Spielfigur nr " + id + " " + this.getPosX() + " " + this.getPosY());
 	}
 
 	/**
@@ -97,7 +98,7 @@ public class Spielfigur {
 	public int getPosY() {
 		return posY;
 	}
-	
+
 	public int getId() {
 		return this.id;
 	}
@@ -129,14 +130,13 @@ public class Spielfigur {
 		return spieler;
 	}
 
-			
 	@Override
 	public String toString() {
 		if (getFarbe() == FarbEnum.SCHWARZ)
-			return this.id +this.getPosX() + "|" + this.getPosY();
+			return this.id + " " + this.getPosX() + "|" + this.getPosY();
 
 		else
-			return this.id +this.getPosX() + "|" + this.getPosY();
+			return this.id + " " + this.getPosX() + "|" + this.getPosY();
 
 	}
 
