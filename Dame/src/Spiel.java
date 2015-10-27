@@ -37,8 +37,7 @@ public class Spiel implements iBediener {
 					System.out.println("start: Startet das Spiel, es wird ein erstelltes Spielbrett und zwei Spieler benoetigt.");
 					System.out.println("beenden : Das Spiel wird geschlossen.");
 					System.out.println("ziehen : Erlaubt dir eine Spielfigur zu bewegen. Nicht moeglich solange das Spiel nicht laeuft.");
-					System.out.println("anzeigenb : Zeigt dir das Spielbrett.");
-					System.out.println("anzeigenf : Zeigt dir alle Spielfiguren.");
+					System.out.println("anzeigen : Zeigt dir das Spielbrett.");
 					System.out.println("speichern : erlaubt es dir das Spiel zu speichern.");
 					System.out.println("laden : erlaubt es dir ein Spielstand zu laden.");
 					break;
@@ -60,23 +59,13 @@ public class Spiel implements iBediener {
 						break;
 					}
 					// zum anzeigen des Bretts
-				case "anzeigenb":
+				case "anzeigen":
 					if (spielAufgebaut) {
 						brett.display();
 						System.out.println("\n");
 						break;
 					} else {
 						System.out.println("Du kannst kein Brett anzeigen das nicht existiert! Nutze aufbauen um ein Brett zu erstellen.");
-						break;
-					}
-					// Zum anzeigen der Figuren
-				case "anzeigenf":
-					if (weissvergeben == true && schwarzvergeben == true) {
-						//brett.displayFigur();
-						System.out.println("\n");
-						break;
-					} else {
-						System.out.println("Du kannst keine Figuren anzeigen die nicht existieren! Nutze spieler erstellen um einen Spieler und seine Figuren zu erstellen.");
 						break;
 					}
 					// zum erstellen von spielern
@@ -110,7 +99,6 @@ public class Spiel implements iBediener {
 									System.out.println(s1);
 									System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
 									erstelleFiguren(s1, brett);
-									// fig.display();
 									break;
 								} else {
 									Spieler s1 = new Spieler(name, FarbEnum.SCHWARZ, true);
