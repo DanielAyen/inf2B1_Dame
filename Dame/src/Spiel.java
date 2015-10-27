@@ -265,15 +265,18 @@ public class Spiel implements iBediener {
 	}
 
 	private void erstelleFiguren(Spieler spieler, Spielbrett brett) {
+		// TODO Setter für x und y sind fürn arsch
 
 		if (spieler.getFarbe() == FarbEnum.SCHWARZ) {
 			for (int i = 0; i < brett.getBrettGroesse() / 2 - 1; i++) {
 				for (int j = 0; j < brett.getBrettGroesse(); j++) {
 					if (brett.getBrettFeld(i, j).getIstBelegt() == false && brett.getBrettFeld(i, j).getIstSchwarz() == true) {
 
-						brett.getBrettFeld(i, j).setSpielfigur(FarbEnum.SCHWARZ, i, j, brett, false);
+						fig = (new Spielfigur(FarbEnum.SCHWARZ, i, j, brett, false));
 
-						spieler.addSpielfigur(new Spielfigur(FarbEnum.SCHWARZ, i, j, brett, false));
+						brett.getBrettFeld(i, j).setSpielfigur(fig);
+
+						spieler.addSpielfigur(fig);
 					}
 				}
 			}
@@ -281,8 +284,12 @@ public class Spiel implements iBediener {
 			for (int i = brett.getBrettGroesse() - 1; i > brett.getBrettGroesse() / 2; i--) {
 				for (int j = 0; j < brett.getBrettGroesse(); j++) {
 					if (brett.getBrettFeld(i, j).getIstBelegt() == false && brett.getBrettFeld(i, j).getIstSchwarz() == true) {
-						brett.getBrettFeld(i, j).setSpielfigur(FarbEnum.WEIß, i, j, brett, false);
-						spieler.addSpielfigur(new Spielfigur(FarbEnum.WEIß, i, j, brett, false));
+
+						fig = (new Spielfigur(FarbEnum.WEIß, i, j, brett, false));
+						brett.getBrettFeld(i, j).setSpielfigur(fig);
+
+						spieler.addSpielfigur(fig);
+
 					}
 				}
 			}

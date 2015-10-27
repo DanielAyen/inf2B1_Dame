@@ -102,8 +102,8 @@ public class Spielfeld {
 	/**
 	 * Setzt die akt SPielfigur auf ein Feld
 	 */
-	public void setSpielfigur(FarbEnum farbe, int x, int y, Spielbrett brett, boolean isDame) {
-		spielfigur = new Spielfigur(farbe, x, y, brett, isDame);
+	public void setSpielfigur(Spielfigur fig) {
+		this.spielfigur = fig;
 		this.setIstBelegt(true);
 	}
 

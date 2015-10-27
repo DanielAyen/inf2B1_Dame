@@ -133,10 +133,10 @@ public class Spielfigur {
 	@Override
 	public String toString() {
 		if (getFarbe() == FarbEnum.SCHWARZ)
-			return this.id +this.getPosX() + " " + this.getPosY();
+			return this.id +this.getPosX() + "|" + this.getPosY();
 
 		else
-			return this.id +this.getPosX() + " " + this.getPosY();
+			return this.id +this.getPosX() + "|" + this.getPosY();
 
 	}
 
