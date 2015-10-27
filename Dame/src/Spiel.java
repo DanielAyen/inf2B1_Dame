@@ -43,6 +43,8 @@ public class Spiel implements iBediener {
 					break;
 				// zum erstellen des spielfelds
 				case "aufbauen":
+					if (spielAufgebaut)
+						break;
 					System.out.println("Bitte gebe die gewuenschte Spielbrett Groesse ein. ( 8 , 10 , 12 )");
 					String groesse = reader.readLine();
 					if (groesse.equals("8")) {
