@@ -7,6 +7,43 @@ import java.io.InputStreamReader;
  *
  */
 public class Spiel implements iBediener {
+	
+	/**
+	 * Attribute
+	 * 
+	 * @param spielaufgebaut
+	 * 		Boolean überprüfung ob das Spiel aufgebaut wurde oder nicht. 
+	 * @param spielerAnzahl
+	 * 	    Anzahl der aktuellen Spieler
+	 * @param name
+	 * 		Name des Spielers
+	 * @param farbe 
+	 * 		Farbe der Spieler
+	 * @param Ki
+	 * 
+	 * @param spiellaeuft
+	 * 		Boolean überprüfung ob das Spiel bereits läuft oder nicht.
+	 * 
+	 * @param schwarzvergeben
+	 * 		gibt an ob die Farbe schwarz bereits vergeben ist (False==nicht
+	 *      vergeben)	
+	 *      
+	 * @param weiß
+	 * 		gibt an ob die Farbe weiß bereits vergeben ist (False==nicht
+	 *      vergeben)
+	 * 
+	 * @param brett
+	 * 		das zugehörige Spielbrett	
+	 * 
+	 * @param fig
+	 * 		die zugehörigen Spielfiguren
+	 * 
+	 * @param spieler
+	 * 		die zugehörigen Spieler
+	 * 
+	 * @param spielfeld
+	 * 	die zugehörigen Spielfelder
+	 */
 
 	private boolean spielAufgebaut = false;
 	private int spielerAnzahl = 0;
