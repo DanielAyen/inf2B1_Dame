@@ -266,10 +266,24 @@ public class Spiel implements iBediener {
 	 */
 	private void dameWerden(Spielfigur fig) {
 		// TODO
+
 		FarbEnum temp = fig.getFarbe();
+		if (brett.getBrettGroesse() == 8) {
+			int g = 8;
+		}
+
+		if (brett.getBrettGroesse() == 10) {
+			int g = 10;
+		}
+
+		if (brett.getBrettGroesse() == 12) {
+			int g = 12;
+		}
+
 		switch (temp) {
 
 		case SCHWARZ:// müssen oben ankommen also bei 8/10/12////// 0|0 =A1
+			brett.getBrettFeldIndex(x, y);
 			break;
 
 		case WEIß:// müssen unten ankommen 1
