@@ -35,9 +35,8 @@ public class Spieler {
 	private static boolean weißvergeben = false;
 	private static boolean schwarzvergeben = false;
 	private FarbEnum farbe;
-
-	// private boolean istKi = false; wird nicht benötigt weil wenn ki==true beim
-	// Spieler erstellen, dann Ki_Objekt
+	private boolean istAmZug = false;
+	private boolean istKi = false;
 
 	/**
 	 * erstellen der Spieler muss in der Spielklasse erfolgen
@@ -64,11 +63,11 @@ public class Spieler {
 		if (spielerPrüfen(name, farbe) == 3) {
 			throw new RuntimeException("Farbe schon vergeben!");
 		}
-//		if (istKi == true) {
-			
-//		} else {
+		if (istKi == true) {
+			this.istKi = true;
+		} else {
 			this.setName(name);
-		//		}
+		}
 		if (farbe == FarbEnum.SCHWARZ) {
 			this.setFarbeSchwarz(farbe);
 		} else if (farbe == FarbEnum.WEIß) {
@@ -220,6 +219,14 @@ public class Spieler {
 	 */
 	public void addSpielfigur(Spielfigur s) {
 		figuren.add(s);
+	}
+
+	public boolean getIsIstAmZug() {
+		return istAmZug;
+	}
+
+	public void setIstAmZug(boolean istAmZug) {
+		this.istAmZug = istAmZug;
 	}
 
 	@Override
