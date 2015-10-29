@@ -53,7 +53,6 @@ public class Spiel implements iBediener {
 	private boolean spiellaeuft = false;
 	private boolean schwarzvergeben = false;
 	private boolean weissvergeben = false;
-
 	private Spielbrett brett;
 	private Spieler spieler;
 	private Spielfeld spielfeld;
@@ -140,10 +139,11 @@ public class Spiel implements iBediener {
 									break;
 								} else {
 									Spieler s1 = new Spieler(name, FarbEnum.SCHWARZ, true);
+									KI_Dame k1 = new KI_Dame(s1);
 									schwarzvergeben = true;
 									System.out.println(s1);
 									System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
-									erstelleFiguren(s1, brett);
+									erstelleFiguren(k1, brett);
 									break;
 								}
 
@@ -165,10 +165,11 @@ public class Spiel implements iBediener {
 									break;
 								} else {
 									Spieler s2 = new Spieler(name, FarbEnum.WEIß, true);
+									KI_Dame k2 = new KI_Dame(s2);
 									weissvergeben = true;
 									System.out.println(s2);
 									System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
-									erstelleFiguren(s2, brett);
+									erstelleFiguren(k2, brett);
 									break;
 								}
 
@@ -188,6 +189,7 @@ public class Spiel implements iBediener {
 				case "start":
 					if (spielAufgebaut == true && spielerAnzahl == 2) {
 						spiellaeuft = true;
+
 						System.out.println("Das Spiel beginnt!");
 						// display?
 

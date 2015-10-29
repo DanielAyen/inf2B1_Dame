@@ -35,7 +35,9 @@ public class Spieler {
 	private static boolean weißvergeben = false;
 	private static boolean schwarzvergeben = false;
 	private FarbEnum farbe;
-	//private boolean istKi = false; wird nicht benötigt weil wenn ki==true beim Spieler erstellen, dann Ki_Objekt 
+
+	// private boolean istKi = false; wird nicht benötigt weil wenn ki==true beim
+	// Spieler erstellen, dann Ki_Objekt
 
 	/**
 	 * erstellen der Spieler muss in der Spielklasse erfolgen
@@ -62,11 +64,11 @@ public class Spieler {
 		if (spielerPrüfen(name, farbe) == 3) {
 			throw new RuntimeException("Farbe schon vergeben!");
 		}
-		if (istKi == true) {
-			erstelleKi(name, farbe);
-		} else {
+//		if (istKi == true) {
+			
+//		} else {
 			this.setName(name);
-		}
+		//		}
 		if (farbe == FarbEnum.SCHWARZ) {
 			this.setFarbeSchwarz(farbe);
 		} else if (farbe == FarbEnum.WEIß) {
@@ -74,7 +76,7 @@ public class Spieler {
 
 		} else if (anzSpieler >= maxSpieler) {
 			throw new RuntimeException("Max Spieleranzahl erreicht");
-		} 
+		}
 	}
 
 	/**
@@ -108,21 +110,6 @@ public class Spieler {
 				}
 			}
 		}
-	}
-
-	/**
-	 * 
-	 * Ki erstell Methode gibt alles an die Ki klasse weiter
-	 * 
-	 * @param nameKi
-	 * @param farbeKi
-	 */
-	private void erstelleKi(String nameKi, FarbEnum farbeKi) {
-		new KI_Dame(nameKi, farbeKi);
-		// Sollte alles an KI gegeben werden
-		// this.setFarbeWeiß(farbeKi);
-		// this.setName(nameKi);
-
 	}
 
 	/**
