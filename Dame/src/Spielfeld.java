@@ -1,10 +1,16 @@
+import java.io.Serializable;
+
 /**
  * 
  * @author Baris, Daniel, Simon,Hannes
  *
  */
-public class Spielfeld {
+public class Spielfeld implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5401194863737521362L;
 	/**
 	 * 
 	 * @param spielfigur

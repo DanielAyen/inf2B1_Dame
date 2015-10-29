@@ -1,10 +1,16 @@
+import java.io.Serializable;
+
 /**
  * 
  * @author Baris, Daniel, Simon,Hannes
  *
  */
-public class Spielbrett {
+public class Spielbrett  implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -97966293000257188L;
 	// Unten links schwarz a1 und oben rechts schwarz h8
 	/**
 	 * @param Spielfeld

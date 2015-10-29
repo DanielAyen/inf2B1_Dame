@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -5,7 +6,11 @@ import java.util.ArrayList;
  * @author Baris, Daniel, Simon,Hannes
  *
  */
-public class Spieler {
+public class Spieler implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1823974290227879516L;
 	/**
 	 * 
 	 * @param name

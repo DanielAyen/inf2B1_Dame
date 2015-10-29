@@ -1,12 +1,18 @@
+import java.io.Serializable;
+
 
 /**
  * 
  * @author Baris, Daniel, Simon, Hannes
  *
  */
-public abstract class KI {
+public abstract class KI  implements Serializable{
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1239435568425931372L;
 	public Spieler spieler;
 
 

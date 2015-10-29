@@ -1,13 +1,19 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.Serializable;
+import java.util.Properties;
 
 /**
  * 
  * @author Baris, Daniel, Simon
  *
  */
-public class Spiel implements iBediener {
+public class Spiel implements iBediener, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1632008787864445195L;
 	/**
 	 * Attribute
 	 * 
@@ -45,6 +51,7 @@ public class Spiel implements iBediener {
 	 *          die zugehörigen Spielfelder
 	 */
 
+	private static iDatenzugriff daten;
 	private boolean spielAufgebaut = false;
 	private int spielerAnzahl = 0;
 	private String name;
@@ -211,7 +218,7 @@ public class Spiel implements iBediener {
 					break;
 				// speichern
 				case "speichern":
-					System.out.println("Derzeit nicht implementiert -Sorry.");
+					speichernAlsSerial(name);
 					break;
 				// laden
 				case "laden":
@@ -440,11 +447,22 @@ public class Spiel implements iBediener {
 	}
 
 	/**
-	 * speichern
+	 * serializiert das Spiel
 	 */
-	private void speichern() {
-
+	private void speichernAlsSerial(String s) {
+		try{
+			daten = new Serial();
+			Properties p = new Properties();
+			p.setProperty("datei", s +".ser");
+			daten.oeffnen(p);
+			daten.schreiben(this);
+			System.out.println("Das Spiel wurde gespeichert: "+p.getProperty("datei"));
+			daten.schliessen(p);
+		}catch (Exception e){
+			System.out.println("Speichern serialisiert fehlgeschlagen!");
+		}
 	}
+
 
 	/**
 	 * laden
