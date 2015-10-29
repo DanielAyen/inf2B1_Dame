@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 /**
  * 
- * @author Baris, Daniel, Simon
+ * @author Baris, Daniel, Simon,Hannes
  *
  */
 public class Spieler {

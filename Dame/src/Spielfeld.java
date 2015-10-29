@@ -1,57 +1,69 @@
 /**
  * 
- * @author Baris, Daniel, Simon
+ * @author Baris, Daniel, Simon,Hannes
  *
  */
 public class Spielfeld {
 
 	/**
-	 * @param spielbrett
-	 *          Das Spielbrett
+	 * 
 	 * @param spielfigur
-	 *          Die Spielfigur
+	 *            Die Spielfigur
 	 * @param id
-	 *          die ID des Spielfelds
+	 *            die ID des Spielfelds
+	 * @param posX
+	 *            der Wert der Position X
+	 * @param posY
+	 *            der Wert der Position y
 	 * @param istBelegt
-	 *          bool wert ob ein Spielfeld besetzt ist oder nicht
+	 *            bool wert ob ein Spielfeld besetzt ist oder nicht
 	 * @param farbe
-	 *          die Farbe des Spielfelds
+	 *            die Farbe des Spielfelds
 	 * 
 	 */
-	private Spielbrett spielbrett;
 	private Spielfigur spielfigur;
 	private String id;
-	private boolean istBelegt = false;
-	private boolean istSchwarz;
 	private int posX;
 	private int posY;
+	private boolean istBelegt = false;
+	private boolean istSchwarz;
 
 	/**
 	 * * Konstruktor für die Spielfelder
 	 * 
 	 * @param spielbrett
-	 *          Das Spielbrett
+	 *            Das Spielbrett
 	 * @param istSchwarz
-	 *          Bool ob die Figur schwarz (true) ist oder nicht (false)
+	 *            Bool ob die Figur schwarz (true) ist oder nicht (false)
 	 * @param x
-	 *          x Koord. im Array
+	 *            x Koord. im Array
 	 * @param y
-	 *          y Koord. im Array
+	 *            y Koord. im Array
 	 */
-	public Spielfeld(Spielbrett spielbrett, boolean istSchwarz, int x, int y) {
-		if (spielbrett != null) {
-			this.spielbrett = spielbrett;
-			this.istSchwarz = istSchwarz;
-			this.posX = x;
-			this.posY = y;
-			setId();
-		}
+	public Spielfeld(boolean istSchwarz, int x, int y) {
+
+		this.istSchwarz = istSchwarz;
+		this.posX = x;
+		this.posY = y;
+		setId();
 	}
 
-	public boolean getIstSchwarz(Spielfeld feld) {
+	/**
+	 * Gibt die aktuelle Spielfigur auf einem Feld zurueck
+	 * 
+	 * @return die akt Spielfigur
+	 */
+	public Spielfigur getSpielfigur() {
+		return this.spielfigur;
+	}
 
-		return this.istSchwarz;
-
+	/**
+	 * gibt die id der Figur zurueck
+	 * 
+	 * @return gibt die id in Schachnotation zurueck
+	 */
+	public String getId() {
+		return this.id;
 	}
 
 	/**
@@ -73,38 +85,14 @@ public class Spielfeld {
 	}
 
 	/**
-	 * gibt die id der Figur zurueck
+	 * Gibt zurueck ob das übergebene Spielfeld schwarz ist
 	 * 
-	 * @return gibt die id zurueck
-	 */
-	public String getId() {
-		return this.id;
-	}
-
-	/**
-	 * Setzt die Id fuer ein Feld
+	 * @param feld
 	 * 
-	 * id besteht aus einem Char mit der pos in Form einer Zahl
+	 * @return (true/false) Spielfeld schwarz
 	 */
-	private void setId() {
-		this.id = "" + (char) (65 + this.getPosY()) + (this.getPosX() + 1);
-	}
-
-	/**
-	 * Gibt die akt Spielfigur auf einem Feld zurueck
-	 * 
-	 * @return die akt Spielfigur
-	 */
-	public Spielfigur getSpielfigur() {
-		return this.spielfigur;
-	}
-
-	/**
-	 * Setzt die akt SPielfigur auf ein Feld
-	 */
-	public void setSpielfigur(Spielfigur fig) {
-		this.spielfigur = fig;
-		this.setIstBelegt(true);
+	public boolean getIstSchwarz(Spielfeld feld) {
+		return this.istSchwarz;
 	}
 
 	/**
@@ -117,31 +105,40 @@ public class Spielfeld {
 	}
 
 	/**
-	 * Setzt einen Bool wert auf ein Feld ob dieses besetzt ist oder nicht
+	 * Setzt die Id fuer ein Feld
 	 * 
-	 * @param istBelegt
-	 *          setzt ob es belegt ist oder nicht
+	 * id besteht aus einem Char mit der pos in Form einer Zahl
 	 */
-	public void setIstBelegt(boolean istBelegt) {
-		this.istBelegt = istBelegt;
+	private void setId() {
+		this.id = "" + (char) (65 + this.getPosY()) + (this.getPosX() + 1);
 	}
 
 	/**
-	 * Ueberschreibt die toString
+	 * Setzt die aktuelle Spielfigur auf ein Feld
 	 * 
-	 * gibt ein feld zurueck mit seiner farbe x/o und seiner id nach
-	 * Schachnotation
-	 * 
+	 * @param s
 	 */
-	@Override
-	public String toString() {
-		if (getIstSchwarz() == true)
-			return "( x " + this.getId() + " " + this.getSpielfigur() + " )";
-		// + "[" + getPosX() + "," + getPosY() + "]";
-		else
-			return "( o " + this.getId() + " " + this.getSpielfigur() + " )";
-		// + "[" + getPosX() + "," + getPosY() + "]";
+	public void setSpielfigur(Spielfigur s) {
+		if (s == null) {
+			throw new RuntimeException("Keine Spielfigur übergeben!");
+		}
+		if (istBelegt != true) {
+			this.spielfigur = s;
+			this.istBelegt = true;
+		} else
+			throw new RuntimeException(
+					"Es ist bereits eine Spielfigur auf dem Brett!");
+	}
 
+	public void removeSpielfigur(Spielfigur s, String id) {
+		if (s == null) {
+			throw new RuntimeException(
+					"Kein Spielfigur übergeben um es vom Feld zu nehmen");
+		}
+		if ((this.id != id) || (istBelegt == false)) {
+			throw new RuntimeException("Falsche Eingabe");
+		} else
+			this.spielfigur = null;
 	}
 
 	/**
@@ -151,5 +148,27 @@ public class Spielfeld {
 	 */
 	public boolean getIstSchwarz() {
 		return this.istSchwarz;
+	}
+
+	/**
+	 * Ueberschreibt die toString Methode
+	 * 
+	 * gibt ein Feld zurueck mit seiner farbe x/o, seiner id nach Schachnotation
+	 * und Spielfigur
+	 * 
+	 */
+	@Override
+	public String toString() {
+		if (getIstSchwarz() == true) {
+			if (this.getSpielfigur() == null) {
+				return "x " + this.getId() + " " + this.getSpielfigur();
+			}
+			return "x " + this.getId() + this.getSpielfigur();
+		} else {
+			if (this.getSpielfigur() == null) {
+				return "o " + this.getId() + " " + this.getSpielfigur();
+			}
+			return "o " + this.getId() + this.getSpielfigur();
+		}
 	}
 }

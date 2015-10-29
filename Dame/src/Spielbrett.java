@@ -1,6 +1,6 @@
 /**
  * 
- * @author Baris, Daniel, Simon
+ * @author Baris, Daniel, Simon,Hannes
  *
  */
 public class Spielbrett {
@@ -32,7 +32,7 @@ public class Spielbrett {
 
 				for (int i = 0; i < brett.length; i++) {
 					for (int j = 0; j < brett[i].length; j++) {
-						this.brett[i][j] = new Spielfeld(this, feldSchwarz, i, j);
+						this.brett[i][j] = new Spielfeld(feldSchwarz, i, j);
 						feldSchwarz = !feldSchwarz;
 					}
 					feldSchwarz = !feldSchwarz;
@@ -110,27 +110,58 @@ public class Spielbrett {
 		default:
 			throw new RuntimeException("Eingabe ausserhalb Feld");
 		}
-		return this.brett[hilf][i];
+		return this.brett[hilf][i-1];
 
 	}
-	public Spielfeld getBrettFeld(int x, int y) {
+	public String gibBrettFeldSchachnotation(int x, int y) {
+		char hilf;
+		switch (x) {
+		case 0:// fall through
+			hilf = 'A';
+			break;
+		case 1:
+			hilf = 'B';
+			break;
+		case 2:
+			hilf = 'C';
+			break;
+		case 3:
+			hilf = 'D';
+			break;
+		case 4:
+			hilf = 'E';
+			break;
+		case 5:
+			hilf = 'F';
+			break;
+		case 6:
+			hilf = 'G';
+			break;
+		case 7:
+			hilf = 'H';
+			break;
+		case 8:
+			hilf = 'I';
+			break;
+		case 9:
+			hilf = 'J';
+			break;
+		case 10:
+			hilf = 'K';
+			break;
+		case 11:
+			hilf = 'L';
+			break;
+		default:
+			throw new RuntimeException("Eingabe ausserhalb Feld");
+		}
+		return ""+hilf+(y+1);
+
+	}
+	public Spielfeld getBrettFeldIndex(int x, int y) {
 		return brett[x][y];
 	}
-	/*
-	 * 
-	 * public Spielfeld getBrett(int x,int y){ return this.brett[x][y]; } public
-	 * String getEinzelFeld(int x, int y) {
-	 * 
-	 * String s = ""; return s + brett[x][y]; }
-	 */
-	/**
-	 * toString z.Z unnoetig
-	 */
-	public String toString() {
-
-		return "";
-	}
-
+	
 	/**
 	 * Anzeigemethode für das Array der Spielfelder
 	 * 
@@ -154,38 +185,12 @@ public class Spielbrett {
 			System.out.println();
 		}
 	}
-	/*
-		public void displayFigur() {
-			System.out.println("o=weiß x=schwarz  Array bei der Ausgabe gedreht(0|0 ist unten links)");
-			for (int zeile = brett.length - 1; zeile >= 0; zeile--) {
-
-				if (brett[zeile] != null) {
-					for (int spalte = 0; spalte < brett[zeile].length; spalte++) {
-						// Die if is dafür da dass das Brett so wie es z.Z.ist ( farbe in form
-						// von x/o und die notation h3) schön untereinander da steht
-//						if (zeile > 8) { //
-//							System.out.print(brett[zeile][spalte] + "  ");
-//						} else { //
-//							System.out.print(brett[zeile][spalte] + "   "); //
-//						}
-						if(brett[zeile][spalte].getIstBelegt()){
-														
-							System.out.println(brett[zeile][spalte].getSpielfigur().toString());
-						}
-					}
-				}
-				System.out.println();
-			}
-	}
-*/
-	public Spielfeld[][] getBrettArray() {
-
-		return brett;
-	}
-
-
 	
-
+/**
+ * Gibt die Größe des Spielbretts zurück
+ * 
+ * @return Größe des Spielbretts
+ */
 	public int getBrettGroesse() {
 
 		return brett.length;
