@@ -7,42 +7,42 @@ import java.io.InputStreamReader;
  *
  */
 public class Spiel implements iBediener {
-	
+
 	/**
 	 * Attribute
 	 * 
 	 * @param spielaufgebaut
-	 * 		Boolean überprüfung ob das Spiel aufgebaut wurde oder nicht. 
+	 *          Boolean überprüfung ob das Spiel aufgebaut wurde oder nicht.
 	 * @param spielerAnzahl
-	 * 	    Anzahl der aktuellen Spieler
+	 *          Anzahl der aktuellen Spieler
 	 * @param name
-	 * 		Name des Spielers
-	 * @param farbe 
-	 * 		Farbe der Spieler
+	 *          Name des Spielers
+	 * @param farbe
+	 *          Farbe der Spieler
 	 * @param Ki
 	 * 
 	 * @param spiellaeuft
-	 * 		Boolean überprüfung ob das Spiel bereits läuft oder nicht.
+	 *          Boolean überprüfung ob das Spiel bereits läuft oder nicht.
 	 * 
 	 * @param schwarzvergeben
-	 * 		gibt an ob die Farbe schwarz bereits vergeben ist (False==nicht
-	 *      vergeben)	
-	 *      
+	 *          gibt an ob die Farbe schwarz bereits vergeben ist (False==nicht
+	 *          vergeben)
+	 * 
 	 * @param weiß
-	 * 		gibt an ob die Farbe weiß bereits vergeben ist (False==nicht
-	 *      vergeben)
+	 *          gibt an ob die Farbe weiß bereits vergeben ist (False==nicht
+	 *          vergeben)
 	 * 
 	 * @param brett
-	 * 		das zugehörige Spielbrett	
+	 *          das zugehörige Spielbrett
 	 * 
 	 * @param fig
-	 * 		die zugehörigen Spielfiguren
+	 *          die zugehörigen Spielfiguren
 	 * 
 	 * @param spieler
-	 * 		die zugehörigen Spieler
+	 *          die zugehörigen Spieler
 	 * 
 	 * @param spielfeld
-	 * 	die zugehörigen Spielfelder
+	 *          die zugehörigen Spielfelder
 	 */
 
 	private boolean spielAufgebaut = false;
@@ -54,7 +54,6 @@ public class Spiel implements iBediener {
 	private boolean schwarzvergeben = false;
 	private boolean weissvergeben = false;
 
-	private Spielfigur fig;
 	private Spielbrett brett;
 	private Spieler spieler;
 	private Spielfeld spielfeld;
@@ -263,8 +262,18 @@ public class Spiel implements iBediener {
 	/**
 	 * wenn eine figur die eind pos erreicht hat wird sie zur dame(true)
 	 */
-	private void dameWerden() {
-		// wie bei zuggueltig TODO
+	private void dameWerden(Spielfigur fig) {
+		// TODO
+		FarbEnum temp = fig.getFarbe();
+		switch (temp) {
+
+		case SCHWARZ:// müssen oben ankommen also bei 8/10/12////// 0|0 =A1
+			break;
+
+		case WEIß:// müssen unten ankommen 1
+			break;
+
+		}
 
 	}
 
@@ -285,13 +294,20 @@ public class Spiel implements iBediener {
 	/**
 	 * setzt den derzeitigen Spieler der am zug ist
 	 */
-	private void amZug() {
+	private void setAmZug() {
 
-		/**
-		 * der nächste spieler der am zug ist vlt unnoetig
-		 */
 	}
 
+	/**
+	 * gibt den derzeitigen Spieler der am zug ist
+	 */
+	private void getAmZug() {
+
+	}
+
+	/**
+	 * der nächste spieler der am zug ist vlt unnoetig
+	 */
 	private void naechster() {
 
 	}
@@ -303,15 +319,18 @@ public class Spiel implements iBediener {
 
 	}
 
+	private void erstelleFiguren(KI_Dame ki, Spielbrett brett) {
+
+	}
+
 	private void erstelleFiguren(Spieler spieler, Spielbrett brett) {
-		// TODO Setter für x und y sind fürn arsch
 
 		if (spieler.getFarbe() == FarbEnum.SCHWARZ) {
 			for (int i = 0; i < brett.getBrettGroesse() / 2 - 1; i++) {
 				for (int j = 0; j < brett.getBrettGroesse(); j++) {
 					if (brett.getBrettFeld(i, j).getIstBelegt() == false && brett.getBrettFeld(i, j).getIstSchwarz() == true) {
 
-						fig = (new Spielfigur(FarbEnum.SCHWARZ, i, j, brett, false));
+						Spielfigur fig = (new Spielfigur(FarbEnum.SCHWARZ, i, j, brett, false));
 
 						brett.getBrettFeld(i, j).setSpielfigur(fig);
 
@@ -324,7 +343,7 @@ public class Spiel implements iBediener {
 				for (int j = 0; j < brett.getBrettGroesse(); j++) {
 					if (brett.getBrettFeld(i, j).getIstBelegt() == false && brett.getBrettFeld(i, j).getIstSchwarz() == true) {
 
-						fig = (new Spielfigur(FarbEnum.WEIß, i, j, brett, false));
+						Spielfigur fig = (new Spielfigur(FarbEnum.WEIß, i, j, brett, false));
 						brett.getBrettFeld(i, j).setSpielfigur(fig);
 
 						spieler.addSpielfigur(fig);
