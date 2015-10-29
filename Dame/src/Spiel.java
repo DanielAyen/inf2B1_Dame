@@ -143,7 +143,7 @@ public class Spiel implements iBediener {
 									schwarzvergeben = true;
 									System.out.println(s1);
 									System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
-									erstelleFiguren(k1, brett);
+									erstelleFiguren(s1, brett);
 									break;
 								}
 
@@ -169,7 +169,7 @@ public class Spiel implements iBediener {
 									weissvergeben = true;
 									System.out.println(s2);
 									System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
-									erstelleFiguren(k2, brett);
+									erstelleFiguren(s2, brett);
 									break;
 								}
 
@@ -318,10 +318,6 @@ public class Spiel implements iBediener {
 	 * zug fruehzeitig beenden
 	 */
 	private void zugBeenden() {
-
-	}
-
-	private void erstelleFiguren(KI_Dame ki, Spielbrett brett) {
 
 	}
 
