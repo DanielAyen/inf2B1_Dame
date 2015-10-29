@@ -4,15 +4,10 @@
  *
  */
 class KI_Dame extends KI {
-
-
 	
-	public KI_Dame(String name, FarbEnum farbe) {
-		super(name, farbe);
-}
+	public Spieler spieler;
 
-	@Override
-	public String toString(){
-		return "KiName: "+super.getName()+"Farbe: "+super.getFarbe();
+	public KI_Dame(Spieler spieler) {
+		super(spieler);
 	}
 }

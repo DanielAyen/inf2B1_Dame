@@ -1,39 +1,30 @@
 
 /**
  * 
- * @author Baris, Daniel, Simon
+ * @author Baris, Daniel, Simon, Hannes
  *
  */
 public abstract class KI {
 	
-	private String name;
-	private FarbEnum farbe;
-
-
 	
+	public Spieler spieler;
+
+
+	/**
+	 * Konstruktor der KI
+	 * 
+	 * @param spieler
+	 */
 	
-	KI(String name, FarbEnum farbe) {
-		this.setName(name);
-		this.setFarbe(farbe);
-
-
-	}
-
-	public String getName(){
-		return name;
-	}
-	public FarbEnum getFarbe(){
-		return farbe;
-	}
-	public void setName(String name){
-		this.name=name;
-	}
-	public void setFarbe(FarbEnum farbe){
-		this.farbe=farbe;
+	public KI(Spieler spieler) {
+		if(spieler==null){
+			throw new RuntimeException("Ki darf nicht ohne Spieler exisitieren");
+		}else{
+		this.spieler=spieler;
+		}
 	}
 	
-	@Override
-	public String toString(){
-		return "Name: "+getName()+"Farbe: "+getFarbe();
+	public Spieler getSpieler(){
+		return this.spieler;
 	}
 }
