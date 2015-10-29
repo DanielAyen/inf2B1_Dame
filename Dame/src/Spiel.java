@@ -328,11 +328,11 @@ public class Spiel implements iBediener {
 		if (spieler.getFarbe() == FarbEnum.SCHWARZ) {
 			for (int i = 0; i < brett.getBrettGroesse() / 2 - 1; i++) {
 				for (int j = 0; j < brett.getBrettGroesse(); j++) {
-					if (brett.getBrettFeld(i, j).getIstBelegt() == false && brett.getBrettFeld(i, j).getIstSchwarz() == true) {
+					if (brett.getBrettFeldIndex(i, j).getIstBelegt() == false && brett.getBrettFeldIndex(i, j).getIstSchwarz() == true) {
 
-						Spielfigur fig = (new Spielfigur(FarbEnum.SCHWARZ, i, j, brett, false));
+						Spielfigur fig = (new Spielfigur(FarbEnum.SCHWARZ, false));
 
-						brett.getBrettFeld(i, j).setSpielfigur(fig);
+						brett.getBrettFeldIndex(i, j).setSpielfigur(fig);
 
 						spieler.addSpielfigur(fig);
 					}
@@ -341,10 +341,10 @@ public class Spiel implements iBediener {
 		} else {
 			for (int i = brett.getBrettGroesse() - 1; i > brett.getBrettGroesse() / 2; i--) {
 				for (int j = 0; j < brett.getBrettGroesse(); j++) {
-					if (brett.getBrettFeld(i, j).getIstBelegt() == false && brett.getBrettFeld(i, j).getIstSchwarz() == true) {
+					if (brett.getBrettFeldIndex(i, j).getIstBelegt() == false && brett.getBrettFeldIndex(i, j).getIstSchwarz() == true) {
 
-						Spielfigur fig = (new Spielfigur(FarbEnum.WEIß, i, j, brett, false));
-						brett.getBrettFeld(i, j).setSpielfigur(fig);
+						Spielfigur fig = (new Spielfigur(FarbEnum.WEIß, false));
+						brett.getBrettFeldIndex(i, j).setSpielfigur(fig);
 
 						spieler.addSpielfigur(fig);
 
@@ -379,8 +379,8 @@ public class Spiel implements iBediener {
 		int xPosNeu4;
 		int yPosNeu4;
 
-		xPosFig = brett.getBrettFeld(x, y).getPosX();
-		yPosFig = brett.getBrettFeld(x, y).getPosY();
+		xPosFig = brett.getBrettFeldIndex(x, y).getPosX();
+		yPosFig = brett.getBrettFeldIndex(x, y).getPosY();
 
 		if (istDame) {
 			xPosNeu1 = xPosFig + 1;
