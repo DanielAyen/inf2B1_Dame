@@ -14,17 +14,17 @@ public class Spielfeld implements Serializable {
 	/**
 	 * 
 	 * @param spielfigur
-	 *            Die Spielfigur
+	 *          Die Spielfigur
 	 * @param id
-	 *            die ID des Spielfelds
+	 *          die ID des Spielfelds
 	 * @param posX
-	 *            der Wert der Position X
+	 *          der Wert der Position X
 	 * @param posY
-	 *            der Wert der Position y
+	 *          der Wert der Position y
 	 * @param istBelegt
-	 *            bool wert ob ein Spielfeld besetzt ist oder nicht
+	 *          bool wert ob ein Spielfeld besetzt ist oder nicht
 	 * @param farbe
-	 *            die Farbe des Spielfelds
+	 *          die Farbe des Spielfelds
 	 * 
 	 */
 	private Spielfigur spielfigur;
@@ -38,13 +38,13 @@ public class Spielfeld implements Serializable {
 	 * * Konstruktor für die Spielfelder
 	 * 
 	 * @param spielbrett
-	 *            Das Spielbrett
+	 *          Das Spielbrett
 	 * @param istSchwarz
-	 *            Bool ob die Figur schwarz (true) ist oder nicht (false)
+	 *          Bool ob die Figur schwarz (true) ist oder nicht (false)
 	 * @param x
-	 *            x Koord. im Array
+	 *          x Koord. im Array
 	 * @param y
-	 *            y Koord. im Array
+	 *          y Koord. im Array
 	 */
 	public Spielfeld(boolean istSchwarz, int x, int y) {
 
@@ -131,15 +131,16 @@ public class Spielfeld implements Serializable {
 		if (istBelegt != true) {
 			this.spielfigur = s;
 			this.istBelegt = true;
+			spielfigur.setPosX(this.getPosX());
+			spielfigur.setPosY(this.getPosY());
+
 		} else
-			throw new RuntimeException(
-					"Es ist bereits eine Spielfigur auf dem Brett!");
+			throw new RuntimeException("Es ist bereits eine Spielfigur auf dem Brett!");
 	}
 
 	public void removeSpielfigur(Spielfigur s, String id) {
 		if (s == null) {
-			throw new RuntimeException(
-					"Kein Spielfigur übergeben um es vom Feld zu nehmen");
+			throw new RuntimeException("Kein Spielfigur übergeben um es vom Feld zu nehmen");
 		}
 		if ((this.id != id) || (istBelegt == false)) {
 			throw new RuntimeException("Falsche Eingabe");

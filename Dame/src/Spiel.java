@@ -62,7 +62,6 @@ public class Spiel implements iBediener, Serializable {
 	private boolean weissvergeben = false;
 	private Spielbrett brett;
 	private Spieler spieler;
-	private Spielfeld spielfeld;
 
 	public void spielStarten() {
 		System.out.println("Bitte erstelle zuerst ein neues Spielbrett. Falls du Hilfe benoetigst gebe 'help' in die konsole ein");
@@ -280,26 +279,35 @@ public class Spiel implements iBediener, Serializable {
 	private void dameWerden(Spielfigur fig) {
 		// TODO
 
-		FarbEnum temp = fig.getFarbe();
+		int x = fig.getPosX();
+		int y = fig.getPosY();
+		int brettgroesse = 0;
+		FarbEnum farbe = fig.getFarbe();
 		if (brett.getBrettGroesse() == 8) {
-			int g = 8;
+			brettgroesse = 8;
+
 		}
 
 		if (brett.getBrettGroesse() == 10) {
-			int g = 10;
+			brettgroesse = 10;
+
 		}
 
 		if (brett.getBrettGroesse() == 12) {
-			int g = 12;
+			brettgroesse = 12;
+
 		}
 
-		switch (temp) {
+		switch (farbe) {
 
 		case SCHWARZ:// müssen oben ankommen also bei 8/10/12////// 0|0 =A1
-			brett.getBrettFeldIndex(x, y);
+			if (x == brettgroesse - 1)
+				fig.setDame(true);
 			break;
 
 		case WEIß:// müssen unten ankommen 1
+			if (x == 0)
+				fig.setDame(true);
 			break;
 
 		}
@@ -309,7 +317,187 @@ public class Spiel implements iBediener, Serializable {
 	/**
 	 * einen gegnerischen stein aus dem Spiel werfen
 	 */
-	private void steinSchlagen() {
+	private void steinSchlagen(char altepx, int altepy, char neuepx, int neuepy, Spielfigur fig) {
+
+		int alteX = brett.getBrettFeldSchachnotation(altepx, altepy).getPosX();
+		int alteY = brett.getBrettFeldSchachnotation(altepx, altepy).getPosY();
+
+		int neueX = brett.getBrettFeldSchachnotation(neuepx, neuepy).getPosX();
+		int neueY = brett.getBrettFeldSchachnotation(neuepx, neuepy).getPosY();
+
+		int diffX = alteX - neueX;
+		int diffY = alteY - neueY;
+
+		FarbEnum farbe = fig.getFarbe();
+
+		if (brett.getBrettFeldIndex(neueX, neueY).getIstSchwarz()) {
+			if (!brett.getBrettFeldIndex(neueX, neueY).getIstBelegt()) {
+
+				switch (farbe) {
+
+				case SCHWARZ:
+					if (fig.getDame(fig)) {// schlagen in 4richtungen mögl
+						// alte pos minus neue pos gibt mittleres feld
+
+						if (diffX < alteX && diffY < alteY) {
+							if (brett.getBrettFeldIndex(alteX - 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
+								// farbe prüfen (Wenn alles korrekt die
+								// figurEntfernen()aufrufen)
+
+							}
+
+						}
+
+						if (diffX < alteX && diffY > alteY) {
+							if (brett.getBrettFeldIndex(alteX - 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
+								// farbe prüfen (Wenn alles korrekt die
+								// figurEntfernen()aufrufen)
+
+							}
+
+						}
+
+						if (diffX > alteX && diffY < alteY) {
+							if (brett.getBrettFeldIndex(alteX + 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
+								// farbe prüfen (Wenn alles korrekt die
+								// figurEntfernen()aufrufen)
+
+							}
+
+						}
+
+						if (diffX > alteX && diffY > alteY) {
+							if (brett.getBrettFeldIndex(alteX + 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
+								// farbe prüfen (Wenn alles korrekt die
+								// figurEntfernen()aufrufen)
+
+							}
+
+						}
+
+					} else {
+
+						if (neueX < alteX) {// schlagen nur nach vorne mögl
+
+							System.out.println("Nach hinten schlagen nur mit einer Dame möglich.");
+							return;
+						}
+
+						if (diffX > alteX && diffY < alteY) {
+							if (brett.getBrettFeldIndex(alteX + 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
+								// farbe prüfen (Wenn alles korrekt die
+								// figurEntfernen()aufrufen)
+
+							}
+
+						}
+
+						if (diffX > alteX && diffY > alteY) {
+							if (brett.getBrettFeldIndex(alteX + 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
+								// farbe prüfen (Wenn alles korrekt die
+								// figurEntfernen()aufrufen)
+
+							}
+
+						}
+
+					}
+
+					break;
+
+				case WEIß:
+
+					if (fig.getDame(fig)) {// schlagen in 4richtungen mögl
+						// alte pos minus neue pos gibt mittleres feld
+
+						if (diffX < alteX && diffY < alteY) {
+							if (brett.getBrettFeldIndex(alteX - 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
+								// farbe prüfen (Wenn alles korrekt die
+								// figurEntfernen()aufrufen)
+
+							}
+
+						}
+
+						if (diffX < alteX && diffY > alteY) {
+							if (brett.getBrettFeldIndex(alteX - 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
+								// farbe prüfen (Wenn alles korrekt die
+								// figurEntfernen()aufrufen)
+
+							}
+
+						}
+
+						if (diffX > alteX && diffY < alteY) {
+							if (brett.getBrettFeldIndex(alteX + 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
+								// farbe prüfen (Wenn alles korrekt die
+								// figurEntfernen()aufrufen)
+
+							}
+
+						}
+
+						if (diffX > alteX && diffY > alteY) {
+							if (brett.getBrettFeldIndex(alteX + 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
+								// farbe prüfen (Wenn alles korrekt die
+								// figurEntfernen()aufrufen)
+
+							}
+
+						}
+
+					} else {
+
+						if (neueX > alteX) {// schlagen nur nach vorne mögl
+
+							System.out.println("Nach hinten schlagen nur mit einer Dame möglich.");
+							return;
+						}
+
+						if (diffX > alteX && diffY < alteY) {
+							if (brett.getBrettFeldIndex(alteX + 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
+								// farbe prüfen (Wenn alles korrekt die
+								// figurEntfernen()aufrufen)
+
+							}
+
+						}
+
+						if (diffX > alteX && diffY > alteY) {
+							if (brett.getBrettFeldIndex(alteX + 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
+								// farbe prüfen (Wenn alles korrekt die
+								// figurEntfernen()aufrufen)
+
+							}
+
+						}
+
+					}
+
+					break;
+
+				}
+
+			} else {
+				System.out.println("Zielfeld ist besetzt!");
+			}
+		} else {
+
+			System.out.println("Unmöglich, das Zielfeld ist nicht schwarz.");
+			return;
+		}
 
 	}
 

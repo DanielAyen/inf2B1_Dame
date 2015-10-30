@@ -14,13 +14,13 @@ public class Spielfigur implements Serializable {
 	 * Attribute
 	 * 
 	 * @param farbe
-	 *            Die Farbe der Figur
+	 *          Die Farbe der Figur
 	 * @param spieler
-	 *            der zugehoerige Spieler
+	 *          der zugehoerige Spieler
 	 * @param posX
-	 *            x Koord der Fig.
+	 *          x Koord der Fig.
 	 * @param posY
-	 *            y Koord der Fig.
+	 *          y Koord der Fig.
 	 */
 
 	private FarbEnum farbe;
@@ -29,16 +29,18 @@ public class Spielfigur implements Serializable {
 	private static int j = 0;
 	private int idS = 1;
 	private int idW = 1;
+	private int posX;
+	private int posY;
 
 	/**
 	 * Konstruktor
 	 * 
 	 * @param farbe
-	 *            setzt die Farbe der figur
+	 *          setzt die Farbe der figur
 	 * @param posX
-	 *            setzt die x pos
+	 *          setzt die x pos
 	 * @param posY
-	 *            setzt die y pos
+	 *          setzt die y pos
 	 */
 
 	public Spielfigur(FarbEnum farbe, boolean istDame) {
@@ -82,11 +84,29 @@ public class Spielfigur implements Serializable {
 		return this.idS;
 	}
 
+	public void setPosX(int posX) {
+		this.posX = posX;
+
+	}
+
+	public void setPosY(int posY) {
+		this.posY = posY;
+
+	}
+
+	public int getPosX() {
+		return this.posX;
+	}
+
+	public int getPosY() {
+		return this.posY;
+	}
+
 	/**
 	 * Setter für die Farbe
 	 * 
 	 * @param farbe
-	 *            die Farbe der Fig.
+	 *          die Farbe der Fig.
 	 */
 
 	private void setFarbe(FarbEnum farbe) {
