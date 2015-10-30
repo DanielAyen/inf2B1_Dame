@@ -85,8 +85,10 @@ public class Spiel implements iBediener, Serializable {
 					break;
 				// zum erstellen des spielfelds
 				case "aufbauen":
-					if (spielAufgebaut)
+					if (spielAufgebaut) {
+						System.out.println("Das Spielbrett wurde bereits aufgebaut!");
 						break;
+					}
 					System.out.println("Bitte gebe die gewuenschte Spielbrett Groesse ein. ( 8 , 10 , 12 )");
 					String groesse = reader.readLine();
 					if (groesse.equals("8")) {
@@ -140,6 +142,7 @@ public class Spiel implements iBediener, Serializable {
 
 									Spieler s1 = new Spieler(name, FarbEnum.SCHWARZ, false);
 									schwarzvergeben = true;
+									spielerAnzahl++;
 									System.out.println(s1);
 									System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
 									erstelleFiguren(s1, brett);
@@ -147,6 +150,7 @@ public class Spiel implements iBediener, Serializable {
 								} else {
 									Spieler s1 = new Spieler(name, FarbEnum.SCHWARZ, true);
 									KI_Dame k1 = new KI_Dame(s1);
+									spielerAnzahl++;
 									schwarzvergeben = true;
 									System.out.println(s1);
 									System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
@@ -166,6 +170,7 @@ public class Spiel implements iBediener, Serializable {
 								if (ki.equals("m")) {
 									Spieler s2 = new Spieler(name, FarbEnum.WEIß, false);
 									weissvergeben = true;
+									spielerAnzahl++;
 									System.out.println(s2);
 									System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
 									erstelleFiguren(s2, brett);
@@ -174,6 +179,7 @@ public class Spiel implements iBediener, Serializable {
 									Spieler s2 = new Spieler(name, FarbEnum.WEIß, true);
 									KI_Dame k2 = new KI_Dame(s2);
 									weissvergeben = true;
+									spielerAnzahl++;
 									System.out.println(s2);
 									System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
 									erstelleFiguren(s2, brett);
@@ -450,19 +456,18 @@ public class Spiel implements iBediener, Serializable {
 	 * serializiert das Spiel
 	 */
 	private void speichernAlsSerial(String s) {
-		try{
+		try {
 			daten = new Serial();
 			Properties p = new Properties();
-			p.setProperty("datei", s +".ser");
+			p.setProperty("datei", s + ".ser");
 			daten.oeffnen(p);
 			daten.schreiben(this);
-			System.out.println("Das Spiel wurde gespeichert: "+p.getProperty("datei"));
+			System.out.println("Das Spiel wurde gespeichert: " + p.getProperty("datei"));
 			daten.schliessen(p);
-		}catch (Exception e){
+		} catch (Exception e) {
 			System.out.println("Speichern serialisiert fehlgeschlagen!");
 		}
 	}
-
 
 	/**
 	 * laden
