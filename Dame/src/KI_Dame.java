@@ -2,7 +2,7 @@ import java.io.Serializable;
 
 /**
  * 
- * @author Baris, Daniel, Simon
+ * @author Baris, Daniel, Simon, Hannes
  *
  */
 class KI_Dame extends KI  implements Serializable{
@@ -16,7 +16,6 @@ class KI_Dame extends KI  implements Serializable{
 	public KI_Dame(Spieler spieler) {
 		super(spieler);
 		this.spieler = spieler;
-		
 		
 	}
 }
