@@ -283,20 +283,7 @@ public class Spiel implements iBediener, Serializable {
 		int y = fig.getPosY();
 		int brettgroesse = 0;
 		FarbEnum farbe = fig.getFarbe();
-		if (brett.getBrettGroesse() == 8) {
-			brettgroesse = 8;
-
-		}
-
-		if (brett.getBrettGroesse() == 10) {
-			brettgroesse = 10;
-
-		}
-
-		if (brett.getBrettGroesse() == 12) {
-			brettgroesse = 12;
-
-		}
+		brettgroesse = brett.getBrettGroesse();
 
 		switch (farbe) {
 
