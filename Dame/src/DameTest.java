@@ -3,7 +3,7 @@
  * @author Baris, Daniel, Simon
  *
  */
-public class DameTest implements iBediener {
+public class DameTest{
 
 	public static void main(String[] args) {
 	/*	
@@ -25,14 +25,8 @@ b1.display();
 
 		System.out.println("________________________________________________________________________");
 		
-		Spiel spiel=new Spiel();
+		iBediener spiel=new Spiel();
 		spiel.spielStarten();
-		
-	}
-
-	@Override
-	public void spielStarten() {
-		// TODO Auto-generated method stub
 		
 	}
 
