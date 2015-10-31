@@ -77,6 +77,14 @@ public class Spiel implements iBediener, Serializable {
 			do {
 				eingabe = reader.readLine().toLowerCase();
 				switch (eingabe) {
+				// TEST CASES: //
+
+				case "entf":
+					figurEntfernen(s1.getAlleFiguren().get(0));
+					break;
+
+				// TEST CASES ENDE //
+
 				case "help":
 					System.out.println("aufbauen : Erstellt ein Spielbrett, wird zum spielen benoetigt.");
 					System.out.println("spieler erstellen : Erlaubt dir einen Spieler zu erstellen, es werden 2 Spieler zum spielen benoetigt.");
@@ -498,8 +506,25 @@ public class Spiel implements iBediener, Serializable {
 	}
 
 	private void figurEntfernen(Spielfigur spielfigur) {
-		//TODO
-		
+
+		if (s1.getAlleFiguren().contains(spielfigur)) {
+			s1.getAlleFiguren().remove(spielfigur);
+
+			brett.getBrettFeldIndex(spielfigur.getPosX(), spielfigur.getPosY()).removeSpielfigur(spielfigur);
+
+			if (s1.getAlleFiguren().isEmpty())
+				System.out.println(s2 + " hat gewonnen!");// TODO Sieg zeugs.
+		} else {
+			if (s2.getAlleFiguren().contains(spielfigur)) {
+				s2.getAlleFiguren().remove(spielfigur);
+
+				brett.getBrettFeldIndex(spielfigur.getPosX(), spielfigur.getPosY()).removeSpielfigur(spielfigur);
+
+				if (s2.getAlleFiguren().isEmpty())
+					System.out.println(s1 + " hat gewonnen!");// TODO Sieg zeugs.
+			}
+
+		}
 
 	}
 
@@ -516,7 +541,6 @@ public class Spiel implements iBediener, Serializable {
 	private void setAmZug(FarbEnum farbe) {
 		farbeAmZug = farbe;
 	}
-
 
 	/**
 	 * gibt den derzeitigen Spieler der am zug ist

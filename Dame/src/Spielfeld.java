@@ -138,14 +138,14 @@ public class Spielfeld implements Serializable {
 			throw new RuntimeException("Es ist bereits eine Spielfigur auf dem Brett!");
 	}
 
-	public void removeSpielfigur(Spielfigur s, String id) {
+	public void removeSpielfigur(Spielfigur s) {
 		if (s == null) {
-			throw new RuntimeException("Kein Spielfigur übergeben um es vom Feld zu nehmen");
+			throw new RuntimeException("Keine zu löschende Figur übergeben.");
 		}
-		if ((this.id != id) || (istBelegt == false)) {
-			throw new RuntimeException("Falsche Eingabe");
-		} else
-			this.spielfigur = null;
+		s = null;
+		this.spielfigur = s;
+		this.istBelegt = false;
+
 	}
 
 	/**
