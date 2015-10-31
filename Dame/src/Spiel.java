@@ -62,6 +62,11 @@ public class Spiel implements iBediener, Serializable {
 	private boolean weissvergeben = false;
 	private Spielbrett brett;
 	private Spieler spieler;
+	private FarbEnum farbeAmZug;
+	private Spieler s1;
+	private Spieler s2;
+	private KI_Dame k1;
+	private KI_Dame k2;
 
 	public void spielStarten() {
 		System.out.println("Bitte erstelle zuerst ein neues Spielbrett. Falls du Hilfe benoetigst gebe 'help' in die konsole ein");
@@ -139,7 +144,7 @@ public class Spiel implements iBediener, Serializable {
 							if (ki.equals("m") || ki.equals("k")) {
 								if (ki.equals("m")) {
 
-									Spieler s1 = new Spieler(name, FarbEnum.SCHWARZ, false);
+									s1 = new Spieler(name, FarbEnum.SCHWARZ, false);
 									schwarzvergeben = true;
 									spielerAnzahl++;
 									System.out.println(s1);
@@ -147,11 +152,12 @@ public class Spiel implements iBediener, Serializable {
 									erstelleFiguren(s1, brett);
 									break;
 								} else {
-									Spieler s1 = new Spieler(name, FarbEnum.SCHWARZ, true);
-									KI_Dame k1 = new KI_Dame(s1);
+									s1 = new Spieler(name, FarbEnum.SCHWARZ, true);
+									k1 = new KI_Dame(s1);
 									spielerAnzahl++;
 									schwarzvergeben = true;
-									System.out.println(s1);
+									System.out.println(k1);// TODO Nur marker hier wird die Ki
+																					// ausgegeben aber to String fehlt
 									System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
 									erstelleFiguren(s1, brett);
 									break;
@@ -167,7 +173,7 @@ public class Spiel implements iBediener, Serializable {
 							ki = reader.readLine();
 							if (ki.equals("m") || ki.equals("k")) {
 								if (ki.equals("m")) {
-									Spieler s2 = new Spieler(name, FarbEnum.WEIß, false);
+									s2 = new Spieler(name, FarbEnum.WEIß, false);
 									weissvergeben = true;
 									spielerAnzahl++;
 									System.out.println(s2);
@@ -175,11 +181,12 @@ public class Spiel implements iBediener, Serializable {
 									erstelleFiguren(s2, brett);
 									break;
 								} else {
-									Spieler s2 = new Spieler(name, FarbEnum.WEIß, true);
-									KI_Dame k2 = new KI_Dame(s2);
+									s2 = new Spieler(name, FarbEnum.WEIß, true);
+									k2 = new KI_Dame(s2);
 									weissvergeben = true;
 									spielerAnzahl++;
-									System.out.println(s2);
+									System.out.println(k2);// TODO Nur marker hier wird die Ki
+																					// ausgegeben aber to String fehlt
 									System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
 									erstelleFiguren(s2, brett);
 									break;
@@ -203,7 +210,9 @@ public class Spiel implements iBediener, Serializable {
 						spiellaeuft = true;
 
 						System.out.println("Das Spiel beginnt!");
-						// display?
+						if (s1.getFarbe() == FarbEnum.SCHWARZ)
+							setAmZug(FarbEnum.SCHWARZ);
+						// TODO
 
 					} else {
 						System.err.println("Das Spiel kann noch nicht gestartet werden!!");
@@ -326,42 +335,42 @@ public class Spiel implements iBediener, Serializable {
 					if (fig.getDame(fig)) {// schlagen in 4richtungen mögl
 						// alte pos minus neue pos gibt mittleres feld
 
-						if (diffX < alteX && diffY < alteY) {
-							if (brett.getBrettFeldIndex(alteX - 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+						if (diffX < 0 && diffY < 0) {
+							if (brett.getBrettFeldIndex(alteX + 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
 								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
-
+								figurEntfernen(brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur());
 							}
 
 						}
 
-						if (diffX < alteX && diffY > alteY) {
+						if (diffX < 0 && diffY > 0) {
 							if (brett.getBrettFeldIndex(alteX - 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
 								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
-
+								figurEntfernen(brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur());
 							}
 
 						}
 
-						if (diffX > alteX && diffY < alteY) {
+						if (diffX > 0 && diffY < 0) {
 							if (brett.getBrettFeldIndex(alteX + 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
 								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
-
+								figurEntfernen(brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur());
 							}
 
 						}
 
 						if (diffX > alteX && diffY > alteY) {
-							if (brett.getBrettFeldIndex(alteX + 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+							if (brett.getBrettFeldIndex(alteX - 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
 								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
-
+								figurEntfernen(brett.getBrettFeldIndex(alteX - 1, alteY - 1).getSpielfigur());
 							}
 
 						}
@@ -374,22 +383,22 @@ public class Spiel implements iBediener, Serializable {
 							return;
 						}
 
+						if (diffX < 0 && diffY < 0) {
+							if (brett.getBrettFeldIndex(alteX + 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
+								// farbe prüfen (Wenn alles korrekt die
+								// figurEntfernen()aufrufen)
+								figurEntfernen(brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur());
+							}
+
+						}
+
 						if (diffX > alteX && diffY < alteY) {
 							if (brett.getBrettFeldIndex(alteX + 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
 								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
-
-							}
-
-						}
-
-						if (diffX > alteX && diffY > alteY) {
-							if (brett.getBrettFeldIndex(alteX + 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
-								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
-								// farbe prüfen (Wenn alles korrekt die
-								// figurEntfernen()aufrufen)
-
+								figurEntfernen(brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur());
 							}
 
 						}
@@ -403,42 +412,42 @@ public class Spiel implements iBediener, Serializable {
 					if (fig.getDame(fig)) {// schlagen in 4richtungen mögl
 						// alte pos minus neue pos gibt mittleres feld
 
-						if (diffX < alteX && diffY < alteY) {
-							if (brett.getBrettFeldIndex(alteX - 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
-								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
-								// farbe prüfen (Wenn alles korrekt die
-								// figurEntfernen()aufrufen)
-
-							}
-
-						}
-
-						if (diffX < alteX && diffY > alteY) {
-							if (brett.getBrettFeldIndex(alteX - 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
-								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
-								// farbe prüfen (Wenn alles korrekt die
-								// figurEntfernen()aufrufen)
-
-							}
-
-						}
-
-						if (diffX > alteX && diffY < alteY) {
-							if (brett.getBrettFeldIndex(alteX + 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
-								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
-								// farbe prüfen (Wenn alles korrekt die
-								// figurEntfernen()aufrufen)
-
-							}
-
-						}
-
-						if (diffX > alteX && diffY > alteY) {
+						if (diffX < 0 && diffY < 0) {
 							if (brett.getBrettFeldIndex(alteX + 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
 								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
+								figurEntfernen(brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur());
+							}
 
+						}
+
+						if (diffX < 0 && diffY > 0) {
+							if (brett.getBrettFeldIndex(alteX - 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
+								// farbe prüfen (Wenn alles korrekt die
+								// figurEntfernen()aufrufen)
+								figurEntfernen(brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur());
+							}
+
+						}
+
+						if (diffX > 0 && diffY < 0) {
+							if (brett.getBrettFeldIndex(alteX + 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
+								// farbe prüfen (Wenn alles korrekt die
+								// figurEntfernen()aufrufen)
+								figurEntfernen(brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur());
+							}
+
+						}
+
+						if (diffX > 0 && diffY > 0) {
+							if (brett.getBrettFeldIndex(alteX - 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
+								// farbe prüfen (Wenn alles korrekt die
+								// figurEntfernen()aufrufen)
+								figurEntfernen(brett.getBrettFeldIndex(alteX - 1, alteY - 1).getSpielfigur());
 							}
 
 						}
@@ -451,22 +460,22 @@ public class Spiel implements iBediener, Serializable {
 							return;
 						}
 
-						if (diffX > alteX && diffY < alteY) {
-							if (brett.getBrettFeldIndex(alteX + 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+						if (diffX > 0 && diffY > 0) {
+							if (brett.getBrettFeldIndex(alteX - 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
 								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
-
+								figurEntfernen(brett.getBrettFeldIndex(alteX - 1, alteY - 1).getSpielfigur());
 							}
 
 						}
 
-						if (diffX > alteX && diffY > alteY) {
-							if (brett.getBrettFeldIndex(alteX + 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+						if (diffX < 0 && diffY > 0) {
+							if (brett.getBrettFeldIndex(alteX - 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
 								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
-
+								figurEntfernen(brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur());
 							}
 
 						}
@@ -488,6 +497,12 @@ public class Spiel implements iBediener, Serializable {
 
 	}
 
+	private void figurEntfernen(Spielfigur spielfigur) {
+		//TODO
+		
+
+	}
+
 	/**
 	 * pusten halt
 	 */
@@ -498,15 +513,17 @@ public class Spiel implements iBediener, Serializable {
 	/**
 	 * setzt den derzeitigen Spieler der am zug ist
 	 */
-	private void setAmZug() {
-
+	private void setAmZug(FarbEnum farbe) {
+		farbeAmZug = farbe;
 	}
+
 
 	/**
 	 * gibt den derzeitigen Spieler der am zug ist
 	 */
-	private void getAmZug() {
+	private FarbEnum getAmZug() {
 
+		return farbeAmZug;
 	}
 
 	/**
