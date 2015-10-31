@@ -229,6 +229,60 @@ public class Spiel implements iBediener, Serializable {
 				case "ziehen":
 					if (!spiellaeuft) {
 						System.out.println("Spiel hat noch nicht begonnen! Zurueck in Hauptmenue");
+
+						break;
+
+						System.out.println("Bitte gebe deine Startposition ein.");
+
+						String startp = reader.readLine();
+						int brettGroesse = brett.getBrettGroesse();
+
+						switch (brettGroesse) {
+						case 8:
+							if (startp.startsWith("A"))
+								if (startp.startsWith("B"))
+									if (startp.startsWith("C"))
+										if (startp.startsWith("D"))
+											if (startp.startsWith("E"))
+												if (startp.startsWith("F"))
+													if (startp.startsWith("G"))
+														if (startp.startsWith("H"))
+
+															break;
+
+						case 10:
+							if (startp.startsWith("A"))
+								if (startp.startsWith("B"))
+									if (startp.startsWith("C"))
+										if (startp.startsWith("D"))
+											if (startp.startsWith("E"))
+												if (startp.startsWith("F"))
+													if (startp.startsWith("G"))
+														if (startp.startsWith("H"))
+															if (startp.startsWith("I"))
+																if (startp.startsWith("J"))
+
+																	break;
+
+						case 12:
+							if (startp.startsWith("A"))
+								if (startp.startsWith("B"))
+									if (startp.startsWith("C"))
+										if (startp.startsWith("D"))
+											if (startp.startsWith("E"))
+												if (startp.startsWith("F"))
+													if (startp.startsWith("G"))
+														if (startp.startsWith("H"))
+															if (startp.startsWith("I"))
+																if (startp.startsWith("K"))
+																	if (startp.startsWith("L"))
+
+																		break;
+
+						}
+
+						figurBewegen(xa, ya, xn, yn);
+
 						break;
 					} else {
 						// zugGueltig(int x, int y, boolean istDame);
@@ -279,7 +333,94 @@ public class Spiel implements iBediener, Serializable {
 	 * Der Spieler der am Zug ist darf seine Figur bewegen(wird durch zuggueltig
 	 * geprueft) nur der SPieler der am zug ist darf auch ziehen
 	 */
-	private void figurBewegen() {
+	private void figurBewegen(char xa, int ya, char xn, int yn) {// TODO
+
+		if (xa < brett.getBrettGroesse() || ya < brett.getBrettGroesse()) {
+			System.out.println("Außerhalb des Brett's gibt es keine Figuren!");
+			return;
+		}
+
+		if (xn > brett.getBrettGroesse() || yn > brett.getBrettGroesse() || xa < brett.getBrettGroesse() || ya < brett.getBrettGroesse()) {
+			System.out.println("Du kannst doch nicht vom Spielbrett springen!");
+			return;
+		}
+
+		if (!brett.getBrettFeldSchachnotation(xa, ya).getIstBelegt()) {
+			System.out.println("Ohne Figur kannst du nicht ziehen!");
+			return;
+		}
+		if (!brett.getBrettFeldSchachnotation(xn, yn).getIstSchwarz()) {
+			System.out.println("Du kannst nur auf schwarze Felder springen!");
+			return;
+		}
+		if (brett.getBrettFeldSchachnotation(xn, yn).getIstBelegt()) {
+			System.out.println("Du kannst keine andere Figur besteigen!");
+			return;
+		}
+
+		if (brett.getBrettFeldSchachnotation(xa, ya).getPosX() - brett.getBrettFeldSchachnotation(xn, yn).getPosX() != brett.getBrettFeldSchachnotation(xa, ya).getPosY() - brett.getBrettFeldSchachnotation(xn, yn).getPosY()) {
+			System.out.println("Du kannst nicht quer­beet übers Brett laufen!");
+			return;
+		}
+
+		Spielfigur fig = brett.getBrettFeldSchachnotation(xa, ya).getSpielfigur();
+
+		FarbEnum farbe = fig.getFarbe();
+		int tempx = brett.getBrettFeldSchachnotation(xa, ya).getPosX() - brett.getBrettFeldSchachnotation(xn, yn).getPosX();
+		switch (farbe) {
+		case SCHWARZ:
+			if (fig.getDame(fig)) {
+
+				if (tempx == -1 || tempx == 1) {// zieh möglivchkeiten dame
+
+					brett.getBrettFeldSchachnotation(xa, ya).removeSpielfigur(fig);
+					brett.getBrettFeldSchachnotation(xn, yn).setSpielfigur(fig);
+
+				} else {
+					figurSchlagen(xa, ya, xn, yn, fig);
+				}
+
+			} else {
+				if (tempx == -1) {// zieh möglichkeiten stein
+
+					brett.getBrettFeldSchachnotation(xa, ya).removeSpielfigur(fig);
+					brett.getBrettFeldSchachnotation(xn, yn).setSpielfigur(fig);
+
+				} else {
+					figurSchlagen(xa, ya, xn, yn, fig);
+				}
+
+			}
+
+			break;
+
+		case WEIß:
+
+			if (fig.getDame(fig)) {
+
+				if (tempx == -1 || tempx == 1) {// zieh möglivchkeiten dame
+
+					brett.getBrettFeldSchachnotation(xa, ya).removeSpielfigur(fig);
+					brett.getBrettFeldSchachnotation(xn, yn).setSpielfigur(fig);
+
+				} else {
+					figurSchlagen(xa, ya, xn, yn, fig);
+				}
+
+			} else {
+				if (tempx == 1) {// zieh möglichkeiten stein
+
+					brett.getBrettFeldSchachnotation(xa, ya).removeSpielfigur(fig);
+					brett.getBrettFeldSchachnotation(xn, yn).setSpielfigur(fig);
+
+				} else {
+					figurSchlagen(xa, ya, xn, yn, fig);
+				}
+
+			}
+
+			break;
+		}
 
 	}
 
@@ -321,7 +462,7 @@ public class Spiel implements iBediener, Serializable {
 	/**
 	 * einen gegnerischen stein aus dem Spiel werfen
 	 */
-	private void steinSchlagen(char altepx, int altepy, char neuepx, int neuepy, Spielfigur fig) {
+	private void figurSchlagen(char altepx, int altepy, char neuepx, int neuepy, Spielfigur fig) {
 
 		int alteX = brett.getBrettFeldSchachnotation(altepx, altepy).getPosX();
 		int alteY = brett.getBrettFeldSchachnotation(altepx, altepy).getPosY();
