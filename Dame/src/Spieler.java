@@ -203,8 +203,8 @@ public class Spieler implements Serializable {
 	 */
 	public String getFiguren(FarbEnum farbe) {
 		String s = "";
-		for (int i = 1; i < this.figuren.size(); i++) {
-			figuren.get(i);// pos der fig und name der fig bekommen dazu den dame
+		for (int i = 0; i < this.figuren.size(); i++) {
+			s+=""+figuren.get(i);// pos der fig und name der fig bekommen dazu den dame
 											// status alles in S schreiben
 
 		}
