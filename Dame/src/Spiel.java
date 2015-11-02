@@ -68,6 +68,11 @@ public class Spiel implements iBediener, Serializable {
 	private KI_Dame k1;
 	private KI_Dame k2;
 
+	private char startC;
+	private char endC;
+	private int startI;
+	private int endI;
+
 	public void spielStarten() {
 		System.out.println("Bitte erstelle zuerst ein neues Spielbrett. Falls du Hilfe benoetigst gebe 'help' in die konsole ein");
 		try {
@@ -218,8 +223,9 @@ public class Spiel implements iBediener, Serializable {
 						spiellaeuft = true;
 
 						System.out.println("Das Spiel beginnt!");
-						if (s1.getFarbe() == FarbEnum.SCHWARZ)
-							setAmZug(FarbEnum.SCHWARZ);
+
+						setAmZug(FarbEnum.WEIß);
+						System.out.println("Der Spieler mit der Farbe " + getAmZug() + " beginnt");
 						// TODO
 
 					} else {
@@ -229,66 +235,88 @@ public class Spiel implements iBediener, Serializable {
 				case "ziehen":
 					if (!spiellaeuft) {
 						System.out.println("Spiel hat noch nicht begonnen! Zurueck in Hauptmenue");
-
 						break;
-
+					} else {
+						// Startpos fragen
 						System.out.println("Bitte gebe deine Startposition ein.");
 
 						String startp = reader.readLine();
-						int brettGroesse = brett.getBrettGroesse();
+						// ///
+						if (startp.length() != 0) {
 
-						switch (brettGroesse) {
-						case 8:
-							if (startp.startsWith("A"))
-								if (startp.startsWith("B"))
-									if (startp.startsWith("C"))
-										if (startp.startsWith("D"))
-											if (startp.startsWith("E"))
-												if (startp.startsWith("F"))
-													if (startp.startsWith("G"))
-														if (startp.startsWith("H"))
+							if (!charPruefenUndSetzenA(startp)) {
+								System.out.println("Fehler in der Eingabe (Buchstabe)! Zurueck im Hauptmenue.");
+								startC = 0;
+								startI = 0;
+								endC = 0;
+								endI = 0;
+								break;
+							}
 
-															break;
+							if (!zahlPruefenUndSetzenA(startp)) {
+								System.out.println("Fehler in der Eingabe (Zahl)! Zurueck im Hauptmenue.");
+								startC = 0;
+								startI = 0;
+								endC = 0;
+								endI = 0;
+								break;
+							}
 
-						case 10:
-							if (startp.startsWith("A"))
-								if (startp.startsWith("B"))
-									if (startp.startsWith("C"))
-										if (startp.startsWith("D"))
-											if (startp.startsWith("E"))
-												if (startp.startsWith("F"))
-													if (startp.startsWith("G"))
-														if (startp.startsWith("H"))
-															if (startp.startsWith("I"))
-																if (startp.startsWith("J"))
-
-																	break;
-
-						case 12:
-							if (startp.startsWith("A"))
-								if (startp.startsWith("B"))
-									if (startp.startsWith("C"))
-										if (startp.startsWith("D"))
-											if (startp.startsWith("E"))
-												if (startp.startsWith("F"))
-													if (startp.startsWith("G"))
-														if (startp.startsWith("H"))
-															if (startp.startsWith("I"))
-																if (startp.startsWith("K"))
-																	if (startp.startsWith("L"))
-
-																		break;
-
+						} else {
+							System.out.println("So kannst du nicht ziehen! Zurueck im Hauptmenue.");
+							startC = 0;
+							startI = 0;
+							endC = 0;
+							endI = 0;
+							break;
 						}
+						// Endpos fragen
+						System.out.println("Eingegebene Startposition: " + startC + startI + "\n");
 
-						figurBewegen(xa, ya, xn, yn);
+						System.out.println("Bitte gebe deine Endposition ein.");
+
+						String endp = reader.readLine();
+
+						if (endp.length() != 0) {
+
+							if (!charPruefenUndSetzenN(endp)) {
+								System.out.println("Fehler in der Eingabe (Buchstabe)! Zurueck im Hauptmenue.");
+								startC = 0;
+								startI = 0;
+								endC = 0;
+								endI = 0;
+								break;
+							}
+
+							if (!zahlPruefenUndSetzenN(endp)) {
+								System.out.println("Fehler in der Eingabe (Zahl)! Zurueck im Hauptmenue.");
+								startC = 0;
+								startI = 0;
+								endC = 0;
+								endI = 0;
+								break;
+							}
+
+						} else {
+							System.out.println("So kannst du nicht ziehen! Zurueck im Hauptmenue.");
+							startC = 0;
+							startI = 0;
+							endC = 0;
+							endI = 0;
+							break;
+						}
+						System.out.println("Eingegebene EndPosition: " + endC + endI + "\n");
+
+						figurBewegen(startC, startI, endC, endI);
+						startC = 0;
+						startI = 0;
+						endC = 0;
+						endI = 0;
 
 						break;
-					} else {
-						// zugGueltig(int x, int y, boolean istDame);
 					}
-					break;
-				// beendet das Spiel
+
+					// beendet das Spiel
 				case "beenden":
 					System.out.println("\n\n\t\tDas Spiel wird beendet.");
 					break;
@@ -314,10 +342,589 @@ public class Spiel implements iBediener, Serializable {
 		}
 	}
 
+	private boolean charPruefenUndSetzenA(String posi) {
+
+		int brettGroesse = brett.getBrettGroesse();
+
+		switch (brettGroesse) {
+
+		case 8:
+
+			if (posi.startsWith("A") || posi.startsWith("a")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("B") || posi.startsWith("b")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("C") || posi.startsWith("c")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("D") || posi.startsWith("d")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("E") || posi.startsWith("e")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("F") || posi.startsWith("f")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("G") || posi.startsWith("g")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("H") || posi.startsWith("h")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			return false;
+
+		case 10:
+
+			if (posi.startsWith("A") || posi.startsWith("a")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("B") || posi.startsWith("b")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("C") || posi.startsWith("c")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("D") || posi.startsWith("d")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("E") || posi.startsWith("e")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("F") || posi.startsWith("f")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("G") || posi.startsWith("g")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("H") || posi.startsWith("h")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("I") || posi.startsWith("i")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("J") || posi.startsWith("j")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			return false;
+
+		case 12:
+
+			if (posi.startsWith("A") || posi.startsWith("a")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("B") || posi.startsWith("b")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("C") || posi.startsWith("c")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("D") || posi.startsWith("d")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("E") || posi.startsWith("e")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("F") || posi.startsWith("f")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("G") || posi.startsWith("g")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("H") || posi.startsWith("h")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("I") || posi.startsWith("i")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("J") || posi.startsWith("j")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("K") || posi.startsWith("k")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("L") || posi.startsWith("l")) {
+				startC = posi.charAt(0);
+				return true;
+			}
+			return false;
+
+		}
+		return false;
+	}
+
+	private boolean zahlPruefenUndSetzenA(String posi) {
+
+		int brettGroesse = brett.getBrettGroesse();
+
+		switch (brettGroesse) {
+
+		case 8:
+
+			if (posi.endsWith("1")) {
+				startI = 1;
+
+			}
+			if (posi.endsWith("2")) {
+				startI = 2;
+
+			}
+			if (posi.endsWith("3")) {
+				startI = 3;
+
+			}
+			if (posi.endsWith("4")) {
+				startI = 4;
+
+			}
+			if (posi.endsWith("5")) {
+				startI = 5;
+
+			}
+			if (posi.endsWith("6")) {
+				startI = 6;
+
+			}
+			if (posi.endsWith("7")) {
+				startI = 7;
+
+			}
+			if (posi.endsWith("8")) {
+				startI = 8;
+
+			}
+			if (startI != 0)
+				return true;
+
+			return false;
+
+		case 10:
+
+			if (posi.endsWith("1")) {
+				startI = 1;
+
+			}
+			if (posi.endsWith("2")) {
+				startI = 2;
+
+			}
+			if (posi.endsWith("3")) {
+				startI = 3;
+
+			}
+			if (posi.endsWith("4")) {
+				startI = 4;
+
+			}
+			if (posi.endsWith("5")) {
+				startI = 5;
+
+			}
+			if (posi.endsWith("6")) {
+				startI = 6;
+
+			}
+			if (posi.endsWith("7")) {
+				startI = 7;
+
+			}
+			if (posi.endsWith("8")) {
+				startI = 8;
+
+			}
+			if (posi.endsWith("9")) {
+				startI = 9;
+
+			}
+			if (posi.endsWith("10")) {
+				startI = 10;
+
+			}
+			if (startI != 0)
+				return true;
+
+			return false;
+
+		case 12:
+
+			if (posi.endsWith("1")) {
+				startI = 1;
+
+			}
+			if (posi.endsWith("2")) {
+				startI = 2;
+
+			}
+			if (posi.endsWith("3")) {
+				startI = 3;
+
+			}
+			if (posi.endsWith("4")) {
+				startI = 4;
+
+			}
+			if (posi.endsWith("5")) {
+				startI = 5;
+
+			}
+			if (posi.endsWith("6")) {
+				startI = 6;
+
+			}
+			if (posi.endsWith("7")) {
+				startI = 7;
+
+			}
+			if (posi.endsWith("8")) {
+				startI = 8;
+
+			}
+			if (posi.endsWith("9")) {
+				startI = 9;
+
+			}
+			if (posi.endsWith("10")) {
+				startI = 10;
+
+			}
+			if (posi.endsWith("11")) {
+				startI = 11;
+
+			}
+			if (posi.endsWith("12")) {
+				startI = 12;
+
+			}
+			if (startI != 0)
+				return true;
+
+		}
+		return false;
+	}
+
+	private boolean charPruefenUndSetzenN(String posi) {
+		int brettGroesse = brett.getBrettGroesse();
+
+		switch (brettGroesse) {
+
+		case 8:
+
+			if (posi.startsWith("A") || posi.startsWith("a")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("B") || posi.startsWith("b")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("C") || posi.startsWith("c")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("D") || posi.startsWith("d")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("E") || posi.startsWith("e")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("F") || posi.startsWith("f")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("G") || posi.startsWith("g")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("H") || posi.startsWith("h")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			return false;
+
+		case 10:
+
+			if (posi.startsWith("A") || posi.startsWith("a")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("B") || posi.startsWith("b")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("C") || posi.startsWith("c")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("D") || posi.startsWith("d")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("E") || posi.startsWith("e")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("F") || posi.startsWith("f")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("G") || posi.startsWith("g")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("H") || posi.startsWith("h")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("I") || posi.startsWith("i")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("J") || posi.startsWith("j")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			return false;
+
+		case 12:
+
+			if (posi.startsWith("A") || posi.startsWith("a")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("B") || posi.startsWith("b")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("C") || posi.startsWith("c")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("D") || posi.startsWith("d")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("E") || posi.startsWith("e")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("F") || posi.startsWith("f")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("G") || posi.startsWith("g")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("H") || posi.startsWith("h")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("I") || posi.startsWith("i")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("J") || posi.startsWith("j")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("K") || posi.startsWith("k")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			if (posi.startsWith("L") || posi.startsWith("l")) {
+				endC = posi.charAt(0);
+				return true;
+			}
+			return false;
+
+		}
+		return false;
+	}
+
+	private boolean zahlPruefenUndSetzenN(String posi) {
+		int brettGroesse = brett.getBrettGroesse();
+
+		switch (brettGroesse) {
+
+		case 8:
+
+			if (posi.endsWith("1")) {
+				endI = 1;
+
+			}
+			if (posi.endsWith("2")) {
+				endI = 2;
+
+			}
+			if (posi.endsWith("3")) {
+				endI = 3;
+
+			}
+			if (posi.endsWith("4")) {
+				endI = 4;
+
+			}
+			if (posi.endsWith("5")) {
+				endI = 5;
+
+			}
+			if (posi.endsWith("6")) {
+				endI = 6;
+
+			}
+			if (posi.endsWith("7")) {
+				endI = 7;
+
+			}
+			if (posi.endsWith("8")) {
+				endI = 8;
+
+			}
+			if (startI != 0)
+				return true;
+
+			return false;
+
+		case 10:
+
+			if (posi.endsWith("1")) {
+				endI = 1;
+
+			}
+			if (posi.endsWith("2")) {
+				endI = 2;
+
+			}
+			if (posi.endsWith("3")) {
+				endI = 3;
+
+			}
+			if (posi.endsWith("4")) {
+				endI = 4;
+
+			}
+			if (posi.endsWith("5")) {
+				endI = 5;
+
+			}
+			if (posi.endsWith("6")) {
+				endI = 6;
+
+			}
+			if (posi.endsWith("7")) {
+				endI = 7;
+
+			}
+			if (posi.endsWith("8")) {
+				endI = 8;
+
+			}
+			if (posi.endsWith("9")) {
+				endI = 9;
+
+			}
+			if (posi.endsWith("10")) {
+				endI = 10;
+
+			}
+			return false;
+
+		case 12:
+
+			if (posi.endsWith("1")) {
+				endI = 1;
+
+			}
+			if (posi.endsWith("2")) {
+				endI = 2;
+
+			}
+			if (posi.endsWith("3")) {
+				endI = 3;
+
+			}
+			if (posi.endsWith("4")) {
+				endI = 4;
+
+			}
+			if (posi.endsWith("5")) {
+				endI = 5;
+
+			}
+			if (posi.endsWith("6")) {
+				endI = 6;
+
+			}
+			if (posi.endsWith("7")) {
+				endI = 7;
+
+			}
+			if (posi.endsWith("8")) {
+				endI = 8;
+
+			}
+			if (posi.endsWith("9")) {
+				endI = 9;
+
+			}
+			if (posi.endsWith("10")) {
+				endI = 10;
+
+			}
+			if (posi.endsWith("11")) {
+				endI = 11;
+
+			}
+			if (posi.endsWith("12")) {
+				endI = 12;
+
+			}
+			if (startI != 0)
+				return true;
+
+			return false;
+
+		}
+		return false;
+	}
+
 	/**
 	 * erste Methode erstellt Spielbrett,
 	 */
-	private void spielBauen(int x) {
+	public void spielBauen(int x) {
 		if (spielAufgebaut == true) {
 			System.out.println("Spielbrett wurde bereits aufgebaut!");
 		} else {
@@ -335,15 +942,16 @@ public class Spiel implements iBediener, Serializable {
 	 */
 	private void figurBewegen(char xa, int ya, char xn, int yn) {// TODO
 
-		if (xa < brett.getBrettGroesse() || ya < brett.getBrettGroesse()) {
-			System.out.println("Außerhalb des Brett's gibt es keine Figuren!");
-			return;
-		}
+		// if (xa > brett.getBrettGroesse() || ya > brett.getBrettGroesse()) {
+		// System.out.println("Außerhalb des Brett's gibt es keine Figuren!");
+		// return;
+		// }
 
-		if (xn > brett.getBrettGroesse() || yn > brett.getBrettGroesse() || xa < brett.getBrettGroesse() || ya < brett.getBrettGroesse()) {
-			System.out.println("Du kannst doch nicht vom Spielbrett springen!");
-			return;
-		}
+		// if (xn > brett.getBrettGroesse() || yn > brett.getBrettGroesse() || xa <
+		// brett.getBrettGroesse() || ya < brett.getBrettGroesse()) {
+		// System.out.println("Du kannst doch nicht vom Spielbrett springen!");
+		// return;
+		// }
 
 		if (!brett.getBrettFeldSchachnotation(xa, ya).getIstBelegt()) {
 			System.out.println("Ohne Figur kannst du nicht ziehen!");
@@ -354,6 +962,7 @@ public class Spiel implements iBediener, Serializable {
 			return;
 		}
 		if (brett.getBrettFeldSchachnotation(xn, yn).getIstBelegt()) {
+			System.out.println(brett.getBrettFeldSchachnotation(xn, yn).getSpielfigur());
 			System.out.println("Du kannst keine andere Figur besteigen!");
 			return;
 		}
@@ -699,9 +1308,14 @@ public class Spiel implements iBediener, Serializable {
 	}
 
 	/**
-	 * zug fruehzeitig beenden
+	 * zug beenden
 	 */
 	private void zugBeenden() {
+		if (getAmZug() == FarbEnum.SCHWARZ) {
+			setAmZug(FarbEnum.WEIß);
+		} else {
+			setAmZug(FarbEnum.SCHWARZ);
+		}
 
 	}
 
@@ -734,7 +1348,39 @@ public class Spiel implements iBediener, Serializable {
 				}
 			}
 		}
+
 	}
+
+	// if (spieler.getFarbe() == FarbEnum.SCHWARZ) {
+	// for (int i = 0; i < brett.getBrettGroesse() / 2 - 1; i++) {
+	// for (int j = 0; j < brett.getBrettGroesse(); j++) {
+	// if (brett.getBrettFeldIndex(i, j).getIstBelegt() == false &&
+	// brett.getBrettFeldIndex(i, j).getIstSchwarz() == true) {
+	//
+	// Spielfigur fig = (new Spielfigur(FarbEnum.SCHWARZ, false));
+	//
+	// brett.getBrettFeldIndex(i, j).setSpielfigur(fig);
+	//
+	// spieler.addSpielfigur(fig);
+	// }
+	// }
+	// }
+	// } else {
+	// for (int i = brett.getBrettGroesse() - 1; i > brett.getBrettGroesse() /
+	// 2; i--) {
+	// for (int j = 0; j < brett.getBrettGroesse(); j++) {
+	// if (brett.getBrettFeldIndex(i, j).getIstBelegt() == false &&
+	// brett.getBrettFeldIndex(i, j).getIstSchwarz() == true) {
+	//
+	// Spielfigur fig = (new Spielfigur(FarbEnum.WEIß, false));
+	// brett.getBrettFeldIndex(i, j).setSpielfigur(fig);
+	//
+	// spieler.addSpielfigur(fig);
+	//
+	// }
+	// }
+	// }
+	// }
 
 	/**
 	 * ueberprueft ob der gewollte Zug gueltig ist
