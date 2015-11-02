@@ -22,11 +22,12 @@ public abstract class KI implements Serializable {
 	 * @param spieler
 	 */
 
-	public KI(Spieler spieler) {
+	public KI(Spieler spieler, Spielbrett brett) {
 		if (spieler == null) {
 			throw new RuntimeException("Ki darf nicht ohne Spieler exisitieren");
 		} else {
 			this.spieler = spieler;
+			this.brett = brett;
 		}
 	}
 
@@ -42,60 +43,72 @@ public abstract class KI implements Serializable {
 		}
 	}
 
-	private void zug() {
-
+	public int[] zug() {
 		// Methode erfasst eigene Spielfiguren, um später mit getZuege mögliche Züge
 		// zu ermitteln.
 
 		// ArrayList<ArrayList<int[]>> alleZuge = new ArrayList<ArrayList<int[]>>();
 		for (int i = 0; i < brett.getBrettGroesse(); i++) {
-			for (int j = 0; j < brett.getBrettGroesse(); j++) {
-				Spielfeld feld = brett.getBrettFeldIndex(i, j);
+			for (int j = 1; j <= brett.getBrettGroesse(); j++) {
+				char a = (char) ('a' + i);
+				Spielfeld feld = brett.getBrettFeldSchachnotation(a, j);
 				if (feld.getIstSchwarz() && feld.getIstBelegt()) {
 					Spielfigur figur = feld.getSpielfigur();
 					if (figur.getFarbe() == spieler.getFarbe()) {
-						ArrayList<int[]> zuege = this.getZuege(i, j, figur);
+						ArrayList<int[]> zuege = this.getZuege(a, j, figur);
 						if (!zuege.isEmpty()) {
-							zuege.get(0);
-							// TODO movemethode aufrufen
-							return;
+							int[] zugZielKoords = zuege.get(0);
+							int rückgabe[] = { a, j, zugZielKoords[0], zugZielKoords[1] };
+							return rückgabe;
 						}
 					}
 				}
 			}
 		}
+		return null;
 	}
 
 	// fragt für Spielfigur ab welche züge möglich sind
 	// TODO bewertung der Züge
 
-	private ArrayList<int[]> getZuege(int i, int j, Spielfigur figur) {
+	private ArrayList<int[]> getZuege(char a, int j, Spielfigur figur) {
 		ArrayList<int[]> zuge = new ArrayList<int[]>();
+
 		if (!figur.getDame(figur)) {
-			if (i < brett.getBrettGroesse() - 1 && j < brett.getBrettGroesse()) {
+			// wäre ein schritt nach vorne noch im spielbrett?
+			if (j + this.zugRichtung() >= 1 && j + this.zugRichtung() <= brett.getBrettGroesse()) {
+				// ist schräger schritt nach rechts möglich?
+				if (a + 1 <= 'a' + brett.getBrettGroesse() - 1) {
+					Spielfeld zugFeld1 = brett.getBrettFeldSchachnotation((char) (a + 1), j + this.zugRichtung());
+					if (zugFeld1.getIstBelegt()) {
+						// auf farbe prüfen, überspringen möglich?
+					} else {
+						int[] koord = { a + 1, j + this.zugRichtung() };
+						zuge.add(koord);
 
-				Spielfeld zugFeld1 = brett.getBrettFeldIndex(i + 1, j + this.zugRichtung());
-				if (zugFeld1.getIstBelegt()) {
-					// auf farbe prüfen, überspringen möglich?
-				} else {
-					int[] koord = { i + 1, j + this.zugRichtung() };
-					zuge.add(koord);
-
+					}
 				}
-			}
-			if (i > 0 && j < brett.getBrettGroesse()) {
-				Spielfeld zugFeld2 = brett.getBrettFeldIndex(i - 1, j + this.zugRichtung());
-				if (zugFeld2.getIstBelegt()) {
-					// auf farbe prüfen, überspringen möglich?
-				} else {
-					int[] koord = { i - 1, j + this.zugRichtung() };
-					zuge.add(koord);
+				// ist schräger schritt nach links möglich?
+				if (a - 1 >= 'a') {
+					Spielfeld zugFeld2 = brett.getBrettFeldSchachnotation((char) (a - 1), j + this.zugRichtung());
+					if (zugFeld2.getIstBelegt()) {
+						// auf farbe prüfen, überspringen möglich?
+					} else {
+						int[] koord = { a - 1, j + this.zugRichtung() };
+						zuge.add(koord);
+					}
 				}
 			}
 		} else {
 			// abfrage für dame
 		}
 		return zuge;
+
+	}
+
+	@Override
+	public String toString() {
+		return "KI: " + spieler.getName() + " mit der Farbe: " + spieler.getFarbe();
 
 	}
 

@@ -11,11 +11,9 @@ class KI_Dame extends KI  implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -1632008787864445195L;
-	public Spieler spieler;
+	
 
-	public KI_Dame(Spieler spieler) {
-		super(spieler);
-		this.spieler = spieler;
-		
-	}
+	public KI_Dame(Spieler spieler, Spielbrett brett) {
+		super(spieler, brett);
+		}
 }

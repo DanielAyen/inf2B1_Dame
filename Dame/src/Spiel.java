@@ -99,6 +99,7 @@ public class Spiel implements iBediener, Serializable {
 					System.out.println("anzeigen : Zeigt dir das Spielbrett.");
 					System.out.println("speichern : erlaubt es dir das Spiel zu speichern.");
 					System.out.println("laden : erlaubt es dir ein Spielstand zu laden.");
+					System.out.println("ki ziehen : Lässt die KI ziehen.");
 					break;
 				// zum erstellen des spielfelds
 				case "aufbauen":
@@ -121,6 +122,46 @@ public class Spiel implements iBediener, Serializable {
 						System.out.println("Fehlerhafte Eingabe, bitte nur 8 , 10 oder 12 eingeben. Zurueck im Hauptmenue.\n");
 						break;
 					}
+					//zum aufrufen der Ki
+				case "ki ziehen":
+					if (!spiellaeuft) {
+						System.out.println("Spiel hat noch nicht begonnen! Zurueck in Hauptmenue");
+					 break;}
+					if(k1==null && k2==null){
+						System.out.println("Kein Spieler ist eine KI");
+						break;
+					}
+					System.out.println("Spielerfarbe eingeben (s fuer schwarz w fuer weiss)\n");
+					String kifarbe = reader.readLine();
+					if (kifarbe.equals("s")) {
+						if(k1 == null){
+							System.out.println("Schwarz ist keine KI");
+							break;
+						}
+						int [] zuge = k1.zug();
+						if(zuge==null){
+							System.out.println("KI findet keine Züge");
+							break;
+						}
+						figurBewegen((char)zuge[0],zuge[1],(char)zuge[2],zuge[3]);
+						break;
+					}
+					if (kifarbe.equals("w")) {
+						if(k2 == null){
+							System.out.println("Weiß ist keine KI");
+							break;
+						}
+						int [] zuge = k2.zug();
+						if(zuge==null){
+							System.out.println("KI findet keine Züge");
+							break;
+						}
+						figurBewegen((char)zuge[0],zuge[1],(char)zuge[2],zuge[3]);
+					}
+						break;
+					
+					
+					
 					// zum anzeigen des Bretts
 				case "anzeigen":
 					if (spielAufgebaut) {
@@ -166,11 +207,10 @@ public class Spiel implements iBediener, Serializable {
 									break;
 								} else {
 									s1 = new Spieler(name, FarbEnum.SCHWARZ, true);
-									k1 = new KI_Dame(s1);
+									k1 = new KI_Dame(s1, brett);
 									spielerAnzahl++;
 									schwarzvergeben = true;
-									System.out.println(k1);// TODO Nur marker hier wird die Ki
-																					// ausgegeben aber to String fehlt
+									System.out.println(k1);
 									System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
 									erstelleFiguren(s1, brett);
 									break;
@@ -195,11 +235,10 @@ public class Spiel implements iBediener, Serializable {
 									break;
 								} else {
 									s2 = new Spieler(name, FarbEnum.WEIß, true);
-									k2 = new KI_Dame(s2);
+									k2 = new KI_Dame(s2, brett);
 									weissvergeben = true;
 									spielerAnzahl++;
-									System.out.println(k2);// TODO Nur marker hier wird die Ki
-																					// ausgegeben aber to String fehlt
+									System.out.println(k2);
 									System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
 									erstelleFiguren(s2, brett);
 									break;
@@ -968,7 +1007,7 @@ public class Spiel implements iBediener, Serializable {
 		}
 		int x = brett.getBrettFeldSchachnotation(xa, ya).getPosX() - brett.getBrettFeldSchachnotation(xn, yn).getPosX();
 		int y = brett.getBrettFeldSchachnotation(xa, ya).getPosY() - brett.getBrettFeldSchachnotation(xn, yn).getPosY();
-
+		
 		if (x - y > 2) {
 			figurSchlagen(xa, ya, xn, yn, brett.getBrettFeldSchachnotation(xa, ya).getSpielfigur());
 
