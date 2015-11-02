@@ -27,8 +27,8 @@ public class SpielfigurTest {
 	@BeforeClass
 	public static void Methode() {
 		b1 = new Spielbrett(12);
-		s = new Spielfigur(FarbEnum.SCHWARZ, 8, 8,b1,false);
-		d = new Spielfigur(FarbEnum.WEIß, 5, 5,b1,true);
+		s = new Spielfigur(FarbEnum.SCHWARZ, false);
+		d = new Spielfigur(FarbEnum.WEIß, true);
 		
 	}
 
