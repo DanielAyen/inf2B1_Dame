@@ -940,7 +940,7 @@ public class Spiel implements iBediener, Serializable {
 	 * Der Spieler der am Zug ist darf seine Figur bewegen(wird durch zuggueltig
 	 * geprueft) nur der SPieler der am zug ist darf auch ziehen
 	 */
-	private void figurBewegen(char xa, int ya, char xn, int yn) {// TODO
+	private void figurBewegen(char xa, int ya, char xn, int yn) {
 
 		// if (xa > brett.getBrettGroesse() || ya > brett.getBrettGroesse()) {
 		// System.out.println("Außerhalb des Brett's gibt es keine Figuren!");
@@ -966,9 +966,12 @@ public class Spiel implements iBediener, Serializable {
 			System.out.println("Du kannst keine andere Figur besteigen!");
 			return;
 		}
+		int x = brett.getBrettFeldSchachnotation(xa, ya).getPosX() - brett.getBrettFeldSchachnotation(xn, yn).getPosX();
+		int y = brett.getBrettFeldSchachnotation(xa, ya).getPosY() - brett.getBrettFeldSchachnotation(xn, yn).getPosY();
 
-		if (brett.getBrettFeldSchachnotation(xa, ya).getPosX() - brett.getBrettFeldSchachnotation(xn, yn).getPosX() != brett.getBrettFeldSchachnotation(xa, ya).getPosY() - brett.getBrettFeldSchachnotation(xn, yn).getPosY()) {
-			System.out.println("Du kannst nicht quer­beet übers Brett laufen!");
+		if (x - y > 2) {
+			figurSchlagen(xa, ya, xn, yn, brett.getBrettFeldSchachnotation(xa, ya).getSpielfigur());
+
 			return;
 		}
 
@@ -1071,7 +1074,13 @@ public class Spiel implements iBediener, Serializable {
 	/**
 	 * einen gegnerischen stein aus dem Spiel werfen
 	 */
-	private void figurSchlagen(char altepx, int altepy, char neuepx, int neuepy, Spielfigur fig) {
+	private void figurSchlagen(char altepx, int altepy, char neuepx, int neuepy, Spielfigur fig) {// TODO
+																																																// problem
+																																																// bei
+																																																// figur
+																																																// schlagen,
+																																																// passiert
+																																																// nix
 
 		int alteX = brett.getBrettFeldSchachnotation(altepx, altepy).getPosX();
 		int alteY = brett.getBrettFeldSchachnotation(altepx, altepy).getPosY();
@@ -1099,6 +1108,8 @@ public class Spiel implements iBediener, Serializable {
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
 								figurEntfernen(brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur());
+								brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
+								brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
 							}
 
 						}
@@ -1109,6 +1120,8 @@ public class Spiel implements iBediener, Serializable {
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
 								figurEntfernen(brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur());
+								brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
+								brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
 							}
 
 						}
@@ -1119,6 +1132,8 @@ public class Spiel implements iBediener, Serializable {
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
 								figurEntfernen(brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur());
+								brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
+								brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
 							}
 
 						}
@@ -1129,6 +1144,8 @@ public class Spiel implements iBediener, Serializable {
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
 								figurEntfernen(brett.getBrettFeldIndex(alteX - 1, alteY - 1).getSpielfigur());
+								brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
+								brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
 							}
 
 						}
@@ -1147,6 +1164,8 @@ public class Spiel implements iBediener, Serializable {
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
 								figurEntfernen(brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur());
+								brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
+								brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
 							}
 
 						}
@@ -1157,6 +1176,8 @@ public class Spiel implements iBediener, Serializable {
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
 								figurEntfernen(brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur());
+								brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
+								brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
 							}
 
 						}
@@ -1176,6 +1197,8 @@ public class Spiel implements iBediener, Serializable {
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
 								figurEntfernen(brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur());
+								brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
+								brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
 							}
 
 						}
@@ -1186,6 +1209,8 @@ public class Spiel implements iBediener, Serializable {
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
 								figurEntfernen(brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur());
+								brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
+								brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
 							}
 
 						}
@@ -1196,6 +1221,8 @@ public class Spiel implements iBediener, Serializable {
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
 								figurEntfernen(brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur());
+								brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
+								brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
 							}
 
 						}
@@ -1206,6 +1233,8 @@ public class Spiel implements iBediener, Serializable {
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
 								figurEntfernen(brett.getBrettFeldIndex(alteX - 1, alteY - 1).getSpielfigur());
+								brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
+								brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
 							}
 
 						}
@@ -1224,6 +1253,8 @@ public class Spiel implements iBediener, Serializable {
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
 								figurEntfernen(brett.getBrettFeldIndex(alteX - 1, alteY - 1).getSpielfigur());
+								brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
+								brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
 							}
 
 						}
@@ -1234,6 +1265,9 @@ public class Spiel implements iBediener, Serializable {
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
 								figurEntfernen(brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur());
+								brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
+								brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
+
 							}
 
 						}
@@ -1327,6 +1361,8 @@ public class Spiel implements iBediener, Serializable {
 					if (brett.getBrettFeldIndex(i, j).getIstBelegt() == false && brett.getBrettFeldIndex(i, j).getIstSchwarz() == true) {
 
 						Spielfigur fig = (new Spielfigur(FarbEnum.SCHWARZ, false));
+						fig.setPosX(i);
+						fig.setPosY(j);
 
 						brett.getBrettFeldIndex(i, j).setSpielfigur(fig);
 
@@ -1340,6 +1376,8 @@ public class Spiel implements iBediener, Serializable {
 					if (brett.getBrettFeldIndex(i, j).getIstBelegt() == false && brett.getBrettFeldIndex(i, j).getIstSchwarz() == true) {
 
 						Spielfigur fig = (new Spielfigur(FarbEnum.WEIß, false));
+						fig.setPosX(i);
+						fig.setPosY(j);
 						brett.getBrettFeldIndex(i, j).setSpielfigur(fig);
 
 						spieler.addSpielfigur(fig);

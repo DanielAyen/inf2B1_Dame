@@ -5,7 +5,7 @@ import java.io.Serializable;
  * @author Baris, Daniel, Simon,Hannes
  *
  */
-public class Spielbrett  implements Serializable{
+public class Spielbrett implements Serializable {
 
 	/**
 	 * 
@@ -116,9 +116,11 @@ public class Spielbrett  implements Serializable{
 		default:
 			throw new RuntimeException("Eingabe ausserhalb Feld");
 		}
-		return this.brett[hilf][i-1];
+		return this.brett[i - 1][hilf];
+		// return this.brett[hilf][i-1];
 
 	}
+
 	public String gibBrettFeldSchachnotation(int x, int y) {
 		char hilf;
 		switch (x) {
@@ -161,13 +163,14 @@ public class Spielbrett  implements Serializable{
 		default:
 			throw new RuntimeException("Eingabe ausserhalb Feld");
 		}
-		return ""+hilf+(y+1);
+		return "" + (y + 1) + hilf;
 
 	}
+
 	public Spielfeld getBrettFeldIndex(int x, int y) {
 		return brett[x][y];
 	}
-	
+
 	/**
 	 * Anzeigemethode für das Array der Spielfelder
 	 * 
@@ -184,19 +187,19 @@ public class Spielbrett  implements Serializable{
 					if (zeile > 8) { //
 						System.out.print(brett[zeile][spalte] + "  ");
 					} else { //
-						System.out.print(brett[zeile][spalte] + "   "); 
+						System.out.print(brett[zeile][spalte] + "   ");
 					}
 				}
 			}
 			System.out.println();
 		}
 	}
-	
-/**
- * Gibt die Größe des Spielbretts zurück
- * 
- * @return Größe des Spielbretts
- */
+
+	/**
+	 * Gibt die Größe des Spielbretts zurück
+	 * 
+	 * @return Größe des Spielbretts
+	 */
 	public int getBrettGroesse() {
 
 		return brett.length;
