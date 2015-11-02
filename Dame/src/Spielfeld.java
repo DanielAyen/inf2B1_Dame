@@ -10,7 +10,7 @@ public class Spielfeld implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5401194863737521362L;
+	private static final long serialVersionUID = -1632008787864445195L;
 	/**
 	 * 
 	 * @param spielfigur

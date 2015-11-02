@@ -10,7 +10,7 @@ public class Spieler implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1823974290227879516L;
+	private static final long serialVersionUID = -1632008787864445195L;
 	/**
 	 * 
 	 * @param name
