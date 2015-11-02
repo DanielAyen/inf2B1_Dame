@@ -10,7 +10,7 @@ public class Spielbrett  implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -97966293000257188L;
+	private static final long serialVersionUID = -1632008787864445195L;
 	// Unten links schwarz a1 und oben rechts schwarz h8
 	/**
 	 * @param Spielfeld

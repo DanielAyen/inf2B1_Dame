@@ -9,7 +9,7 @@ public class Spielfigur implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6059774803133226820L;
+	private static final long serialVersionUID = -1632008787864445195L;
 	/**
 	 * Attribute
 	 * 

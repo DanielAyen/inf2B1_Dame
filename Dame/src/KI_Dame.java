@@ -10,7 +10,7 @@ class KI_Dame extends KI  implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5485930708087137319L;
+	private static final long serialVersionUID = -1632008787864445195L;
 	public Spieler spieler;
 
 	public KI_Dame(Spieler spieler) {
