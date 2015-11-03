@@ -164,16 +164,17 @@ public class Spielfeld implements Serializable {
 	 * und Spielfigur
 	 * 
 	 */
+
 	@Override
 	public String toString() {
 		if (getIstSchwarz() == true) {
 			if (this.getSpielfigur() == null) {
-				return "x " + this.getId() + " " + this.getSpielfigur();
+				return "x " + this.getId() + "     ";
 			}
 			return "x " + this.getId() + this.getSpielfigur();
 		} else {
 			if (this.getSpielfigur() == null) {
-				return "o " + this.getId() + " " + this.getSpielfigur();
+				return "o " + this.getId() + "     ";
 			}
 			return "o " + this.getId() + this.getSpielfigur();
 		}
