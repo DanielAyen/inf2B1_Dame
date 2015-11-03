@@ -94,7 +94,7 @@ public class Spiel implements iBediener, Serializable {
 
 				case "help":
 					System.out.println("aufbauen : Erstellt ein Spielbrett, wird zum spielen benoetigt.");
-					System.out.println("spieler erstellen : Erlaubt dir einen Spieler zu erstellen, es werden 2 Spieler zum spielen benoetigt.");
+					System.out.println("erstellen : Erlaubt dir einen Spieler zu erstellen, es werden 2 Spieler zum spielen benoetigt.");
 					System.out.println("start: Startet das Spiel, es wird ein erstelltes Spielbrett und zwei Spieler benoetigt.");
 					System.out.println("beenden : Das Spiel wird geschlossen.");
 					System.out.println("ziehen : Erlaubt dir eine Spielfigur zu bewegen. Nicht moeglich solange das Spiel nicht laeuft.");
@@ -175,7 +175,7 @@ public class Spiel implements iBediener, Serializable {
 						break;
 					}
 					// zum erstellen von spielern
-				case "spieler erstellen":
+				case "erstellen":
 					if (!spielAufgebaut) {
 						System.out.println("Du musst zuerst ein Spielbrett aufbauen! (aufbauen)");
 						break;
@@ -285,7 +285,7 @@ public class Spiel implements iBediener, Serializable {
 
 						String startp = reader.readLine();
 						// ///
-						if (startp.length() != 0) {
+						if (startp.length() == 2 || startp.length() == 3) {
 
 							if (!charPruefenUndSetzenA(startp)) {
 								System.out.println("Fehler in der Eingabe (Buchstabe)! Zurueck im Hauptmenue.");
@@ -320,7 +320,7 @@ public class Spiel implements iBediener, Serializable {
 
 						String endp = reader.readLine();
 
-						if (endp.length() != 0) {
+						if (endp.length() == 2 || endp.length() == 3) {
 
 							if (!charPruefenUndSetzenN(endp)) {
 								System.out.println("Fehler in der Eingabe (Buchstabe)! Zurueck im Hauptmenue.");
@@ -356,7 +356,9 @@ public class Spiel implements iBediener, Serializable {
 						endC = 0;
 						endI = 0;
 
+						dameWerden();
 						brett.display();
+						System.out.println("\n");
 
 						break;
 					}
@@ -691,6 +693,7 @@ public class Spiel implements iBediener, Serializable {
 			if (startI != 0)
 				return true;
 
+			return false;
 		}
 		return false;
 	}
@@ -936,6 +939,9 @@ public class Spiel implements iBediener, Serializable {
 				endI = 10;
 
 			}
+			if (startI != 0)
+				return true;
+
 			return false;
 
 		case 12:
@@ -1122,26 +1128,42 @@ public class Spiel implements iBediener, Serializable {
 	/**
 	 * wenn eine figur die eind pos erreicht hat wird sie zur dame(true)
 	 */
-	private void dameWerden(Spielfigur fig) {
+	private void dameWerden() {
 		// TODO
 
-		int x = fig.getPosX();
-		int y = fig.getPosY();
-		int brettgroesse = 0;
-		FarbEnum farbe = fig.getFarbe();
-		brettgroesse = brett.getBrettGroesse();
+		for (int i = 0; i < brett.getBrettGroesse(); i++) {
 
-		switch (farbe) {
+			for (int j = 0; j < brett.getBrettGroesse(); j++) {
+				if (brett.getBrettFeldIndex(i, j).getSpielfigur() == null) {
+					// Tu nichts falls null, ansonsten...
+				} else {
 
-		case SCHWARZ:// müssen oben ankommen also bei 8/10/12////// 0|0 =A1
-			if (x == brettgroesse - 1)
-				fig.setDame(true);
-			break;
+					Spielfigur fig = brett.getBrettFeldIndex(i, j).getSpielfigur();
 
-		case WEIß:// müssen unten ankommen 1
-			if (x == 0)
-				fig.setDame(true);
-			break;
+					int x = fig.getPosX();
+					int y = fig.getPosY();
+					int brettgroesse = 0;
+					FarbEnum farbe = fig.getFarbe();
+					brettgroesse = brett.getBrettGroesse() - 1;
+					// brettgroesse -1 da das brett ja 8/10/12
+					// sein kann aber index nur 7/9/11 ist
+					switch (farbe) {
+
+					case SCHWARZ:// müssen oben ankommen also bei 8/10/12////// 0|0 =A1
+						if (x == brettgroesse)
+							fig.setDame(true);
+
+						break;
+
+					case WEIß:// müssen unten ankommen 1
+						if (x == 0)
+							fig.setDame(true);
+
+						break;
+					}
+				}
+
+			}
 
 		}
 
@@ -1179,7 +1201,8 @@ public class Spiel implements iBediener, Serializable {
 					if (fig.getDame(fig)) {// schlagen in 4richtungen mögl
 						// alte pos minus neue pos gibt mittleres feld
 
-						if (diffX < 0 && diffY < 0) {System.out.println("schwarz mit dame x<0 y<0");
+						if (diffX < 0 && diffY < 0) {
+							// RICHTUNG NACH OBEN RECHTS
 							if (brett.getBrettFeldIndex(alteX + 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
 								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
 								// farbe prüfen (Wenn alles korrekt die
@@ -1190,20 +1213,9 @@ public class Spiel implements iBediener, Serializable {
 							}
 
 						}
-
-						if (diffX < 0 && diffY > 0) {System.out.println("schwarz mit dame x<0 y>0");
-							if (brett.getBrettFeldIndex(alteX - 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
-								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
-								// farbe prüfen (Wenn alles korrekt die
-								// figurEntfernen()aufrufen)
-								figurEntfernen(brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur());
-								brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
-								brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
-							}
-
-						}
-
-						if (diffX > 0 && diffY < 0) {System.out.println("schwarz mit dame x>0 y<0");
+						// RICHTUNG NACH OBEN LINKS
+						if (diffX < 0 && diffY > 0) {
+							System.out.println("schwarz mit dame x<0 y>0");
 							if (brett.getBrettFeldIndex(alteX + 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
 								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
 								// farbe prüfen (Wenn alles korrekt die
@@ -1214,8 +1226,22 @@ public class Spiel implements iBediener, Serializable {
 							}
 
 						}
+						// RICHTUNG NACH UNTEN RECHTS
+						if (diffX > 0 && diffY < 0) {
+							System.out.println("schwarz mit dame x>0 y<0");
+							if (brett.getBrettFeldIndex(alteX - 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
+								// farbe prüfen (Wenn alles korrekt die
+								// figurEntfernen()aufrufen)
+								figurEntfernen(brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur());
+								brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
+								brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
+							}
 
-						if (diffX > alteX && diffY > alteY) {System.out.println("schwarz mit dame x>0 y>0");
+						}
+						// RICHTUNG NACH UNTEN LINKS
+						if (diffX > alteX && diffY > alteY) {
+							System.out.println("schwarz mit dame x>0 y>0");
 							if (brett.getBrettFeldIndex(alteX - 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
 								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
 								// farbe prüfen (Wenn alles korrekt die
@@ -1235,7 +1261,8 @@ public class Spiel implements iBediener, Serializable {
 							return;
 						}
 
-						if (diffX < 0 && diffY < 0) {System.out.println("schwarz ohne dame x<0 y<0");
+						if (diffX < 0 && diffY < 0) {
+
 							if (brett.getBrettFeldIndex(alteX + 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
 								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
 								// farbe prüfen (Wenn alles korrekt die
@@ -1247,7 +1274,8 @@ public class Spiel implements iBediener, Serializable {
 
 						}
 
-						if (diffX > alteX && diffY < alteY) {System.out.println("schwarz ohne dame x>0 y<0");
+						if (diffX < 0 && diffY > 0) {
+
 							if (brett.getBrettFeldIndex(alteX + 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
 								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
 								// farbe prüfen (Wenn alles korrekt die
@@ -1268,7 +1296,8 @@ public class Spiel implements iBediener, Serializable {
 					if (fig.getDame(fig)) {// schlagen in 4richtungen mögl
 						// alte pos minus neue pos gibt mittleres feld
 
-						if (diffX < 0 && diffY < 0) {System.out.println("weiss mit dame x<0 y<0");
+						if (diffX < 0 && diffY < 0) {
+
 							if (brett.getBrettFeldIndex(alteX + 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
 								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
 								// farbe prüfen (Wenn alles korrekt die
@@ -1280,19 +1309,8 @@ public class Spiel implements iBediener, Serializable {
 
 						}
 
-						if (diffX < 0 && diffY > 0) {System.out.println("weiss mit dame x<0 y>0");
-							if (brett.getBrettFeldIndex(alteX - 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
-								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
-								// farbe prüfen (Wenn alles korrekt die
-								// figurEntfernen()aufrufen)
-								figurEntfernen(brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur());
-								brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
-								brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
-							}
+						if (diffX < 0 && diffY > 0) {
 
-						}
-
-						if (diffX > 0 && diffY < 0) {System.out.println("weiss mit dame x>0 y<0");
 							if (brett.getBrettFeldIndex(alteX + 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
 								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
 								// farbe prüfen (Wenn alles korrekt die
@@ -1304,7 +1322,21 @@ public class Spiel implements iBediener, Serializable {
 
 						}
 
-						if (diffX > 0 && diffY > 0) {System.out.println("weiss mit dame x>0 y>0");
+						if (diffX > 0 && diffY < 0) {
+
+							if (brett.getBrettFeldIndex(alteX - 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
+								// farbe prüfen (Wenn alles korrekt die
+								// figurEntfernen()aufrufen)
+								figurEntfernen(brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur());
+								brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
+								brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
+							}
+
+						}
+
+						if (diffX > 0 && diffY > 0) {
+
 							if (brett.getBrettFeldIndex(alteX - 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
 								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
 								// farbe prüfen (Wenn alles korrekt die
@@ -1324,7 +1356,8 @@ public class Spiel implements iBediener, Serializable {
 							return;
 						}
 
-						if (diffX > 0 && diffY > 0) {System.out.println("weiss ohne dame x>0 y>0");
+						if (diffX > 0 && diffY > 0) {
+
 							if (brett.getBrettFeldIndex(alteX - 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
 								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
 								// farbe prüfen (Wenn alles korrekt die
@@ -1336,8 +1369,9 @@ public class Spiel implements iBediener, Serializable {
 
 						}
 
-						if (diffX < 0 && diffY > 0) {System.out.println("weiss ohne dame x<0 y>0");
-							if (brett.getBrettFeldIndex(alteX + 1, alteY -1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+						if (diffX > 0 && diffY < 0) {
+
+							if (brett.getBrettFeldIndex(alteX - 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
 								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
