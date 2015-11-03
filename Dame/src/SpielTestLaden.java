@@ -2,8 +2,8 @@
 public class SpielTestLaden {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		 Spiel spiel = new Spiel();
+		 Spiel.ladenSerialisiert("NewGame.ser");
 
-	}
-
+}
 }

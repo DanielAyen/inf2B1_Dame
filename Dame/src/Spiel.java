@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.Properties;
@@ -67,6 +68,7 @@ public class Spiel implements iBediener, Serializable {
 	private Spieler s2;
 	private KI_Dame k1;
 	private KI_Dame k2;
+	private String dateiname = "csv";
 
 	private char startC;
 	private char endC;
@@ -97,7 +99,8 @@ public class Spiel implements iBediener, Serializable {
 					System.out.println("beenden : Das Spiel wird geschlossen.");
 					System.out.println("ziehen : Erlaubt dir eine Spielfigur zu bewegen. Nicht moeglich solange das Spiel nicht laeuft.");
 					System.out.println("anzeigen : Zeigt dir das Spielbrett.");
-					System.out.println("speichern : erlaubt es dir das Spiel zu speichern.");
+					System.out.println("ser : erlaubt es dir das Spiel zu serialisieren.");
+					System.out.println("csv : erlaubt es dir das Spiel als CSV Datei zu speichern.");
 					System.out.println("laden : erlaubt es dir ein Spielstand zu laden.");
 					System.out.println("ki ziehen : Lässt die KI ziehen.");
 					break;
@@ -360,8 +363,11 @@ public class Spiel implements iBediener, Serializable {
 					System.out.println("\n\n\t\tDas Spiel wird beendet.");
 					break;
 				// speichern
-				case "speichern":
-					speichernAlsSerial(name);
+				case "ser":
+					speichernSerial(this);
+					break;
+				case "csv":
+					speichernCSV(dateiname);
 					break;
 				// laden
 				case "laden":
@@ -1531,29 +1537,86 @@ public class Spiel implements iBediener, Serializable {
 		return false;
 
 	}
+	public static void setdZugriff(iDatenzugriff daten) {
+		Spiel.daten = daten;
+	}
 
+	public static iDatenzugriff getdZugriff() {
+		return daten;
+	}
+	
 	/**
 	 * serializiert das Spiel
 	 */
-	private void speichernAlsSerial(String s) {
+	public void speichernSerial(Spiel s) {
 		try {
-			daten = new Serial();
-			Properties p = new Properties();
-			p.setProperty("datei", s + ".ser");
-			daten.oeffnen(p);
-			daten.schreiben(this);
-			System.out.println("Das Spiel wurde gespeichert: " + p.getProperty("datei"));
-			daten.schliessen(p);
+			setdZugriff(new DatenzugriffSerialisiert());
+			File p = new File(s + ".ser");
+			if (p.length() > 0) {
+				p.delete();
+				p = new File(s + ".ser");
+			}
+			getdZugriff().oeffnen(p);
+			getdZugriff().speichern(p, this);
+			System.out.println("Das Spiel wurde gespeichert: " + p.getName());
+			getdZugriff().schliessen(p);
 		} catch (Exception e) {
-			System.out.println("Speichern serialisiert fehlgeschlagen!");
+			System.out.println("Speichern Serialisiert fehlgeschlagen!");
 		}
+
 	}
 
 	/**
 	 * laden
+	 * @return 
 	 */
-	private void laden() {
+	public static Spiel ladenSerialisiert(String string){
+	try {
+		setdZugriff(new DatenzugriffSerialisiert());
+		File f = new File(string);
+		getdZugriff().oeffnen(f);
+		Spiel o = (Spiel) getdZugriff().laden(f);
+		System.out.println("Das Spiel " + " wurde geladen.");
+		getdZugriff().schliessen(f);
+		return o;
+	} catch (Exception e) {
+		System.out.println("Laden Serialisiert fehlgeschlagen!");
+		return null;
+	}
 
+}
+	public void speichernCSV(String string){
+	try {
+		setdZugriff(new DatenzugriffCSV());
+		File f = new File(string + ".csv");
+		File p = new File(f.getAbsolutePath());
+//		if (f.length() > 0) {
+//			p = new File(f.getAbsolutePath());
+//			f.delete();
+//		}
+		
+		getdZugriff().oeffnen(p);
+		getdZugriff().speichern(p, Spieler.getAnzahl()); // AnzahlSpieler
+
+		getdZugriff().speichern(p, spieler.toString()); //Spielername 
+		getdZugriff().speichern(p, spieler.getAlleFiguren()); // Liste der Figuren
+		getdZugriff().speichern(p, spieler.getIsIstAmZug());
+		for (int i = 0; i < spieler.getAlleFiguren().size(); i++) {
+			getdZugriff().speichern(p,
+					spieler.getAlleFiguren().get(i)); // Positionen der Figuren
+		}
+							//TODO
+
+		System.out.println("Das Spiel wurde gespeichert: " + p.getName());
+		getdZugriff().schliessen(p);
+	} catch (Exception e) {
+		System.out.println("Speichern CSV fehlgeschlagen.");
+	}
+}
+	
+	@Override
+	public String toString(){
+		return  "NewGame";
 	}
 
 	/*
