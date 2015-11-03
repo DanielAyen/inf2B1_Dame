@@ -125,47 +125,46 @@ public class Spiel implements iBediener, Serializable {
 						System.out.println("Fehlerhafte Eingabe, bitte nur 8 , 10 oder 12 eingeben. Zurueck im Hauptmenue.\n");
 						break;
 					}
-					//zum aufrufen der Ki
+					// zum aufrufen der Ki
 				case "ki ziehen":
 					if (!spiellaeuft) {
 						System.out.println("Spiel hat noch nicht begonnen! Zurueck in Hauptmenue");
-					 break;}
-					if(k1==null && k2==null){
+						break;
+					}
+					if (k1 == null && k2 == null) {
 						System.out.println("Kein Spieler ist eine KI");
 						break;
 					}
 					System.out.println("Spielerfarbe eingeben (s fuer schwarz w fuer weiss)\n");
 					String kifarbe = reader.readLine();
 					if (kifarbe.equals("s")) {
-						if(k1 == null){
+						if (k1 == null) {
 							System.out.println("Schwarz ist keine KI");
 							break;
 						}
-						int [] zuge = k1.zug();
-						if(zuge==null){
+						int[] zuge = k1.zug();
+						if (zuge == null) {
 							System.out.println("KI findet keine Züge");
 							break;
 						}
-						figurBewegen((char)zuge[0],zuge[1],(char)zuge[2],zuge[3]);
+						figurBewegen((char) zuge[0], zuge[1], (char) zuge[2], zuge[3]);
 						break;
 					}
 					if (kifarbe.equals("w")) {
-						if(k2 == null){
+						if (k2 == null) {
 							System.out.println("Weiß ist keine KI");
 							break;
 						}
-						int [] zuge = k2.zug();
-						if(zuge==null){
+						int[] zuge = k2.zug();
+						if (zuge == null) {
 							System.out.println("KI findet keine Züge");
 							break;
 						}
-						figurBewegen((char)zuge[0],zuge[1],(char)zuge[2],zuge[3]);
+						figurBewegen((char) zuge[0], zuge[1], (char) zuge[2], zuge[3]);
 					}
-						break;
-					
-					
-					
-					// zum anzeigen des Bretts
+					break;
+
+				// zum anzeigen des Bretts
 				case "anzeigen":
 					if (spielAufgebaut) {
 						brett.display();
@@ -279,8 +278,10 @@ public class Spiel implements iBediener, Serializable {
 						System.out.println("Spiel hat noch nicht begonnen! Zurueck in Hauptmenue");
 						break;
 					} else {
+						brett.display();
+
 						// Startpos fragen
-						System.out.println("Bitte gebe deine Startposition ein.");
+						System.out.println("\n Bitte gebe deine Startposition ein.");
 
 						String startp = reader.readLine();
 						// ///
@@ -355,6 +356,8 @@ public class Spiel implements iBediener, Serializable {
 						endC = 0;
 						endI = 0;
 
+						brett.display();
+
 						break;
 					}
 
@@ -387,6 +390,13 @@ public class Spiel implements iBediener, Serializable {
 		}
 	}
 
+	/**
+	 * prueft den alten positions char
+	 * 
+	 * @param posi
+	 *          String uebergabe
+	 * @return gibt einen char wert zurueck
+	 */
 	private boolean charPruefenUndSetzenA(String posi) {
 
 		int brettGroesse = brett.getBrettGroesse();
@@ -529,6 +539,13 @@ public class Spiel implements iBediener, Serializable {
 		return false;
 	}
 
+	/**
+	 * prueft die eingegebene zahl
+	 * 
+	 * @param posi
+	 *          eingabe ueber string
+	 * @return gibt einen int wert zurueck
+	 */
 	private boolean zahlPruefenUndSetzenA(String posi) {
 
 		int brettGroesse = brett.getBrettGroesse();
@@ -678,6 +695,13 @@ public class Spiel implements iBediener, Serializable {
 		return false;
 	}
 
+	/**
+	 * prueft den neuen posi char
+	 * 
+	 * @param posi
+	 *          eingabe ueber String
+	 * @return gibt char zurueck
+	 */
 	private boolean charPruefenUndSetzenN(String posi) {
 		int brettGroesse = brett.getBrettGroesse();
 
@@ -819,6 +843,13 @@ public class Spiel implements iBediener, Serializable {
 		return false;
 	}
 
+	/**
+	 * neue zahl in int wandlung und pruefung
+	 * 
+	 * @param posi
+	 *          bekommt einen String
+	 * @return gibt ein char zurueck
+	 */
 	private boolean zahlPruefenUndSetzenN(String posi) {
 		int brettGroesse = brett.getBrettGroesse();
 
@@ -1013,7 +1044,7 @@ public class Spiel implements iBediener, Serializable {
 		}
 		int x = brett.getBrettFeldSchachnotation(xa, ya).getPosX() - brett.getBrettFeldSchachnotation(xn, yn).getPosX();
 		int y = brett.getBrettFeldSchachnotation(xa, ya).getPosY() - brett.getBrettFeldSchachnotation(xn, yn).getPosY();
-		
+
 		if (x - y > 2) {
 			figurSchlagen(xa, ya, xn, yn, brett.getBrettFeldSchachnotation(xa, ya).getSpielfigur());
 
@@ -1119,13 +1150,14 @@ public class Spiel implements iBediener, Serializable {
 	/**
 	 * einen gegnerischen stein aus dem Spiel werfen
 	 */
-	private void figurSchlagen(char altepx, int altepy, char neuepx, int neuepy, Spielfigur fig) {// TODO
-																																																// problem
-																																																// bei
-																																																// figur
-																																																// schlagen,
-																																																// passiert
-																																																// nix
+	private void figurSchlagen(char altepx, int altepy, char neuepx, int neuepy, Spielfigur fig) {
+		// TODO
+		// problem
+		// bei
+		// figur
+		// schlagen,
+		// passiert
+		// nix
 
 		int alteX = brett.getBrettFeldSchachnotation(altepx, altepy).getPosX();
 		int alteY = brett.getBrettFeldSchachnotation(altepx, altepy).getPosY();
@@ -1334,6 +1366,12 @@ public class Spiel implements iBediener, Serializable {
 
 	}
 
+	/**
+	 * Methode zum entfernen einer Spielfigur vom brett/feld und vom Spieler
+	 * 
+	 * @param spielfigur
+	 *          die zu entfernende Figur
+	 */
 	private void figurEntfernen(Spielfigur spielfigur) {
 
 		if (s1.getAlleFiguren().contains(spielfigur)) {
@@ -1398,6 +1436,14 @@ public class Spiel implements iBediener, Serializable {
 
 	}
 
+	/**
+	 * methode zum erstellen der Spielfiguren
+	 * 
+	 * @param spieler
+	 *          der spieler wessen figuren erstellt werden
+	 * @param brett
+	 *          das Spielbrett woruf die figuren kommen
+	 */
 	private void erstelleFiguren(Spieler spieler, Spielbrett brett) {
 
 		if (spieler.getFarbe() == FarbEnum.SCHWARZ) {
@@ -1537,14 +1583,24 @@ public class Spiel implements iBediener, Serializable {
 		return false;
 
 	}
+
+	/**
+	 * 
+	 * @param daten
+	 *          uebergabe
+	 */
 	public static void setdZugriff(iDatenzugriff daten) {
 		Spiel.daten = daten;
 	}
 
+	/**
+	 * 
+	 * @return gibt daten zurueck
+	 */
 	public static iDatenzugriff getdZugriff() {
 		return daten;
 	}
-	
+
 	/**
 	 * serializiert das Spiel
 	 */
@@ -1568,55 +1624,67 @@ public class Spiel implements iBediener, Serializable {
 
 	/**
 	 * laden
-	 * @return 
+	 * 
+	 * @return
 	 */
-	public static Spiel ladenSerialisiert(String string){
-	try {
-		setdZugriff(new DatenzugriffSerialisiert());
-		File f = new File(string);
-		getdZugriff().oeffnen(f);
-		Spiel o = (Spiel) getdZugriff().laden(f);
-		System.out.println("Das Spiel " + " wurde geladen.");
-		getdZugriff().schliessen(f);
-		return o;
-	} catch (Exception e) {
-		System.out.println("Laden Serialisiert fehlgeschlagen!");
-		return null;
-	}
-
-}
-	public void speichernCSV(String string){
-	try {
-		setdZugriff(new DatenzugriffCSV());
-		File f = new File(string + ".csv");
-		File p = new File(f.getAbsolutePath());
-//		if (f.length() > 0) {
-//			p = new File(f.getAbsolutePath());
-//			f.delete();
-//		}
-		
-		getdZugriff().oeffnen(p);
-		getdZugriff().speichern(p, Spieler.getAnzahl()); // AnzahlSpieler
-
-		getdZugriff().speichern(p, spieler.toString()); //Spielername 
-		getdZugriff().speichern(p, spieler.getAlleFiguren()); // Liste der Figuren
-		getdZugriff().speichern(p, spieler.getIsIstAmZug());
-		for (int i = 0; i < spieler.getAlleFiguren().size(); i++) {
-			getdZugriff().speichern(p,
-					spieler.getAlleFiguren().get(i)); // Positionen der Figuren
+	public static Spiel ladenSerialisiert(String string) {
+		try {
+			setdZugriff(new DatenzugriffSerialisiert());
+			File f = new File(string);
+			getdZugriff().oeffnen(f);
+			Spiel o = (Spiel) getdZugriff().laden(f);
+			System.out.println("Das Spiel " + " wurde geladen.");
+			getdZugriff().schliessen(f);
+			return o;
+		} catch (Exception e) {
+			System.out.println("Laden Serialisiert fehlgeschlagen!");
+			return null;
 		}
-							//TODO
 
-		System.out.println("Das Spiel wurde gespeichert: " + p.getName());
-		getdZugriff().schliessen(p);
-	} catch (Exception e) {
-		System.out.println("Speichern CSV fehlgeschlagen.");
 	}
-}
-	
+
+	/**
+	 * speichert das Spiel
+	 * 
+	 * @param string
+	 *          name der Datei
+	 */
+	public void speichernCSV(String string) {
+		try {
+			setdZugriff(new DatenzugriffCSV());
+			File f = new File(string + ".csv");
+			File p = new File(f.getAbsolutePath());
+			// if (f.length() > 0) {
+			// p = new File(f.getAbsolutePath());
+			// f.delete();
+			// }
+
+			getdZugriff().oeffnen(p);
+			getdZugriff().speichern(p, Spieler.getAnzahl()); // AnzahlSpieler
+
+			getdZugriff().speichern(p, spieler.toString()); // Spielername
+			getdZugriff().speichern(p, spieler.getAlleFiguren()); // Liste der Figuren
+			getdZugriff().speichern(p, spieler.getIsIstAmZug());
+			for (int i = 0; i < spieler.getAlleFiguren().size(); i++) {
+				getdZugriff().speichern(p, spieler.getAlleFiguren().get(i)); // Positionen
+																																			// der
+																																			// Figuren
+			}
+			// TODO
+
+			System.out.println("Das Spiel wurde gespeichert: " + p.getName());
+			getdZugriff().schliessen(p);
+		} catch (Exception e) {
+			System.out.println("Speichern CSV fehlgeschlagen.");
+		}
+	}
+
+	/**
+	 * die toString.
+	 */
 	@Override
-	public String toString(){
-		return  "NewGame";
+	public String toString() {
+		return "NewGame";
 	}
 
 	/*
