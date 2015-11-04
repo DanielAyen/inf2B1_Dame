@@ -86,9 +86,9 @@ public class Spiel implements iBediener, Serializable {
 				switch (eingabe) {
 				// TEST CASES: //
 
-				case "entf":
-					figurEntfernen(s1.getAlleFiguren().get(0));
-					break;
+				// case "entf":
+				// figurEntfernen(s1.getAlleFiguren().get(0));
+				// break;
 
 				// TEST CASES ENDE //
 
@@ -178,6 +178,10 @@ public class Spiel implements iBediener, Serializable {
 				case "erstellen":
 					if (!spielAufgebaut) {
 						System.out.println("Du musst zuerst ein Spielbrett aufbauen! (aufbauen)");
+						break;
+					}
+					if (spielerAnzahl == 2) {
+						System.out.println("Es gibt bereits zwei Spieler.");
 						break;
 					}
 					System.out.println("Spielernamen eingeben (min 2 Zeichen!)\n");
@@ -1202,11 +1206,13 @@ public class Spiel implements iBediener, Serializable {
 						// alte pos minus neue pos gibt mittleres feld
 
 						if (diffX < 0 && diffY < 0) {
+							System.out.println("nach oben rechts s1");
 							// RICHTUNG NACH OBEN RECHTS
 							if (brett.getBrettFeldIndex(alteX + 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
 								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
+								System.out.println("nach oben rechts s2");
 								figurEntfernen(brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur());
 								brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
 								brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
@@ -1215,11 +1221,12 @@ public class Spiel implements iBediener, Serializable {
 						}
 						// RICHTUNG NACH OBEN LINKS
 						if (diffX < 0 && diffY > 0) {
-							System.out.println("schwarz mit dame x<0 y>0");
+							System.out.println("nach oben links s1");
 							if (brett.getBrettFeldIndex(alteX + 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
 								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
+								System.out.println("nach oben links s2");
 								figurEntfernen(brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur());
 								brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
 								brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
@@ -1228,11 +1235,12 @@ public class Spiel implements iBediener, Serializable {
 						}
 						// RICHTUNG NACH UNTEN RECHTS
 						if (diffX > 0 && diffY < 0) {
-							System.out.println("schwarz mit dame x>0 y<0");
+							System.out.println("nach unten rechts s1");
 							if (brett.getBrettFeldIndex(alteX - 1, alteY + 1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
 								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
+								System.out.println("nach unten rechts s2");
 								figurEntfernen(brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur());
 								brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
 								brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
@@ -1240,12 +1248,13 @@ public class Spiel implements iBediener, Serializable {
 
 						}
 						// RICHTUNG NACH UNTEN LINKS
-						if (diffX > alteX && diffY > alteY) {
-							System.out.println("schwarz mit dame x>0 y>0");
+						if (diffX > 0 && diffY > 0) {
+							System.out.println("nach unten links s1");
 							if (brett.getBrettFeldIndex(alteX - 1, alteY - 1).getIstBelegt() && brett.getBrettFeldIndex(alteX - 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
 								// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
 								// farbe prüfen (Wenn alles korrekt die
 								// figurEntfernen()aufrufen)
+								System.out.println("nach unten links s2");
 								figurEntfernen(brett.getBrettFeldIndex(alteX - 1, alteY - 1).getSpielfigur());
 								brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
 								brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
