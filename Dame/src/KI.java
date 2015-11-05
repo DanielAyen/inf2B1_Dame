@@ -73,6 +73,7 @@ public abstract class KI implements Serializable {
 						if (!schlaege.isEmpty()) {
 							int[] zugZielKoords1 = schlaege.get(0);
 							int rueckgabeSchlaege[] = { a, j, zugZielKoords1[0], zugZielKoords1[1] };
+							System.out.println("Hat Figur an Stelle " + ((char)(a+1)) + (j+1) +" geschlagen.");
 							System.out.println("Figur zog von " + a+j+" nach " + (char)zugZielKoords1[0] + zugZielKoords1[1]+".");
 							return rueckgabeSchlaege;
 						} else {
@@ -111,9 +112,10 @@ public abstract class KI implements Serializable {
 							// überprüft ob Feld hinter GegnerFigur frei ist
 							Spielfeld zugFeld2 = brett.getBrettFeldSchachnotation((char) (a + 2), j + this.zugRichtung2());
 							if (zugFeld2.getIstBelegt() == false) {
+//								Spielfeld schlagbarerStein = brett.getBrettFeldSchachnotation((char) (a + 1), j + this.zugRichtung());
 								int[] koordSchlagen = { (a + 2), (j + (this.zugRichtung2())) };
 								schlaege.add(koordSchlagen);
-								System.out.println("Hat Figur an Stelle " + koordSchlagen +" geschlagen.");
+//								System.out.println("Hat Figur an Stelle " + schlagbarerStein +" geschlagen.");
 							}
 						}
 					}
@@ -128,9 +130,10 @@ public abstract class KI implements Serializable {
 							// überprüft ob Feld hinter GegnerFigur frei ist
 							Spielfeld zugFeld2 = brett.getBrettFeldSchachnotation((char) (a - 2), j + this.zugRichtung2());
 							if (zugFeld2.getIstBelegt() == false) {
+//								Spielfeld schlagbarerStein = brett.getBrettFeldSchachnotation((char) (a - 1), j + this.zugRichtung());
 								int[] koordSchlagen = { (a - 2), (j + (this.zugRichtung2())) };
 								schlaege.add(koordSchlagen);
-								System.out.println("Hat Figur an Stelle " + koordSchlagen +" geschlagen.");
+//								System.out.println("Hat Figur an Stelle " + schlagbarerStein +" geschlagen.");
 							}
 						}
 					}
