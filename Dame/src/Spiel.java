@@ -325,10 +325,11 @@ public class Spiel implements iBediener, Serializable {
 						// TODO überprufen ob startpos figur gleiche farbe wie der spieler
 						// der am zug ist hat. wenn nicht der fall dann startp ungültig.
 
-//						if (!(getAmZug() == brett.getBrettFeldSchachnotation(startC, startI).getSpielfigur().getFarbe())) {
-//							System.out.println("Du kannst nur deine eigenen Figuren bewegen! Zurueck im Hauptmenue.");
-//							break;
-//						}
+						// if (!(getAmZug() == brett.getBrettFeldSchachnotation(startC,
+						// startI).getSpielfigur().getFarbe())) {
+						// System.out.println("Du kannst nur deine eigenen Figuren bewegen! Zurueck im Hauptmenue.");
+						// break;
+						// }
 
 						if (s1.getAlleFiguren().size() == 1 && s1.getFarbe() == getAmZug() && moeglicheZuege(startC, startI) == 0) {
 							// spieler 2 gewinnt
@@ -399,8 +400,8 @@ public class Spiel implements iBediener, Serializable {
 						System.out.println("\n");
 
 					}
-
-					// beendet das Spiel
+					break;
+				// beendet das Spiel
 				case "beenden":
 					System.out.println("\n\n\t\tDas Spiel wird beendet.");
 					break;
@@ -1679,11 +1680,12 @@ public class Spiel implements iBediener, Serializable {
 			if (xPosNeu1 >= 0 && xPosNeu1 <= brett.getBrettGroesse() - 1 && yPosNeu1 >= 0 && yPosNeu1 <= brett.getBrettGroesse() - 1) {
 				if (!brett.getBrettFeldIndex(xPosNeu1, yPosNeu1).getIstBelegt()) {
 					anzMoeglichkeiten++;
-				}
+				} else {
 
-				if (brett.getBrettFeldIndex(xPosNeu1, yPosNeu1).getSpielfigur().getFarbe() != getAmZug()) {
-					if (!brett.getBrettFeldIndex(xPosNeu1 + 1, yPosNeu1 + 1).getIstBelegt()) {
-						anzMoeglichkeiten++;
+					if (brett.getBrettFeldIndex(xPosNeu1, yPosNeu1).getSpielfigur().getFarbe() != getAmZug()) {
+						if (!brett.getBrettFeldIndex(xPosNeu1 + 1, yPosNeu1 + 1).getIstBelegt()) {
+							anzMoeglichkeiten++;
+						}
 					}
 				}
 			}
@@ -1693,11 +1695,12 @@ public class Spiel implements iBediener, Serializable {
 			if (xPosNeu2 >= 0 && xPosNeu2 <= brett.getBrettGroesse() - 1 && yPosNeu2 >= 0 && yPosNeu2 <= brett.getBrettGroesse() - 1) {
 				if (!brett.getBrettFeldIndex(xPosNeu2, yPosNeu2).getIstBelegt()) {
 					anzMoeglichkeiten++;
-				}
+				} else {
 
-				if (brett.getBrettFeldIndex(xPosNeu2, yPosNeu2).getSpielfigur().getFarbe() != getAmZug()) {
-					if (!brett.getBrettFeldIndex(xPosNeu2 + 1, yPosNeu2 + 1).getIstBelegt()) {
-						anzMoeglichkeiten++;
+					if (brett.getBrettFeldIndex(xPosNeu2, yPosNeu2).getSpielfigur().getFarbe() != getAmZug()) {
+						if (!brett.getBrettFeldIndex(xPosNeu2 + 1, yPosNeu2 + 1).getIstBelegt()) {
+							anzMoeglichkeiten++;
+						}
 					}
 				}
 			}
@@ -1707,11 +1710,12 @@ public class Spiel implements iBediener, Serializable {
 			if (xPosNeu3 >= 0 && xPosNeu3 <= brett.getBrettGroesse() - 1 && yPosNeu3 >= 0 && yPosNeu3 <= brett.getBrettGroesse() - 1) {
 				if (!brett.getBrettFeldIndex(xPosNeu3, yPosNeu3).getIstBelegt()) {
 					anzMoeglichkeiten++;
-				}
+				} else {
 
-				if (brett.getBrettFeldIndex(xPosNeu3, yPosNeu3).getSpielfigur().getFarbe() != getAmZug()) {
-					if (!brett.getBrettFeldIndex(xPosNeu3 + 1, yPosNeu3 + 1).getIstBelegt()) {
-						anzMoeglichkeiten++;
+					if (brett.getBrettFeldIndex(xPosNeu3, yPosNeu3).getSpielfigur().getFarbe() != getAmZug()) {
+						if (!brett.getBrettFeldIndex(xPosNeu3 + 1, yPosNeu3 + 1).getIstBelegt()) {
+							anzMoeglichkeiten++;
+						}
 					}
 				}
 			}
@@ -1721,11 +1725,12 @@ public class Spiel implements iBediener, Serializable {
 			if (xPosNeu4 >= 0 && xPosNeu4 <= brett.getBrettGroesse() - 1 && yPosNeu4 >= 0 && yPosNeu4 <= brett.getBrettGroesse() - 1) {
 				if (!brett.getBrettFeldIndex(xPosNeu4, yPosNeu4).getIstBelegt()) {
 					anzMoeglichkeiten++;
-				}
+				} else {
 
-				if (brett.getBrettFeldIndex(xPosNeu4, yPosNeu4).getSpielfigur().getFarbe() != getAmZug()) {
-					if (!brett.getBrettFeldIndex(xPosNeu4 + 1, yPosNeu4 + 1).getIstBelegt()) {
-						anzMoeglichkeiten++;
+					if (brett.getBrettFeldIndex(xPosNeu4, yPosNeu4).getSpielfigur().getFarbe() != getAmZug()) {
+						if (!brett.getBrettFeldIndex(xPosNeu4 + 1, yPosNeu4 + 1).getIstBelegt()) {
+							anzMoeglichkeiten++;
+						}
 					}
 				}
 			}
