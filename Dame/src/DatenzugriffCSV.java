@@ -26,7 +26,7 @@ public class DatenzugriffCSV implements iDatenzugriff {
 	
 	public Object laden(File f) throws IOException {
 		if (reader == null) {
-			throw new RuntimeException("Idiot,der Reader ist nicht offen");
+			throw new RuntimeException("Der Reader ist nicht offen");
 		}
 		try {
 			return reader.readLine();
@@ -40,7 +40,7 @@ public class DatenzugriffCSV implements iDatenzugriff {
 
 	public void speichern(File f, Object o) throws IOException {
 		if (writer == null) {
-			throw new RuntimeException("Idiot,der Reader ist nicht offen");
+			throw new RuntimeException("Der Reader ist nicht offen");
 		}
 		writer.println(o);	
 	}
