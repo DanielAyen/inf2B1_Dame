@@ -325,10 +325,10 @@ public class Spiel implements iBediener, Serializable {
 						// TODO überprufen ob startpos figur gleiche farbe wie der spieler
 						// der am zug ist hat. wenn nicht der fall dann startp ungültig.
 
-						if (!(getAmZug() == brett.getBrettFeldSchachnotation(startC, startI).getSpielfigur().getFarbe())) {
-							System.out.println("Du kannst nur deine eigenen Figuren bewegen! Zurueck im Hauptmenue.");
-							break;
-						}
+//						if (!(getAmZug() == brett.getBrettFeldSchachnotation(startC, startI).getSpielfigur().getFarbe())) {
+//							System.out.println("Du kannst nur deine eigenen Figuren bewegen! Zurueck im Hauptmenue.");
+//							break;
+//						}
 
 						if (s1.getAlleFiguren().size() == 1 && s1.getFarbe() == getAmZug() && moeglicheZuege(startC, startI) == 0) {
 							// spieler 2 gewinnt
@@ -1526,11 +1526,15 @@ public class Spiel implements iBediener, Serializable {
 			System.out.println("Spieler " + s1.getName() + " hat das Spiel gewonnen!");
 			try {
 				Thread.sleep(1500);
+
 				System.err.println("\n	(╯°□°)╯︵ ┻━┻ \n");
-				System.out.println("Spieler " + s2.getName() + " flipped the table!\n\n");
+				System.out.println("Spieler " + s2.getName() + " flipped the table!");
+
+				// throw new RuntimeException("Spieler " + s2.getName() +
+				// " flipped the table!");
+
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
 			}
 
 			System.exit(0);
@@ -1540,11 +1544,15 @@ public class Spiel implements iBediener, Serializable {
 			System.out.println("Spieler " + s2.getName() + " hat das Spiel gewonnen!");
 			try {
 				Thread.sleep(1500);
+
 				System.err.println("\n	(╯°□°)╯︵ ┻━┻ \n");
-				System.out.println(" Spieler " + s1.getName() + " flipped the table!\n\n");
+				System.out.println(" Spieler " + s1.getName() + " flipped the table!");
+
+				// throw new RuntimeException("Spieler " + s2.getName() +
+				// " flipped the table!");
+
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
 			}
 
 			System.exit(0);
