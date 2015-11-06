@@ -151,7 +151,7 @@ public class Spiel implements iBediener, Serializable {
 							System.out.println("Schwarz ist keine KI");
 							break;
 						}
-						int[] zuge = k1.zug();
+						int[] zuge = k1.zieh();
 						if (zuge == null) {
 							System.out.println("KI findet keine Züge");
 							break;
@@ -164,7 +164,7 @@ public class Spiel implements iBediener, Serializable {
 							System.out.println("Weiß ist keine KI");
 							break;
 						}
-						int[] zuge = k2.zug();
+						int[] zuge = k2.zieh();
 						if (zuge == null) {
 							System.out.println("KI findet keine Züge");
 							break;
