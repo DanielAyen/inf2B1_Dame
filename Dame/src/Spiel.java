@@ -1784,35 +1784,134 @@ public class Spiel implements iBediener, Serializable {
 	 * @param string
 	 *          name der Datei
 	 */
-	public void speichernCSV(String string) {
+public void speichernCSV(String string) {
+		
 		try {
 			setdZugriff(new DatenzugriffCSV());
 			File f = new File(string + ".csv");
 			File p = new File(f.getAbsolutePath());
-			// if (f.length() > 0) {
-			// p = new File(f.getAbsolutePath());
-			// f.delete();
-			// }
 
 			getdZugriff().oeffnen(p);
-			getdZugriff().speichern(p, Spieler.getAnzahl()); // AnzahlSpieler
-
-			getdZugriff().speichern(p, spieler.toString()); // Spielername
-			getdZugriff().speichern(p, spieler.getAlleFiguren()); // Liste der Figuren
-			getdZugriff().speichern(p, spieler.getIsIstAmZug());
-			for (int i = 0; i < spieler.getAlleFiguren().size(); i++) {
-				getdZugriff().speichern(p, spieler.getAlleFiguren().get(i)); // Positionen
-																																			// der
-																																			// Figuren
+			getdZugriff().speichern(p, this.brett.getBrettGroesse() + ",");  // Speichert die Brettgröße
+			getdZugriff().speichern(p, this.getAmZug() + ","); 				// Gibt an wer am Zug ist
+			getdZugriff().speichern(p, "Spieler" +","+ this.s1.getName()+","+this.s1.getFarbe()+","+this.s1.getIstKi()+",");
+			getdZugriff().speichern(p, "Spieler" +","+ this.s2.getName()+","+this.s2.getFarbe()+","+this.s2.getIstKi()+",");
+			//TODO 
+			
+			for (Spielfigur s: s1.getAlleFiguren()){    // Speichere für jede Spielfigur 
+						getdZugriff().speichern(p, s.getFarbe() + ","); // Farbe
+						if (s.getFarbe() == FarbEnum.SCHWARZ){
+							getdZugriff().speichern(p, s.getIdS() + ","); // ID
+						}else{
+							getdZugriff().speichern(p, s.getIdW() + ","); // ID
+						}
+						getdZugriff().speichern(p, s.getDame(s) + ","); // Dame Ja oder Nein
+						getdZugriff().speichern(p, s.getPosX() + ",");  // Position X
+						getdZugriff().speichern(p, s.getPosY() + ",");	// Position Y
+						
 			}
-			// TODO
-
+			
+			/**
+			 * CSV für Spieler Zwei
+			 */
+			
+			getdZugriff().speichern(p, "Spieler" +","+ this.s2.getName()+","+this.s2.getFarbe()+","+this.s2.getIstKi()+",");
+			//TODO 
+			for (Spielfigur s: s2.getAlleFiguren()){    // Speichere für jede Spielfigur 
+						getdZugriff().speichern(p,"Spielfigur" + s.getFarbe() + ","); // Farbe
+						if (s.getFarbe() == FarbEnum.SCHWARZ){
+							getdZugriff().speichern(p, s.getIdS() + ","); // ID
+						}else{
+							getdZugriff().speichern(p, s.getIdW() + ","); // ID
+						}
+						getdZugriff().speichern(p, s.getDame(s) + ","); // Dame Ja oder Nein
+						getdZugriff().speichern(p, s.getPosX() + ",");  // Position X
+						getdZugriff().speichern(p, s.getPosY() + ",");	// Position Y
+						
+			}
+			
 			System.out.println("Das Spiel wurde gespeichert: " + p.getName());
 			getdZugriff().schliessen(p);
 		} catch (Exception e) {
 			System.out.println("Speichern CSV fehlgeschlagen.");
 		}
 	}
+	
+	// Noch fehlerhaft :-(
+	public static Spiel ladenCSV(String string){
+		try{
+		setdZugriff(new DatenzugriffCSV());
+		File f = new File(string);
+		getdZugriff().oeffnen(f);
+		System.out.println("Das Spiel wird geladen.");
+		Spiel o = new Spiel();
+		
+		
+		String t = (String) getdZugriff().laden(f);
+		String[] list = t.split(";");
+		
+		if(list[0].equals("8")){
+			o.spielBauen(8);
+		}else if (list[0] == "10"){
+			o.spielBauen(10);
+		} else if (list[0].equals("12")) {
+			o.spielBauen(12);
+			
+		}
+		if(list[1].equals("WEIß")){
+			o.setAmZug(FarbEnum.WEIß); //Später in Weiß ändern! 
+		}else{
+			o.setAmZug(FarbEnum.SCHWARZ);
+		}		
+			while (list[3].equals("Spieler")) {
+				
+				FarbEnum a;
+				boolean b;
+				
+				if(list[5].equals("SCHWARZ")){
+					a = FarbEnum.SCHWARZ;
+				}
+				else{
+					a = FarbEnum.WEIß;
+				}
+				
+				if(list[6].equals("true")){
+					b = true;
+				} else{
+					b = false;
+				}
+				Spieler s1 = new Spieler(list[4],a,b);
+			}
+			while (list[7].equals("Spieler")) {
+				
+				FarbEnum a;
+				boolean b;
+				
+				if(list[9].equals("SCHWARZ")){
+					a = FarbEnum.SCHWARZ;
+				}
+				else{
+					a = FarbEnum.WEIß;
+				}
+				
+				if(list[10].equals("true")){
+					b = true;
+				} else{
+					b = false;
+				}
+				Spieler s2 = new Spieler(list[4],a,b);
+				getdZugriff().schliessen(f);
+			}
+			return o;
+		
+		 // später ändern
+		
+		} catch (Exception e) {
+			System.out.println("Laden fehlgeschlagen!");
+			return null;
+		}
+	}
+		
 
 	/**
 	 * die toString.

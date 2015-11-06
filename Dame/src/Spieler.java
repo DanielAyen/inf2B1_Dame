@@ -241,6 +241,10 @@ public class Spieler implements Serializable {
 		return "Spieler: " + this.getName() + " mit der Farbe: " + this.getFarbe();
 
 	}
+	public boolean getIstKi(){
+		return istKi;
+		
+	}
 
 }
 // //
