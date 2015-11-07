@@ -102,7 +102,7 @@ public class Spiel implements iBediener, Serializable {
 					brett.getBrettFeldSchachnotation('c', 5).getSpielfigur().setDame(true);
 					break;
 
-					// TEST CASES ENDE //
+				// TEST CASES ENDE //
 
 				case "help":
 					System.out.println("aufbauen : Erstellt ein Spielbrett, wird zum spielen benoetigt.");
@@ -390,8 +390,8 @@ public class Spiel implements iBediener, Serializable {
 	public int[] wandleUmvString(String Input) {
 		int[] gueltig = new int[3];
 		if (Input.length() > 1 && Input.length() < 4 && (IstBuchstabe(Input.substring(0, 1).toCharArray()) > -1) && (IstZahl(Input.substring(1, Input.length())) > -1)) {
-			System.out.println("Alles-OK");
-			System.out.println(IstBuchstabe(Input.substring(0, 1).toCharArray()) + "  " + IstZahl(Input.substring(1, Input.length())));
+//			System.out.println("Alles-OK");
+//			System.out.println(IstBuchstabe(Input.substring(0, 1).toCharArray()) + "  " + IstZahl(Input.substring(1, Input.length())));
 			gueltig[0] = IstZahl(Input.substring(1, Input.length()));
 			gueltig[1] = IstBuchstabe(Input.substring(0, 1).toCharArray());
 			return gueltig;
@@ -587,13 +587,6 @@ public class Spiel implements iBediener, Serializable {
 
 			break;
 		}
-
-	}
-
-	/**
-	 * falls mit der derzeitigen figur noch weitere zuege moeglich sind
-	 */
-	private void figurWeiterbewegen(Spielfigur fig) {
 
 	}
 
@@ -805,13 +798,6 @@ public class Spiel implements iBediener, Serializable {
 	private FarbEnum getAmZug() {
 
 		return farbeAmZug;
-	}
-
-	/**
-	 * der nächste spieler der am zug ist vlt unnoetig
-	 */
-	private void naechster() {
-
 	}
 
 	/**
