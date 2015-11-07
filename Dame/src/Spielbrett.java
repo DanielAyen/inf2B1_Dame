@@ -177,7 +177,7 @@ public class Spielbrett implements Serializable {
 	 * Geht durch das Array und gibt jedes einzelne Feld aus
 	 */
 	public void display() {
-		System.out.println("o=weiß x=schwarz  Array bei der Ausgabe gedreht(0|0 ist unten links)");
+		System.out.println("o=weiß x=schwarz");
 		for (int zeile = brett.length - 1; zeile >= 0; zeile--) {
 
 			if (brett[zeile] != null) {

@@ -21,55 +21,23 @@ public class DameTest {
 
 		System.out.println("________________________________________________________________________");
 
-		 iBediener spiel=new Spiel();
-		 spiel.spielStarten();
-//		Spielbrett b1 = new Spielbrett(12);
-//		Spiel spiel1 = new Spiel();
-//		Spieler s1 = new Spieler("Test", FarbEnum.SCHWARZ, false);
-//		Spieler s2 = new Spieler("Test2", FarbEnum.WEIß, false);
-//		erstelleFiguren(s1, b1);
-//		erstelleFiguren(s2, b1);
-//		b1.display();
-//		System.out.println(b1.getBrettFeldIndex(4, 2).getSpielfigur().getPosX());
-//		System.out.println(b1.getBrettFeldIndex(4, 2).getSpielfigur().getPosY());
-//		System.out.println(b1.getBrettFeldIndex(4, 2).getSpielfigur().getIdS());
-//		System.out.println(b1.getBrettFeldIndex(4, 4).getSpielfigur().getPosX());
-//		System.out.println(b1.getBrettFeldIndex(4, 4).getSpielfigur().getPosY());
-//		System.out.println(b1.getBrettFeldIndex(4, 4).getSpielfigur());
-//		System.out.println(b1.getBrettFeldIndex(4, 4).getSpielfigur().getIdS());
-//		System.out.println(s1.getFiguren(FarbEnum.SCHWARZ));
-	}
-
-	private static void erstelleFiguren(Spieler spieler, Spielbrett brett) {
-
-		if (spieler.getFarbe() == FarbEnum.SCHWARZ) {
-			for (int i = 0; i < brett.getBrettGroesse() / 2 - 1; i++) {
-				for (int j = 0; j < brett.getBrettGroesse(); j++) {
-					if (brett.getBrettFeldIndex(i, j).getIstBelegt() == false && brett.getBrettFeldIndex(i, j).getIstSchwarz() == true) {
-
-						Spielfigur fig = (new Spielfigur(FarbEnum.SCHWARZ, false));
-
-						brett.getBrettFeldIndex(i, j).setSpielfigur(fig);
-
-						spieler.addSpielfigur(fig);
-					}
-				}
-			}
-		} else {
-			for (int i = brett.getBrettGroesse() - 1; i > brett.getBrettGroesse() / 2; i--) {
-				for (int j = 0; j < brett.getBrettGroesse(); j++) {
-					if (brett.getBrettFeldIndex(i, j).getIstBelegt() == false && brett.getBrettFeldIndex(i, j).getIstSchwarz() == true) {
-
-						Spielfigur fig = (new Spielfigur(FarbEnum.WEIß, false));
-						brett.getBrettFeldIndex(i, j).setSpielfigur(fig);
-
-						spieler.addSpielfigur(fig);
-
-					}
-				}
-			}
-		}
-
+		iBediener spiel = new Spiel();
+		spiel.spielStarten();
+		// Spielbrett b1 = new Spielbrett(12);
+		// Spiel spiel1 = new Spiel();
+		// Spieler s1 = new Spieler("Test", FarbEnum.SCHWARZ, false);
+		// Spieler s2 = new Spieler("Test2", FarbEnum.WEIß, false);
+		// erstelleFiguren(s1, b1);
+		// erstelleFiguren(s2, b1);
+		// b1.display();
+		// System.out.println(b1.getBrettFeldIndex(4, 2).getSpielfigur().getPosX());
+		// System.out.println(b1.getBrettFeldIndex(4, 2).getSpielfigur().getPosY());
+		// System.out.println(b1.getBrettFeldIndex(4, 2).getSpielfigur().getIdS());
+		// System.out.println(b1.getBrettFeldIndex(4, 4).getSpielfigur().getPosX());
+		// System.out.println(b1.getBrettFeldIndex(4, 4).getSpielfigur().getPosY());
+		// System.out.println(b1.getBrettFeldIndex(4, 4).getSpielfigur());
+		// System.out.println(b1.getBrettFeldIndex(4, 4).getSpielfigur().getIdS());
+		// System.out.println(s1.getFiguren(FarbEnum.SCHWARZ));
 	}
 
 }

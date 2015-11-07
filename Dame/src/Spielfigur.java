@@ -49,11 +49,11 @@ public class Spielfigur implements Serializable {
 		if (farbe == FarbEnum.SCHWARZ) {
 			i++;
 			this.idS = i;
-			System.out.println("SpielfigurNr." + idS + " " + this.getFarbe());
+
 		} else {
 			j++;
 			this.idW = j;
-			System.out.println("SpielfigurNr." + idW + " " + this.getFarbe());
+
 		}
 	}
 
@@ -118,9 +118,9 @@ public class Spielfigur implements Serializable {
 		if (getFarbe() == FarbEnum.SCHWARZ) {
 			if (istDame == true) {
 				if (this.idS < 10) {
-					return "(S" + "0" + this.idS + ")";
+					return "{S" + "0" + this.idS + "}";
 				} else
-					return "(S" + this.idS + ")";
+					return "{S" + this.idS + "}";
 			} else if (this.idS < 10) {
 				return "(s" + "0" + this.idS + ")";
 			} else
@@ -128,9 +128,9 @@ public class Spielfigur implements Serializable {
 		} else {
 			if (istDame == true) {
 				if (this.idW < 10) {
-					return "(W" + "0" + this.idW + ")";
+					return "{W" + "0" + this.idW + "}";
 				} else
-					return "(W" + this.idW + ")";
+					return "{W" + this.idW + "}";
 
 			} else if (this.idW < 10) {
 				return "(w" + "0" + this.idW + ")";
