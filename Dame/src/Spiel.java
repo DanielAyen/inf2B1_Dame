@@ -88,9 +88,9 @@ public class Spiel implements iBediener, Serializable {
 				switch (eingabe) {
 				// TEST CASES: //
 
-				// case "entf":
-				// figurEntfernen(s1.getAlleFiguren().get(0));
-				// break;
+				case "entf":
+					brett.getBrettFeldSchachnotation('a', 11).removeSpielfigur(brett.getBrettFeldSchachnotation('a', 11).getSpielfigur());
+					break;
 				case "win":
 					spielerHatGewonnen(FarbEnum.SCHWARZ);
 					break;
@@ -390,8 +390,9 @@ public class Spiel implements iBediener, Serializable {
 	public int[] wandleUmvString(String Input) {
 		int[] gueltig = new int[3];
 		if (Input.length() > 1 && Input.length() < 4 && (IstBuchstabe(Input.substring(0, 1).toCharArray()) > -1) && (IstZahl(Input.substring(1, Input.length())) > -1)) {
-//			System.out.println("Alles-OK");
-//			System.out.println(IstBuchstabe(Input.substring(0, 1).toCharArray()) + "  " + IstZahl(Input.substring(1, Input.length())));
+			// System.out.println("Alles-OK");
+			// System.out.println(IstBuchstabe(Input.substring(0, 1).toCharArray()) +
+			// "  " + IstZahl(Input.substring(1, Input.length())));
 			gueltig[0] = IstZahl(Input.substring(1, Input.length()));
 			gueltig[1] = IstBuchstabe(Input.substring(0, 1).toCharArray());
 			return gueltig;
@@ -520,16 +521,206 @@ public class Spiel implements iBediener, Serializable {
 			System.out.println("Du kannst keine andere Figur besteigen!");
 			return;
 		}
-		int x = brett.getBrettFeldIndex(xa, ya).getPosX() - brett.getBrettFeldIndex(xn, yn).getPosX();
-		int y = brett.getBrettFeldIndex(xa, ya).getPosY() - brett.getBrettFeldIndex(xn, yn).getPosY();
+		int diffX = brett.getBrettFeldIndex(xa, ya).getPosX() - brett.getBrettFeldIndex(xn, yn).getPosX();
+		int diffY = brett.getBrettFeldIndex(xa, ya).getPosY() - brett.getBrettFeldIndex(xn, yn).getPosY();
+		Spielfigur fig = brett.getBrettFeldIndex(xa, ya).getSpielfigur();
 
-		if (x - y > 2) {
-			figurSchlagen(xa, ya, xn, yn, brett.getBrettFeldIndex(xa, ya).getSpielfigur());
+		if (xa - xn > 2 || xa - xn < -2) {
+			// wenn stein dann einfach schlagen
+
+			if (fig.getDame(fig) == false) {
+				figurSchlagen(xa, ya, xn, yn, brett.getBrettFeldIndex(xa, ya).getSpielfigur());
+
+			} else {// wenn dame dann alles zwischen end und startfeld chencken sovie
+							// end feld -- ++ +- -+ eine gegner figur ist falls schlagen.
+
+				int tempX = diffX;
+				int tempY = diffY;
+
+				if (diffX < 0) {
+					tempX = diffX * (-1);
+				}
+				if (diffY < 0) {
+					tempY = diffY * (-1);
+				}
+
+				if (tempX == tempY) {
+
+					int alteX = brett.getBrettFeldIndex(xa, ya).getPosX();
+					int alteY = brett.getBrettFeldIndex(xa, ya).getPosY();
+
+					int neueX = brett.getBrettFeldIndex(xn, yn).getPosX();
+					int neueY = brett.getBrettFeldIndex(xn, yn).getPosY();
+
+					// RICHTUNG NACH OBEN RECHTS
+					if (diffX < 0 && diffY < 0) {
+
+						int j = alteY + 1;
+						for (int i = alteX + 1; i < neueX; i++) {
+
+							if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
+								// wenn etwas auf dem feld ist.
+								if (brett.getBrettFeldIndex(i, j).getSpielfigur().getFarbe() == getAmZug()) {
+									System.out.println("Eigene Figuren schlagen geht nicht.");
+									return;
+								}
+								if (brett.getBrettFeldIndex(i + 1, j + 1).getIstBelegt()) {
+									System.out.println("Zwei Figuren aufeinmal ueberspringen geht nicht.");
+									return;
+								}
+								if (!brett.getBrettFeldIndex(neueX - 1, neueY - 1).getIstBelegt()) {
+									System.out.println("Du kannst nachdem du geschlagen hast nicht einfach weiter gehen.");
+									return;
+								}
+
+							}
+							j++;
+						}
+
+						j = alteY + 1;
+						for (int i = alteX + 1; i < neueX; i++) {
+
+							if (!brett.getBrettFeldIndex(i, j).getIstBelegt()) {
+								brett.getBrettFeldIndex(i, j).setSpielfigur(brett.getBrettFeldIndex(i - 1, j - 1).getSpielfigur());
+								brett.getBrettFeldIndex(i - 1, j - 1).removeSpielfigur(brett.getBrettFeldIndex(i - 1, j - 1).getSpielfigur());
+							} else {
+								figurSchlagen(i - 1, j - 1, i + 1, j + 1, brett.getBrettFeldIndex(i - 1, j - 1).getSpielfigur());
+
+							}
+
+							j++;
+						}
+
+					}
+
+					// RICHTUNG NACH OBEN LINKS
+					if (diffX < 0 && diffY > 0) {
+
+						int j = alteY - 1;
+						for (int i = alteX + 1; i < neueX; i++) {
+
+							if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
+								// wenn etwas auf dem feld ist.
+								if (brett.getBrettFeldIndex(i, j).getSpielfigur().getFarbe() == getAmZug()) {
+									System.out.println("Eigene Figuren schlagen geht nicht.");
+									return;
+								}
+								if (brett.getBrettFeldIndex(i + 1, j - 1).getIstBelegt()) {
+									System.out.println("Zwei Figuren aufeinmal ueberspringen geht nicht.");
+									return;
+								}
+								if (!brett.getBrettFeldIndex(neueX - 1, neueY + 1).getIstBelegt()) {
+									System.out.println("Du kannst nachdem du geschlagen hast nicht einfach weiter gehen.");
+									return;
+								}
+
+							}
+							j--;
+						}
+
+						j = alteY - 1;
+						for (int i = alteX + 1; i < neueX; i++) {
+
+							if (!brett.getBrettFeldIndex(i, j).getIstBelegt()) {
+								brett.getBrettFeldIndex(i, j).setSpielfigur(brett.getBrettFeldIndex(i - 1, j + 1).getSpielfigur());
+								brett.getBrettFeldIndex(i - 1, j + 1).removeSpielfigur(brett.getBrettFeldIndex(i - 1, j + 1).getSpielfigur());
+							} else {
+								figurSchlagen(i - 1, j + 1, i + 1, j - 1, brett.getBrettFeldIndex(i - 1, j + 1).getSpielfigur());
+
+							}
+
+							j--;
+						}
+
+					}
+
+					// RICHTUNG NACH UNTEN RECHTS
+					if (diffX > 0 && diffY < 0) {
+
+						int j = alteY + 1;
+						for (int i = alteX - 1; i < neueX; i++) {
+
+							if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
+								// wenn etwas auf dem feld ist.
+								if (brett.getBrettFeldIndex(i, j).getSpielfigur().getFarbe() == getAmZug()) {
+									System.out.println("Eigene Figuren schlagen geht nicht.");
+									return;
+								}
+								if (brett.getBrettFeldIndex(i - 1, j + 1).getIstBelegt()) {
+									System.out.println("Zwei Figuren aufeinmal ueberspringen geht nicht.");
+									return;
+								}
+								if (!brett.getBrettFeldIndex(neueX + 1, neueY - 1).getIstBelegt()) {
+									System.out.println("Du kannst nachdem du geschlagen hast nicht einfach weiter gehen.");
+									return;
+								}
+
+							}
+							j++;
+						}
+
+						j = alteY + 1;
+						for (int i = alteX - 1; i < neueX; i--) {
+
+							if (!brett.getBrettFeldIndex(i, j).getIstBelegt()) {
+								brett.getBrettFeldIndex(i, j).setSpielfigur(brett.getBrettFeldIndex(i + 1, j - 1).getSpielfigur());
+								brett.getBrettFeldIndex(i + 1, j - 1).removeSpielfigur(brett.getBrettFeldIndex(i + 1, j - 1).getSpielfigur());
+							} else {
+								figurSchlagen(i + 1, j - 1, i - 1, j + 1, brett.getBrettFeldIndex(i + 1, j - 1).getSpielfigur());
+
+							}
+
+							j++;
+						}
+
+					}
+
+					// RICHTUNG NACH UNTEN RECHTS
+					if (diffX > 0 && diffY > 0) {
+
+						int j = alteY - 1;
+						for (int i = alteX - 1; i < neueX; i--) {
+
+							if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
+								// wenn etwas auf dem feld ist.
+								if (brett.getBrettFeldIndex(i, j).getSpielfigur().getFarbe() == getAmZug()) {
+									System.out.println("Eigene Figuren schlagen geht nicht.");
+									return;
+								}
+								if (brett.getBrettFeldIndex(i - 1, j - 1).getIstBelegt()) {
+									System.out.println("Zwei Figuren aufeinmal ueberspringen geht nicht.");
+									return;
+								}
+								if (!brett.getBrettFeldIndex(neueX + 1, neueY + 1).getIstBelegt()) {
+									System.out.println("Du kannst nachdem du geschlagen hast nicht einfach weiter gehen.");
+									return;
+								}
+
+							}
+							j--;
+						}
+
+						j = alteY - 1;
+						for (int i = alteX - 1; i < neueX; i--) {
+
+							if (!brett.getBrettFeldIndex(i, j).getIstBelegt()) {
+								brett.getBrettFeldIndex(i, j).setSpielfigur(brett.getBrettFeldIndex(i + 1, j + 1).getSpielfigur());
+								brett.getBrettFeldIndex(i + 1, j + 1).removeSpielfigur(brett.getBrettFeldIndex(i + 1, j + 1).getSpielfigur());
+							} else {
+								figurSchlagen(i + 1, j + 1, i - 1, j - 1, brett.getBrettFeldIndex(i + 1, j + 1).getSpielfigur());
+
+							}
+
+							j--;
+						}
+
+					}
+				}
+
+			}
 
 			return;
 		}
-
-		Spielfigur fig = brett.getBrettFeldIndex(xa, ya).getSpielfigur();
 
 		FarbEnum farbe = fig.getFarbe();
 		int tempx = brett.getBrettFeldIndex(xa, ya).getPosX() - brett.getBrettFeldIndex(xn, yn).getPosX();
@@ -542,7 +733,7 @@ public class Spiel implements iBediener, Serializable {
 					brett.getBrettFeldIndex(xa, ya).removeSpielfigur(fig);
 					brett.getBrettFeldIndex(xn, yn).setSpielfigur(fig);
 
-				} else {// rückwärts schalgen
+				} else {// rückwärts schlagen
 					figurSchlagen(xa, ya, xn, yn, fig);
 				}
 
