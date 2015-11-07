@@ -72,8 +72,8 @@ public class Spiel implements iBediener, Serializable {
 	private KI_Dame k2;
 	private String dateiname = "csv";
 
-	private char startC;
-	private char endC;
+	private int startC;
+	private int endC;
 	private int startI;
 	private int endI;
 
@@ -295,41 +295,20 @@ public class Spiel implements iBediener, Serializable {
 
 						// Startpos fragen
 						System.out.println("\n Bitte gebe deine Startposition ein.");
-
 						String startp = reader.readLine();
-						// ///
-						if (startp.length() == 2 || startp.length() == 3) {
-
-							if (!charPruefenUndSetzenA(startp)) {
-								System.out.println("Fehler in der Eingabe (Buchstabe)! Zurueck im Hauptmenue.");
-								startC = 0;
-								startI = 0;
-								endC = 0;
-								endI = 0;
-								break;
-							}
-
-							if (!zahlPruefenUndSetzenA(startp)) {
-								System.out.println("Fehler in der Eingabe (Zahl)! Zurueck im Hauptmenue.");
-								startC = 0;
-								startI = 0;
-								endC = 0;
-								endI = 0;
-								break;
-							}
-
-						} else {
-							System.out.println("So kannst du nicht ziehen! Zurueck im Hauptmenue.");
-							startC = 0;
-							startI = 0;
-							endC = 0;
-							endI = 0;
+						startC = wandleUmvString(startp)[0];
+						startI = wandleUmvString(startp)[1];
+						if (wandleUmvString(startp)[2] == -1) {
+							System.out.println("Falsche Eingabe, zurück im Menü");
 							break;
 						}
-						// TODO überprufen ob startpos figur gleiche farbe wie der spieler
-						// der am zug ist hat. wenn nicht der fall dann startp ungültig.
 
-						// if (!(getAmZug() == brett.getBrettFeldSchachnotation(startC,
+						// TODO überprufen ob startpos figur gleiche farbe wie
+						// der spieler
+						// der am zug ist hat. wenn nicht der fall dann startp
+						// ungültig.
+						// if (!(getAmZug() ==
+						// brett.getBrettFeldSchachnotation(startC,
 						// startI).getSpielfigur().getFarbe())) {
 						// System.out.println("Du kannst nur deine eigenen Figuren bewegen! Zurueck im Hauptmenue.");
 						// break;
@@ -340,70 +319,39 @@ public class Spiel implements iBediener, Serializable {
 							spielerHatGewonnen(s2.getFarbe());
 							break;
 						}
-
 						if (s2.getAlleFiguren().size() == 1 && s2.getFarbe() == getAmZug() && moeglicheZuege(startC, startI) == 0) {
 							// spieler 1 gewinnt
 							spielerHatGewonnen(s1.getFarbe());
 							break;
 						}
-
 						if (moeglicheZuege(startC, startI) == 0) {
 							System.out.println("Mit dieser Figur sind keine Zuege moeglich! Zurueck im Hauptmenue.");
-
 							break;
 						}
 
 						// Endpos fragen
-						System.out.println("Eingegebene Startposition: " + startC + startI + "\n");
-
+						System.out.println("Eingegebene Startposition: " + brett.getBrettFeldIndex(startC, startI) + "\n");
 						System.out.println("Bitte gebe deine Endposition ein.");
-
 						String endp = reader.readLine();
-
-						if (endp.length() == 2 || endp.length() == 3) {
-
-							if (!charPruefenUndSetzenN(endp)) {
-								System.out.println("Fehler in der Eingabe (Buchstabe)! Zurueck im Hauptmenue.");
-								startC = 0;
-								startI = 0;
-								endC = 0;
-								endI = 0;
-
-								break;
-							}
-
-							if (!zahlPruefenUndSetzenN(endp)) {
-								System.out.println("Fehler in der Eingabe (Zahl)! Zurueck im Hauptmenue.");
-								startC = 0;
-								startI = 0;
-								endC = 0;
-								endI = 0;
-
-								break;
-							}
-
-						} else {
-							System.out.println("So kannst du nicht ziehen! Zurueck im Hauptmenue.");
-							startC = 0;
-							startI = 0;
-							endC = 0;
-							endI = 0;
-
+						endC = wandleUmvString(endp)[0];
+						endI = wandleUmvString(endp)[1];
+						if (wandleUmvString(endp)[2] == -1) {
+							System.out.println("Falsche Eingabe, zurück im Menü");
 							break;
 						}
-						System.out.println("Eingegebene EndPosition: " + endC + endI + "\n");
 
+						System.out.println("Eingegebene EndPosition: " + brett.getBrettFeldIndex(endC, endI) + "\n");
 						figurBewegen(startC, startI, endC, endI);
 						startC = 0;
 						startI = 0;
 						endC = 0;
 						endI = 0;
-
 						dameWerden();
 						brett.display();
 						System.out.println("\n");
 
 					}
+					zugBeenden();
 					break;
 				// beendet das Spiel
 				case "beenden":
@@ -434,615 +382,51 @@ public class Spiel implements iBediener, Serializable {
 		}
 	}
 
-	/**
-	 * prueft den alten positions char
-	 * 
-	 * @param posi
-	 *          String uebergabe
-	 * @return gibt einen char wert zurueck
-	 */
-	private boolean charPruefenUndSetzenA(String posi) {
-
-		int brettGroesse = brett.getBrettGroesse();
-
-		switch (brettGroesse) {
-
-		case 8:
-
-			if (posi.startsWith("A") || posi.startsWith("a")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("B") || posi.startsWith("b")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("C") || posi.startsWith("c")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("D") || posi.startsWith("d")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("E") || posi.startsWith("e")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("F") || posi.startsWith("f")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("G") || posi.startsWith("g")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("H") || posi.startsWith("h")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			return false;
-
-		case 10:
-
-			if (posi.startsWith("A") || posi.startsWith("a")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("B") || posi.startsWith("b")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("C") || posi.startsWith("c")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("D") || posi.startsWith("d")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("E") || posi.startsWith("e")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("F") || posi.startsWith("f")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("G") || posi.startsWith("g")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("H") || posi.startsWith("h")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("I") || posi.startsWith("i")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("J") || posi.startsWith("j")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			return false;
-
-		case 12:
-
-			if (posi.startsWith("A") || posi.startsWith("a")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("B") || posi.startsWith("b")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("C") || posi.startsWith("c")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("D") || posi.startsWith("d")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("E") || posi.startsWith("e")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("F") || posi.startsWith("f")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("G") || posi.startsWith("g")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("H") || posi.startsWith("h")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("I") || posi.startsWith("i")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("J") || posi.startsWith("j")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("K") || posi.startsWith("k")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("L") || posi.startsWith("l")) {
-				startC = posi.charAt(0);
-				return true;
-			}
-			return false;
-
-		}
-		return false;
+	public int[] wandleUmvString(String Input) {
+		int[] gueltig = new int[3];
+		if (Input.length() > 1 && Input.length() < 4 && (IstBuchstabe(Input.substring(0, 1).toCharArray()) > -1) && (IstZahl(Input.substring(1, Input.length())) > -1)) {
+			System.out.println("Alles-OK");
+			System.out.println(IstBuchstabe(Input.substring(0, 1).toCharArray()) + "  " + IstZahl(Input.substring(1, Input.length())));
+			gueltig[0] = IstZahl(Input.substring(1, Input.length()));
+			gueltig[1] = IstBuchstabe(Input.substring(0, 1).toCharArray());
+			return gueltig;
+		} else
+			gueltig[2] = -1;
+		System.out.println("Falsche Eingabe");
+		return gueltig;
 	}
 
 	/**
-	 * prueft die eingegebene zahl
 	 * 
-	 * @param posi
-	 *          eingabe ueber string
-	 * @return gibt einen int wert zurueck
+	 * @param Input
+	 * @return int den Indexwert vom Brett (Spalte)
+	 * @return -1 wenn Input (Index) ausserhalb Brett liegt
 	 */
-	private boolean zahlPruefenUndSetzenA(String posi) {
-
-		int brettGroesse = brett.getBrettGroesse();
-
-		switch (brettGroesse) {
-
-		case 8:
-
-			if (posi.endsWith("1")) {
-				startI = 1;
-
+	public int IstZahl(String Input) {
+		try {
+			if (Integer.parseInt(Input) > 0 && Integer.parseInt(Input) <= brett.getBrettGroesse()) {
+				return Integer.parseInt(Input) - 1;
 			}
-			if (posi.endsWith("2")) {
-				startI = 2;
-
-			}
-			if (posi.endsWith("3")) {
-				startI = 3;
-
-			}
-			if (posi.endsWith("4")) {
-				startI = 4;
-
-			}
-			if (posi.endsWith("5")) {
-				startI = 5;
-
-			}
-			if (posi.endsWith("6")) {
-				startI = 6;
-
-			}
-			if (posi.endsWith("7")) {
-				startI = 7;
-
-			}
-			if (posi.endsWith("8")) {
-				startI = 8;
-
-			}
-			if (startI != 0)
-				return true;
-
-			return false;
-
-		case 10:
-
-			if (posi.endsWith("1")) {
-				startI = 1;
-
-			}
-			if (posi.endsWith("2")) {
-				startI = 2;
-
-			}
-			if (posi.endsWith("3")) {
-				startI = 3;
-
-			}
-			if (posi.endsWith("4")) {
-				startI = 4;
-
-			}
-			if (posi.endsWith("5")) {
-				startI = 5;
-
-			}
-			if (posi.endsWith("6")) {
-				startI = 6;
-
-			}
-			if (posi.endsWith("7")) {
-				startI = 7;
-
-			}
-			if (posi.endsWith("8")) {
-				startI = 8;
-
-			}
-			if (posi.endsWith("9")) {
-				startI = 9;
-
-			}
-			if (posi.endsWith("10")) {
-				startI = 10;
-
-			}
-			if (startI != 0)
-				return true;
-
-			return false;
-
-		case 12:
-
-			if (posi.endsWith("1")) {
-				startI = 1;
-
-			}
-			if (posi.endsWith("2")) {
-				startI = 2;
-
-			}
-			if (posi.endsWith("3")) {
-				startI = 3;
-
-			}
-			if (posi.endsWith("4")) {
-				startI = 4;
-
-			}
-			if (posi.endsWith("5")) {
-				startI = 5;
-
-			}
-			if (posi.endsWith("6")) {
-				startI = 6;
-
-			}
-			if (posi.endsWith("7")) {
-				startI = 7;
-
-			}
-			if (posi.endsWith("8")) {
-				startI = 8;
-
-			}
-			if (posi.endsWith("9")) {
-				startI = 9;
-
-			}
-			if (posi.endsWith("10")) {
-				startI = 10;
-
-			}
-			if (posi.endsWith("11")) {
-				startI = 11;
-
-			}
-			if (posi.endsWith("12")) {
-				startI = 12;
-
-			}
-			if (startI != 0)
-				return true;
-
-			return false;
+			return -1;
+		} catch (NumberFormatException ex) {
+			return -1;
 		}
-		return false;
 	}
 
 	/**
-	 * prueft den neuen posi char
 	 * 
-	 * @param posi
-	 *          eingabe ueber String
-	 * @return gibt char zurueck
+	 * @param Input
+	 * @return int den Indexwert von Brett (Zeile)
+	 * @return -1 wenn Input (Index) ausserhalb vom Brett liegt
 	 */
-	private boolean charPruefenUndSetzenN(String posi) {
-		int brettGroesse = brett.getBrettGroesse();
+	public int IstBuchstabe(char[] Input) {
 
-		switch (brettGroesse) {
+		Input[0] = Character.toUpperCase(Input[0]);
 
-		case 8:
-
-			if (posi.startsWith("A") || posi.startsWith("a")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("B") || posi.startsWith("b")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("C") || posi.startsWith("c")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("D") || posi.startsWith("d")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("E") || posi.startsWith("e")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("F") || posi.startsWith("f")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("G") || posi.startsWith("g")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("H") || posi.startsWith("h")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			return false;
-
-		case 10:
-
-			if (posi.startsWith("A") || posi.startsWith("a")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("B") || posi.startsWith("b")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("C") || posi.startsWith("c")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("D") || posi.startsWith("d")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("E") || posi.startsWith("e")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("F") || posi.startsWith("f")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("G") || posi.startsWith("g")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("H") || posi.startsWith("h")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("I") || posi.startsWith("i")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("J") || posi.startsWith("j")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			return false;
-
-		case 12:
-
-			if (posi.startsWith("A") || posi.startsWith("a")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("B") || posi.startsWith("b")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("C") || posi.startsWith("c")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("D") || posi.startsWith("d")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("E") || posi.startsWith("e")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("F") || posi.startsWith("f")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("G") || posi.startsWith("g")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("H") || posi.startsWith("h")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("I") || posi.startsWith("i")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("J") || posi.startsWith("j")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("K") || posi.startsWith("k")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			if (posi.startsWith("L") || posi.startsWith("l")) {
-				endC = posi.charAt(0);
-				return true;
-			}
-			return false;
-
+		if ((int) Input[0] >= 65 && (int) Input[0] <= (65 + brett.getBrettGroesse())) {
+			return Input[0] - 65;
 		}
-		return false;
-	}
-
-	/**
-	 * neue zahl in int wandlung und pruefung
-	 * 
-	 * @param posi
-	 *          bekommt einen String
-	 * @return gibt ein char zurueck
-	 */
-	private boolean zahlPruefenUndSetzenN(String posi) {
-		int brettGroesse = brett.getBrettGroesse();
-
-		switch (brettGroesse) {
-
-		case 8:
-
-			if (posi.endsWith("1")) {
-				endI = 1;
-
-			}
-			if (posi.endsWith("2")) {
-				endI = 2;
-
-			}
-			if (posi.endsWith("3")) {
-				endI = 3;
-
-			}
-			if (posi.endsWith("4")) {
-				endI = 4;
-
-			}
-			if (posi.endsWith("5")) {
-				endI = 5;
-
-			}
-			if (posi.endsWith("6")) {
-				endI = 6;
-
-			}
-			if (posi.endsWith("7")) {
-				endI = 7;
-
-			}
-			if (posi.endsWith("8")) {
-				endI = 8;
-
-			}
-			if (endI != 0)
-				return true;
-
-			return false;
-
-		case 10:
-
-			if (posi.endsWith("1")) {
-				endI = 1;
-
-			}
-			if (posi.endsWith("2")) {
-				endI = 2;
-
-			}
-			if (posi.endsWith("3")) {
-				endI = 3;
-
-			}
-			if (posi.endsWith("4")) {
-				endI = 4;
-
-			}
-			if (posi.endsWith("5")) {
-				endI = 5;
-
-			}
-			if (posi.endsWith("6")) {
-				endI = 6;
-
-			}
-			if (posi.endsWith("7")) {
-				endI = 7;
-
-			}
-			if (posi.endsWith("8")) {
-				endI = 8;
-
-			}
-			if (posi.endsWith("9")) {
-				endI = 9;
-
-			}
-			if (posi.endsWith("10")) {
-				endI = 10;
-
-			}
-			if (endI != 0)
-				return true;
-
-			return false;
-
-		case 12:
-
-			if (posi.endsWith("1")) {
-				endI = 1;
-
-			}
-			if (posi.endsWith("2")) {
-				endI = 2;
-
-			}
-			if (posi.endsWith("3")) {
-				endI = 3;
-
-			}
-			if (posi.endsWith("4")) {
-				endI = 4;
-
-			}
-			if (posi.endsWith("5")) {
-				endI = 5;
-
-			}
-			if (posi.endsWith("6")) {
-				endI = 6;
-
-			}
-			if (posi.endsWith("7")) {
-				endI = 7;
-
-			}
-			if (posi.endsWith("8")) {
-				endI = 8;
-
-			}
-			if (posi.endsWith("9")) {
-				endI = 9;
-
-			}
-			if (posi.endsWith("10")) {
-				endI = 10;
-
-			}
-			if (posi.endsWith("11")) {
-				endI = 11;
-
-			}
-			if (posi.endsWith("12")) {
-				endI = 12;
-
-			}
-			if (endI != 0)
-				return true;
-
-			return false;
-
-		}
-		return false;
+		return -1;
 	}
 
 	/**
@@ -1064,53 +448,54 @@ public class Spiel implements iBediener, Serializable {
 	 * Der Spieler der am Zug ist darf seine Figur bewegen(wird durch zuggueltig
 	 * geprueft) nur der SPieler der am zug ist darf auch ziehen
 	 */
-	private void figurBewegen(char xa, int ya, char xn, int yn) {
+	private void figurBewegen(int xa, int ya, int xn, int yn) {
 
 		// if (xa > brett.getBrettGroesse() || ya > brett.getBrettGroesse()) {
 		// System.out.println("Außerhalb des Brett's gibt es keine Figuren!");
 		// return;
 		// }
 
-		// if (xn > brett.getBrettGroesse() || yn > brett.getBrettGroesse() || xa <
+		// if (xn > brett.getBrettGroesse() || yn > brett.getBrettGroesse() ||
+		// xa <
 		// brett.getBrettGroesse() || ya < brett.getBrettGroesse()) {
 		// System.out.println("Du kannst doch nicht vom Spielbrett springen!");
 		// return;
 		// }
 
-		if (!brett.getBrettFeldSchachnotation(xa, ya).getIstBelegt()) {
+		if (!brett.getBrettFeldIndex(xa, ya).getIstBelegt()) {
 			System.out.println("Ohne Figur kannst du nicht ziehen!");
 			return;
 		}
-		if (!brett.getBrettFeldSchachnotation(xn, yn).getIstSchwarz()) {
+		if (!brett.getBrettFeldIndex(xn, yn).getIstSchwarz()) {
 			System.out.println("Du kannst nur auf schwarze Felder springen!");
 			return;
 		}
-		if (brett.getBrettFeldSchachnotation(xn, yn).getIstBelegt()) {
-			System.out.println(brett.getBrettFeldSchachnotation(xn, yn).getSpielfigur());
+		if (brett.getBrettFeldIndex(xn, yn).getIstBelegt()) {
+			System.out.println(brett.getBrettFeldIndex(xn, yn).getSpielfigur());
 			System.out.println("Du kannst keine andere Figur besteigen!");
 			return;
 		}
-		int x = brett.getBrettFeldSchachnotation(xa, ya).getPosX() - brett.getBrettFeldSchachnotation(xn, yn).getPosX();
-		int y = brett.getBrettFeldSchachnotation(xa, ya).getPosY() - brett.getBrettFeldSchachnotation(xn, yn).getPosY();
+		int x = brett.getBrettFeldIndex(xa, ya).getPosX() - brett.getBrettFeldIndex(xn, yn).getPosX();
+		int y = brett.getBrettFeldIndex(xa, ya).getPosY() - brett.getBrettFeldIndex(xn, yn).getPosY();
 
 		if (x - y > 2) {
-			figurSchlagen(xa, ya, xn, yn, brett.getBrettFeldSchachnotation(xa, ya).getSpielfigur());
+			figurSchlagen(xa, ya, xn, yn, brett.getBrettFeldIndex(xa, ya).getSpielfigur());
 
 			return;
 		}
 
-		Spielfigur fig = brett.getBrettFeldSchachnotation(xa, ya).getSpielfigur();
+		Spielfigur fig = brett.getBrettFeldIndex(xa, ya).getSpielfigur();
 
 		FarbEnum farbe = fig.getFarbe();
-		int tempx = brett.getBrettFeldSchachnotation(xa, ya).getPosX() - brett.getBrettFeldSchachnotation(xn, yn).getPosX();
+		int tempx = brett.getBrettFeldIndex(xa, ya).getPosX() - brett.getBrettFeldIndex(xn, yn).getPosX();
 		switch (farbe) {
 		case SCHWARZ:
 			if (fig.getDame(fig)) {
 
 				if (tempx == -1 || tempx == 1) {// zieh möglichkeiten dame
 
-					brett.getBrettFeldSchachnotation(xa, ya).removeSpielfigur(fig);
-					brett.getBrettFeldSchachnotation(xn, yn).setSpielfigur(fig);
+					brett.getBrettFeldIndex(xa, ya).removeSpielfigur(fig);
+					brett.getBrettFeldIndex(xn, yn).setSpielfigur(fig);
 
 				} else {
 					figurSchlagen(xa, ya, xn, yn, fig);
@@ -1119,8 +504,8 @@ public class Spiel implements iBediener, Serializable {
 			} else {
 				if (tempx == -1) {// zieh möglichkeiten stein
 
-					brett.getBrettFeldSchachnotation(xa, ya).removeSpielfigur(fig);
-					brett.getBrettFeldSchachnotation(xn, yn).setSpielfigur(fig);
+					brett.getBrettFeldIndex(xa, ya).removeSpielfigur(fig);
+					brett.getBrettFeldIndex(xn, yn).setSpielfigur(fig);
 
 				} else {
 					figurSchlagen(xa, ya, xn, yn, fig);
@@ -1136,8 +521,8 @@ public class Spiel implements iBediener, Serializable {
 
 				if (tempx == -1 || tempx == 1) {// zieh möglivchkeiten dame
 
-					brett.getBrettFeldSchachnotation(xa, ya).removeSpielfigur(fig);
-					brett.getBrettFeldSchachnotation(xn, yn).setSpielfigur(fig);
+					brett.getBrettFeldIndex(xa, ya).removeSpielfigur(fig);
+					brett.getBrettFeldIndex(xn, yn).setSpielfigur(fig);
 
 				} else {
 					figurSchlagen(xa, ya, xn, yn, fig);
@@ -1146,8 +531,8 @@ public class Spiel implements iBediener, Serializable {
 			} else {
 				if (tempx == 1) {// zieh möglichkeiten stein
 
-					brett.getBrettFeldSchachnotation(xa, ya).removeSpielfigur(fig);
-					brett.getBrettFeldSchachnotation(xn, yn).setSpielfigur(fig);
+					brett.getBrettFeldIndex(xa, ya).removeSpielfigur(fig);
+					brett.getBrettFeldIndex(xn, yn).setSpielfigur(fig);
 
 				} else {
 					figurSchlagen(xa, ya, xn, yn, fig);
@@ -1214,13 +599,13 @@ public class Spiel implements iBediener, Serializable {
 	/**
 	 * Einen gegnerischen stein aus dem Spiel werfen
 	 */
-	private void figurSchlagen(char altepx, int altepy, char neuepx, int neuepy, Spielfigur fig) {
+	private void figurSchlagen(int altepx, int altepy, int neuepx, int neuepy, Spielfigur fig) {
 
-		int alteX = brett.getBrettFeldSchachnotation(altepx, altepy).getPosX();
-		int alteY = brett.getBrettFeldSchachnotation(altepx, altepy).getPosY();
+		int alteX = brett.getBrettFeldIndex(altepx, altepy).getPosX();
+		int alteY = brett.getBrettFeldIndex(altepx, altepy).getPosY();
 
-		int neueX = brett.getBrettFeldSchachnotation(neuepx, neuepy).getPosX();
-		int neueY = brett.getBrettFeldSchachnotation(neuepx, neuepy).getPosY();
+		int neueX = brett.getBrettFeldIndex(neuepx, neuepy).getPosX();
+		int neueY = brett.getBrettFeldIndex(neuepx, neuepy).getPosY();
 
 		int diffX = alteX - neueX;
 		int diffY = alteY - neueY;
@@ -1233,7 +618,8 @@ public class Spiel implements iBediener, Serializable {
 					// RICHTUNG NACH OBEN RECHTS
 					if (brett.getBrettFeldIndex(alteX + 1, alteY + 1).getIstBelegt()) {
 						if (brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
-							// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
+							// prüfen ob feld zwischen alt und neu leer ist wenn
+							// nicht dann
 							// farbe prüfen (Wenn alles korrekt die
 							// figurEntfernen()aufrufen)
 							System.out.println("nach oben rechts s2");
@@ -1253,7 +639,8 @@ public class Spiel implements iBediener, Serializable {
 					System.out.println("nach oben links s1");
 					if (brett.getBrettFeldIndex(alteX + 1, alteY - 1).getIstBelegt()) {
 						if (brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
-							// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
+							// prüfen ob feld zwischen alt und neu leer ist wenn
+							// nicht dann
 							// farbe prüfen (Wenn alles korrekt die
 							// figurEntfernen()aufrufen)
 							System.out.println("nach oben links s2");
@@ -1273,7 +660,8 @@ public class Spiel implements iBediener, Serializable {
 					System.out.println("nach unten rechts s1");
 					if (brett.getBrettFeldIndex(alteX - 1, alteY + 1).getIstBelegt()) {
 						if (brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
-							// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
+							// prüfen ob feld zwischen alt und neu leer ist wenn
+							// nicht dann
 							// farbe prüfen (Wenn alles korrekt die
 							// figurEntfernen()aufrufen)
 							System.out.println("nach unten rechts s2");
@@ -1293,7 +681,8 @@ public class Spiel implements iBediener, Serializable {
 					System.out.println("nach unten links s1");
 					if (brett.getBrettFeldIndex(alteX - 1, alteY - 1).getIstBelegt()) {
 						if (brett.getBrettFeldIndex(alteX - 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
-							// prüfen ob feld zwischen alt und neu leer ist wenn nicht dann
+							// prüfen ob feld zwischen alt und neu leer ist wenn
+							// nicht dann
 							// farbe prüfen (Wenn alles korrekt die
 							// figurEntfernen()aufrufen)
 							System.out.println("nach unten links s2");
@@ -1513,7 +902,7 @@ public class Spiel implements iBediener, Serializable {
 	 * ueberprueft die moeglichkeit an zuegen mit der gewaehlten figur
 	 */
 
-	private int moeglicheZuege(char x, int y) {
+	private int moeglicheZuege(int x, int y) {
 
 		int xPosFig;
 		int yPosFig;
@@ -1530,9 +919,9 @@ public class Spiel implements iBediener, Serializable {
 		int xPosNeu4;
 		int yPosNeu4;
 
-		xPosFig = brett.getBrettFeldSchachnotation(x, y).getPosX();
-		yPosFig = brett.getBrettFeldSchachnotation(x, y).getPosY();
-		Spielfigur fig = brett.getBrettFeldSchachnotation(x, y).getSpielfigur();
+		xPosFig = brett.getBrettFeldIndex(x, y).getPosX();
+		yPosFig = brett.getBrettFeldIndex(x, y).getPosY();
+		Spielfigur fig = brett.getBrettFeldIndex(x, y).getSpielfigur();
 
 		xPosNeu1 = xPosFig + 1;
 		yPosNeu1 = yPosFig + 1;
@@ -1556,7 +945,8 @@ public class Spiel implements iBediener, Serializable {
 					if (xPosNeu1 >= 0 && xPosNeu1 <= brett.getBrettGroesse() - 1 && yPosNeu1 >= 0 && yPosNeu1 <= brett.getBrettGroesse() - 1) {
 						// prueft ob das feld innerhalb des bretts liegt
 						if (!brett.getBrettFeldIndex(xPosNeu1, yPosNeu1).getIstBelegt()) {
-							// prueft ob das mögliche zielfeld belegt ist oder nicht wenn
+							// prueft ob das mögliche zielfeld belegt ist oder
+							// nicht wenn
 							// nicht
 							// dann ++
 							anzMoeglichkeiten++;
