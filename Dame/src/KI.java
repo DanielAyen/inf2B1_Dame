@@ -101,11 +101,11 @@ public abstract class KI implements Serializable {
 		// int[] zugZielKoords1 = schlaege.get(0);
 		// int rueckgabeSchlaege[] = { a, j, zugZielKoords1[0], zugZielKoords1[1]
 		// ------------------------------------------------------------------------
-		int rueckgabeZieh[] = { zielKoords[2],  zielKoords[3] ,zielKoords[0], zielKoords[1]};
+		int rueckgabeZieh[] = { (zielKoords[3]-1),  (zielKoords[2]-97) ,(zielKoords[1]-1), (zielKoords[0]-97)};
 		// ------------------------------------------------------------------------
 //		System.out.println("Figur WTF zog von " + (char) ziehKoords[0] + ziehKoords[1] + " nach " + (char) ziehKoords[2] + ziehKoords[3] + ".");
 //		System.out.println("OMG");
-		System.out.println(zielKoords[2]+" " +zielKoords[3] +" nach "+ zielKoords[0]+" "+zielKoords[1]);
+		System.out.println(((char)zielKoords[2])+"" +(zielKoords[3]) +" nach "+ ((char)zielKoords[0])+""+(zielKoords[1]));
 		return rueckgabeZieh;
 	}
 
