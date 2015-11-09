@@ -66,46 +66,48 @@ public abstract class KI implements Serializable {
 
 		int limit = zug.size();
 		int i = this.zufall(limit);
-//		System.out.println("Limit: " + limit);
-//		System.out.println("Zufallszahl: " + i);
+		// System.out.println("Limit: " + limit);
+		// System.out.println("Zufallszahl: " + i);
 		ArrayList<int[]> zugZiel = zug.get(i);
 
-//		Object [] bla = zug.toArray();
-//		for (int t = 0; t <= bla.length - 1; t++) {
-//			System.out.println("in Zug steht dies: " + bla[t]);
-//		}
-//
-//		int s3  = (int) bla[i];
-//		int s2  = (int) bla[i+1];
-//		char s1 = (char) s3;
-//		
+		// Object [] bla = zug.toArray();
+		// for (int t = 0; t <= bla.length - 1; t++) {
+		// System.out.println("in Zug steht dies: " + bla[t]);
+		// }
+		//
+		// int s3 = (int) bla[i];
+		// int s2 = (int) bla[i+1];
+		// char s1 = (char) s3;
+		//
 		int limit2 = zugZiel.size();
 		int i2 = this.zufall(limit2);
-//		System.out.println("Limit2: " + limit2);
-//		System.out.println("Zufallszahl2: " + i2);
-		
+		// System.out.println("Limit2: " + limit2);
+		// System.out.println("Zufallszahl2: " + i2);
+
 		int zielKoords[] = zugZiel.get(i2);
 		for (int l = 0; l <= zielKoords.length - 1; l++) {
 			System.out.println(zielKoords[l]);
 		}
 
-//		System.out.println("Zufallszahl2 holt die koordinaten");
-//		System.out.println("Figur WIRD ZIEHEN von " + (char) ziehKoords[0] + ziehKoords[1] + " nach " + (char) ziehKoords[2] + ziehKoords[3] + ".");
+		// System.out.println("Zufallszahl2 holt die koordinaten");
+		// System.out.println("Figur WIRD ZIEHEN von " + (char) ziehKoords[0] +
+		// ziehKoords[1] + " nach " + (char) ziehKoords[2] + ziehKoords[3] + ".");
 
-//		System.out.println("von char" + (char) zielKoords[2]);
-//		System.out.println("von Zahl" + zielKoords[3]);
-//
-//		System.out.println("nach char" + (char) zielKoords[0]);
-//		System.out.println("nach zahl" + zielKoords[1]);
+		// System.out.println("von char" + (char) zielKoords[2]);
+		// System.out.println("von Zahl" + zielKoords[3]);
+		//
+		// System.out.println("nach char" + (char) zielKoords[0]);
+		// System.out.println("nach zahl" + zielKoords[1]);
 
 		// int[] zugZielKoords1 = schlaege.get(0);
 		// int rueckgabeSchlaege[] = { a, j, zugZielKoords1[0], zugZielKoords1[1]
 		// ------------------------------------------------------------------------
-		int rueckgabeZieh[] = { (zielKoords[3]-1),  (zielKoords[2]-97) ,(zielKoords[1]-1), (zielKoords[0]-97)};
+		int rueckgabeZieh[] = { (zielKoords[3] - 1), (zielKoords[2] - 97), (zielKoords[1] - 1), (zielKoords[0] - 97) };
 		// ------------------------------------------------------------------------
-//		System.out.println("Figur WTF zog von " + (char) ziehKoords[0] + ziehKoords[1] + " nach " + (char) ziehKoords[2] + ziehKoords[3] + ".");
-//		System.out.println("OMG");
-		System.out.println(((char)zielKoords[2])+"" +(zielKoords[3]) +" nach "+ ((char)zielKoords[0])+""+(zielKoords[1]));
+		// System.out.println("Figur WTF zog von " + (char) ziehKoords[0] +
+		// ziehKoords[1] + " nach " + (char) ziehKoords[2] + ziehKoords[3] + ".");
+		// System.out.println("OMG");
+		System.out.println(((char) zielKoords[2]) + "" + (zielKoords[3]) + " nach " + ((char) zielKoords[0]) + "" + (zielKoords[1]));
 		return rueckgabeZieh;
 	}
 
@@ -128,13 +130,13 @@ public abstract class KI implements Serializable {
 						if (!schlaege.isEmpty()) {
 							for (int k = 0; k <= schlaege.size() - 1; k++) {
 								int[] zugZielKoords1 = schlaege.get(k);
-								if(zugZielKoords1!=null){
-								zugZielKoords1[2] = a;
-								zugZielKoords1[3] = j;
+								if (zugZielKoords1 != null) {
+									zugZielKoords1[2] = a;
+									zugZielKoords1[3] = j;
 								}
 								// int rueckgabeSchlaege[] = { a, j, zugZielKoords1[0],
 								// zugZielKoords1[1] };
-								System.out.println("Hat Figur an Stelle " + ((char) (a + 1)) + (j + 1) + " geschlagen.");
+//								System.out.println("Hat Figur an Stelle " + ((char) (a + 1)) + (j + 1) + " geschlagen.");
 								System.out.println("Figur will SCHLÄGE von " + a + j + " nach " + (char) zugZielKoords1[0] + zugZielKoords1[1] + " GEBEN.");
 								alleSchlaege.add(schlaege);
 							}
@@ -147,10 +149,10 @@ public abstract class KI implements Serializable {
 									// int rueckgabeBewegung[] = { a, j, zugZielKoords2[0],
 									// zugZielKoords2[1] };
 									System.out.println("Figur will ZUEGE von " + a + j + " nach " + (char) zugZielKoords2[0] + zugZielKoords2[1] + " ziehen.");
-									if(zugZielKoords2!=null){
+									if (zugZielKoords2 != null) {
 										zugZielKoords2[2] = a;
 										zugZielKoords2[3] = j;
-										}
+									}
 									alleZuege.add(zuege);
 								}
 							}
@@ -169,7 +171,6 @@ public abstract class KI implements Serializable {
 	}
 
 	// fragt für Spielfigur ab welche züge möglich sind
-	// TODO bewertung der Züge
 
 	private ArrayList<int[]> getSchlaege(char a, int j, Spielfigur figur) {
 		ArrayList<int[]> schlaege = new ArrayList<int[]>();
@@ -191,7 +192,7 @@ public abstract class KI implements Serializable {
 								// Spielfeld schlagbarerStein =
 								// brett.getBrettFeldSchachnotation((char) (a + 1), j +
 								// this.zugRichtung());
-								int[] koordSchlagen = { (a + 2), (j + (this.zugRichtung2())), 0,0 };
+								int[] koordSchlagen = { (a + 2), (j + (this.zugRichtung2())), 0, 0 };
 								schlaege.add(koordSchlagen);
 								// System.out.println("Hat Figur an Stelle " + schlagbarerStein
 								// +" geschlagen.");
@@ -222,6 +223,53 @@ public abstract class KI implements Serializable {
 				}
 			}
 		}
+		// wäre ein schritt nach hinten noch im spielbrett?
+		if (j - this.zugRichtung2() > 0 && j - this.zugRichtung2() <= brett.getBrettGroesse()) {
+			// ist schräger schritt nach rechts möglich?
+			if (a + 2 <= 'a' + brett.getBrettGroesse() - 1) {
+				Spielfeld zugFeld1 = brett.getBrettFeldSchachnotation((char) (a + 1), j - this.zugRichtung());
+				if (zugFeld1.getIstBelegt() == true) {
+					Spielfigur figurAufBelegtemFeld = zugFeld1.getSpielfigur();
+
+					// schaut ob Figur andere Farbe hat
+					if (figurAufBelegtemFeld.getFarbe() != spieler.getFarbe()) {
+						// überprüft ob Feld hinter GegnerFigur frei ist
+						Spielfeld zugFeld2 = brett.getBrettFeldSchachnotation((char) (a + 2), j - this.zugRichtung2());
+						if (zugFeld2.getIstBelegt() == false) {
+							// Spielfeld schlagbarerStein =
+							// brett.getBrettFeldSchachnotation((char) (a + 1), j +
+							// this.zugRichtung());
+							int[] koordSchlagen = { (a + 2), (j - (this.zugRichtung2())), 0, 0 };
+							schlaege.add(koordSchlagen);
+							// System.out.println("Hat Figur an Stelle " + schlagbarerStein
+							// +" geschlagen.");
+						}
+					}
+				}
+			}
+			// ist schräger schritt nach links möglich?
+			if (a - 2 >= 'a') {
+				Spielfeld zugFeld1 = brett.getBrettFeldSchachnotation((char) (a - 1), j - this.zugRichtung());
+				if (zugFeld1.getIstBelegt() == true) {
+					Spielfigur figurAufBelegtemFeld = zugFeld1.getSpielfigur();
+					// schaut ob Figur andere Farbe hat
+					if (figurAufBelegtemFeld.getFarbe() != spieler.getFarbe()) {
+						// überprüft ob Feld hinter GegnerFigur frei ist
+						Spielfeld zugFeld2 = brett.getBrettFeldSchachnotation((char) (a - 2), j - this.zugRichtung2());
+						if (zugFeld2.getIstBelegt() == false) {
+							// Spielfeld schlagbarerStein =
+							// brett.getBrettFeldSchachnotation((char) (a - 1), j +
+							// this.zugRichtung());
+							int[] koordSchlagen = { (a - 2), (j - (this.zugRichtung2())), 0, 0 };
+							schlaege.add(koordSchlagen);
+							// System.out.println("Hat Figur an Stelle " + schlagbarerStein
+							// +" geschlagen.");
+						}
+					}
+				}
+			}
+		}
+
 		return schlaege;
 	}
 
@@ -238,7 +286,7 @@ public abstract class KI implements Serializable {
 				if (a + 1 <= 'a' + brett.getBrettGroesse() - 1) {
 					Spielfeld zugFeld1 = brett.getBrettFeldSchachnotation((char) (a + 1), j + this.zugRichtung());
 					if (zugFeld1.getIstBelegt() == false) {
-						int[] koord = { a + 1, j + this.zugRichtung(),0 ,0 };
+						int[] koord = { a + 1, j + this.zugRichtung(), 0, 0 };
 						zuge.add(koord);
 						System.out.println("nach rechts: " + (((char) a) + 1) + " " + (j + this.zugRichtung()));
 					}
@@ -247,7 +295,7 @@ public abstract class KI implements Serializable {
 				if (a - 1 >= 'a') {
 					Spielfeld zugFeld2 = brett.getBrettFeldSchachnotation((char) (a - 1), j + this.zugRichtung());
 					if (zugFeld2.getIstBelegt() == false) {
-						int[] koord = { a - 1, j + this.zugRichtung(), 0,0 };
+						int[] koord = { a - 1, j + this.zugRichtung(), 0, 0 };
 						zuge.add(koord);
 						System.out.println("nach links: " + (((char) a) - 1) + " " + (j + this.zugRichtung()));
 					}
@@ -267,8 +315,7 @@ public abstract class KI implements Serializable {
 		int zufallszug = new Random().nextInt(limit);
 		return zufallszug;
 	}
-	
-	
+
 	@Override
 	public String toString() {
 		return "KI: " + spieler.getName() + " mit der Farbe: " + spieler.getFarbe();
