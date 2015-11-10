@@ -68,15 +68,25 @@ public class SpielTest {
 	}
 
 	/**
-	 * Testet ob ein Spielfeld mit 12x12 Feldern in weniger als 10ms gebaut wird
+	 * Testet ob ein Spielfeld mit 12x12 Feldern in weniger als 100ms gebaut wird
 	 */
 
-	@Test(timeout = 10)
+	@Test(timeout = 100)
 	public void testV() {
 		int x = 12;
 		s2.spielBauen(x);
 		assertNotNull(s2);
 
+	}
+	
+	/**
+	 * Eerstellt einen Spieler
+	 */
+	@Test
+	public void testVI(){Spieler sp1 ;
+	assertNotNull (sp1= new Spieler("Test", FarbEnum.SCHWARZ, true));
+	
+		
 	}
 
 }
