@@ -457,35 +457,35 @@ public class Spiel implements iBediener, Serializable {
 								break;
 							}
 
-							if (geschlagen == true) {
-								if (moeglicheZuegeStartposition(endC, endI)[1] != 0) {
-									System.out.println("Weiterziehen (w) oder beenden (b)?");
-									String entscheidung = reader.readLine();
-
-									if (entscheidung.equals("w")) {
-										startC = endC;
-										startI = endI;
-										// TODO ziehen nur mit der Bedingung zu
-										// schlagen
-										System.out.println("Sie duerfen nochmals ziehen. Geben sie die Endposition ein");
-										geschlagen = false;
-
-										break;
-									}
-									if (entscheidung.equals("b")) {
-										System.out.println("Die Figur " + brett.getBrettFeldIndex(endC, endI).getSpielfigur() + " wird entfernt(Pusten)!");
-										pusten(brett.getBrettFeldIndex(endC, endI).getSpielfigur());
-										startC = 0;
-										startI = 0;
-										endC = 0;
-										endI = 0;
-										zugBeenden();
-										System.out.println("Der Spieler mit der Farbe: " + getAmZug() + " ist nun am Zug.");
-										geschlagen = false;
-										break;
-									}
-								}
-							}
+//							if (geschlagen == true) {
+//								if (moeglicheZuegeStartposition(endC, endI)[1] != 0) {
+//									System.out.println("Weiterziehen (w) oder beenden (b)?");
+//									String entscheidung = reader.readLine();
+//
+//									if (entscheidung.equals("w")) {
+//										startC = endC;
+//										startI = endI;
+//										// TODO ziehen nur mit der Bedingung zu
+//										// schlagen
+//										System.out.println("Sie duerfen nochmals ziehen. Geben sie die Endposition ein");
+//										geschlagen = false;
+//
+//										break;
+//									}
+//									if (entscheidung.equals("b")) {
+//										System.out.println("Die Figur " + brett.getBrettFeldIndex(endC, endI).getSpielfigur() + " wird entfernt(Pusten)!");
+//										pusten(brett.getBrettFeldIndex(endC, endI).getSpielfigur());
+//										startC = 0;
+//										startI = 0;
+//										endC = 0;
+//										endI = 0;
+//										zugBeenden();
+//										System.out.println("Der Spieler mit der Farbe: " + getAmZug() + " ist nun am Zug.");
+//										geschlagen = false;
+//										break;
+//									}
+//								}
+//							}
 
 						}
 						if (zugPruefen == -1) {
