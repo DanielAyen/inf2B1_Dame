@@ -185,20 +185,35 @@ public class Spiel implements iBediener, Serializable {
 							break;
 						}
 						brett.display();
-						figurBewegen(zuge[0], zuge[1], zuge[2], zuge[3]);
-
-						if (k1.hatGeschlagen()) {
-							int[] zugee = zuge;
-							do {
-								Spielfigur figur = brett.getBrettFeldIndex((zugee[2]), (zugee[3])).getSpielfigur();
-								zugee = k1.getWeitereSchlaege(((char) (zugee[3] + 97)), (zugee[2] + 1), figur);
-								tmpZug = zugee;
-
-								if (zugee != null) {
-									figurBewegen(zugee[0], zugee[1], zugee[2], zugee[3]);
-								}
-							} while (tmpZug != null);
+						int zugPruefenKI = zugPruefen(zuge[0], zuge[1], zuge[2], zuge[3]);
+						// zugPruefen == 1 Laufen
+						// zugPruefen == 2 Schlagen
+						// zugPruefen == -1 Zug ungueltig
+						if (zugPruefenKI == 1) {
+							figurBewegen(zuge[0], zuge[1], zuge[2], zuge[3]);
+							dameWerden();
 						}
+						if (zugPruefenKI == 2) {
+							figurSchlagen(zuge[0], zuge[1], zuge[2], zuge[3]);
+							if (moeglicheZuegeStartposition(zuge[2], zuge[3])[1] == 0) {
+								break;
+							}
+						}
+
+						// FigurBewegen(zuge[0], zuge[1], zuge[2], zuge[3]);
+
+//						if (k1.hatGeschlagen()) {
+//							int[] zugee = zuge;
+//							do {
+//								Spielfigur figur = brett.getBrettFeldIndex((zugee[2]), (zugee[3])).getSpielfigur();
+//								zugee = k1.getWeitereSchlaege(((char) (zugee[3] + 97)), (zugee[2] + 1), figur);
+//								tmpZug = zugee;
+//
+//								if (zugee != null) {
+//									figurBewegen(zugee[0], zugee[1], zugee[2], zugee[3]);
+//								}
+//							} while (tmpZug != null);
+//						}
 						brett.display();
 						zugBeenden();
 						k1.setHatGeschlagen(false);
@@ -223,19 +238,34 @@ public class Spiel implements iBediener, Serializable {
 							break;
 						}
 						brett.display();
-						figurBewegen(zuge[0], zuge[1], zuge[2], zuge[3]);
-						if (k2.hatGeschlagen()) {
-							int[] zugee = zuge;
-							do {
-								Spielfigur figur = brett.getBrettFeldIndex((zugee[2]), (zugee[3])).getSpielfigur();
-								zugee = k2.getWeitereSchlaege(((char) (zugee[3] + 97)), (zugee[2] + 1), figur);
-								tmpZug = zugee;
 
-								if (zugee != null) {
-									figurBewegen(zugee[0], zugee[1], zugee[2], zugee[3]);
-								}
-							} while (tmpZug != null);
+						int zugPruefenKI = zugPruefen(zuge[0], zuge[1], zuge[2], zuge[3]);
+						// zugPruefen == 1 Laufen
+						// zugPruefen == 2 Schlagen
+						// zugPruefen == -1 Zug ungueltig
+						if (zugPruefenKI == 1) {
+							figurBewegen(zuge[0], zuge[1], zuge[2], zuge[3]);
+							dameWerden();
 						}
+						if (zugPruefenKI == 2) {
+							figurSchlagen(zuge[0], zuge[1], zuge[2], zuge[3]);
+							if (moeglicheZuegeStartposition(zuge[2], zuge[3])[1] == 0) {
+								break;
+							}
+						}
+
+//						if (k2.hatGeschlagen()) {
+//							int[] zugee = zuge;
+//							do {
+//								Spielfigur figur = brett.getBrettFeldIndex((zugee[2]), (zugee[3])).getSpielfigur();
+//								zugee = k2.getWeitereSchlaege(((char) (zugee[3] + 97)), (zugee[2] + 1), figur);
+//								tmpZug = zugee;
+//
+//								if (zugee != null) {
+//									figurBewegen(zugee[0], zugee[1], zugee[2], zugee[3]);
+//								}
+//							} while (tmpZug != null);
+//						}
 
 						brett.display();
 						zugBeenden();
@@ -426,8 +456,7 @@ public class Spiel implements iBediener, Serializable {
 								System.out.println("Der Spieler mit der Farbe: " + getAmZug() + " ist nun am Zug.");
 								break;
 							}
-							
-							
+
 							if (geschlagen == true) {
 								if (moeglicheZuegeStartposition(endC, endI)[1] != 0) {
 									System.out.println("Weiterziehen (w) oder beenden (b)?");
