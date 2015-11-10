@@ -113,8 +113,8 @@ public class Spiel implements iBediener, Serializable {
 					System.out.println("anzeigen : Zeigt dir das Spielbrett.");
 					System.out.println("ser : erlaubt es dir das Spiel zu serialisieren.");
 					System.out.println("csv : erlaubt es dir das Spiel als CSV Datei zu speichern.");
-					System.out.println("laden : erlaubt es dir ein Spielstand zu laden.");
 					System.out.println("ki ziehen : Lässt die KI ziehen.");
+					System.out.println("anzcsv: Ausgabe der aktuellen Spielbrett-Belegung in CSV-Notation.");
 					break;
 				// zum erstellen des spielfelds
 				case "aufbauen":
@@ -137,6 +137,14 @@ public class Spiel implements iBediener, Serializable {
 						System.out.println("Fehlerhafte Eingabe, bitte nur 8 , 10 oder 12 eingeben. Zurueck im Hauptmenue.\n");
 						break;
 					}
+					
+					case "anzcsv":
+					if (spielAufgebaut) {
+						brett.CSVanzeigen();
+						break;
+					}
+					System.out.println("Du kannst kein Spiel anzeigen das es nicht gibt!");
+					break;
 
 					// zum aufrufen der Ki
 				case "ki ziehen":
@@ -1378,47 +1386,51 @@ public class Spiel implements iBediener, Serializable {
 
 			getdZugriff().oeffnen(p);
 			getdZugriff().speichern(p, this.brett.getBrettGroesse() + ","); // Speichert
-																																			// die
-																																			// Brettgröße
-			getdZugriff().speichern(p, this.getAmZug() + ","); // Gibt an wer am Zug
-																													// ist
-			getdZugriff().speichern(p, "Spieler" + "," + this.s1.getName() + "," + this.s1.getFarbe() + "," + this.s1.getIstKi() + ",");
-			getdZugriff().speichern(p, "Spieler" + "," + this.s2.getName() + "," + this.s2.getFarbe() + "," + this.s2.getIstKi() + ",");
-			// TODO
+																			// die
+																			// Spielbrettgroesse
+
+			getdZugriff().speichern(
+					p,
+					this.s1.getName() + "," + "\n"+
+							this.s1.getFarbe() + "," + "\n"+  this.s1.getIstKi()
+							+ ","); // Speichert Spieler 1 mit Name, Farbe, KI
+			getdZugriff().speichern(
+					p,
+					 this.s2.getName() + ","+ "\n"+
+							 this.s2.getFarbe() + "," + "\n"+ this.s2.getIstKi()
+							+ ","); // Speichert Spieler 2 mit Name, Farbe, KI
 
 			for (Spielfigur s : s1.getAlleFiguren()) { // Speichere für jede
-																									// Spielfigur
+														// Spielfigur
 				getdZugriff().speichern(p, s.getFarbe() + ","); // Farbe
 				if (s.getFarbe() == FarbEnum.SCHWARZ) {
 					getdZugriff().speichern(p, s.getIdS() + ","); // ID
 				} else {
 					getdZugriff().speichern(p, s.getIdW() + ","); // ID
 				}
-				getdZugriff().speichern(p, s.getDame(s) + ","); // Dame Ja oder Nein
+				getdZugriff().speichern(p, s.getDame(s) + ","); // Dame Ja oder
+																// Nein
 				getdZugriff().speichern(p, s.getPosX() + ","); // Position X
 				getdZugriff().speichern(p, s.getPosY() + ","); // Position Y
 
 			}
-
-			/**
-			 * CSV für Spieler Zwei
-			 */
-
-			getdZugriff().speichern(p, "Spieler" + "," + this.s2.getName() + "," + this.s2.getFarbe() + "," + this.s2.getIstKi() + ",");
-			// TODO
 			for (Spielfigur s : s2.getAlleFiguren()) { // Speichere für jede
-																									// Spielfigur
-				getdZugriff().speichern(p, "Spielfigur" + s.getFarbe() + ","); // Farbe
+														// Spielfigur
+				getdZugriff().speichern(p,s.getFarbe() + ","); // Farbe
 				if (s.getFarbe() == FarbEnum.SCHWARZ) {
 					getdZugriff().speichern(p, s.getIdS() + ","); // ID
 				} else {
 					getdZugriff().speichern(p, s.getIdW() + ","); // ID
 				}
-				getdZugriff().speichern(p, s.getDame(s) + ","); // Dame Ja oder Nein
+				getdZugriff().speichern(p, s.getDame(s) + ","); // Dame Ja oder
+																// Nein
 				getdZugriff().speichern(p, s.getPosX() + ","); // Position X
 				getdZugriff().speichern(p, s.getPosY() + ","); // Position Y
 
 			}
+			getdZugriff().speichern(p, this.getAmZug() + ","); // Speichert
+																// welche Farbe
+																// am Zug ist
 
 			System.out.println("Das Spiel wurde gespeichert: " + p.getName());
 			getdZugriff().schliessen(p);

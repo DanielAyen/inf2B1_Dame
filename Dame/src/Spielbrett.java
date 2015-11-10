@@ -194,6 +194,24 @@ public class Spielbrett implements Serializable {
 			System.out.println();
 		}
 	}
+	
+	/**
+	 * Gibt das Spielfeld in CSV Notation aus
+	 */
+	public void CSVanzeigen(){
+		for (int zeile = brett.length - 1; zeile >= 0; zeile--) {
+			if (brett[zeile] != null) {
+				for (int spalte = 0; spalte < brett[zeile].length; spalte++) {
+					if (zeile > 8) { //
+						System.out.print(brett[zeile][spalte].getcsvAusgabe() + ",");
+					} else { //
+						System.out.print(brett[zeile][spalte].getcsvAusgabe() + ",");
+					}
+				}
+			}
+			System.out.println();
+		}
+	}
 
 	/**
 	 * Gibt die Größe des Spielbretts zurück

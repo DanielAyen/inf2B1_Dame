@@ -147,6 +147,25 @@ public class Spielfeld implements Serializable {
 		this.istBelegt = false;
 
 	}
+	
+	/**
+	 * Gibt die Felder in CSV Notation aus
+	 * @return
+	 */
+	
+	public String getcsvAusgabe() {
+		if (getIstSchwarz() == true) {
+			if (this.getSpielfigur() == null) {
+				return this.getId();
+			}
+			return this.getId() + "," + this.getSpielfigur();
+		} else {
+			if (this.getSpielfigur() == null) {
+				return  this.getId();
+			}
+			return this.getId() + ","+ this.getSpielfigur();
+		}
+	}
 
 	/**
 	 * gibt zurueck ob ein Feld schwarz ist
