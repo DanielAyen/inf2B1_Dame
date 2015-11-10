@@ -1,8 +1,6 @@
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
-//import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -13,8 +11,8 @@ import java.util.Random;
 public abstract class KI implements Serializable {
 
 	/**
-                 *
-                 */
+                         *
+                         */
 	private static final long serialVersionUID = -1632008787864445195L;
 	private Spieler spieler;
 	private Spielbrett brett;
@@ -82,9 +80,9 @@ public abstract class KI implements Serializable {
 		// System.out.println("Zufallszahl2: " + i2);
 
 		int zielKoords[] = zugZiel.get(i2);
-		for (int l = 0; l <= zielKoords.length - 1; l++) {
-			System.out.println(zielKoords[l]);
-		}
+		// for (int l = 0; l <= zielKoords.length - 1; l++) {
+		// System.out.println(zielKoords[l]);
+		// }
 
 		// ------------------------------------------------------------------------
 		int rueckgabeZieh[] = { (zielKoords[3] - 1), (zielKoords[2] - 97), (zielKoords[1] - 1), (zielKoords[0] - 97) };
@@ -120,7 +118,9 @@ public abstract class KI implements Serializable {
 								// zugZielKoords1[1] };
 								// System.out.println("Hat Figur an Stelle " + ((char) (a + 1))
 								// + (j + 1) + " geschlagen.");
-								System.out.println("Figur will SCHLÄGE von " + a + j + " nach " + (char) zugZielKoords1[0] + zugZielKoords1[1] + " GEBEN.");
+								// System.out.println("Figur will SCHLÄGE von " + a + j +
+								// " nach " + (char) zugZielKoords1[0] + zugZielKoords1[1] +
+								// " GEBEN.");
 								alleSchlaege.add(schlaege);
 							}
 						} else {
@@ -131,7 +131,9 @@ public abstract class KI implements Serializable {
 									int[] zugZielKoords2 = zuege.get(k);
 									// int rueckgabeBewegung[] = { a, j, zugZielKoords2[0],
 									// zugZielKoords2[1] };
-									System.out.println("Figur will ZUEGE von " + a + j + " nach " + (char) zugZielKoords2[0] + zugZielKoords2[1] + " ziehen.");
+									// System.out.println("Figur will ZUEGE von " + a + j +
+									// " nach " + (char) zugZielKoords2[0] + zugZielKoords2[1] +
+									// " ziehen.");
 									if (zugZielKoords2 != null) {
 										zugZielKoords2[2] = a;
 										zugZielKoords2[3] = j;
@@ -159,8 +161,106 @@ public abstract class KI implements Serializable {
 
 	private ArrayList<int[]> getSchlaege(char a, int j, Spielfigur figur) {
 		ArrayList<int[]> schlaege = new ArrayList<int[]>();
+		ArrayList<int[]> DameSchlaege = new ArrayList<int[]>();
 
-		if (!figur.getDame(figur)) {
+		if (figur.getDame(figur)) {
+			// wäre ein schritt nach vorne noch im spielbrett?
+			if (j - this.zugRichtung2() >= 1 && j - this.zugRichtung2() <= brett.getBrettGroesse()) {
+				// ist schräger schritt nach rechts möglich?
+				if (a + 2 <= 'a' + brett.getBrettGroesse() - 1) {
+					Spielfeld zugFeld1 = brett.getBrettFeldSchachnotation((char) (a + 1), j - this.zugRichtung());
+					if (zugFeld1.getIstBelegt() == true) {
+						Spielfigur figurAufBelegtemFeld = zugFeld1.getSpielfigur();
+
+						// schaut ob Figur andere Farbe hat
+						if (figurAufBelegtemFeld.getFarbe() != spieler.getFarbe()) {
+							// überprüft ob Feld hinter GegnerFigur frei ist
+							Spielfeld zugFeld2 = brett.getBrettFeldSchachnotation((char) (a + 2), j - this.zugRichtung2());
+							if (zugFeld2.getIstBelegt() == false) {
+								// Spielfeld schlagbarerStein =
+								// brett.getBrettFeldSchachnotation((char) (a + 1), j +
+								// this.zugRichtung());
+								int[] koordSchlagen = { (a + 2), (j - (this.zugRichtung2())), 0, 0 };
+								DameSchlaege.add(koordSchlagen);
+								// System.out.println("Hat Figur an Stelle " + schlagbarerStein
+								// +" geschlagen.");
+							}
+						}
+					}
+				}
+				// ist schräger schritt nach links möglich?
+				if (a - 2 >= 'a') {
+					Spielfeld zugFeld1 = brett.getBrettFeldSchachnotation((char) (a - 1), j - this.zugRichtung());
+					if (zugFeld1.getIstBelegt() == true) {
+						Spielfigur figurAufBelegtemFeld = zugFeld1.getSpielfigur();
+						// schaut ob Figur andere Farbe hat
+						if (figurAufBelegtemFeld.getFarbe() != spieler.getFarbe()) {
+							// überprüft ob Feld hinter GegnerFigur frei ist
+							Spielfeld zugFeld2 = brett.getBrettFeldSchachnotation((char) (a - 2), j - this.zugRichtung2());
+							if (zugFeld2.getIstBelegt() == false) {
+								// Spielfeld schlagbarerStein =
+								// brett.getBrettFeldSchachnotation((char) (a - 1), j +
+								// this.zugRichtung());
+								int[] koordSchlagen = { (a - 2), (j - (this.zugRichtung2())), 0, 0 };
+								DameSchlaege.add(koordSchlagen);
+								// System.out.println("Hat Figur an Stelle " + schlagbarerStein
+								// +" geschlagen.");
+							}
+						}
+					}
+				}
+			}
+
+			// wäre ein Schritt nach hinten noch im spielbrett?
+			if (j - this.zugRichtung2() > 0 && j + this.zugRichtung2() <= brett.getBrettGroesse()) {
+				// ist schräger schritt nach hinten rechts möglich?
+				if (a + 2 <= 'a' + brett.getBrettGroesse() - 1) {
+					Spielfeld zugFeld1 = brett.getBrettFeldSchachnotation((char) (a + 1), j + this.zugRichtung());
+					if (zugFeld1.getIstBelegt() == true) {
+						Spielfigur figurAufBelegtemFeld = zugFeld1.getSpielfigur();
+
+						// schaut ob Figur andere Farbe hat
+						if (figurAufBelegtemFeld.getFarbe() != spieler.getFarbe()) {
+							// überprüft ob Feld hinter GegnerFigur frei ist
+							Spielfeld zugFeld2 = brett.getBrettFeldSchachnotation((char) (a + 2), j + this.zugRichtung2());
+							if (zugFeld2.getIstBelegt() == false) {
+								// Spielfeld schlagbarerStein =
+								// brett.getBrettFeldSchachnotation((char) (a + 1), j +
+								// this.zugRichtung());
+								int[] koordSchlagen = { (a + 2), (j + (this.zugRichtung2())), 0, 0 };
+								DameSchlaege.add(koordSchlagen);
+								// System.out.println("Hat Figur an Stelle " + schlagbarerStein
+								// +" geschlagen.");
+							}
+						}
+					}
+				}
+				// ist schräger schritt nach hinten links möglich?
+				if (a - 2 >= 'a') {
+					Spielfeld zugFeld1 = brett.getBrettFeldSchachnotation((char) (a - 1), j + this.zugRichtung());
+					if (zugFeld1.getIstBelegt() == true) {
+						Spielfigur figurAufBelegtemFeld = zugFeld1.getSpielfigur();
+						// schaut ob Figur andere Farbe hat
+						if (figurAufBelegtemFeld.getFarbe() != spieler.getFarbe()) {
+							// überprüft ob Feld hinter GegnerFigur frei ist
+							Spielfeld zugFeld2 = brett.getBrettFeldSchachnotation((char) (a - 2), j + this.zugRichtung2());
+							if (zugFeld2.getIstBelegt() == false) {
+								// Spielfeld schlagbarerStein =
+								// brett.getBrettFeldSchachnotation((char) (a - 1), j +
+								// this.zugRichtung());
+								int[] koordSchlagen = { (a - 2), (j + (this.zugRichtung2())), 0, 0 };
+								DameSchlaege.add(koordSchlagen);
+								// System.out.println("Hat Figur an Stelle " + schlagbarerStein
+								// +" geschlagen.");
+							}
+						}
+					}
+				}
+			}
+
+			// -------------------------------------------------------
+			// Züge für normale Figuren
+		} else {
 			// wäre ein schritt nach vorne noch im spielbrett?
 			if (j + this.zugRichtung2() >= 1 && j + this.zugRichtung2() <= brett.getBrettGroesse()) {
 				// ist schräger schritt nach rechts möglich?
@@ -207,10 +307,9 @@ public abstract class KI implements Serializable {
 					}
 				}
 			}
-
 			// wäre ein schritt nach hinten noch im spielbrett?
 			if (j - this.zugRichtung2() > 0 && j - this.zugRichtung2() <= brett.getBrettGroesse()) {
-				// ist schräger schritt nach rechts möglich?
+				// ist schräger schritt nach hinten rechts möglich?
 				if (a + 2 <= 'a' + brett.getBrettGroesse() - 1) {
 					Spielfeld zugFeld1 = brett.getBrettFeldSchachnotation((char) (a + 1), j - this.zugRichtung());
 					if (zugFeld1.getIstBelegt() == true) {
@@ -232,7 +331,7 @@ public abstract class KI implements Serializable {
 						}
 					}
 				}
-				// ist schräger schritt nach links möglich?
+				// ist schräger schritt nach hinten links möglich?
 				if (a - 2 >= 'a') {
 					Spielfeld zugFeld1 = brett.getBrettFeldSchachnotation((char) (a - 1), j - this.zugRichtung());
 					if (zugFeld1.getIstBelegt() == true) {
@@ -254,9 +353,10 @@ public abstract class KI implements Serializable {
 					}
 				}
 			}
-			
-//		}else{
-//			
+
+		}
+		if (!DameSchlaege.isEmpty()) {
+			return DameSchlaege;
 		}
 		return schlaege;
 	}
@@ -266,9 +366,62 @@ public abstract class KI implements Serializable {
 	 */
 	private ArrayList<int[]> getZuege(char a, int j, Spielfigur figur) {
 		ArrayList<int[]> zuge = new ArrayList<int[]>();
+		ArrayList<int[]> DameZuge = new ArrayList<int[]>();
 
-		if (!figur.getDame(figur)) {
+		if (figur.getDame(figur)) {
 			// wäre ein schritt nach vorne noch im spielbrett?
+			// abfrage für dame
+			if (j + this.zugRichtung() >= 1 && j - this.zugRichtung() <= brett.getBrettGroesse()) {
+				// ist schräger schritt nach rechts möglich?
+				if (a + 1 <= 'a' + brett.getBrettGroesse() - 1) {
+					Spielfeld zugFeld1 = brett.getBrettFeldSchachnotation((char) (a + 1), j - this.zugRichtung());
+					if (zugFeld1.getIstBelegt() == false) {
+						int[] koord = { a + 1, j - this.zugRichtung(), 0, 0 };
+						DameZuge.add(koord);
+						// System.out.println("nach rechts: " + (((char) a) + 1) + " " + (j
+						// - this.zugRichtung()));
+					}
+				}
+				// ist schräger schritt nach links möglich?
+				if (a - 1 >= 'a') {
+					Spielfeld zugFeld2 = brett.getBrettFeldSchachnotation((char) (a - 1), j - this.zugRichtung());
+					if (zugFeld2.getIstBelegt() == false) {
+						int[] koord = { a - 1, j - this.zugRichtung(), 0, 0 };
+						DameZuge.add(koord);
+						// System.out.println("nach links: " + (((char) a) - 1) + " " + (j -
+						// this.zugRichtung()));
+					}
+				}
+				// wäre ein schritt nach HINTEN noch im spielbrett?
+				// abfrage für dame
+				if (j + this.zugRichtung() >= 1 && j + this.zugRichtung() <= brett.getBrettGroesse()) {
+					// ist schräger schritt nach HINTEN rechts möglich?
+					if (a + 1 <= 'a' + brett.getBrettGroesse() - 1) {
+						Spielfeld zugFeld1 = brett.getBrettFeldSchachnotation((char) (a + 1), j + this.zugRichtung());
+						if (zugFeld1.getIstBelegt() == false) {
+							int[] koord = { a + 1, j + this.zugRichtung(), 0, 0 };
+							DameZuge.add(koord);
+							// System.out.println("nach rechts: " + (((char) a) + 1) + " " +
+							// (j + this.zugRichtung()));
+						}
+					}
+					// ist schräger schritt nach HINTEN links möglich?
+					if (a - 1 >= 'a') {
+						Spielfeld zugFeld2 = brett.getBrettFeldSchachnotation((char) (a - 1), j + this.zugRichtung());
+						if (zugFeld2.getIstBelegt() == false) {
+							int[] koord = { a - 1, j + this.zugRichtung(), 0, 0 };
+							DameZuge.add(koord);
+							// System.out.println("nach links: " + (((char) a) - 1) + " " + (j
+							// + this.zugRichtung()));
+						}
+					}
+				}
+			}
+
+			// abfrage für normale steine
+		} else {
+			// wäre ein schritt nach vorne noch im spielbrett?
+			// abfrage für dame
 			if (j + this.zugRichtung() >= 1 && j + this.zugRichtung() <= brett.getBrettGroesse()) {
 				// ist schräger schritt nach rechts möglich?
 				if (a + 1 <= 'a' + brett.getBrettGroesse() - 1) {
@@ -276,7 +429,8 @@ public abstract class KI implements Serializable {
 					if (zugFeld1.getIstBelegt() == false) {
 						int[] koord = { a + 1, j + this.zugRichtung(), 0, 0 };
 						zuge.add(koord);
-						System.out.println("nach rechts: " + (((char) a) + 1) + " " + (j + this.zugRichtung()));
+						// System.out.println("nach rechts: " + (((char) a) + 1) + " " + (j
+						// + this.zugRichtung()));
 					}
 				}
 				// ist schräger schritt nach links möglich?
@@ -285,18 +439,20 @@ public abstract class KI implements Serializable {
 					if (zugFeld2.getIstBelegt() == false) {
 						int[] koord = { a - 1, j + this.zugRichtung(), 0, 0 };
 						zuge.add(koord);
-						System.out.println("nach links: " + (((char) a) - 1) + " " + (j + this.zugRichtung()));
+						// System.out.println("nach links: " + (((char) a) - 1) + " " + (j +
+						// this.zugRichtung()));
 					}
 				}
 			}
-		} else {
-			// abfrage für dame
+		}
+		if (!DameZuge.isEmpty()) {
+			return DameZuge;
 		}
 		return zuge;
 	}
 
 	/**
-	 * ermittelt weitere Züge für gezogene Figur
+	 * ermittelt weitere schläge für gezogene Figur
 	 *
 	 * @param a
 	 * @param j
@@ -349,9 +505,19 @@ public abstract class KI implements Serializable {
 		return zufallszug;
 	}
 
+	/**
+	 * Setzt ob geschlagen wurde
+	 * 
+	 * @param b
+	 */
 	public void setHatGeschlagen(boolean b) {
 		this.schlag = b;
 	}
+
+	/**
+	 * Vermittelt ob geschlagen wurde
+	 *
+	 */
 
 	public boolean hatGeschlagen() {
 		return this.schlag;
@@ -362,11 +528,4 @@ public abstract class KI implements Serializable {
 		return "KI: " + spieler.getName() + " mit der Farbe: " + spieler.getFarbe();
 
 	}
-
-	// private KI zug(){
-	// Iterator<Spielfigur> alleFiguren = spieler.getAlleFiguren().iterator();
-	// while(alleFiguren.hasNext()){
-	// }
-	// return null;
-	// }
 }

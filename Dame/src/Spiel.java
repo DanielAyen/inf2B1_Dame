@@ -137,6 +137,7 @@ public class Spiel implements iBediener, Serializable {
 						System.out.println("Fehlerhafte Eingabe, bitte nur 8 , 10 oder 12 eingeben. Zurueck im Hauptmenue.\n");
 						break;
 					}
+
 					// zum aufrufen der Ki
 				case "ki ziehen":
 					if (!spiellaeuft) {
@@ -149,7 +150,17 @@ public class Spiel implements iBediener, Serializable {
 					}
 					System.out.println("Spielerfarbe eingeben (s fuer schwarz w fuer weiss)\n");
 					String kifarbe = reader.readLine();
+					if (!kifarbe.equals("w") && !kifarbe.equals("s")) {
+						System.out.println("Gib bitte die Farbe an die an der Reihe ist(s/w)");
+						break;
+					}
 					if (kifarbe.equals("s")) {
+						int[] tmpZug = null;
+
+						if (this.getAmZug() == FarbEnum.WEIß) {
+							System.out.println("Weiß ist an der Reihe(w)");
+							break;
+						}
 						if (k1 == null) {
 							System.out.println("Schwarz ist keine KI");
 							break;
@@ -159,10 +170,35 @@ public class Spiel implements iBediener, Serializable {
 							System.out.println("KI findet keine Züge");
 							break;
 						}
-						figurBewegen((char) zuge[0], zuge[1], (char) zuge[2], zuge[3]);
+						brett.display();
+						figurBewegen(zuge[0], zuge[1], zuge[2], zuge[3]);
+
+						if (k1.hatGeschlagen()) {
+							int[] zugee = zuge;
+							do {
+								Spielfigur figur = brett.getBrettFeldIndex((zugee[2]), (zugee[3])).getSpielfigur();
+								zugee = k1.getWeitereSchlaege(((char) (zugee[3] + 97)), (zugee[2] + 1), figur);
+								tmpZug = zugee;
+
+								if (zugee != null) {
+									figurBewegen(zugee[0], zugee[1], zugee[2], zugee[3]);
+								}
+							} while (tmpZug != null);
+						}
+						brett.display();
+						zugBeenden();
+						k1.setHatGeschlagen(false);
+						System.out.println("Der Spieler mit der Farbe: " + getAmZug() + " ist nun am Zug.");
+
 						break;
 					}
+
 					if (kifarbe.equals("w")) {
+						int[] tmpZug = null;
+						if (this.getAmZug() == FarbEnum.SCHWARZ) {
+							System.out.println("Schwarz ist an der Reihe (s)");
+							break;
+						}
 						if (k2 == null) {
 							System.out.println("Weiß ist keine KI");
 							break;
@@ -172,7 +208,25 @@ public class Spiel implements iBediener, Serializable {
 							System.out.println("KI findet keine Züge");
 							break;
 						}
-						figurBewegen((char) zuge[0], zuge[1], (char) zuge[2], zuge[3]);
+						brett.display();
+						figurBewegen(zuge[0], zuge[1], zuge[2], zuge[3]);
+						if (k2.hatGeschlagen()) {
+							int[] zugee = zuge;
+							do {
+								Spielfigur figur = brett.getBrettFeldIndex((zugee[2]), (zugee[3])).getSpielfigur();
+								zugee = k2.getWeitereSchlaege(((char) (zugee[3] + 97)), (zugee[2] + 1), figur);
+								tmpZug = zugee;
+
+								if (zugee != null) {
+									figurBewegen(zugee[0], zugee[1], zugee[2], zugee[3]);
+								}
+							} while (tmpZug != null);
+						}
+
+						brett.display();
+						zugBeenden();
+						k2.setHatGeschlagen(false);
+						System.out.println("Der Spieler mit der Farbe: " + getAmZug() + " ist nun am Zug.");
 					}
 					break;
 
