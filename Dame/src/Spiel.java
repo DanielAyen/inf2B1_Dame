@@ -353,73 +353,137 @@ public class Spiel implements iBediener, Serializable {
 					break;
 				case "ziehen":
 					if (!spiellaeuft) {
-						System.out.println("Spiel hat noch nicht begonnen! Zurueck in Hauptmenue");
+						System.err
+								.println("Spiel hat noch nicht begonnen! Zurueck in Hauptmenue");
 						break;
 					} else {
 						brett.display();
 
-						// Startpos fragen
-						System.out.println("\n Bitte gebe deine Startposition ein.");
+						// Startposition fragen
+						System.out
+								.println("\n Bitte gebe deine Startposition ein.");
 						String startp = reader.readLine();
-						startC = wandleUmvString(startp)[0];
-						startI = wandleUmvString(startp)[1];
-						if (wandleUmvString(startp)[2] == -1) {
-							System.out.println("Falsche Eingabe, zurück im Menü");
+						if (pruefeStartposition(startp) == false) {
 							break;
 						}
+						int[] tmp = moeglicheZuegeStartposition(startC, startI);
+						int tempZuegeLaufen = tmp[0];
+						int tempZuegeSchlagen = tmp[1];
+						System.out.println("Anzahl Zuege Laufen: "
+								+ tempZuegeLaufen + " Anzahl Zuege Schlagen: "
+								+ tempZuegeSchlagen);
 
-						// TODO überprufen ob startpos figur gleiche farbe wie
-						// der spieler
-						// der am zug ist hat. wenn nicht der fall dann startp
-						// ungültig.
-						// if (!(getAmZug() ==
-						// brett.getBrettFeldSchachnotation(startC,
-						// startI).getSpielfigur().getFarbe())) {
-						// System.out.println("Du kannst nur deine eigenen Figuren bewegen! Zurueck im Hauptmenue.");
-						// break;
-						// }
-
-						int tempZuege = moeglicheZuege(startC, startI);
-
-						if (s1.getAlleFiguren().size() == 1 && s1.getFarbe() == getAmZug() && tempZuege == 0) {
+						if (s1.getAlleFiguren().size() == 1
+								&& s1.getFarbe() == getAmZug()
+								&& (tempZuegeLaufen == 0 && tempZuegeSchlagen == 0)) {
 							// spieler 2 gewinnt
+							System.err
+									.println("Du hast keine Zugmoeglichkeiten mehr.");
 							spielerHatGewonnen(s2.getFarbe());
 							break;
 						}
-						if (s2.getAlleFiguren().size() == 1 && s2.getFarbe() == getAmZug() && tempZuege == 0) {
+						if (s2.getAlleFiguren().size() == 1
+								&& s2.getFarbe() == getAmZug()
+								&& (tempZuegeLaufen == 0 && tempZuegeSchlagen == 0)) {
 							// spieler 1 gewinnt
+							System.err
+									.println("Du hast keine Zugmoeglichkeiten mehr.");
 							spielerHatGewonnen(s1.getFarbe());
 							break;
 						}
-						if (tempZuege == 0) {
+						if ((tempZuegeLaufen == 0 && tempZuegeSchlagen == 0)) {
+							System.err
+									.println("Mit dieser Figur sind keine Zuege moeglich! zurueck ins Menue");
+							System.out.println("Gib ziehen ein.");
 							break;
 						}
 
 						// Endpos fragen
-						System.out.println("Eingegebene Startposition: " + brett.getBrettFeldIndex(startC, startI) + "\n");
+						System.out.println("Eingegebene Startposition: "
+								+ brett.getBrettFeldIndex(startC, startI)
+										.getId() + "\n");
+
 						System.out.println("Bitte gebe deine Endposition ein.");
 						String endp = reader.readLine();
 						endC = wandleUmvString(endp)[0];
 						endI = wandleUmvString(endp)[1];
 						if (wandleUmvString(endp)[2] == -1) {
-							System.out.println("Falsche Eingabe, zurück im Menü");
+							System.err
+									.println("Falsche Eingabe, zurueck im Menü");
 							break;
 						}
 
-						System.out.println("Eingegebene Endposition: " + brett.getBrettFeldIndex(endC, endI) + "\n");
-						figurBewegen(startC, startI, endC, endI);
-						startC = 0;
-						startI = 0;
-						endC = 0;
-						endI = 0;
-						dameWerden();
-						brett.display();
-						System.out.println("\n");
+						System.out.println("Eingegebene Endposition: "
+								+ brett.getBrettFeldIndex(endC, endI).getId()
+								+ "\n");
 
+						int zugPruefen = zugPruefen(startC, startI, endC, endI);
+						// zugPruefen == 1 Laufen
+						// zugPruefen == 2 Schlagen
+						// zugPruefen == -1 Zug ungueltig
+						if (zugPruefen == 1) {
+							figurBewegen(startC, startI, endC, endI);
+							dameWerden();
+							zugBeenden();
+						}
+						if (zugPruefen == 2) {
+							figurSchlagen(startC, startI, endC, endI);
+							if (moeglicheZuegeStartposition(endC, endI)[1] == 0){
+								zugBeenden();
+								break;
+							}
+							if (geschlagen == true) {
+								if (moeglicheZuegeStartposition(endC, endI)[1] != 0) {
+									System.out
+											.println("Weiterziehen (w) oder beenden (b)?");
+									String entscheidung = reader.readLine();
+
+									if (entscheidung.equals("w")) {
+										startC = endC;
+										startI = endI;
+										// TODO ziehen nur mit der Bedingung zu
+										// schlagen
+										System.out
+												.println("Sie duerfen nochmals ziehen. Geben sie die Endposition ein");
+										geschlagen = false;
+
+										break;
+									}
+									if (entscheidung.equals("b")) {
+										System.out.println("Die Figur "
+												+ brett.getBrettFeldIndex(endC,
+														endI).getSpielfigur()
+												+ " wird entfernt(Pusten)!");
+										pusten(brett.getBrettFeldIndex(endC,
+												endI).getSpielfigur());
+										startC = 0;
+										startI = 0;
+										endC = 0;
+										endI = 0;
+										zugBeenden();
+										System.out
+												.println("Der Spieler mit der Farbe: "
+														+ getAmZug()
+														+ " ist nun am Zug.");
+										geschlagen = false;
+										break;
+									}
+								}
+							}
+
+						}
+						if (zugPruefen == -1) {
+							System.out
+									.println("Zurueck im Menue. Gib nochmals ziehen ein.");
+							break;
+						}
+
+						brett.display();
+						System.out.println("Der Spieler mit der Farbe: "
+								+ getAmZug() + " ist nun am Zug.");
+						System.out.println("Gib ziehen ein.");
+						break;
 					}
-					zugBeenden();
-					System.out.println("Der Spieler mit der Farbe: " + getAmZug() + " ist nun am Zug.");
-					break;
 				// beendet das Spiel
 				case "beenden":
 					System.out.println("\n\n\t\tDas Spiel wird beendet.");
@@ -449,6 +513,32 @@ public class Spiel implements iBediener, Serializable {
 		}
 	}
 
+	
+	public boolean pruefeStartposition(String startp) {
+		startC = wandleUmvString(startp)[0];
+		startI = wandleUmvString(startp)[1];
+		if (wandleUmvString(startp)[2] == -1) {
+			System.err.println("Falsche Eingabe, zurueck ins Menü");
+			return false;
+		}
+
+		// überprüft ob Startposition belegt ist
+		if (!brett.getBrettFeldIndex(startC, startI).getIstBelegt()) {
+			System.err
+					.println("Du brauchst eine Figur um zu ziehen! zurueck ins Menü");
+			return false;
+		}
+		// überprüft ob Figur an der Startpsotion die eigene ist
+		if (brett.getBrettFeldIndex(startC, startI).getSpielfigur().getFarbe() != getAmZug()) {
+			System.err
+					.println("Du kannst nur mit deinen Figuren ziehen! zurueck ins Menü");
+			return false;
+		}
+		return true;
+	}
+
+	
+	
 	public int[] wandleUmvString(String Input) {
 		int[] gueltig = new int[3];
 		if (Input.length() > 1 && Input.length() < 4 && (IstBuchstabe(Input.substring(0, 1).toCharArray()) > -1) && (IstZahl(Input.substring(1, Input.length())) > -1)) {
@@ -498,6 +588,160 @@ public class Spiel implements iBediener, Serializable {
 	}
 
 	/**
+	 * gibt Anzahl Zuege in einem Array zurueck. Array [0] gibt Anzahl der
+	 * Moeglichkeiten beim laufen. Array[1] gibt Anzahl der Moeglichkeiten beim
+	 * schlagen.
+	 * 
+	 * @param x
+	 *            Index Zeile von der Spielfigur auf Brett
+	 * @param y
+	 *            Index Spatlte von der Spielfigur auf Brett
+	 * @return int[] gibt array mit moeglichen Zuegen zurueck
+	 */
+
+	private int[] moeglicheZuegeStartposition(int x, int y) {
+
+		int xPosFig = brett.getBrettFeldIndex(x, y).getPosX();
+		int yPosFig = brett.getBrettFeldIndex(x, y).getPosY();
+		Spielfigur fig = brett.getBrettFeldIndex(x, y).getSpielfigur();
+		int indexGroesse = brett.getBrettGroesse() - 1;
+
+		// Index[0]=laufen, Index[1]=schlagen
+		int[] anzMoeglichkeitenVonStartfeld = new int[2];
+		int laufen = 0;
+		int schlagen = 0;
+
+		// Rechts oben
+		int xPosNeu1 = xPosFig + 1;
+		int yPosNeu1 = yPosFig + 1;
+
+		// Links unten
+		int xPosNeu2 = xPosFig - 1;
+		int yPosNeu2 = yPosFig - 1;
+
+		// Links oben
+		int xPosNeu3 = xPosFig + 1;
+		int yPosNeu3 = yPosFig - 1;
+
+		// Rechts unten
+		int xPosNeu4 = xPosFig - 1;
+		int yPosNeu4 = yPosFig + 1;
+
+		// Pruefungen ob Felder ringsherum vom Startfeld innerhalb vom Brett
+		// liegen
+		boolean rechtsObenImFeld = xPosNeu1 >= 0 && xPosNeu1 <= indexGroesse
+				&& yPosNeu1 >= 0 && yPosNeu1 <= indexGroesse;
+		boolean linksUntenImFeld = xPosNeu2 >= 0 && xPosNeu2 <= indexGroesse
+				&& yPosNeu2 >= 0 && yPosNeu2 <= indexGroesse;
+		boolean linksObenImFeld = xPosNeu3 >= 0 && xPosNeu3 <= indexGroesse
+				&& yPosNeu3 >= 0 && yPosNeu3 <= indexGroesse;
+		boolean rechtsUntenImFeld = xPosNeu4 >= 0 && xPosNeu4 <= indexGroesse
+				&& yPosNeu4 >= 0 && yPosNeu4 <= indexGroesse;
+
+		// laufen dame+figur
+
+		// Laufen nach Rechts oben
+		if (((fig.getDame(fig)) || ((!fig.getDame(fig) && fig.getFarbe() == FarbEnum.SCHWARZ))
+				&& rechtsObenImFeld)
+				&& !brett.getBrettFeldIndex(xPosNeu1, yPosNeu1).getIstBelegt()) {
+			// Pruefung ob moegliches Zielfeld belegt ist.
+			System.out.println("(L RO) Moeglicher Zug: "
+					+ brett.getBrettFeldIndex(xPosNeu1, yPosNeu1).getId());
+			laufen++;
+		}
+
+		// Laufen nach Links unten
+		if (((fig.getDame(fig)) || ((!fig.getDame(fig) && fig.getFarbe() == FarbEnum.WEIß))
+				&& linksUntenImFeld)
+				&& !brett.getBrettFeldIndex(xPosNeu2, yPosNeu2).getIstBelegt()) {
+			System.out.println("(L LU) Moeglicher Zug: "
+					+ brett.getBrettFeldIndex(xPosNeu2, yPosNeu2).getId());
+			laufen++;
+		}
+
+		// Laufen nach Links oben
+		if (((fig.getDame(fig)) || ((!fig.getDame(fig) && fig.getFarbe() == FarbEnum.SCHWARZ))
+				&& linksObenImFeld)
+				&& !brett.getBrettFeldIndex(xPosNeu3, yPosNeu3).getIstBelegt()) {
+			System.out.println("(L LO) Moeglicher Zug: "
+					+ brett.getBrettFeldIndex(xPosNeu3, yPosNeu3).getId());
+			laufen++;
+		}
+
+		// Laufen nach Rechts unten
+		if (((fig.getDame(fig)) || ((!fig.getDame(fig) && fig.getFarbe() == FarbEnum.WEIß))
+				&& rechtsUntenImFeld)
+				&& !brett.getBrettFeldIndex(xPosNeu4, yPosNeu4).getIstBelegt()) {
+			System.out.println("(L RU) Moeglicher Zug: "
+					+ brett.getBrettFeldIndex(xPosNeu4, yPosNeu4).getId());
+			laufen++;
+		}
+
+		// schlagen alle
+		if (rechtsObenImFeld
+				&& brett.getBrettFeldIndex(xPosNeu1, yPosNeu1).getIstBelegt()
+				&& brett.getBrettFeldIndex(xPosNeu1, yPosNeu1).getSpielfigur()
+						.getFarbe() != getAmZug()
+				&& (xPosNeu1 + 1 >= 0 && xPosNeu1 + 1 <= indexGroesse
+						&& yPosNeu1 + 1 >= 0 && yPosNeu1 + 1 <= indexGroesse)
+				&& (!brett.getBrettFeldIndex(xPosNeu1 + 1, yPosNeu1 + 1)
+						.getIstBelegt())) {
+			System.out.println("(S RO) Moeglicher Zug: "
+					+ brett.getBrettFeldIndex(xPosNeu1 + 1, yPosNeu1 + 1)
+							.getId());
+			schlagen++;
+		}
+
+		if (linksUntenImFeld
+				&& brett.getBrettFeldIndex(xPosNeu2, yPosNeu2).getIstBelegt()
+				&& brett.getBrettFeldIndex(xPosNeu2, yPosNeu2).getSpielfigur()
+						.getFarbe() != getAmZug()
+				&& (xPosNeu2 - 1 >= 0 && xPosNeu2 - 1 <= indexGroesse
+						&& yPosNeu2 - 1 >= 0 && yPosNeu2 - 1 <= indexGroesse)
+				&& (!brett.getBrettFeldIndex(xPosNeu2 - 1, yPosNeu2 - 1)
+						.getIstBelegt())) {
+			System.out.println("(S LU) Moeglicher Zug: "
+					+ brett.getBrettFeldIndex(xPosNeu2 + 1, yPosNeu2 + 1)
+							.getId());
+			schlagen++;
+		}
+
+		if (linksObenImFeld
+				&& brett.getBrettFeldIndex(xPosNeu3, yPosNeu3).getIstBelegt()
+				&& brett.getBrettFeldIndex(xPosNeu3, yPosNeu3).getSpielfigur()
+						.getFarbe() != getAmZug()
+				&& (xPosNeu3 - 1 >= 0 && xPosNeu3 - 1 <= indexGroesse
+						&& yPosNeu3 + 1 >= 0 && yPosNeu3 + 1 <= indexGroesse)
+				&& (!brett.getBrettFeldIndex(xPosNeu3 - 1, yPosNeu3 + 1)
+						.getIstBelegt())) {
+			System.out.println("(S LO) Moeglicher Zug: "
+					+ brett.getBrettFeldIndex(xPosNeu3 + 1, yPosNeu3 + 1)
+							.getId());
+			schlagen++;
+		}
+
+		if (rechtsUntenImFeld
+				&& brett.getBrettFeldIndex(xPosNeu4, yPosNeu4).getIstBelegt()
+				&& (brett.getBrettFeldIndex(xPosNeu4, yPosNeu4).getSpielfigur()
+						.getFarbe() != getAmZug())
+				&& (xPosNeu4 - 1 >= 0 && xPosNeu4 - 1 <= indexGroesse
+						&& yPosNeu4 + 1 >= 0 && yPosNeu4 + 1 <= indexGroesse)
+				&& (!brett.getBrettFeldIndex(xPosNeu4 - 1, yPosNeu4 + 1)
+						.getIstBelegt())) {
+			System.out.println("(S RU) Moeglicher Zug: "
+					+ brett.getBrettFeldIndex(xPosNeu4 + 1, yPosNeu4 + 1)
+							.getId());
+			schlagen++;
+		}
+
+		anzMoeglichkeitenVonStartfeld[0] = laufen;
+		anzMoeglichkeitenVonStartfeld[1] = schlagen;
+		return anzMoeglichkeitenVonStartfeld;
+	}
+
+	
+	
+	/**
 	 * erste Methode erstellt Spielbrett,
 	 */
 	public void spielBauen(int x) {
@@ -524,30 +768,276 @@ public class Spiel implements iBediener, Serializable {
 	 * @param yn
 	 *          neue y koord
 	 */
-	private void zugPruefen(int xa, int ya, int xn, int yn) {
+	private int zugPruefen(int xa, int ya, int xn, int yn) {
+		// return 1 figur bewegen
+		// return 2 figur schlagen
+		// return -1 Zug nicht gueltig
 
-		if (!brett.getBrettFeldIndex(xa, ya).getIstBelegt()) {
-			System.out.println("Ohne Figur kannst du nicht ziehen!");
-			return;
-		}
+		int xPosAlt = brett.getBrettFeldIndex(xa, ya).getPosX();
+		int yPosAlt = brett.getBrettFeldIndex(xa, ya).getPosY();
+		int xPosNeu = brett.getBrettFeldIndex(xn, yn).getPosX();
+		int yPosNeu = brett.getBrettFeldIndex(xn, yn).getPosY();
+
+		int diffX = brett.getBrettFeldIndex(xa, ya).getPosX()
+				- brett.getBrettFeldIndex(xn, yn).getPosX();
+		int diffY = brett.getBrettFeldIndex(xa, ya).getPosY()
+				- brett.getBrettFeldIndex(xn, yn).getPosY();
+
+		int tempX = diffX;
+		int tempY = diffY;
+		int diff = diffX - diffY;
+
+		tempX = Math.abs(diffX);
+
+		tempY = Math.abs(diffY);
+
 		if (!brett.getBrettFeldIndex(xn, yn).getIstSchwarz()) {
 			System.out.println("Du kannst nur auf schwarze Felder springen!");
-			return;
+			return -1;
+		}
+
+		if (tempX != tempY) {
+			System.out
+					.println("Du darfts nicht querbeet durchs Feld springen!");
+			// System.out.println(tempX + " " + tempY);
+			return -1;
+
 		}
 		if (brett.getBrettFeldIndex(xn, yn).getIstBelegt()) {
 			System.out.println(brett.getBrettFeldIndex(xn, yn).getSpielfigur());
 			System.out.println("Du kannst keine andere Figur besteigen!");
-			return;
+			return -1;
 		}
 
+		// TODO schauen ob bei dame sich
+		// eigene spielfiguren auf dem weg befinden.
 		Spielfigur fig = brett.getBrettFeldIndex(xa, ya).getSpielfigur();
 
-		if (fig.getDame(fig)) {
+		int hitX = (xa + xn) / 2;
+		int hitY = (ya + yn) / 2;
 
-		} else {
+		// Schlagen bei ZugLaenge 2
+		if (tempX == 2
+				&& tempY == 2
+				&& brett.getBrettFeldIndex(hitX, hitY).getIstBelegt()
+				&& brett.getBrettFeldIndex(hitX, hitY).getSpielfigur()
+						.getFarbe() != getAmZug()) {
+			// figurSchlagen(xa, ya, xn, yn, fig);
+			return 2;
+		}
+
+		// Laufen bei Zueglaenge 1
+		if (tempX == 1 && tempY == 1) {
+			// figurBewegen(xa, ya, xn, yn);
+			return 1;
+		}
+
+		// Wenn Stein mehr als ein Feld springen
+		if (!fig.getDame(fig) && tempX >= 2 && tempY >= 2) {
+			System.err
+					.println("Du kannst mit einer Figur nicht mehr als ein Feld ziehen!");
+			return -1;
+		}
+
+		/*
+		 * R.O. diff=0 & diffX > -2 Ein Schritt------diffX=(xa-xn)----------
+		 * L.U. diff=0 & diffX > 0 Ein Schritt------diff=(diffX-diffY)------
+		 * R.U. diff=2 & diffX > 0 Ein Schritt------------------------------
+		 * L.O. diff=2 & diffY > -2 Ein Schritt-----------------------------
+		 * 
+		 * R.O. diff=0 & diffX < -1 mehr als Ein Schritt--------------------
+		 * L.U. diff=0 & diffX > 0 mehr als Ein Schritt---------------------
+		 * R.U. diff>2 & diffX > 0 mehr als Ein Schritt---------------------
+		 * L.O. diff>2 & diffX < -1 mehr als Ein Schritt--------------------
+		 */
+
+		if (fig.getDame(fig) && tempX >= 2 && tempY >= 2) {
+
+			int alteX = brett.getBrettFeldIndex(xa, ya).getPosX();
+			int alteY = brett.getBrettFeldIndex(xa, ya).getPosY();
+
+			int neueX = brett.getBrettFeldIndex(xn, yn).getPosX();
+			int neueY = brett.getBrettFeldIndex(xn, yn).getPosY();
+
+			// RICHTUNG NACH OBEN RECHTS
+			if (diffX < 0 && diffY < 0) {
+
+				int j = alteY + 1;
+				for (int i = alteX + 1; i <= neueX; i++) {
+
+					if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
+						// wenn etwas auf dem feld ist.
+						if (brett.getBrettFeldIndex(i, j).getSpielfigur()
+								.getFarbe() == getAmZug()) {
+							System.out
+									.println("Eigene Figuren schlagen geht nicht.");
+							return -1;
+						}
+						if (brett.getBrettFeldIndex(i + 1, j + 1)
+								.getIstBelegt()) {
+							System.out
+									.println("Zwei Figuren aufeinmal ueberspringen geht nicht.");
+							return -1;
+						}
+						if (!brett.getBrettFeldIndex(neueX - 1, neueY - 1)
+								.getIstBelegt()) {
+							System.out
+									.println("Du kannst nachdem du geschlagen hast nicht einfach weiter gehen.");
+							return -1;
+						}
+
+					}
+					j++;
+				}
+				return 1;
+			}
+			// RICHTUNG NACH OBEN LINKS
+			if (diffX < 0 && diffY > 0) {
+
+				int j = alteY - 1;
+				for (int i = alteX + 1; i <= neueX; i++) {
+
+					if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
+						// wenn etwas auf dem feld ist.
+						if (brett.getBrettFeldIndex(i, j).getSpielfigur()
+								.getFarbe() == getAmZug()) {
+							System.out
+									.println("Eigene Figuren schlagen geht nicht.");
+							return -1;
+						}
+						if (brett.getBrettFeldIndex(i + 1, j - 1)
+								.getIstBelegt()) {
+							System.out
+									.println("Zwei Figuren aufeinmal ueberspringen geht nicht.");
+							return -1;
+						}
+						if (!brett.getBrettFeldIndex(neueX - 1, neueY + 1)
+								.getIstBelegt()) {
+							System.out
+									.println("Du kannst nachdem du geschlagen hast nicht einfach weiter gehen.");
+							return -1;
+						}
+
+					}
+					j--;
+				}
+				return 1;
+			}
+
+			// RICHTUNG NACH UNTEN RECHTS
+			if (diffX > 0 && diffY < 0) {
+
+				int j = alteY + 1;
+				for (int i = alteX - 1; i <= neueX; i++) {
+
+					if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
+						// wenn etwas auf dem feld ist.
+						if (brett.getBrettFeldIndex(i, j).getSpielfigur()
+								.getFarbe() == getAmZug()) {
+							System.out
+									.println("Eigene Figuren schlagen geht nicht.");
+							return -1;
+						}
+						if (brett.getBrettFeldIndex(i - 1, j + 1)
+								.getIstBelegt()) {
+							System.out
+									.println("Zwei Figuren aufeinmal ueberspringen geht nicht.");
+							return -1;
+						}
+						if (!brett.getBrettFeldIndex(neueX + 1, neueY - 1)
+								.getIstBelegt()) {
+							System.out
+									.println("Du kannst nachdem du geschlagen hast nicht einfach weiter gehen.");
+							return -1;
+						}
+
+					}
+					j++;
+				}
+				return 1;
+			}
+
+			// RICHTUNG NACH UNTEN RECHTS
+			if (diffX > 0 && diffY > 0) {
+
+				int j = alteY - 1;
+				for (int i = alteX - 1; i < neueX; i--) {
+
+					if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
+						// wenn etwas auf dem feld ist.
+						if (brett.getBrettFeldIndex(i, j).getSpielfigur()
+								.getFarbe() == getAmZug()) {
+							System.out
+									.println("Eigene Figuren schlagen geht nicht.");
+							return -1;
+						}
+						if (brett.getBrettFeldIndex(i - 1, j - 1)
+								.getIstBelegt()) {
+							System.out
+									.println("Zwei Figuren aufeinmal ueberspringen geht nicht.");
+							return -1;
+						}
+						if (!brett.getBrettFeldIndex(neueX + 1, neueY + 1)
+								.getIstBelegt()) {
+							System.out
+									.println("Du kannst nachdem du geschlagen hast nicht einfach weiter gehen.");
+							return -1;
+						}
+
+					}
+					j--;
+				}
+				return 1;
+			}
 
 		}
 
+		// if (diff > 2 && diffX > 0) {
+		// System.out.println("diff >2 & diffX > 0");
+		// if (fig.getDame(fig)) {
+		// System.out.println("ich bin dame");
+		//
+		// if (Rek_Dame_Moeglich(xa, ya, xn, yn, "ur")) {
+		// System.out.println("Passt");
+		// }
+		// }
+		// }
+		// // oben Rechts
+		// if (diff == 0 && diffX < -1) {
+		// System.out.println("diff == 0 & diffX < -1");
+		// if (fig.getDame(fig)) {
+		// System.out.println("ich bin dame");
+		//
+		// if (Rek_Dame_Moeglich(xa, ya, xn, yn, "or")) {
+		// System.out.println("Passt");
+		// }
+		// }
+		// }
+		// // oben Links
+		// if (diff > 2 && diffX < -1) {
+		// System.out.println("diff > 2 & diffX < -1");
+		// if (fig.getDame(fig)) {
+		// System.out.println("ich bin dame");
+		//
+		// if (Rek_Dame_Moeglich(xa, ya, xn, yn, "ol")) {
+		// System.out.println("Passt");
+		// }
+		// }
+		// }
+		// // // unten Links
+		// if (diff == 0 && diffX > 0) {
+		// System.out.println("diff == 0 & diffX > 0");
+		// if (fig.getDame(fig)) {
+		// System.out.println("ich bin dame");
+		//
+		// if (Rek_Dame_Moeglich(xa, ya, xn, yn, "ul")) {
+		// System.out.println("Passt");
+		// }
+		// }
+		//
+		// }
+
+		return -1;
 	}
 
 	/**
@@ -556,292 +1046,183 @@ public class Spiel implements iBediener, Serializable {
 	 */
 	private void figurBewegen(int xa, int ya, int xn, int yn) {
 
-		// if (xa > brett.getBrettGroesse() || ya > brett.getBrettGroesse()) {
-		// System.out.println("Außerhalb des Brett's gibt es keine Figuren!");
-		// return;
-		// }
+		int diffX = brett.getBrettFeldIndex(xa, ya).getPosX()
+				- brett.getBrettFeldIndex(xn, yn).getPosX();
+		int diffY = brett.getBrettFeldIndex(xa, ya).getPosY()
+				- brett.getBrettFeldIndex(xn, yn).getPosY();
+		int diff = diffX - diffY;
 
-		// if (xn > brett.getBrettGroesse() || yn > brett.getBrettGroesse() ||
-		// xa <
-		// brett.getBrettGroesse() || ya < brett.getBrettGroesse()) {
-		// System.out.println("Du kannst doch nicht vom Spielbrett springen!");
-		// return;
-		// }
-
-		// if (!brett.getBrettFeldIndex(xa, ya).getIstBelegt()) {
-		// System.out.println("Ohne Figur kannst du nicht ziehen!");
-		// return;
-		// }
-
-		if (!brett.getBrettFeldIndex(xn, yn).getIstSchwarz()) {
-			System.out.println("Du kannst nur auf schwarze Felder springen!");
-			return;
-		}
-
-		if (brett.getBrettFeldIndex(xn, yn).getIstBelegt()) {
-			System.out.println(brett.getBrettFeldIndex(xn, yn).getSpielfigur());
-			System.out.println("Du kannst keine andere Figur besteigen!");
-			return;
-		}
-		int diffX = brett.getBrettFeldIndex(xa, ya).getPosX() - brett.getBrettFeldIndex(xn, yn).getPosX();
-		int diffY = brett.getBrettFeldIndex(xa, ya).getPosY() - brett.getBrettFeldIndex(xn, yn).getPosY();
 		Spielfigur fig = brett.getBrettFeldIndex(xa, ya).getSpielfigur();
-
-		if (xa - xn > 2 || xa - xn < -2) {
-			// wenn stein dann einfach schlagen
-
-			if (fig.getDame(fig) == false) {
-				figurSchlagen(xa, ya, xn, yn, brett.getBrettFeldIndex(xa, ya).getSpielfigur());
-
-			} else {// wenn dame dann alles zwischen end und startfeld chencken sovie
-							// end feld -- ++ +- -+ eine gegner figur ist falls schlagen.
-
-				int tempX = diffX;
-				int tempY = diffY;
-
-				if (diffX < 0) {
-					tempX = diffX * (-1);
-				}
-				if (diffY < 0) {
-					tempY = diffY * (-1);
-				}
-
-				if (tempX == tempY) {
-
-					int alteX = brett.getBrettFeldIndex(xa, ya).getPosX();
-					int alteY = brett.getBrettFeldIndex(xa, ya).getPosY();
-
-					int neueX = brett.getBrettFeldIndex(xn, yn).getPosX();
-					int neueY = brett.getBrettFeldIndex(xn, yn).getPosY();
-
-					// RICHTUNG NACH OBEN RECHTS
-					if (diffX < 0 && diffY < 0) {
-
-						int j = alteY + 1;
-						for (int i = alteX + 1; i < neueX; i++) {
-
-							if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
-								// wenn etwas auf dem feld ist.
-								if (brett.getBrettFeldIndex(i, j).getSpielfigur().getFarbe() == getAmZug()) {
-									System.out.println("Eigene Figuren schlagen geht nicht.");
-									return;
-								}
-								if (brett.getBrettFeldIndex(i + 1, j + 1).getIstBelegt()) {
-									System.out.println("Zwei Figuren aufeinmal ueberspringen geht nicht.");
-									return;
-								}
-								if (!brett.getBrettFeldIndex(neueX - 1, neueY - 1).getIstBelegt()) {
-									System.out.println("Du kannst nachdem du geschlagen hast nicht einfach weiter gehen.");
-									return;
-								}
-
-							}
-							j++;
-						}
-
-						j = alteY + 1;
-						for (int i = alteX + 1; i < neueX; i++) {
-
-							if (!brett.getBrettFeldIndex(i, j).getIstBelegt()) {
-								brett.getBrettFeldIndex(i, j).setSpielfigur(brett.getBrettFeldIndex(i - 1, j - 1).getSpielfigur());
-								brett.getBrettFeldIndex(i - 1, j - 1).removeSpielfigur(brett.getBrettFeldIndex(i - 1, j - 1).getSpielfigur());
-							} else {
-								figurSchlagen(i - 1, j - 1, i + 1, j + 1, brett.getBrettFeldIndex(i - 1, j - 1).getSpielfigur());
-
-							}
-
-							j++;
-						}
-
-					}
-
-					// RICHTUNG NACH OBEN LINKS
-					if (diffX < 0 && diffY > 0) {
-
-						int j = alteY - 1;
-						for (int i = alteX + 1; i < neueX; i++) {
-
-							if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
-								// wenn etwas auf dem feld ist.
-								if (brett.getBrettFeldIndex(i, j).getSpielfigur().getFarbe() == getAmZug()) {
-									System.out.println("Eigene Figuren schlagen geht nicht.");
-									return;
-								}
-								if (brett.getBrettFeldIndex(i + 1, j - 1).getIstBelegt()) {
-									System.out.println("Zwei Figuren aufeinmal ueberspringen geht nicht.");
-									return;
-								}
-								if (!brett.getBrettFeldIndex(neueX - 1, neueY + 1).getIstBelegt()) {
-									System.out.println("Du kannst nachdem du geschlagen hast nicht einfach weiter gehen.");
-									return;
-								}
-
-							}
-							j--;
-						}
-
-						j = alteY - 1;
-						for (int i = alteX + 1; i < neueX; i++) {
-
-							if (!brett.getBrettFeldIndex(i, j).getIstBelegt()) {
-								brett.getBrettFeldIndex(i, j).setSpielfigur(brett.getBrettFeldIndex(i - 1, j + 1).getSpielfigur());
-								brett.getBrettFeldIndex(i - 1, j + 1).removeSpielfigur(brett.getBrettFeldIndex(i - 1, j + 1).getSpielfigur());
-							} else {
-								figurSchlagen(i - 1, j + 1, i + 1, j - 1, brett.getBrettFeldIndex(i - 1, j + 1).getSpielfigur());
-
-							}
-
-							j--;
-						}
-
-					}
-
-					// RICHTUNG NACH UNTEN RECHTS
-					if (diffX > 0 && diffY < 0) {
-
-						int j = alteY + 1;
-						for (int i = alteX - 1; i < neueX; i++) {
-
-							if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
-								// wenn etwas auf dem feld ist.
-								if (brett.getBrettFeldIndex(i, j).getSpielfigur().getFarbe() == getAmZug()) {
-									System.out.println("Eigene Figuren schlagen geht nicht.");
-									return;
-								}
-								if (brett.getBrettFeldIndex(i - 1, j + 1).getIstBelegt()) {
-									System.out.println("Zwei Figuren aufeinmal ueberspringen geht nicht.");
-									return;
-								}
-								if (!brett.getBrettFeldIndex(neueX + 1, neueY - 1).getIstBelegt()) {
-									System.out.println("Du kannst nachdem du geschlagen hast nicht einfach weiter gehen.");
-									return;
-								}
-
-							}
-							j++;
-						}
-
-						j = alteY + 1;
-						for (int i = alteX - 1; i < neueX; i--) {
-
-							if (!brett.getBrettFeldIndex(i, j).getIstBelegt()) {
-								brett.getBrettFeldIndex(i, j).setSpielfigur(brett.getBrettFeldIndex(i + 1, j - 1).getSpielfigur());
-								brett.getBrettFeldIndex(i + 1, j - 1).removeSpielfigur(brett.getBrettFeldIndex(i + 1, j - 1).getSpielfigur());
-							} else {
-								figurSchlagen(i + 1, j - 1, i - 1, j + 1, brett.getBrettFeldIndex(i + 1, j - 1).getSpielfigur());
-
-							}
-
-							j++;
-						}
-
-					}
-
-					// RICHTUNG NACH UNTEN RECHTS
-					if (diffX > 0 && diffY > 0) {
-
-						int j = alteY - 1;
-						for (int i = alteX - 1; i < neueX; i--) {
-
-							if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
-								// wenn etwas auf dem feld ist.
-								if (brett.getBrettFeldIndex(i, j).getSpielfigur().getFarbe() == getAmZug()) {
-									System.out.println("Eigene Figuren schlagen geht nicht.");
-									return;
-								}
-								if (brett.getBrettFeldIndex(i - 1, j - 1).getIstBelegt()) {
-									System.out.println("Zwei Figuren aufeinmal ueberspringen geht nicht.");
-									return;
-								}
-								if (!brett.getBrettFeldIndex(neueX + 1, neueY + 1).getIstBelegt()) {
-									System.out.println("Du kannst nachdem du geschlagen hast nicht einfach weiter gehen.");
-									return;
-								}
-
-							}
-							j--;
-						}
-
-						j = alteY - 1;
-						for (int i = alteX - 1; i < neueX; i--) {
-
-							if (!brett.getBrettFeldIndex(i, j).getIstBelegt()) {
-								brett.getBrettFeldIndex(i, j).setSpielfigur(brett.getBrettFeldIndex(i + 1, j + 1).getSpielfigur());
-								brett.getBrettFeldIndex(i + 1, j + 1).removeSpielfigur(brett.getBrettFeldIndex(i + 1, j + 1).getSpielfigur());
-							} else {
-								figurSchlagen(i + 1, j + 1, i - 1, j - 1, brett.getBrettFeldIndex(i + 1, j + 1).getSpielfigur());
-
-							}
-
-							j--;
-						}
-
-					}
-				}
-
-			}
-
-			return;
-		}
-
 		FarbEnum farbe = fig.getFarbe();
-		int tempx = brett.getBrettFeldIndex(xa, ya).getPosX() - brett.getBrettFeldIndex(xn, yn).getPosX();
-		switch (farbe) {
-		case SCHWARZ:
-			if (fig.getDame(fig)) {
 
-				if (tempx == -1 || tempx == 1) {// zieh möglichkeiten dame
+		/*
+		 * Ein Schritt_________________________________________________
+		 * 
+		 * Rechts Oben: (diff == 0 && diffX > -2)--------------------------
+		 * Links Oben: (diff == 2 && diffX > -2)---------------------------
+		 * Rechts Unten: (diff == 2 && diffX > 0)--------------------------
+		 * Links Unten: (diff == 0 && diffX > 0)---------------------------
+		 */
 
+		// Stein
+		if (!fig.getDame(fig)) {
+			switch (farbe) {
+			case SCHWARZ:
+				// Laufen nur nach oben moeglich
+				if ((xa < xn || xa > xn) && diffX < 0) {
+					System.out.println("Laufen schwarz amk");
 					brett.getBrettFeldIndex(xa, ya).removeSpielfigur(fig);
 					brett.getBrettFeldIndex(xn, yn).setSpielfigur(fig);
-
-				} else {// rückwärts schlagen
-					figurSchlagen(xa, ya, xn, yn, fig);
 				}
+				if ((xa > xn || xa < xn) && diffX > 0) {
+					System.out.println("Nach hinten???");
+					if (!brett.getBrettFeldIndex(xn, yn).getIstBelegt()) {
+						System.err
+								.println("Nach hinten ziehen ist mit einem Stein nicht erlaubt!");
+						break;
+					}
 
-			} else {
-				if (tempx == -1) {// zieh möglichkeiten stein
+				}
+				break;
 
+			case WEIß:
+				// Laufen nur nach unten moeglich
+				if ((xa > xn || xa < xn) && diffX > 0) {
+					System.out.println("laufen weiss amk");
 					brett.getBrettFeldIndex(xa, ya).removeSpielfigur(fig);
 					brett.getBrettFeldIndex(xn, yn).setSpielfigur(fig);
-
-				} else {
-					figurSchlagen(xa, ya, xn, yn, fig);
 				}
+				if ((xa < xn || xa > xn) && diffX > 0) {
+					System.out.println("Nach hinten weiss???");
+					if (!brett.getBrettFeldIndex(xn, yn).getIstBelegt()) {
+						System.err
+								.println("Nach hinten ziehen ist mit einem Stein nicht erlaubt!");
+						break;
+					}
+				}
+				break;
 
 			}
-
-			break;
-
-		case WEIß:
-
-			if (fig.getDame(fig)) {
-
-				if (tempx == -1 || tempx == 1) {// zieh möglivchkeiten dame
-
-					brett.getBrettFeldIndex(xa, ya).removeSpielfigur(fig);
-					brett.getBrettFeldIndex(xn, yn).setSpielfigur(fig);
-
-				} else {
-					figurSchlagen(xa, ya, xn, yn, fig);
-				}
-
-			} else {
-				if (tempx == 1) {// zieh möglichkeiten stein
-
-					brett.getBrettFeldIndex(xa, ya).removeSpielfigur(fig);
-					brett.getBrettFeldIndex(xn, yn).setSpielfigur(fig);
-
-				} else {
-					figurSchlagen(xa, ya, xn, yn, fig);
-				}
-
-			}
-
-			break;
 		}
 
+		/*
+		 * Mehr als Ein Schritt____________________________________________
+		 * 
+		 * Rechts Oben: (diff == 0 && diffX < -1)--------------------------
+		 * Links Oben: (diff > 2 && diffX < -1)----------------------------
+		 * Rechts Unten: (diff > 2 && diffX > 0)---------------------------
+		 * Links Unten: (diff == 0 && diffX > 0)---------------------------
+		 */
+		else {
+			// wenn dame dann alles zwischen end und startfeld chencken
+			// sovie // end feld -- ++ +- -+ eine gegner figur ist falls
+			// schlagen.
+
+			int alteX = brett.getBrettFeldIndex(xa, ya).getPosX();
+			int alteY = brett.getBrettFeldIndex(xa, ya).getPosY();
+			int neueX = brett.getBrettFeldIndex(xn, yn).getPosX();
+			int neueY = brett.getBrettFeldIndex(xn, yn).getPosY();
+
+			// RICHTUNG NACH OBEN RECHTS
+			if (diffX < 0 && diffY < 0) {
+
+				int j = alteY + 1;
+				System.out.println("Angefangen zu laufen oben rechts");
+				for (int i = alteX + 1; i <= neueX; i++) {
+					if (!brett.getBrettFeldIndex(i, j).getIstBelegt()) {
+						brett.getBrettFeldIndex(i, j).setSpielfigur(
+								brett.getBrettFeldIndex(i - 1, j - 1)
+										.getSpielfigur());
+						brett.getBrettFeldIndex(i - 1, j - 1).removeSpielfigur(
+								brett.getBrettFeldIndex(i - 1, j - 1)
+										.getSpielfigur());
+						System.out
+								.println("naechstes feld. wenn nicht ende weiterlaufe");
+					} else {
+						figurSchlagen(i - 1, j - 1, i + 1, j + 1);
+
+					}
+
+					j++;
+				}
+
+			}
+
+			// RICHTUNG NACH OBEN LINKS
+
+			if (diffX < 0 && diffY > 0) {
+
+				int j = alteY - 1;
+				for (int i = alteX + 1; i <= neueX; i++) {
+					System.out.println("laufen nach oben links");
+					if (!brett.getBrettFeldIndex(i, j).getIstBelegt()) {
+						brett.getBrettFeldIndex(i, j).setSpielfigur(
+								brett.getBrettFeldIndex(i - 1, j + 1)
+										.getSpielfigur());
+						brett.getBrettFeldIndex(i - 1, j + 1).removeSpielfigur(
+								brett.getBrettFeldIndex(i - 1, j + 1)
+										.getSpielfigur());
+					} else {
+						figurSchlagen(i - 1, j + 1, i + 1, j - 1);
+
+					}
+
+					j--;
+				}
+
+			}
+
+			// RICHTUNG NACH UNTEN RECHTS
+			if (diffX > 0 && diffY < 0) {
+
+				int j = alteY + 1;
+				for (int i = alteX - 1; i <= neueX; i--) {
+					System.out.println("laufen nach unten rechts");
+					if (!brett.getBrettFeldIndex(i, j).getIstBelegt()) {
+						brett.getBrettFeldIndex(i, j).setSpielfigur(
+								brett.getBrettFeldIndex(i + 1, j - 1)
+										.getSpielfigur());
+						brett.getBrettFeldIndex(i + 1, j - 1).removeSpielfigur(
+								brett.getBrettFeldIndex(i + 1, j - 1)
+										.getSpielfigur());
+					} else {
+						figurSchlagen(i + 1, j - 1, i - 1, j + 1);
+
+					}
+
+					j++;
+				}
+
+			}
+
+			// RICHTUNG NACH UNTEN Links
+			if (diffX > 0 && diffY > 0) {
+
+				int j = alteY - 1;
+				for (int i = alteX - 1; i <= neueX; i--) {
+					System.out.println("Laufen nach unten links");
+					if (!brett.getBrettFeldIndex(i, j).getIstBelegt()) {
+						brett.getBrettFeldIndex(i, j).setSpielfigur(
+								brett.getBrettFeldIndex(i + 1, j + 1)
+										.getSpielfigur());
+						brett.getBrettFeldIndex(i + 1, j + 1).removeSpielfigur(
+								brett.getBrettFeldIndex(i + 1, j + 1)
+										.getSpielfigur());
+					} else {
+						figurSchlagen(i + 1, j + 1, i - 1, j - 1);
+
+					}
+
+					j--;
+				}
+
+			}
+
+		}
+
+		return;
 	}
+
 
 	/**
 	 * wenn eine figur die eind pos erreicht hat wird sie zur dame(true)
@@ -890,8 +1271,10 @@ public class Spiel implements iBediener, Serializable {
 	/**
 	 * Einen gegnerischen stein aus dem Spiel werfen
 	 */
-	private void figurSchlagen(int altepx, int altepy, int neuepx, int neuepy, Spielfigur fig) {
+	private void figurSchlagen(int altepx, int altepy, int neuepx, int neuepy) {
 
+		Spielfigur fig = brett.getBrettFeldIndex(altepx, altepy)
+				.getSpielfigur();
 		int alteX = brett.getBrettFeldIndex(altepx, altepy).getPosX();
 		int alteY = brett.getBrettFeldIndex(altepx, altepy).getPosY();
 
@@ -907,85 +1290,113 @@ public class Spiel implements iBediener, Serializable {
 				if (diffX < 0 && diffY < 0) {
 					System.out.println("nach oben rechts s1");
 					// RICHTUNG NACH OBEN RECHTS
-					if (brett.getBrettFeldIndex(alteX + 1, alteY + 1).getIstBelegt()) {
-						if (brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+					if (brett.getBrettFeldIndex(alteX + 1, alteY + 1)
+							.getIstBelegt()) {
+						if (brett.getBrettFeldIndex(alteX + 1, alteY + 1)
+								.getSpielfigur().getFarbe() != fig.getFarbe()) {
 							// prüfen ob feld zwischen alt und neu leer ist wenn
 							// nicht dann
 							// farbe prüfen (Wenn alles korrekt die
 							// figurEntfernen()aufrufen)
 							System.out.println("nach oben rechts s2");
-							figurEntfernen(brett.getBrettFeldIndex(alteX + 1, alteY + 1).getSpielfigur());
-							brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
-							brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
+							figurEntfernen(brett.getBrettFeldIndex(alteX + 1,
+									alteY + 1).getSpielfigur());
+							brett.getBrettFeldIndex(alteX, alteY)
+									.removeSpielfigur(fig);
+							brett.getBrettFeldIndex(neueX, neueY)
+									.setSpielfigur(fig);
 							geschlagen = true;
 						} else {
-							System.out.println("Eigene Figuren schlagen geht nicht!");
+							System.out
+									.println("Eigene Figuren schlagen geht nicht!");
 						}
 					} else {
-						System.out.println("Du darfst nich ueber ein leeres Feld springen.");
+						System.out
+								.println("Du darfst nich ueber ein leeres Feld springen.");
 					}
 				}
 				// RICHTUNG NACH OBEN LINKS
 				if (diffX < 0 && diffY > 0) {
 					System.out.println("nach oben links s1");
-					if (brett.getBrettFeldIndex(alteX + 1, alteY - 1).getIstBelegt()) {
-						if (brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+					if (brett.getBrettFeldIndex(alteX + 1, alteY - 1)
+							.getIstBelegt()) {
+						if (brett.getBrettFeldIndex(alteX + 1, alteY - 1)
+								.getSpielfigur().getFarbe() != fig.getFarbe()) {
 							// prüfen ob feld zwischen alt und neu leer ist wenn
 							// nicht dann
 							// farbe prüfen (Wenn alles korrekt die
 							// figurEntfernen()aufrufen)
 							System.out.println("nach oben links s2");
-							figurEntfernen(brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur());
-							brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
-							brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
+							figurEntfernen(brett.getBrettFeldIndex(alteX + 1,
+									alteY - 1).getSpielfigur());
+							brett.getBrettFeldIndex(alteX, alteY)
+									.removeSpielfigur(fig);
+							brett.getBrettFeldIndex(neueX, neueY)
+									.setSpielfigur(fig);
 							geschlagen = true;
 						} else {
-							System.out.println("Eigene Figuren schlagen geht nicht!");
+							System.out
+									.println("Eigene Figuren schlagen geht nicht!");
 						}
 					} else {
-						System.out.println("Du darfst nich ueber ein leeres Feld springen.");
+						System.out
+								.println("Du darfst nich ueber ein leeres Feld springen.");
 					}
 				}
 				// RICHTUNG NACH UNTEN RECHTS
 				if (diffX > 0 && diffY < 0) {
 					System.out.println("nach unten rechts s1");
-					if (brett.getBrettFeldIndex(alteX - 1, alteY + 1).getIstBelegt()) {
-						if (brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+					if (brett.getBrettFeldIndex(alteX - 1, alteY + 1)
+							.getIstBelegt()) {
+						if (brett.getBrettFeldIndex(alteX - 1, alteY + 1)
+								.getSpielfigur().getFarbe() != fig.getFarbe()) {
 							// prüfen ob feld zwischen alt und neu leer ist wenn
 							// nicht dann
 							// farbe prüfen (Wenn alles korrekt die
 							// figurEntfernen()aufrufen)
 							System.out.println("nach unten rechts s2");
-							figurEntfernen(brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur());
-							brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
-							brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
+							figurEntfernen(brett.getBrettFeldIndex(alteX - 1,
+									alteY + 1).getSpielfigur());
+							brett.getBrettFeldIndex(alteX, alteY)
+									.removeSpielfigur(fig);
+							brett.getBrettFeldIndex(neueX, neueY)
+									.setSpielfigur(fig);
 							geschlagen = true;
 						} else {
-							System.out.println("Eigene Figuren schlagen geht nicht!");
+							System.out
+									.println("Eigene Figuren schlagen geht nicht!");
 						}
 					} else {
-						System.out.println("Du darfst nich ueber ein leeres Feld springen.");
+						System.out
+								.println("Du darfst nich ueber ein leeres Feld springen.");
 					}
 				}
 				// RICHTUNG NACH UNTEN LINKS
 				if (diffX > 0 && diffY > 0) {
 					System.out.println("nach unten links s1");
-					if (brett.getBrettFeldIndex(alteX - 1, alteY - 1).getIstBelegt()) {
-						if (brett.getBrettFeldIndex(alteX - 1, alteY - 1).getSpielfigur().getFarbe() != fig.getFarbe()) {
+					if (brett.getBrettFeldIndex(alteX - 1, alteY - 1)
+							.getIstBelegt()) {
+						if (brett.getBrettFeldIndex(alteX - 1, alteY - 1)
+								.getSpielfigur().getFarbe() != fig.getFarbe()) {
 							// prüfen ob feld zwischen alt und neu leer ist wenn
 							// nicht dann
 							// farbe prüfen (Wenn alles korrekt die
 							// figurEntfernen()aufrufen)
 							System.out.println("nach unten links s2");
-							figurEntfernen(brett.getBrettFeldIndex(alteX - 1, alteY - 1).getSpielfigur());
-							brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
-							brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
+							figurEntfernen(brett.getBrettFeldIndex(alteX - 1,
+									alteY - 1).getSpielfigur());
+							brett.getBrettFeldIndex(alteX, alteY)
+									.removeSpielfigur(fig);
+							brett.getBrettFeldIndex(neueX, neueY)
+									.setSpielfigur(fig);
 							geschlagen = true;
 						} else {
-							System.out.println("Eigene Figuren schlagen geht nicht!");
+							System.out
+									.println("Eigene Figuren schlagen geht nicht!");
 						}
 					} else {
-						System.out.println("Du darfst nich ueber ein leeres Feld springen.");
+						System.out
+								.println("Du darfst nich ueber ein leeres Feld springen.");
 					}
 				}
 
@@ -994,7 +1405,7 @@ public class Spiel implements iBediener, Serializable {
 			}
 		} else {
 
-			System.out.println("Unmöglich, das Zielfeld ist nicht schwarz.");
+			System.out.println("Unmoeglich, das Zielfeld ist nicht schwarz.");
 			return;
 		}
 
@@ -1032,10 +1443,14 @@ public class Spiel implements iBediener, Serializable {
 	}
 
 	/**
-	 * pusten halt
+	 * @param spielfigur
+	 *            wenn eine Spielfigur die Moeglichkeit hat zu schlagen und
+	 *            diesen Zug nicht wahrnimmt, wird er entfernt
+	 * 
+	 * 
 	 */
-	private void pusten() {
-
+	private void pusten(Spielfigur spielfigur) {
+		figurEntfernen(spielfigur);
 	}
 
 	/**
