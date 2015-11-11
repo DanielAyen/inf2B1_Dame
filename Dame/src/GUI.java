@@ -12,7 +12,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+/**
+ * 
+ * @author B1
+ *
+ */
 public class GUI extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private JFrame hauptf = new JFrame("Dame Spiel der Gruppe B1");
 	private JPanel hauptp = new JPanel(new BorderLayout());
@@ -25,7 +35,7 @@ public class GUI extends JFrame {
 
 	public GUI() {
 		super();
-		
+
 		eh = new EventHandler();
 
 	}
@@ -57,6 +67,14 @@ public class GUI extends JFrame {
 		hauptf.setMenuBar(this.getMenuOben()); // erstellt Menue oben
 
 		hauptf.setSize(GetScreenWorkingWidth() - 450, GetScreenWorkingHeight() - 50);
+
+		hauptf.add(hauptp);
+		// hauptf.add(SPIELFELD, BorderLayout.CENTER);
+
+		hauptf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		hauptf.setVisible(true);
+		hauptf.setResizable(false);
+		// addComponentsToPane(hauptf.getContentPane());
 	}
 
 	protected MenuBar getMenuOben() {
