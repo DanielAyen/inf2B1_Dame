@@ -257,24 +257,7 @@ public class Spiel implements iBediener, Serializable {
 
 				// zum erstellen von spielern
 
-	
-					// beendet das Spiel
-				case "beenden":
-					System.out.println("\n\n\t\tDas Spiel wird beendet.");
-					break;
-				// speichern
-				case "ser":
-					speichernSerial(this);
-					break;
-				case "csv":
-					speichernCSV(dateiname);
-					break;
-				// falls falsche eingaben erfolgen
-				default:
-					System.err.println("Befehl nicht erkannt.");
-
 				}
-				// solange man spielt läuft es weiter.
 			} while (!eingabe.equals("beenden"));
 
 		} catch (Exception e) {
@@ -1657,20 +1640,19 @@ public class Spiel implements iBediener, Serializable {
 		}
 
 	}
-	
-	public boolean ziehen(){
-		
+
+	public boolean ziehen(String startp, String endp) {
+
 		if (!spiellaeuft) {
 			System.err.println("Spiel hat noch nicht begonnen! Zurueck in Hauptmenue");
-			break;
+			return false;
 		} else {
 			brett.display();
 
 			// Startposition fragen
-			System.out.println("\n Bitte gebe deine Startposition ein.");
-			String startp = reader.readLine();
+
 			if (pruefeStartposition(startp) == false) {
-				break;
+				return false;
 			}
 			int[] tmp = moeglicheZuegeStartposition(startC, startI);
 			int tempZuegeLaufen = tmp[0];
@@ -1681,30 +1663,28 @@ public class Spiel implements iBediener, Serializable {
 				// spieler 2 gewinnt
 				System.err.println("Du hast keine Zugmoeglichkeiten mehr.");
 				spielerHatGewonnen(s2.getFarbe());
-				break;
+				return false;
 			}
 			if (s2.getAlleFiguren().size() == 1 && s2.getFarbe() == getAmZug() && (tempZuegeLaufen == 0 && tempZuegeSchlagen == 0)) {
 				// spieler 1 gewinnt
 				System.err.println("Du hast keine Zugmoeglichkeiten mehr.");
 				spielerHatGewonnen(s1.getFarbe());
-				break;
+				return false;
 			}
 			if ((tempZuegeLaufen == 0 && tempZuegeSchlagen == 0)) {
-				System.err.println("Mit dieser Figur sind keine Zuege moeglich! zurueck ins Menue");
+				System.err.println("Mit dieser Figur sind keine Zuege moeglich!");
 				System.out.println("Gib ziehen ein.");
-				break;
+				return false;
 			}
 
 			// Endpos fragen
 			System.out.println("Eingegebene Startposition: " + brett.getBrettFeldIndex(startC, startI).getId() + "\n");
 
-			System.out.println("Bitte gebe deine Endposition ein.");
-			String endp = reader.readLine();
 			endC = wandleUmvString(endp)[0];
 			endI = wandleUmvString(endp)[1];
 			if (wandleUmvString(endp)[2] == -1) {
 				System.err.println("Falsche Eingabe, zurueck im Menü");
-				break;
+				return false;
 			}
 
 			System.out.println("Eingegebene Endposition: " + brett.getBrettFeldIndex(endC, endI).getId() + "\n");
@@ -1716,19 +1696,27 @@ public class Spiel implements iBediener, Serializable {
 			if (zugPruefen == 1) {
 				figurBewegen(startC, startI, endC, endI);
 				dameWerden();
-				zugBeenden();
-				System.out.println("Der Spieler mit der Farbe: " + getAmZug() + " ist nun am Zug.");
-				break;
+				//
+				// zugBeenden();
+				// System.out.println("Der Spieler mit der Farbe: " + getAmZug() +
+				// " ist nun am Zug.");
+				//s
+				return true;
 			}
 			if (zugPruefen == 2) {
 				figurSchlagen(startC, startI, endC, endI);
 				if (moeglicheZuegeStartposition(endC, endI)[1] == 0) {
-					zugBeenden();
+					
 					dameWerden();
-					System.out.println("Der Spieler mit der Farbe: " + getAmZug() + " ist nun am Zug.");
-					break;
+					//
+					// zugBeenden();
+					// System.out.println("Der Spieler mit der Farbe: " + getAmZug() + " ist nun am Zug.");
+					//
+					return true;
 				}
-
+				
+//geschlagen true braucht eigene methode
+				
 				// if (geschlagen == true) {
 				// if (moeglicheZuegeStartposition(endC, endI)[1] != 0) {
 				// System.out.println("Weiterziehen (w) oder beenden (b)?");
@@ -1763,14 +1751,14 @@ public class Spiel implements iBediener, Serializable {
 
 			}
 			if (zugPruefen == -1) {
-				System.out.println("Zurueck im Menue. Gib nochmals ziehen ein.");
-				break;
+				System.out.println("Ungueltiger Zug, versuchs noch einmal.");
+				return false;
 			}
 
 			brett.display();
 			System.out.println("Der Spieler mit der Farbe: " + getAmZug() + " ist nun am Zug.");
 			System.out.println("Gib ziehen ein.");
-			break;
+			return true;
 		}
 	}
 
