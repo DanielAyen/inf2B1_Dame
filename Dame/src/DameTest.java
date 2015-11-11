@@ -22,7 +22,14 @@ public class DameTest {
 		System.out.println("________________________________________________________________________");
 
 		iBediener spiel = new Spiel();
-		spiel.spielStarten();
+
+		GUI g = new GUI();
+		g.log("meh");
+		for (int i = 0; i <= 100; i++) {
+			g.log("Test" + i);
+		}
+		g.logClear();
+		g.log("ss");
 		// Spielbrett b1 = new Spielbrett(12);
 		// Spiel spiel1 = new Spiel();
 		// Spieler s1 = new Spieler("Test", FarbEnum.SCHWARZ, false);
@@ -39,5 +46,4 @@ public class DameTest {
 		// System.out.println(b1.getBrettFeldIndex(4, 4).getSpielfigur().getIdS());
 		// System.out.println(s1.getFiguren(FarbEnum.SCHWARZ));
 	}
-
 }

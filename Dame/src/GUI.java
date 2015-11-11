@@ -35,9 +35,9 @@ public class GUI extends JFrame {
 
 	public GUI() {
 		super();
-
-		eh = new EventHandler();
-
+		
+//		eh = new EventHandler();
+spielAnzeigen();
 	}
 
 	public void spielerErstellen() {
@@ -60,11 +60,11 @@ public class GUI extends JFrame {
 		scroller = new JScrollPane(ta);
 		logger.add(new JLabel("Log-Fenster:"), BorderLayout.NORTH);
 		logger.add(scroller, BorderLayout.CENTER);
-		// jf.getContentPane().add(logger);
+//		 jf.getContentPane().add(logger);
 		hauptf.add(logger, BorderLayout.SOUTH);
 
 		hauptf.setLocation(GetScreenWorkingWidth() / 16, GetScreenWorkingHeight() / 14);
-		hauptf.setMenuBar(this.getMenuOben()); // erstellt Menue oben
+//		hauptf.setMenuBar(this.getMenuOben()); // erstellt Menue oben
 
 		hauptf.setSize(GetScreenWorkingWidth() - 450, GetScreenWorkingHeight() - 50);
 
@@ -77,42 +77,42 @@ public class GUI extends JFrame {
 		// addComponentsToPane(hauptf.getContentPane());
 	}
 
-	protected MenuBar getMenuOben() {
-		MenuBar menueLeiste = new MenuBar();
-		Menu spiel = new Menu("Spiel"); // erster Knopf
-		MenuItem laden = new MenuItem("Spiel laden"); // Unterknopf 1
-		spiel.add(laden);
-		laden.addActionListener(eh);
-		MenuItem neu = new MenuItem("neues Spiel erstellen"); // Unterknopf 2
-		spiel.add(neu);
-		neu.addActionListener(eh);
-		MenuItem speichern = new MenuItem("als PDF speichern");
-		spiel.add(speichern);
-		speichern.addActionListener(eh);
-		menueLeiste.add(spiel);
-		MenuItem speichernCSV = new MenuItem("als CSV speichern");
-		spiel.add(speichernCSV);
-		speichernCSV.addActionListener(eh);
-		menueLeiste.add(spiel);
-		MenuItem speichernSER = new MenuItem("Serialisiert speichern");
-		spiel.add(speichernSER);
-		speichernSER.addActionListener(eh);
-		menueLeiste.add(spiel);
-
-		Menu mail = new Menu("Mail");
-		MenuItem senden = new MenuItem("Mail senden");
-		mail.add(senden);
-		senden.addActionListener(eh);
-		menueLeiste.add(mail);
-
-		Menu hilfe = new Menu("Hilfe"); // dritter Knopf
-		MenuItem xxx = new MenuItem("xxx");
-		hilfe.add(xxx);
-		xxx.addActionListener(eh);
-		menueLeiste.add(hilfe);
-
-		return menueLeiste;
-	}
+//	protected MenuBar getMenuOben() {
+//		MenuBar menueLeiste = new MenuBar();
+//		Menu spiel = new Menu("Spiel"); // erster Knopf
+//		MenuItem laden = new MenuItem("Spiel laden"); // Unterknopf 1
+//		spiel.add(laden);
+//		laden.addActionListener(eh);
+//		MenuItem neu = new MenuItem("neues Spiel erstellen"); // Unterknopf 2
+//		spiel.add(neu);
+//		neu.addActionListener(eh);
+//		MenuItem speichern = new MenuItem("als PDF speichern");
+//		spiel.add(speichern);
+//		speichern.addActionListener(eh);
+//		menueLeiste.add(spiel);
+//		MenuItem speichernCSV = new MenuItem("als CSV speichern");
+//		spiel.add(speichernCSV);
+//		speichernCSV.addActionListener(eh);
+//		menueLeiste.add(spiel);
+//		MenuItem speichernSER = new MenuItem("Serialisiert speichern");
+//		spiel.add(speichernSER);
+//		speichernSER.addActionListener(eh);
+//		menueLeiste.add(spiel);
+//
+//		Menu mail = new Menu("Mail");
+//		MenuItem senden = new MenuItem("Mail senden");
+//		mail.add(senden);
+//		senden.addActionListener(eh);
+//		menueLeiste.add(mail);
+//
+//		Menu hilfe = new Menu("Hilfe"); // dritter Knopf
+//		MenuItem xxx = new MenuItem("xxx");
+//		hilfe.add(xxx);
+//		xxx.addActionListener(eh);
+//		menueLeiste.add(hilfe);
+//
+//		return menueLeiste;
+//	}
 
 	// LOGGER
 	/**
@@ -126,8 +126,9 @@ public class GUI extends JFrame {
 			ta.setText(ta.getText() + text);
 			first = true;
 		} else {
-			ta.setText(ta.getText() + "\n" + text);// Wenn etwas im Logger
-			// gezweigt
+			ta.setText(ta.getText() + "\n" + text);
+			// Wenn etwas im Logger
+			// gezeigt
 			// werden soll einfach
 		} // log("inhalt"); aufrufen!
 	}
