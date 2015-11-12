@@ -24,12 +24,7 @@ public class DameTest {
 		iBediener spiel = new Spiel();
 
 		GUI g = new GUI();
-		g.log("meh");
-		for (int i = 0; i <= 100; i++) {
-			g.log("Test" + i);
-		}
-		g.logClear();
-		g.log("ss");
+		
 		// Spielbrett b1 = new Spielbrett(12);
 		// Spiel spiel1 = new Spiel();
 		// Spieler s1 = new Spieler("Test", FarbEnum.SCHWARZ, false);
