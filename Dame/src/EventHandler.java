@@ -1,5 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.regex.Pattern;
 
 public class EventHandler implements ActionListener {
 	private GUI gui;// kenntnisbeziehung herstellen!!!
@@ -28,10 +29,40 @@ public class EventHandler implements ActionListener {
 		// try {
 		switch (ae.getActionCommand()) {
 
+		case "Ziehen":
+			String eingabe = gui.getBefehlFeld().getText();
+
+			// mit a-z xx
+			// if ((Pattern.matches("[A-Za-z]\\d[-][A-Za-z]\\d", eingabe)) ||
+			// (Pattern.matches("[A-Za-z]\\d\\d[-][A-Za-z]\\d\\d", eingabe)) ||
+			// (Pattern.matches("[A-Za-z]\\d\\[-][A-Za-z]\\d", eingabe)) ||
+			// (Pattern.matches("[A-Za-z]\\d[-][A-Za-z]\\d\\d", eingabe))) {
+			// gui.log("jup");
+			// }
+
+			// nur a-l xx
+			// if ((Pattern.matches("[a-l A-L]\\d[-][a-l A-L]\\d", eingabe)) ||
+			// (Pattern.matches("[a-l A-L]\\d\\d[-][a-l A-L]\\d\\d", eingabe)) ||
+			// (Pattern.matches("[a-l A-L]\\d\\[-][a-l A-L]\\d", eingabe)) ||
+			// (Pattern.matches("[a-l A-L]\\d[-][a-l A-L]\\d\\d", eingabe))) {
+			// gui.log("jup");
+			// }
+			
+			// a=buchstabe X=zahl X=1-9 XX=1 0-2
+			//aX-aX aXX-aXX aX-aXX aXX-aX
+			if ((Pattern.matches("[a-l A-L][1-9][-][a-l A-L][1-9]", eingabe)) || (Pattern.matches("[a-l A-L][1][0-2][-][a-l A-L][1][0-2]", eingabe)) || (Pattern.matches("[a-l A-L][1][0-2][-][a-l A-L][1-9]", eingabe)) || (Pattern.matches("[a-l A-L][1-9][-][a-l A-L][1][0-2]", eingabe))) {
+				gui.log("jup");
+			} else {
+				gui.log("nop");
+			}
+
+			break;
+
 		case "neues Spiel erstellen":
 			// gui.spielAufbauen();
 			// anstatt größe wählbar zu machen erstmal nur 12x12
 			gui.aufbauen(12);
+			gui.spielerErstellen();
 			break;
 
 		case "Weiter":
@@ -47,7 +78,6 @@ public class EventHandler implements ActionListener {
 				gui.log("Gewählte Größe: 12");
 			}
 
-			gui.spielerErstellen();
 			gui.getBrettFrame().dispose();
 			break;
 

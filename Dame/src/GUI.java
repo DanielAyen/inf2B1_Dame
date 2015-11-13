@@ -9,6 +9,7 @@ import java.awt.MenuBar;
 import java.awt.MenuItem;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -193,7 +194,7 @@ public class GUI extends JFrame {
 		hauptf.add(logger, BorderLayout.SOUTH);
 
 		hauptf.setLocation(GetScreenWorkingWidth() / 9, GetScreenWorkingHeight() / 50);
-		hauptf.setSize(GetScreenWorkingWidth() - 800, GetScreenWorkingHeight() - 50);//statt 800 450 rein!!(dür daniel lappi
+		hauptf.setSize(GetScreenWorkingWidth() - 450, GetScreenWorkingHeight() - 50);
 		hauptf.setMenuBar(this.getMenuOben()); // erstellt Menue oben
 
 		feldButtons();// erstellt alle Buttons
@@ -201,21 +202,27 @@ public class GUI extends JFrame {
 			hauptp.add(buttonArray[i]);
 		}
 
+		ImageIcon figurs = new ImageIcon("Bilder//schwarz.png");
+		ImageIcon figurw = new ImageIcon("Bilder//weiss.png");
+		buttonArray[0].setIcon(figurs);
+		buttonArray[1].setIcon(figurw);
+
 		// TODO
 		// TODO
 		// TODO
 
 		hauptf.add(hauptp, BorderLayout.CENTER);
-//rechte seite
+		// rechte seite
 		JPanel befehlPanel = new JPanel(new GridLayout(2, 0));
 		befehlPanel.add(befehlFeld);
 		JButton ziehen = new JButton("Ziehen");
 		ziehen.addActionListener(eh);
 		befehlPanel.add(ziehen);
 		hauptf.add(befehlPanel, BorderLayout.EAST);
-//Linke seite
+		// Linke seite
 		JTextField befehlFeld2 = new JTextField("                                                                                  ");// "12345678912345678912345678912345678912345"
 		befehlFeld2.setEnabled(false);
+		befehlFeld2.setBackground(Color.LIGHT_GRAY);
 		JPanel linksPanel = new JPanel(new GridLayout());
 		linksPanel.add(befehlFeld2);
 		hauptf.add(linksPanel, BorderLayout.WEST);
@@ -364,6 +371,10 @@ public class GUI extends JFrame {
 		return nameFeld;
 	}
 
+	public JTextField getBefehlFeld() {
+		return befehlFeld;
+	}
+
 	public JRadioButton getSchwarz() {
 		return Schwarz;
 	}
@@ -388,3 +399,7 @@ public class GUI extends JFrame {
 	}
 
 }
+
+//
+// ImageIcon figurs = new ImageIcon("Bilder//schwarz.png");
+// ImageIcon figurw = new ImageIcon("Bilder//weiss.png");
