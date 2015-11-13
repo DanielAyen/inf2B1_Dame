@@ -193,29 +193,30 @@ public class GUI extends JFrame {
 		hauptf.add(logger, BorderLayout.SOUTH);
 
 		hauptf.setLocation(GetScreenWorkingWidth() / 9, GetScreenWorkingHeight() / 50);
-		hauptf.setSize(GetScreenWorkingWidth() - 450, GetScreenWorkingHeight() - 50);
+		hauptf.setSize(GetScreenWorkingWidth() - 800, GetScreenWorkingHeight() - 50);//statt 800 450 rein!!(dür daniel lappi
 		hauptf.setMenuBar(this.getMenuOben()); // erstellt Menue oben
 
 		feldButtons();// erstellt alle Buttons
 		for (int i = 0; i < 144; i++) {
 			hauptp.add(buttonArray[i]);
 		}
+
 		// TODO
 		// TODO
 		// TODO
 
 		hauptf.add(hauptp, BorderLayout.CENTER);
-
-		JPanel befehlPanel = new JPanel();
+//rechte seite
+		JPanel befehlPanel = new JPanel(new GridLayout(2, 0));
 		befehlPanel.add(befehlFeld);
-		// JButton ziehen = new JButton("Ziehen");
-		// befehlPanel.add(ziehen);
+		JButton ziehen = new JButton("Ziehen");
+		ziehen.addActionListener(eh);
+		befehlPanel.add(ziehen);
 		hauptf.add(befehlPanel, BorderLayout.EAST);
-
-		JTextField befehlFeld2 = new JTextField("12345678912345678912345678912345678912345");
-
-		JPanel linksPanel = new JPanel();
-
+//Linke seite
+		JTextField befehlFeld2 = new JTextField("                                                                                  ");// "12345678912345678912345678912345678912345"
+		befehlFeld2.setEnabled(false);
+		JPanel linksPanel = new JPanel(new GridLayout());
 		linksPanel.add(befehlFeld2);
 		hauptf.add(linksPanel, BorderLayout.WEST);
 
@@ -233,6 +234,7 @@ public class GUI extends JFrame {
 			buttonArray[i].setMargin(new Insets(0, 0, 0, 0));
 			buttonArray[i].setSize(20, 20);
 			buttonArray[i].addActionListener(eh);
+
 			cnt++;
 			if (ss == false) {
 				buttonArray[i].setBackground(Color.white);

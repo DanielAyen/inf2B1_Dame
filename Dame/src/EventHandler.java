@@ -29,8 +29,9 @@ public class EventHandler implements ActionListener {
 		switch (ae.getActionCommand()) {
 
 		case "neues Spiel erstellen":
-			gui.spielAufbauen();
-
+			// gui.spielAufbauen();
+			// anstatt größe wählbar zu machen erstmal nur 12x12
+			gui.aufbauen(12);
 			break;
 
 		case "Weiter":
