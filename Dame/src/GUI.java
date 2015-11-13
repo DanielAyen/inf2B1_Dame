@@ -183,6 +183,8 @@ public class GUI extends JFrame {
 	}
 
 	public void spielAnzeigen() {
+		//LOGGER PANE HINTERGRUND SCHWARZ
+logger.setBackground(Color.LIGHT_GRAY);
 
 		logger.setLayout(new BorderLayout());
 		ta.setFont(new Font("Arial", Font.PLAIN, 14));
