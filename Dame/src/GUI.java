@@ -50,7 +50,7 @@ public class GUI extends JFrame {
 	private JRadioButton Mensch;
 	private JRadioButton Ki;
 	private JTextField nameFeld;
-	private JTextField befehlFeld = new JTextField("12345678912345678912345678912345678912345");
+	private JTextField befehlFeld = new JTextField("12345678912345678912345");// 12345678912345678912345678912345678912345
 	private Spiel s = new Spiel();
 	private int aufbaucnt = 1;
 
@@ -213,12 +213,30 @@ public class GUI extends JFrame {
 
 		hauptf.add(hauptp, BorderLayout.CENTER);
 		// rechte seite
-		JPanel befehlPanel = new JPanel(new GridLayout(2, 0));
+		JPanel befehlPanel = new JPanel(new GridLayout(2, 1));
 		befehlPanel.add(befehlFeld);
+		//
+		JTextField befehlFeld3 = new JTextField("");
+		befehlPanel.add(befehlFeld3);
+		befehlFeld3.setBackground(Color.LIGHT_GRAY);
+		befehlFeld3.setEnabled(false);
+
 		JButton ziehen = new JButton("Ziehen");
 		ziehen.addActionListener(eh);
 		befehlPanel.add(ziehen);
 		hauptf.add(befehlPanel, BorderLayout.EAST);
+
+		JTextField befehlFeld4 = new JTextField("");
+		befehlPanel.add(befehlFeld4);
+		befehlFeld4.setBackground(Color.LIGHT_GRAY);
+		befehlFeld4.setEnabled(false);
+
+		//
+
+		// JButton ziehen = new JButton("Ziehen");
+		// ziehen.addActionListener(eh);
+		// befehlPanel.add(ziehen);
+		// hauptf.add(befehlPanel, BorderLayout.EAST);
 		// Linke seite
 		JTextField befehlFeld2 = new JTextField("                                                                                  ");// "12345678912345678912345678912345678912345"
 		befehlFeld2.setEnabled(false);
