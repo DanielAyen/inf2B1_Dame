@@ -1,10 +1,13 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,9 +31,11 @@ public class GUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private JFrame hauptf = new JFrame(" Dame Spiel der Gruppe B1 ");
-	private JPanel hauptp = new JPanel(new BorderLayout());
+	private JPanel hauptp = new JPanel(new GridLayout(12, 12, 0, 0));
 	private JButton[] buttonArray = new JButton[144];
-	private JTextArea ta = new JTextArea(8, 20);// fuer die Loggerfeld groesse
+	private JTextArea ta = new JTextArea(5, 20);// fuer die Loggerfeld groesse
+	private JPanel panel02 = new JPanel(new BorderLayout());
+	private JPanel logger = new JPanel();
 	private JScrollPane scroller;
 	private EventHandler eh;
 	private JFrame spielerFrame;
@@ -44,7 +49,7 @@ public class GUI extends JFrame {
 	private JRadioButton Mensch;
 	private JRadioButton Ki;
 	private JTextField nameFeld;
-	private JPanel panel02 = new JPanel(new BorderLayout());
+	private JTextField befehlFeld = new JTextField("12345678912345678912345678912345678912345");
 	private Spiel s = new Spiel();
 	private int aufbaucnt = 1;
 
@@ -178,7 +183,6 @@ public class GUI extends JFrame {
 
 	public void spielAnzeigen() {
 
-		JPanel logger = new JPanel();
 		logger.setLayout(new BorderLayout());
 		ta.setFont(new Font("Arial", Font.PLAIN, 14));
 		ta.setOpaque(true);
@@ -189,17 +193,60 @@ public class GUI extends JFrame {
 		hauptf.add(logger, BorderLayout.SOUTH);
 
 		hauptf.setLocation(GetScreenWorkingWidth() / 9, GetScreenWorkingHeight() / 50);
+		hauptf.setSize(GetScreenWorkingWidth() - 450, GetScreenWorkingHeight() - 50);
 		hauptf.setMenuBar(this.getMenuOben()); // erstellt Menue oben
 
-		hauptf.setSize(GetScreenWorkingWidth() - 450, GetScreenWorkingHeight() - 50);
+		feldButtons();// erstellt alle Buttons
+		for (int i = 0; i < 144; i++) {
+			hauptp.add(buttonArray[i]);
+		}
+		// TODO
+		// TODO
+		// TODO
 
-		hauptf.add(hauptp);
-		// hauptf.add(SPIELFELD, BorderLayout.CENTER);
+		hauptf.add(hauptp, BorderLayout.CENTER);
+
+		JPanel befehlPanel = new JPanel();
+		befehlPanel.add(befehlFeld);
+		// JButton ziehen = new JButton("Ziehen");
+		// befehlPanel.add(ziehen);
+		hauptf.add(befehlPanel, BorderLayout.EAST);
+
+		JTextField befehlFeld2 = new JTextField("12345678912345678912345678912345678912345");
+
+		JPanel linksPanel = new JPanel();
+
+		linksPanel.add(befehlFeld2);
+		hauptf.add(linksPanel, BorderLayout.WEST);
 
 		hauptf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		hauptf.setVisible(true);
 		hauptf.setResizable(false);
 		// addComponentsToPane(hauptf.getContentPane());
+	}
+
+	public void feldButtons() {
+		boolean ss = false;
+		int cnt = 0;
+		for (int i = 0; i < 144; i++) {
+			buttonArray[i] = new JButton("");
+			buttonArray[i].setMargin(new Insets(0, 0, 0, 0));
+			buttonArray[i].setSize(20, 20);
+			buttonArray[i].addActionListener(eh);
+			cnt++;
+			if (ss == false) {
+				buttonArray[i].setBackground(Color.white);
+
+			} else {
+				buttonArray[i].setBackground(Color.black);
+			}
+			ss = !ss;
+			if (cnt == 12) {
+				ss = !ss;
+				cnt = 0;
+			}
+		}
+
 	}
 
 	protected MenuBar getMenuOben() {
