@@ -60,7 +60,7 @@ public class GUI extends JFrame {
 	private JTextArea helptxt;
 	private JPanel helppanel;
 	private JButton ziehen;
-	private int spCnt;
+	private int spCnt = 0;
 
 	// DEX IST DAFÜR DA UM DAS BRETT RICHTIG DARZUSTELLEN BSP [i][j+DEX] IMMER
 	// DEX DRAUF RECHNEN
@@ -457,9 +457,11 @@ public class GUI extends JFrame {
 
 			ziehen.setEnabled(true);
 
-			s.spielStarten();
+			s.starten();
 			log("Das Spiel beginnt.");
 			log("Der Spieler mit der farbe: " + s.getAmZug() + " beginnt.");
+
+		} else {
 
 		}
 
