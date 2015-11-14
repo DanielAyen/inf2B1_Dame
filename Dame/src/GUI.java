@@ -8,6 +8,7 @@ import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -53,6 +55,9 @@ public class GUI extends JFrame {
 	private JTextField befehlFeld = new JTextField("12345678912345678912345");// 12345678912345678912345678912345678912345
 	private Spiel s = new Spiel();
 	private int aufbaucnt = 1;
+	private JFrame helpframe;
+	private JTextArea helptxt;
+	private JPanel helppanel;
 
 	public GUI() {
 		super();
@@ -185,6 +190,7 @@ public class GUI extends JFrame {
 	public void spielAnzeigen() {
 		//LOGGER PANE HINTERGRUND SCHWARZ
 logger.setBackground(Color.LIGHT_GRAY);
+logger.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 
 		logger.setLayout(new BorderLayout());
 		ta.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -221,6 +227,7 @@ logger.setBackground(Color.LIGHT_GRAY);
 		JTextField befehlFeld3 = new JTextField("");
 		befehlPanel.add(befehlFeld3);
 		befehlFeld3.setBackground(Color.LIGHT_GRAY);
+		befehlFeld3.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		befehlFeld3.setEnabled(false);
 
 		JButton ziehen = new JButton("Ziehen");
@@ -231,6 +238,7 @@ logger.setBackground(Color.LIGHT_GRAY);
 		JTextField befehlFeld4 = new JTextField("");
 		befehlPanel.add(befehlFeld4);
 		befehlFeld4.setBackground(Color.LIGHT_GRAY);
+		befehlFeld4.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		befehlFeld4.setEnabled(false);
 
 		//
@@ -243,6 +251,7 @@ logger.setBackground(Color.LIGHT_GRAY);
 		JTextField befehlFeld2 = new JTextField("                                                                                  ");// "12345678912345678912345678912345678912345"
 		befehlFeld2.setEnabled(false);
 		befehlFeld2.setBackground(Color.LIGHT_GRAY);
+		befehlFeld2.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		JPanel linksPanel = new JPanel(new GridLayout());
 		linksPanel.add(befehlFeld2);
 		hauptf.add(linksPanel, BorderLayout.WEST);
@@ -307,12 +316,28 @@ logger.setBackground(Color.LIGHT_GRAY);
 		menueLeiste.add(mail);
 
 		Menu hilfe = new Menu("Hilfe"); // dritter Knopf
-		MenuItem xxx = new MenuItem("xxx");
-		hilfe.add(xxx);
-		xxx.addActionListener(eh);
+		MenuItem Anzeigen = new MenuItem("Anzeigen");
+		hilfe.add(Anzeigen);
+		Anzeigen.addActionListener(eh);
 		menueLeiste.add(hilfe);
 
 		return menueLeiste;
+	}
+	public void hilfeAnz(){
+		helpframe = new JFrame("Hilfe");
+		helptxt = new JTextArea("Um ein neues Spiel zu erstellen, müssen sie im Menu Spiel die Funktion Neues Spiel erstellen wählen  \nGeben sie nun die gewünschte Spielfeld größe ein. Sie haben die wahl zwischen 8x8, 10x10 und 12x12 Spielfeldern");
+		helptxt.setEditable(false);
+		helppanel = new JPanel();
+		helppanel.setLayout(new GridLayout(1,1));
+		Font f=new Font(Font.SANS_SERIF,Font.PLAIN,12);
+		helptxt.setFont(f);
+		helptxt.add(new JScrollBar());
+		helppanel.add(new JScrollPane(helptxt));
+		helpframe.setContentPane(helppanel);
+		helpframe.pack(); 
+		helpframe.setVisible(true);
+		
+		helpframe.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
 	// LOGGER

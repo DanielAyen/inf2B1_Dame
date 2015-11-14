@@ -137,6 +137,10 @@ public class EventHandler implements ActionListener {
 			}
 
 			break;
+			
+		case "Anzeigen":
+			gui.hilfeAnz();
+			break;
 
 		default:
 			gui.log("Diese Funktion ist zu diesem Zeitpunkt nicht verfügbar.");
