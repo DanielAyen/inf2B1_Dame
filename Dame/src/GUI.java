@@ -446,9 +446,10 @@ public class GUI extends JFrame {
 
 	}
 
-	public void posWeitergeben(String startp, String endp) {
-		s.ziehen(startp, endp);
+	public void posWeitergeben(String startp, String endp) {// Zug/ziehen/bewegen/..
 
+		s.ziehen(startp, endp);
+		// icon gemäß zug ändern
 	}
 
 	public void startenWeitergeben() {
