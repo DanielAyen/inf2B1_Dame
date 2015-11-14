@@ -501,7 +501,7 @@ public class Spiel implements iBediener, Serializable {
 		}
 
 		if (tempX != tempY) {
-			System.out.println("Du darfts nicht querbeet durchs Feld springen!");
+			System.out.println("Du darfst nicht querbeet durchs Feld springen!");
 			// System.out.println(tempX + " " + tempY);
 			return -1;
 
@@ -1108,7 +1108,7 @@ public class Spiel implements iBediener, Serializable {
 	/**
 	 * gibt den derzeitigen Spieler der am zug ist
 	 */
-	private FarbEnum getAmZug() {
+	public FarbEnum getAmZug() {
 
 		return farbeAmZug;
 	}

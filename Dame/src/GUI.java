@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -58,6 +59,8 @@ public class GUI extends JFrame {
 	private JFrame helpframe;
 	private JTextArea helptxt;
 	private JPanel helppanel;
+	private JButton ziehen;
+	private int spCnt;
 
 	// DEX IST DAFÜR DA UM DAS BRETT RICHTIG DARZUSTELLEN BSP [i][j+DEX] IMMER
 	// DEX DRAUF RECHNEN
@@ -232,7 +235,8 @@ public class GUI extends JFrame {
 		fuellFeld3.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		fuellFeld3.setEnabled(false);
 		//
-		JButton ziehen = new JButton("Ziehen");
+		ziehen = new JButton("Ziehen");
+		ziehen.setEnabled(false);
 		ziehen.addActionListener(eh);
 		befehlPanel.add(ziehen);
 		hauptf.add(befehlPanel, BorderLayout.EAST);
@@ -267,7 +271,10 @@ public class GUI extends JFrame {
 				buttonArray[i][j] = new JButton("");
 				buttonArray[i][j].setMargin(new Insets(0, 0, 0, 0));
 				buttonArray[i][j].setSize(20, 20);
-				buttonArray[i][j].addActionListener(eh);
+				// TODO
+				// buttonArray[i][j].addActionListener(eh);
+				// //////// MUSS WIEDER REIN WENN ÜBER BUTTON DRUCK!!
+				// TODO
 
 				cnt++;
 				if (ss == false) {
@@ -303,7 +310,7 @@ public class GUI extends JFrame {
 								if (j + 1 < buttonArray.length) {
 									buttonArray[i][j + 1].setIcon(figurs);
 								} else {
-									 buttonArray[i][0].setIcon(figurs);
+									buttonArray[i][0].setIcon(figurs);
 								}
 							}
 						}
@@ -323,7 +330,7 @@ public class GUI extends JFrame {
 								if (j + 1 < buttonArray.length) {
 									buttonArray[i][j + 1].setIcon(figurw);
 								} else {
-									 buttonArray[i][0].setIcon(figurw);
+									buttonArray[i][0].setIcon(figurw);
 								}
 							}
 						}
@@ -439,6 +446,25 @@ public class GUI extends JFrame {
 
 	}
 
+	public void posWeitergeben(String startp, String endp) {
+		s.ziehen(startp, endp);
+
+	}
+
+	public void startenWeitergeben() {
+		spCnt++;
+		if (spCnt == 2) {
+
+			ziehen.setEnabled(true);
+
+			s.spielStarten();
+			log("Das Spiel beginnt.");
+			log("Der Spieler mit der farbe: " + s.getAmZug() + " beginnt.");
+
+		}
+
+	}
+
 	// ///////GETTER UND SETTER ////////////////
 
 	public JRadioButton getAcht() {
@@ -488,8 +514,14 @@ public class GUI extends JFrame {
 		return spielerFrame;
 	}
 
-}
+	public JButton getZiehen() {
 
-//
-// ImageIcon figurs = new ImageIcon("Bilder//schwarz.png");
-// ImageIcon figurw = new ImageIcon("Bilder//weiss.png");
+		return ziehen;
+	}
+
+}
+// TODO
+// Schachnotation erstellen
+// Wenn 2 spieler erstellt und man spielt aber ein neues spiel machen will fehlt
+// das löschen der alten spieler bzw. das komplett neu aufbauen des spiels.
+// z.b. durch vollständiges ersetzten des vorhandenen mit einem neuen spiel

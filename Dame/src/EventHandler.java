@@ -52,8 +52,13 @@ public class EventHandler implements ActionListener {
 			// aX-aX aXX-aXX aX-aXX aXX-aX
 			if ((Pattern.matches("[a-l A-L][1-9][-][a-l A-L][1-9]", eingabe)) || (Pattern.matches("[a-l A-L][1][0-2][-][a-l A-L][1][0-2]", eingabe)) || (Pattern.matches("[a-l A-L][1][0-2][-][a-l A-L][1-9]", eingabe)) || (Pattern.matches("[a-l A-L][1-9][-][a-l A-L][1][0-2]", eingabe))) {
 				gui.log("jup");
+				String[] list = eingabe.split("-");
+
+				gui.posWeitergeben(list[0], list[1]);
 				gui.getBefehlFeld().setText("");
+
 			} else {
+
 				gui.log("nop");
 				gui.getBefehlFeld().setText("");
 			}
@@ -127,6 +132,10 @@ public class EventHandler implements ActionListener {
 					}
 
 					gui.spielerWeitergeben(name, farbe, istKi);
+					gui.steineErstellen(farbe);
+
+					// gui.startenWeitergeben();
+
 					if (istKi == false) {
 						gui.log("Ein Spieler mit dem Namen " + name + " und der Farbe " + farbe + " wurde erstellt.");
 					} else {
@@ -137,7 +146,6 @@ public class EventHandler implements ActionListener {
 					gui.log("Bitte Farbe Wählen");
 				}
 			}
-			gui.steineErstellen(farbe);
 
 			break;
 
