@@ -35,7 +35,7 @@ public class GUI extends JFrame {
 
 	private JFrame hauptf = new JFrame(" Dame Spiel der Gruppe B1 ");
 	private JPanel hauptp = new JPanel(new GridLayout(12, 12, 0, 0));
-	private JButton[] buttonArray = new JButton[144];
+	private JButton[][] buttonArray = new JButton[12][12];
 	private JTextArea ta = new JTextArea(5, 20);// fuer die Loggerfeld groesse
 	private JPanel panel02 = new JPanel(new BorderLayout());
 	private JPanel logger = new JPanel();
@@ -58,6 +58,10 @@ public class GUI extends JFrame {
 	private JFrame helpframe;
 	private JTextArea helptxt;
 	private JPanel helppanel;
+
+	// DEX IST DAFÜR DA UM DAS BRETT RICHTIG DARZUSTELLEN BSP [i][j+DEX] IMMER
+	// DEX DRAUF RECHNEN
+	private final int dex = 11;
 
 	public GUI() {
 		super();
@@ -188,9 +192,9 @@ public class GUI extends JFrame {
 	}
 
 	public void spielAnzeigen() {
-		//LOGGER PANE HINTERGRUND SCHWARZ
-logger.setBackground(Color.LIGHT_GRAY);
-logger.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		// LOGGER PANE HINTERGRUND LIGHT_GRAY
+		logger.setBackground(Color.LIGHT_GRAY);
+		logger.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 
 		logger.setLayout(new BorderLayout());
 		ta.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -206,14 +210,11 @@ logger.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		hauptf.setMenuBar(this.getMenuOben()); // erstellt Menue oben
 
 		feldButtons();// erstellt alle Buttons
-		for (int i = 0; i < 144; i++) {
-			hauptp.add(buttonArray[i]);
+		for (int i = buttonArray.length - 1; i >= 0; i--) {
+			for (int j = buttonArray[i].length - 1; j >= 0; j--) {
+				hauptp.add(buttonArray[i][j]);
+			}
 		}
-
-		ImageIcon figurs = new ImageIcon("Bilder//schwarz.png");
-		ImageIcon figurw = new ImageIcon("Bilder//weiss.png");
-		buttonArray[0].setIcon(figurs);
-		buttonArray[1].setIcon(figurw);
 
 		// TODO
 		// TODO
@@ -222,40 +223,36 @@ logger.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		hauptf.add(hauptp, BorderLayout.CENTER);
 		// rechte seite
 		JPanel befehlPanel = new JPanel(new GridLayout(2, 1));
+		//
 		befehlPanel.add(befehlFeld);
 		//
-		JTextField befehlFeld3 = new JTextField("");
-		befehlPanel.add(befehlFeld3);
-		befehlFeld3.setBackground(Color.LIGHT_GRAY);
-		befehlFeld3.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		befehlFeld3.setEnabled(false);
-
+		JTextField fuellFeld3 = new JTextField("");
+		befehlPanel.add(fuellFeld3);
+		fuellFeld3.setBackground(Color.LIGHT_GRAY);
+		fuellFeld3.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		fuellFeld3.setEnabled(false);
+		//
 		JButton ziehen = new JButton("Ziehen");
 		ziehen.addActionListener(eh);
 		befehlPanel.add(ziehen);
 		hauptf.add(befehlPanel, BorderLayout.EAST);
-
-		JTextField befehlFeld4 = new JTextField("");
-		befehlPanel.add(befehlFeld4);
-		befehlFeld4.setBackground(Color.LIGHT_GRAY);
-		befehlFeld4.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		befehlFeld4.setEnabled(false);
-
+		//
+		JTextField fuellFeld4 = new JTextField("");
+		befehlPanel.add(fuellFeld4);
+		fuellFeld4.setBackground(Color.LIGHT_GRAY);
+		fuellFeld4.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		fuellFeld4.setEnabled(false);
 		//
 
-		// JButton ziehen = new JButton("Ziehen");
-		// ziehen.addActionListener(eh);
-		// befehlPanel.add(ziehen);
-		// hauptf.add(befehlPanel, BorderLayout.EAST);
 		// Linke seite
-		JTextField befehlFeld2 = new JTextField("                                                                                  ");// "12345678912345678912345678912345678912345"
-		befehlFeld2.setEnabled(false);
-		befehlFeld2.setBackground(Color.LIGHT_GRAY);
-		befehlFeld2.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		JTextField fuellFeld2 = new JTextField("                                                                                  ");// "12345678912345678912345678912345678912345"
+		fuellFeld2.setEnabled(false);
+		fuellFeld2.setBackground(Color.LIGHT_GRAY);
+		fuellFeld2.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		JPanel linksPanel = new JPanel(new GridLayout());
-		linksPanel.add(befehlFeld2);
+		linksPanel.add(fuellFeld2);
 		hauptf.add(linksPanel, BorderLayout.WEST);
-
+		//
 		hauptf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		hauptf.setVisible(true);
 		hauptf.setResizable(false);
@@ -265,26 +262,77 @@ logger.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 	public void feldButtons() {
 		boolean ss = false;
 		int cnt = 0;
-		for (int i = 0; i < 144; i++) {
-			buttonArray[i] = new JButton("");
-			buttonArray[i].setMargin(new Insets(0, 0, 0, 0));
-			buttonArray[i].setSize(20, 20);
-			buttonArray[i].addActionListener(eh);
+		for (int i = 0; i < buttonArray.length; i++) {
+			for (int j = 0; j < buttonArray[i].length; j++) {
+				buttonArray[i][j] = new JButton("");
+				buttonArray[i][j].setMargin(new Insets(0, 0, 0, 0));
+				buttonArray[i][j].setSize(20, 20);
+				buttonArray[i][j].addActionListener(eh);
 
-			cnt++;
-			if (ss == false) {
-				buttonArray[i].setBackground(Color.white);
+				cnt++;
+				if (ss == false) {
+					buttonArray[i][j].setBackground(Color.white);
 
-			} else {
-				buttonArray[i].setBackground(Color.black);
-			}
-			ss = !ss;
-			if (cnt == 12) {
+				} else {
+					buttonArray[i][j].setBackground(Color.black);
+				}
 				ss = !ss;
-				cnt = 0;
+				if (cnt == 12) {
+					ss = !ss;
+					cnt = 0;
+				}
 			}
 		}
 
+	}
+
+	public void steineErstellen(FarbEnum farbe) {
+		Spielbrett brett = s.getBrett();
+		ImageIcon figurs = new ImageIcon("Bilder//schwarz.png");
+		ImageIcon figurw = new ImageIcon("Bilder//weiss.png");
+		if (farbe == FarbEnum.SCHWARZ) {
+
+			for (int i = 0; i < brett.getBrettGroesse(); i++) {
+				for (int j = 0; j < brett.getBrettGroesse(); j++) {
+
+					if (brett.getBrettFeldIndex(i, j).getIstSchwarz()) {
+
+						if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
+							if (brett.getBrettFeldIndex(i, j).getSpielfigur().getFarbe() == farbe) {
+
+								if (j + 1 < buttonArray.length) {
+									buttonArray[i][j + 1].setIcon(figurs);
+								} else {
+									 buttonArray[i][0].setIcon(figurs);
+								}
+							}
+						}
+					}
+				}
+			}
+
+		} else {
+			for (int i = 0; i < brett.getBrettGroesse(); i++) {
+				for (int j = 0; j < brett.getBrettGroesse(); j++) {
+
+					if (brett.getBrettFeldIndex(i, j).getIstSchwarz()) {
+
+						if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
+							if (brett.getBrettFeldIndex(i, j).getSpielfigur().getFarbe() == farbe) {
+
+								if (j + 1 < buttonArray.length) {
+									buttonArray[i][j + 1].setIcon(figurw);
+								} else {
+									 buttonArray[i][0].setIcon(figurw);
+								}
+							}
+						}
+					}
+				}
+			}
+
+		}
+		hauptf.repaint();
 	}
 
 	protected MenuBar getMenuOben() {
@@ -323,20 +371,21 @@ logger.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 
 		return menueLeiste;
 	}
-	public void hilfeAnz(){
+
+	public void hilfeAnz() {
 		helpframe = new JFrame("Hilfe");
 		helptxt = new JTextArea("Um ein neues Spiel zu erstellen, müssen sie im Menu Spiel die Funktion Neues Spiel erstellen wählen  \nGeben sie nun die gewünschte Spielfeld größe ein. Sie haben die wahl zwischen 8x8, 10x10 und 12x12 Spielfeldern");
 		helptxt.setEditable(false);
 		helppanel = new JPanel();
-		helppanel.setLayout(new GridLayout(1,1));
-		Font f=new Font(Font.SANS_SERIF,Font.PLAIN,12);
+		helppanel.setLayout(new GridLayout(1, 1));
+		Font f = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
 		helptxt.setFont(f);
 		helptxt.add(new JScrollBar());
 		helppanel.add(new JScrollPane(helptxt));
 		helpframe.setContentPane(helppanel);
-		helpframe.pack(); 
+		helpframe.pack();
 		helpframe.setVisible(true);
-		
+
 		helpframe.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
@@ -378,10 +427,6 @@ logger.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 
 	public static int GetScreenWorkingHeight() {
 		return java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
-	}
-
-	public void setButtonText(int nummer, String text) {
-		buttonArray[nummer - 1].setText(text);
 	}
 
 	// /////////////////////////////////////////

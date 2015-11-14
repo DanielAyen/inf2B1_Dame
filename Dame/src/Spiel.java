@@ -1700,23 +1700,24 @@ public class Spiel implements iBediener, Serializable {
 				// zugBeenden();
 				// System.out.println("Der Spieler mit der Farbe: " + getAmZug() +
 				// " ist nun am Zug.");
-				//s
+				// s
 				return true;
 			}
 			if (zugPruefen == 2) {
 				figurSchlagen(startC, startI, endC, endI);
 				if (moeglicheZuegeStartposition(endC, endI)[1] == 0) {
-					
+
 					dameWerden();
 					//
 					// zugBeenden();
-					// System.out.println("Der Spieler mit der Farbe: " + getAmZug() + " ist nun am Zug.");
+					// System.out.println("Der Spieler mit der Farbe: " + getAmZug() +
+					// " ist nun am Zug.");
 					//
 					return true;
 				}
-				
-//geschlagen true braucht eigene methode
-				
+
+				// geschlagen true braucht eigene methode
+
 				// if (geschlagen == true) {
 				// if (moeglicheZuegeStartposition(endC, endI)[1] != 0) {
 				// System.out.println("Weiterziehen (w) oder beenden (b)?");
@@ -1762,4 +1763,7 @@ public class Spiel implements iBediener, Serializable {
 		}
 	}
 
+	public Spielbrett getBrett() {
+		return this.brett;
+	}
 }

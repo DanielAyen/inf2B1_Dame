@@ -47,13 +47,15 @@ public class EventHandler implements ActionListener {
 			// (Pattern.matches("[a-l A-L]\\d[-][a-l A-L]\\d\\d", eingabe))) {
 			// gui.log("jup");
 			// }
-			
+
 			// a=buchstabe X=zahl X=1-9 XX=1 0-2
-			//aX-aX aXX-aXX aX-aXX aXX-aX
+			// aX-aX aXX-aXX aX-aXX aXX-aX
 			if ((Pattern.matches("[a-l A-L][1-9][-][a-l A-L][1-9]", eingabe)) || (Pattern.matches("[a-l A-L][1][0-2][-][a-l A-L][1][0-2]", eingabe)) || (Pattern.matches("[a-l A-L][1][0-2][-][a-l A-L][1-9]", eingabe)) || (Pattern.matches("[a-l A-L][1-9][-][a-l A-L][1][0-2]", eingabe))) {
 				gui.log("jup");
+				gui.getBefehlFeld().setText("");
 			} else {
 				gui.log("nop");
+				gui.getBefehlFeld().setText("");
 			}
 
 			break;
@@ -135,9 +137,10 @@ public class EventHandler implements ActionListener {
 					gui.log("Bitte Farbe Wählen");
 				}
 			}
+			gui.steineErstellen(farbe);
 
 			break;
-			
+
 		case "Anzeigen":
 			gui.hilfeAnz();
 			break;
