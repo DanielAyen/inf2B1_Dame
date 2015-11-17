@@ -71,9 +71,10 @@ public class GUI extends JFrame {
 
 	ImageIcon damew = new ImageIcon("Bilder//FeldSDameW.png");
 	ImageIcon dames = new ImageIcon("Bilder//FeldSDameS.png");
-/**
- * Konstruktor für die GUI
- */
+
+	/**
+	 * Konstruktor für die GUI
+	 */
 	public GUI() {
 		super();
 
@@ -81,10 +82,12 @@ public class GUI extends JFrame {
 
 		spielAnzeigen();
 	}
-/**
- * zum aufbauen der variablen größe //UNBENUTZT
- * @return true oder false
- */
+
+	/**
+	 * zum aufbauen der variablen größe //UNBENUTZT
+	 * 
+	 * @return true oder false
+	 */
 	public boolean spielAufbauen() {
 		if (aufbaucnt != 0) {
 			aufbaucnt--;
@@ -151,9 +154,10 @@ public class GUI extends JFrame {
 		brettFrame.setVisible(true);
 		return true;
 	}
-/**
- * spieler erstellen fenster
- */
+
+	/**
+	 * spieler erstellen fenster
+	 */
 	public void spielerErstellen() {
 		befehlFeld.setText("");
 		JButton button02 = new JButton("OK");
@@ -208,9 +212,10 @@ public class GUI extends JFrame {
 
 		spielerFrame.setVisible(true);
 	}
-/**
- * baut das brett auf un zeigt alles an
- */
+
+	/**
+	 * baut das brett auf un zeigt alles an
+	 */
 	public void spielAnzeigen() {
 		// LOGGER PANE HINTERGRUND LIGHT_GRAY
 		logger.setBackground(Color.LIGHT_GRAY);
@@ -245,7 +250,7 @@ public class GUI extends JFrame {
 		JPanel befehlPanel = new JPanel(new GridLayout(2, 1));
 		//
 		befehlPanel.add(befehlFeld);
-		
+
 		//
 		JTextField fuellFeld3 = new JTextField("");
 		befehlPanel.add(fuellFeld3);
@@ -279,11 +284,12 @@ public class GUI extends JFrame {
 		hauptf.setVisible(true);
 		hauptf.setResizable(false);
 		// addComponentsToPane(hauptf.getContentPane());
-		
+
 	}
-/**
- * baut die buttons auf
- */
+
+	/**
+	 * baut die buttons auf
+	 */
 	public void feldButtons() {
 
 		boolean ss = true;
@@ -315,10 +321,13 @@ public class GUI extends JFrame {
 		}
 
 	}
-/**
- * erstellt die steine
- * @param farbe erstellt die steine der bestimmten farbe
- */
+
+	/**
+	 * erstellt die steine
+	 * 
+	 * @param farbe
+	 *          erstellt die steine der bestimmten farbe
+	 */
 	public void steineErstellen(FarbEnum farbe) {
 		Spielbrett brett = s.getBrett();
 
@@ -360,10 +369,12 @@ public class GUI extends JFrame {
 		}
 		hauptf.repaint();
 	}
-/**
- * baut die menuebar
- * @return
- */
+
+	/**
+	 * baut die menuebar
+	 * 
+	 * @return
+	 */
 	protected MenuBar getMenuOben() {
 		MenuBar menueLeiste = new MenuBar();
 		Menu spiel = new Menu("Spiel"); // erster Knopf
@@ -400,13 +411,14 @@ public class GUI extends JFrame {
 
 		return menueLeiste;
 	}
-/**
- * zeigt ein hilfefenster
- */
+
+	/**
+	 * zeigt ein hilfefenster
+	 */
 	public void hilfeAnz() {
-		s.getBrett().getBrettFeldIndex(4, 4).getSpielfigur().setDame(true);
 		helpframe = new JFrame("Hilfe");
-		helptxt = new JTextArea("Um ein neues Spiel zu erstellen, müssen sie im Menu Spiel die Funktion Neues Spiel erstellen wählen  \nAnschließend werden sie aufgefordert zwei Spieler zu erstellen.\n Ein Spieler braucht einen Namen und eine Farbe. Sie können zwischen den Farben Schwarz und Weiß wählen.\nSobald Beide Spieler erstellt wurden, beginnt das Spiel.\nUm einen Stein zu bewegen, geben sie die zu erst die Startposition ein und dann die Endposition, z.B. B8-C7");
+		helptxt = new JTextArea(
+				"Um ein neues Spiel zu erstellen, müssen sie im Menu Spiel die Funktion Neues Spiel erstellen wählen  \nAnschließend werden sie aufgefordert zwei Spieler zu erstellen.\n Ein Spieler braucht einen Namen und eine Farbe. Sie können zwischen den Farben Schwarz und Weiß wählen.\nSobald Beide Spieler erstellt wurden, beginnt das Spiel.\nUm einen Stein zu bewegen, geben sie die zu erst die Startposition ein und dann die Endposition, z.B. B8-C7");
 		helptxt.setEditable(false);
 		helppanel = new JPanel();
 		helppanel.setLayout(new GridLayout(1, 1));
@@ -417,7 +429,6 @@ public class GUI extends JFrame {
 		helpframe.setContentPane(helppanel);
 		helpframe.pack();
 		helpframe.setVisible(true);
-
 
 		helpframe.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
@@ -457,10 +468,12 @@ public class GUI extends JFrame {
 		return java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().width;
 
 	}
-/**
- * bildschirmhöhe
- * @return
- */
+
+	/**
+	 * bildschirmhöhe
+	 * 
+	 * @return
+	 */
 	public static int GetScreenWorkingHeight() {
 		return java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
 	}
@@ -468,26 +481,32 @@ public class GUI extends JFrame {
 	// /////////////////////////////////////////
 	/**
 	 * übergibt an spiel
-	 * @param x größe
+	 * 
+	 * @param x
+	 *          größe
 	 */
 	public void aufbauen(int x) {
 		s.aufbauen(x);
 	}
-/**
- * übergibt den spieler
- * @param name
- * @param farbe
- * @param istKi
- */
+
+	/**
+	 * übergibt den spieler
+	 * 
+	 * @param name
+	 * @param farbe
+	 * @param istKi
+	 */
 	public void spielerWeitergeben(String name, FarbEnum farbe, boolean istKi) {
 		s.spielerErstellen(name, farbe, istKi);
 
 	}
-/**
- * gibt die pos weiter
- * @param startp
- * @param endp
- */
+
+	/**
+	 * gibt die pos weiter
+	 * 
+	 * @param startp
+	 * @param endp
+	 */
 	public void posWeitergeben(String startp, String endp) {// Zug/ziehen/bewegen/..
 
 		int startC = s.wandleUmvString(startp)[0];
@@ -503,9 +522,9 @@ public class GUI extends JFrame {
 			log("Startposition: " + startp + " Endposition: " + endp);
 
 			figSetIcon(startC, startI, endC, endI);
-			if(s.getAmZug()== FarbEnum.SCHWARZ){
+			if (s.getAmZug() == FarbEnum.SCHWARZ) {
 				log("Schwarz am Zug");
-			}else{
+			} else {
 				log("Weiß am Zug");
 			}
 		} else {
@@ -563,11 +582,13 @@ public class GUI extends JFrame {
 			}
 		}
 	}
-/**
- * dame icon setzen
- * @param x
- * @param y
- */
+
+	/**
+	 * dame icon setzen
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	public void iconSetDame(int x, int y) {
 		if (s.getBrett().getBrettFeldIndex(x, y).getSpielfigur().getFarbe() == FarbEnum.SCHWARZ) {
 			// TODO
@@ -579,18 +600,21 @@ public class GUI extends JFrame {
 
 		}
 	}
-/**
- * feld setzten
- * @param x
- * @param y
- */
+
+	/**
+	 * feld setzten
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	public void iconSetFeld(int x, int y) {
 		buttonArray[x][y].setIcon(felds);
 
 	}
-/**
- * starten weitergeben
- */
+
+	/**
+	 * starten weitergeben
+	 */
 	public void startenWeitergeben() {
 		spCnt++;
 		if (spCnt == 2) {
@@ -608,90 +632,113 @@ public class GUI extends JFrame {
 	}
 
 	// ///////GETTER UND SETTER ////////////////
-/**
- * getter acht
- * @return
- */
+	/**
+	 * getter acht
+	 * 
+	 * @return
+	 */
 	public JRadioButton getAcht() {
 		return Acht;
 	}
-/**
- * getter zehn
- * @return
- */
+
+	/**
+	 * getter zehn
+	 * 
+	 * @return
+	 */
 	public JRadioButton getZehn() {
 		return Zehn;
 	}
-/**
- * getter zwölf
- * @return
- */
+
+	/**
+	 * getter zwölf
+	 * 
+	 * @return
+	 */
 	public JRadioButton getZwölf() {
 		return Zwölf;
 	}
-/**
- * get brett
- * @return
- */
+
+	/**
+	 * get brett
+	 * 
+	 * @return
+	 */
 	public JFrame getBrettFrame() {
 		return brettFrame;
 	}
-/**
- * get name
- * @return
- */
+
+	/**
+	 * get name
+	 * 
+	 * @return
+	 */
 	public JTextField getNameFeld() {
 		return nameFeld;
 	}
-/**
- * get feld
- * @return
- */
+
+	/**
+	 * get feld
+	 * 
+	 * @return
+	 */
 	public JTextField getBefehlFeld() {
 		return befehlFeld;
 	}
-/**
- * get schwarz
- * @return
- */
+
+	/**
+	 * get schwarz
+	 * 
+	 * @return
+	 */
 	public JRadioButton getSchwarz() {
 		return Schwarz;
 	}
-/**
- * get weiß
- * @return
- */
+
+	/**
+	 * get weiß
+	 * 
+	 * @return
+	 */
 	public JRadioButton getWeiß() {
 		return Weiß;
 	}
-/**
- * get mensch
- * @return
- */
+
+	/**
+	 * get mensch
+	 * 
+	 * @return
+	 */
 	public JRadioButton getMensch() {
 
 		return Mensch;
 	}
-/**
- * get ki
- * @return
- */
+
+	/**
+	 * get ki
+	 * 
+	 * @return
+	 */
 	public JRadioButton getKi() {
 
 		return Ki;
 	}
-/**
- * get frame
- * @return
- */
+
+	/**
+	 * get frame
+	 * 
+	 * @return
+	 */
 	public JFrame getSpielerFrame() {
 
 		return spielerFrame;
 	}
-/**
- * get ziehen
- * @return
- */
+
+	/**
+	 * get ziehen
+	 * 
+	 * @return
+	 */
 	public JButton getZiehen() {
 
 		return ziehen;
