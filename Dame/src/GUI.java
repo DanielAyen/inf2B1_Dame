@@ -566,7 +566,7 @@ public class GUI extends JFrame {
 					if (!s.getBrett().getBrettFeldIndex(zeile, spalte).getIstBelegt()) {
 
 						iconSetFeld(zeile, spalte);
-						log("Figur geschlagen");
+
 
 					} else {
 						Spielfigur temp = s.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur();
