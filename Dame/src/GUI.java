@@ -77,6 +77,10 @@ public class GUI extends JFrame {
 	ImageIcon damew = new ImageIcon("Bilder//FeldSDameW.png");
 	ImageIcon dames = new ImageIcon("Bilder//FeldSDameS.png");
 
+	ImageIcon gruensteins = new ImageIcon("Bilder//FeldSSteinS2Gruen.png");
+
+	// ImageIcon greundames = new ImageIcon("Bilder//FeldSDameS.png");
+
 	/**
 	 * Konstruktor für die GUI
 	 */
@@ -543,6 +547,8 @@ public class GUI extends JFrame {
 			log("Startposition: " + startp + " Endposition: " + endp);
 
 			figSetIcon(startC, startI, endC, endI);
+			highlight(s.getAmZug());
+
 			if (s.getAmZug() == FarbEnum.SCHWARZ) {
 				log("Schwarz am Zug");
 				changeColors();
@@ -555,13 +561,52 @@ public class GUI extends JFrame {
 		}
 	}
 
+	private void highlight(FarbEnum amZug) {
+
+		for (int zeile = buttonArray.length - 1; zeile >= 0; zeile--) {
+			for (int spalte = 0; spalte <= buttonArray[zeile].length - 1; spalte++) {
+
+				if (s.getBrett().getBrettFeldIndex(zeile, spalte).getIstBelegt() && s.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur().getFarbe() == s.getAmZug()) {
+					if(s.getAmZug()==FarbEnum.SCHWARZ){
+						buttonArray[zeile][spalte].setIcon(gruensteins);
+					}else{
+						
+					//	buttonArray[zeile][spalte].setIcon(gruensteinw);
+						
+					}
+					
+
+				} else {
+					FarbEnum farbe = FarbEnum.SCHWARZ;
+
+					if (s.getBrett().getBrettFeldIndex(zeile, spalte).getIstSchwarz()) {
+
+						if (s.getBrett().getBrettFeldIndex(zeile, spalte).getIstBelegt()) {
+							if (s.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur().getFarbe() == farbe) {
+
+								buttonArray[zeile][spalte].setIcon(figurs);
+
+							} else {
+
+								buttonArray[zeile][spalte].setIcon(figurw);
+
+							}
+						}
+					}
+				}
+
+			}
+		}
+
+	}
+
 	public void changeColors() {
 
 		if (fuellFeld2.getBackground() == Color.GREEN) {
 
 			fuellFeld2.setBackground(Color.RED);
 			fuellFeldx.setBackground(Color.GREEN);
-		}else{
+		} else {
 			fuellFeld2.setBackground(Color.GREEN);
 			fuellFeldx.setBackground(Color.RED);
 		}
