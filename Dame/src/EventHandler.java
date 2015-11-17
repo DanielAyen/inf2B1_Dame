@@ -24,9 +24,10 @@ public class EventHandler implements ActionListener {
 		this.gui = gui;
 
 	}
-/**
- * Der action Listener verarbeitet alle aktionen
- */
+
+	/**
+	 * Der action Listener verarbeitet alle aktionen
+	 */
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		// try {
@@ -35,12 +36,10 @@ public class EventHandler implements ActionListener {
 		case "Ziehen":
 			String eingabe = gui.getBefehlFeld().getText();
 
-
-
 			// a=buchstabe X=zahl X=1-9 XX=1 0-2
 			// aX-aX aXX-aXX aX-aXX aXX-aX
 			if ((Pattern.matches("[a-l A-L][1-9][-][a-l A-L][1-9]", eingabe)) || (Pattern.matches("[a-l A-L][1][0-2][-][a-l A-L][1][0-2]", eingabe)) || (Pattern.matches("[a-l A-L][1][0-2][-][a-l A-L][1-9]", eingabe)) || (Pattern.matches("[a-l A-L][1-9][-][a-l A-L][1][0-2]", eingabe))) {
-				gui.log("jup");
+				gui.log("Korrekte Eingabe ( " + eingabe + " ) ");
 				String[] list = eingabe.split("-");
 
 				gui.posWeitergeben(list[0], list[1]);
@@ -48,7 +47,7 @@ public class EventHandler implements ActionListener {
 
 			} else {
 
-				gui.log("nop");
+				gui.log("Inkorrekte Eingabe");
 				gui.getBefehlFeld().setText("");
 			}
 

@@ -53,7 +53,7 @@ public class GUI extends JFrame {
 	private JRadioButton Mensch;
 	private JRadioButton Ki;
 	private JTextField nameFeld;
-	private JTextField befehlFeld = new JTextField("12345678912345678912345");// 12345678912345678912345678912345678912345
+	private JTextField befehlFeld = new JTextField("                                                 ");// 12345678912345678912345678912345678912345
 	private Spiel s = new Spiel();
 	private int aufbaucnt = 1;
 	private JFrame helpframe;
@@ -71,7 +71,9 @@ public class GUI extends JFrame {
 
 	ImageIcon damew = new ImageIcon("Bilder//FeldSDameW.png");
 	ImageIcon dames = new ImageIcon("Bilder//FeldSDameS.png");
-
+/**
+ * Konstruktor für die GUI
+ */
 	public GUI() {
 		super();
 
@@ -79,7 +81,10 @@ public class GUI extends JFrame {
 
 		spielAnzeigen();
 	}
-
+/**
+ * zum aufbauen der variablen größe //UNBENUTZT
+ * @return true oder false
+ */
 	public boolean spielAufbauen() {
 		if (aufbaucnt != 0) {
 			aufbaucnt--;
@@ -146,9 +151,11 @@ public class GUI extends JFrame {
 		brettFrame.setVisible(true);
 		return true;
 	}
-
+/**
+ * spieler erstellen fenster
+ */
 	public void spielerErstellen() {
-
+		befehlFeld.setText("");
 		JButton button02 = new JButton("OK");
 		spielerFrame = new JFrame("Spieler erstellen");
 		spielerFrame.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -201,7 +208,9 @@ public class GUI extends JFrame {
 
 		spielerFrame.setVisible(true);
 	}
-
+/**
+ * baut das brett auf un zeigt alles an
+ */
 	public void spielAnzeigen() {
 		// LOGGER PANE HINTERGRUND LIGHT_GRAY
 		logger.setBackground(Color.LIGHT_GRAY);
@@ -236,6 +245,7 @@ public class GUI extends JFrame {
 		JPanel befehlPanel = new JPanel(new GridLayout(2, 1));
 		//
 		befehlPanel.add(befehlFeld);
+		
 		//
 		JTextField fuellFeld3 = new JTextField("");
 		befehlPanel.add(fuellFeld3);
@@ -269,8 +279,11 @@ public class GUI extends JFrame {
 		hauptf.setVisible(true);
 		hauptf.setResizable(false);
 		// addComponentsToPane(hauptf.getContentPane());
+		
 	}
-
+/**
+ * baut die buttons auf
+ */
 	public void feldButtons() {
 
 		boolean ss = true;
@@ -302,7 +315,10 @@ public class GUI extends JFrame {
 		}
 
 	}
-
+/**
+ * erstellt die steine
+ * @param farbe erstellt die steine der bestimmten farbe
+ */
 	public void steineErstellen(FarbEnum farbe) {
 		Spielbrett brett = s.getBrett();
 
@@ -344,7 +360,10 @@ public class GUI extends JFrame {
 		}
 		hauptf.repaint();
 	}
-
+/**
+ * baut die menuebar
+ * @return
+ */
 	protected MenuBar getMenuOben() {
 		MenuBar menueLeiste = new MenuBar();
 		Menu spiel = new Menu("Spiel"); // erster Knopf
@@ -381,7 +400,9 @@ public class GUI extends JFrame {
 
 		return menueLeiste;
 	}
-
+/**
+ * zeigt ein hilfefenster
+ */
 	public void hilfeAnz() {
 		helpframe = new JFrame("Hilfe");
 		helptxt = new JTextArea("Um ein neues Spiel zu erstellen, müssen sie im Menu Spiel die Funktion Neues Spiel erstellen wählen  \nGeben sie nun die gewünschte Spielfeld größe ein. Sie haben die wahl zwischen 8x8, 10x10 und 12x12 Spielfeldern");
@@ -396,7 +417,6 @@ public class GUI extends JFrame {
 		helpframe.pack();
 		helpframe.setVisible(true);
 
-		s.getBrett().getBrettFeldIndex(4, 4).getSpielfigur().setDame(true);
 
 		helpframe.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
@@ -436,21 +456,37 @@ public class GUI extends JFrame {
 		return java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().width;
 
 	}
-
+/**
+ * bildschirmhöhe
+ * @return
+ */
 	public static int GetScreenWorkingHeight() {
 		return java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
 	}
 
 	// /////////////////////////////////////////
+	/**
+	 * übergibt an spiel
+	 * @param x größe
+	 */
 	public void aufbauen(int x) {
 		s.aufbauen(x);
 	}
-
+/**
+ * übergibt den spieler
+ * @param name
+ * @param farbe
+ * @param istKi
+ */
 	public void spielerWeitergeben(String name, FarbEnum farbe, boolean istKi) {
 		s.spielerErstellen(name, farbe, istKi);
 
 	}
-
+/**
+ * gibt die pos weiter
+ * @param startp
+ * @param endp
+ */
 	public void posWeitergeben(String startp, String endp) {// Zug/ziehen/bewegen/..
 
 		int startC = s.wandleUmvString(startp)[0];
@@ -521,7 +557,11 @@ public class GUI extends JFrame {
 			}
 		}
 	}
-
+/**
+ * dame icon setzen
+ * @param x
+ * @param y
+ */
 	public void iconSetDame(int x, int y) {
 		if (s.getBrett().getBrettFeldIndex(x, y).getSpielfigur().getFarbe() == FarbEnum.SCHWARZ) {
 			// TODO
@@ -533,12 +573,18 @@ public class GUI extends JFrame {
 
 		}
 	}
-
+/**
+ * feld setzten
+ * @param x
+ * @param y
+ */
 	public void iconSetFeld(int x, int y) {
 		buttonArray[x][y].setIcon(felds);
 
 	}
-
+/**
+ * starten weitergeben
+ */
 	public void startenWeitergeben() {
 		spCnt++;
 		if (spCnt == 2) {
@@ -556,54 +602,90 @@ public class GUI extends JFrame {
 	}
 
 	// ///////GETTER UND SETTER ////////////////
-
+/**
+ * getter acht
+ * @return
+ */
 	public JRadioButton getAcht() {
 		return Acht;
 	}
-
+/**
+ * getter zehn
+ * @return
+ */
 	public JRadioButton getZehn() {
 		return Zehn;
 	}
-
+/**
+ * getter zwölf
+ * @return
+ */
 	public JRadioButton getZwölf() {
 		return Zwölf;
 	}
-
+/**
+ * get brett
+ * @return
+ */
 	public JFrame getBrettFrame() {
 		return brettFrame;
 	}
-
+/**
+ * get name
+ * @return
+ */
 	public JTextField getNameFeld() {
 		return nameFeld;
 	}
-
+/**
+ * get feld
+ * @return
+ */
 	public JTextField getBefehlFeld() {
 		return befehlFeld;
 	}
-
+/**
+ * get schwarz
+ * @return
+ */
 	public JRadioButton getSchwarz() {
 		return Schwarz;
 	}
-
+/**
+ * get weiß
+ * @return
+ */
 	public JRadioButton getWeiß() {
 		return Weiß;
 	}
-
+/**
+ * get mensch
+ * @return
+ */
 	public JRadioButton getMensch() {
 
 		return Mensch;
 	}
-
+/**
+ * get ki
+ * @return
+ */
 	public JRadioButton getKi() {
 
 		return Ki;
 	}
-
+/**
+ * get frame
+ * @return
+ */
 	public JFrame getSpielerFrame() {
 
 		return spielerFrame;
 	}
-
+/**
+ * get ziehen
+ * @return
+ */
 	public JButton getZiehen() {
 
 		return ziehen;
