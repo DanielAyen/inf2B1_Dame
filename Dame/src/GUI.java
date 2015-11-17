@@ -8,6 +8,8 @@ import java.awt.Insets;
 import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -297,6 +299,19 @@ public class GUI extends JFrame {
 				buttonArray[zeile][spalte] = new JButton("");
 				buttonArray[zeile][spalte].setMargin(new Insets(0, 0, 0, 0));
 				buttonArray[zeile][spalte].setSize(20, 20);
+				
+				String id = "" + (char) (65 + spalte) + (zeile + 1);
+				buttonArray[zeile][spalte].setToolTipText(id);
+				
+//				buttonArray[zeile][spalte].addMouseListener(new MouseAdapter() {
+//					
+//          @Override
+//          public void mouseEntered(MouseEvent me) {
+//             	log("suck ");
+//              
+//          }
+//      });
+				
 				// TODO
 				// buttonArray[i][j].addActionListener(eh);
 				// //////// MUSS WIEDER REIN WENN ÜBER BUTTON DRUCK!!
