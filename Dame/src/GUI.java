@@ -264,6 +264,8 @@ public class GUI extends JFrame {
 	}
 
 	public void feldButtons() {
+		ImageIcon felds = new ImageIcon("Bilder//felds.png");
+		ImageIcon feldw = new ImageIcon("Bilder//feldw.png");
 		boolean ss = false;
 		int cnt = 0;
 		for (int i = 0; i < buttonArray.length; i++) {
@@ -278,10 +280,11 @@ public class GUI extends JFrame {
 
 				cnt++;
 				if (ss == false) {
-					buttonArray[i][j].setBackground(Color.white);
+
+					buttonArray[i][j].setIcon(feldw);
 
 				} else {
-					buttonArray[i][j].setBackground(Color.black);
+					buttonArray[i][j].setIcon(felds);
 				}
 				ss = !ss;
 				if (cnt == 12) {
@@ -295,8 +298,8 @@ public class GUI extends JFrame {
 
 	public void steineErstellen(FarbEnum farbe) {
 		Spielbrett brett = s.getBrett();
-		ImageIcon figurs = new ImageIcon("Bilder//schwarz.png");
-		ImageIcon figurw = new ImageIcon("Bilder//weiss.png");
+		ImageIcon figurs = new ImageIcon("Bilder//FeldSSteinS.png");
+		ImageIcon figurw = new ImageIcon("Bilder//FeldSSteinW.png");
 		if (farbe == FarbEnum.SCHWARZ) {
 
 			for (int i = 0; i < brett.getBrettGroesse(); i++) {
