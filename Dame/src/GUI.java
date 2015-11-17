@@ -65,6 +65,9 @@ public class GUI extends JFrame {
 	private int spCnt = 0;
 	Spielfigur fig;
 
+	JTextField fuellFeldx;
+	JTextField fuellFeld2;
+
 	ImageIcon felds = new ImageIcon("Bilder//felds.png");
 	ImageIcon feldw = new ImageIcon("Bilder//feldw.png");
 
@@ -243,8 +246,6 @@ public class GUI extends JFrame {
 			}
 		}
 
-
-
 		hauptf.add(hauptp, BorderLayout.CENTER);
 		// rechte seite
 		JPanel befehlPanel = new JPanel(new GridLayout(2, 1));
@@ -272,12 +273,19 @@ public class GUI extends JFrame {
 		//
 
 		// Linke seite
-		JTextField fuellFeld2 = new JTextField("                                                                                  ");// "12345678912345678912345678912345678912345"
+		fuellFeld2 = new JTextField("                                                                                  ");// "12345678912345678912345678912345678912345"
 		fuellFeld2.setEnabled(false);
 		fuellFeld2.setBackground(Color.LIGHT_GRAY);
 		fuellFeld2.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		JPanel linksPanel = new JPanel(new GridLayout());
+
+		fuellFeldx = new JTextField("                                                                                  ");// "12345678912345678912345678912345678912345"
+		fuellFeldx.setEnabled(false);
+		fuellFeldx.setBackground(Color.LIGHT_GRAY);
+		fuellFeldx.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		JPanel linksPanel = new JPanel(new GridLayout(2, 0));
 		linksPanel.add(fuellFeld2);
+		linksPanel.add(fuellFeldx);
+
 		hauptf.add(linksPanel, BorderLayout.WEST);
 		//
 		hauptf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -299,19 +307,19 @@ public class GUI extends JFrame {
 				buttonArray[zeile][spalte] = new JButton("");
 				buttonArray[zeile][spalte].setMargin(new Insets(0, 0, 0, 0));
 				buttonArray[zeile][spalte].setSize(20, 20);
-				
+
 				String id = "" + (char) (65 + spalte) + (zeile + 1);
 				buttonArray[zeile][spalte].setToolTipText(id);
-				
-//				buttonArray[zeile][spalte].addMouseListener(new MouseAdapter() {
-//					
-//          @Override
-//          public void mouseEntered(MouseEvent me) {
-//             	log("suck ");
-//              
-//          }
-//      });
-				
+
+				// buttonArray[zeile][spalte].addMouseListener(new MouseAdapter() {
+				//
+				// @Override
+				// public void mouseEntered(MouseEvent me) {
+				// log("suck ");
+				//
+				// }
+				// });
+
 				// TODO
 				// buttonArray[i][j].addActionListener(eh);
 				// //////// MUSS WIEDER REIN WENN ÜBER BUTTON DRUCK!!
@@ -537,11 +545,25 @@ public class GUI extends JFrame {
 			figSetIcon(startC, startI, endC, endI);
 			if (s.getAmZug() == FarbEnum.SCHWARZ) {
 				log("Schwarz am Zug");
+				changeColors();
 			} else {
 				log("Weiß am Zug");
+				changeColors();
 			}
 		} else {
 			log("Dieser Zug war nicht möglich");
+		}
+	}
+
+	public void changeColors() {
+
+		if (fuellFeld2.getBackground() == Color.GREEN) {
+
+			fuellFeld2.setBackground(Color.RED);
+			fuellFeldx.setBackground(Color.GREEN);
+		}else{
+			fuellFeld2.setBackground(Color.GREEN);
+			fuellFeldx.setBackground(Color.RED);
 		}
 	}
 
@@ -566,7 +588,6 @@ public class GUI extends JFrame {
 					if (!s.getBrett().getBrettFeldIndex(zeile, spalte).getIstBelegt()) {
 
 						iconSetFeld(zeile, spalte);
-
 
 					} else {
 						Spielfigur temp = s.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur();
@@ -637,7 +658,8 @@ public class GUI extends JFrame {
 			s.starten();
 			log("Das Spiel beginnt.");
 			log("Der Spieler mit der farbe: " + s.getAmZug() + " beginnt.");
-
+			fuellFeld2.setBackground(Color.GREEN);
+			fuellFeldx.setBackground(Color.RED);
 		} else {
 
 		}
