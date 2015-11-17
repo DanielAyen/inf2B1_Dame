@@ -404,6 +404,7 @@ public class GUI extends JFrame {
  * zeigt ein hilfefenster
  */
 	public void hilfeAnz() {
+		s.getBrett().getBrettFeldIndex(4, 4).getSpielfigur().setDame(true);
 		helpframe = new JFrame("Hilfe");
 		helptxt = new JTextArea("Um ein neues Spiel zu erstellen, müssen sie im Menu Spiel die Funktion Neues Spiel erstellen wählen  \nAnschließend werden sie aufgefordert zwei Spieler zu erstellen.\n Ein Spieler braucht einen Namen und eine Farbe. Sie können zwischen den Farben Schwarz und Weiß wählen.\nSobald Beide Spieler erstellt wurden, beginnt das Spiel.\nUm einen Stein zu bewegen, geben sie die zu erst die Startposition ein und dann die Endposition, z.B. B8-C7");
 		helptxt.setEditable(false);
