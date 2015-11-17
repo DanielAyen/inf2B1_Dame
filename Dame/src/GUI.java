@@ -206,7 +206,7 @@ public class GUI extends JFrame {
 		panel02.add(Mensch);
 		panel02.add(Ki);
 
-		Ki.setEnabled(false);// KI ZZ nicht möglich!
+		Ki.setEnabled(false);// KI ZZ nicht möglich!//TODO
 
 		panel02.add(button02, BorderLayout.SOUTH);
 
@@ -241,9 +241,7 @@ public class GUI extends JFrame {
 			}
 		}
 
-		// TODO
-		// TODO
-		// TODO
+
 
 		hauptf.add(hauptp, BorderLayout.CENTER);
 		// rechte seite
