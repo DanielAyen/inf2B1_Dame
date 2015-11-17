@@ -61,10 +61,16 @@ public class GUI extends JFrame {
 	private JPanel helppanel;
 	private JButton ziehen;
 	private int spCnt = 0;
+	Spielfigur fig;
 
-	// DEX IST DAFÜR DA UM DAS BRETT RICHTIG DARZUSTELLEN BSP [i][j+DEX] IMMER
-	// DEX DRAUF RECHNEN
-	private final int dex = 11;
+	ImageIcon felds = new ImageIcon("Bilder//felds.png");
+	ImageIcon feldw = new ImageIcon("Bilder//feldw.png");
+
+	ImageIcon figurs = new ImageIcon("Bilder//FeldSSteinS.png");
+	ImageIcon figurw = new ImageIcon("Bilder//FeldSSteinW.png");
+
+	ImageIcon damew = new ImageIcon("Bilder//FeldSDameW.png");
+	ImageIcon dames = new ImageIcon("Bilder//FeldSDameS.png");
 
 	public GUI() {
 		super();
@@ -189,6 +195,8 @@ public class GUI extends JFrame {
 		panel02.add(Mensch);
 		panel02.add(Ki);
 
+		Ki.setEnabled(false);// KI ZZ nicht möglich!
+
 		panel02.add(button02, BorderLayout.SOUTH);
 
 		spielerFrame.setVisible(true);
@@ -213,9 +221,9 @@ public class GUI extends JFrame {
 		hauptf.setMenuBar(this.getMenuOben()); // erstellt Menue oben
 
 		feldButtons();// erstellt alle Buttons
-		for (int i = buttonArray.length - 1; i >= 0; i--) {
-			for (int j = buttonArray[i].length - 1; j >= 0; j--) {
-				hauptp.add(buttonArray[i][j]);
+		for (int zeile = buttonArray.length - 1; zeile >= 0; zeile--) {
+			for (int spalte = 0; spalte <= buttonArray[zeile].length - 1; spalte++) {
+				hauptp.add(buttonArray[zeile][spalte]);
 			}
 		}
 
@@ -264,15 +272,14 @@ public class GUI extends JFrame {
 	}
 
 	public void feldButtons() {
-		ImageIcon felds = new ImageIcon("Bilder//felds.png");
-		ImageIcon feldw = new ImageIcon("Bilder//feldw.png");
-		boolean ss = false;
+
+		boolean ss = true;
 		int cnt = 0;
-		for (int i = 0; i < buttonArray.length; i++) {
-			for (int j = 0; j < buttonArray[i].length; j++) {
-				buttonArray[i][j] = new JButton("");
-				buttonArray[i][j].setMargin(new Insets(0, 0, 0, 0));
-				buttonArray[i][j].setSize(20, 20);
+		for (int zeile = 0; zeile < buttonArray.length; zeile++) {
+			for (int spalte = 0; spalte < buttonArray[zeile].length; spalte++) {
+				buttonArray[zeile][spalte] = new JButton("");
+				buttonArray[zeile][spalte].setMargin(new Insets(0, 0, 0, 0));
+				buttonArray[zeile][spalte].setSize(20, 20);
 				// TODO
 				// buttonArray[i][j].addActionListener(eh);
 				// //////// MUSS WIEDER REIN WENN ÜBER BUTTON DRUCK!!
@@ -281,10 +288,10 @@ public class GUI extends JFrame {
 				cnt++;
 				if (ss == false) {
 
-					buttonArray[i][j].setIcon(feldw);
+					buttonArray[zeile][spalte].setIcon(feldw);
 
 				} else {
-					buttonArray[i][j].setIcon(felds);
+					buttonArray[zeile][spalte].setIcon(felds);
 				}
 				ss = !ss;
 				if (cnt == 12) {
@@ -298,8 +305,7 @@ public class GUI extends JFrame {
 
 	public void steineErstellen(FarbEnum farbe) {
 		Spielbrett brett = s.getBrett();
-		ImageIcon figurs = new ImageIcon("Bilder//FeldSSteinS.png");
-		ImageIcon figurw = new ImageIcon("Bilder//FeldSSteinW.png");
+
 		if (farbe == FarbEnum.SCHWARZ) {
 
 			for (int i = 0; i < brett.getBrettGroesse(); i++) {
@@ -310,11 +316,8 @@ public class GUI extends JFrame {
 						if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
 							if (brett.getBrettFeldIndex(i, j).getSpielfigur().getFarbe() == farbe) {
 
-								if (j + 1 < buttonArray.length) {
-									buttonArray[i][j + 1].setIcon(figurs);
-								} else {
-									buttonArray[i][0].setIcon(figurs);
-								}
+								buttonArray[i][j].setIcon(figurs);
+
 							}
 						}
 					}
@@ -330,11 +333,8 @@ public class GUI extends JFrame {
 						if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
 							if (brett.getBrettFeldIndex(i, j).getSpielfigur().getFarbe() == farbe) {
 
-								if (j + 1 < buttonArray.length) {
-									buttonArray[i][j + 1].setIcon(figurw);
-								} else {
-									buttonArray[i][0].setIcon(figurw);
-								}
+								buttonArray[i][j].setIcon(figurw);
+
 							}
 						}
 					}
@@ -396,6 +396,8 @@ public class GUI extends JFrame {
 		helpframe.pack();
 		helpframe.setVisible(true);
 
+		s.getBrett().getBrettFeldIndex(4, 4).getSpielfigur().setDame(true);
+
 		helpframe.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
@@ -451,8 +453,90 @@ public class GUI extends JFrame {
 
 	public void posWeitergeben(String startp, String endp) {// Zug/ziehen/bewegen/..
 
-		s.ziehen(startp, endp);
-		// icon gemäß zug ändern
+		int startC = s.wandleUmvString(startp)[0];
+		int startI = s.wandleUmvString(startp)[1];
+		int endC = s.wandleUmvString(endp)[0];
+		int endI = s.wandleUmvString(endp)[1];
+
+		if (s.getBrett().getBrettFeldIndex(startC, startI).getIstBelegt()) {
+			fig = s.getBrett().getBrettFeldIndex(startC, startI).getSpielfigur();
+		}
+		if (s.ziehen(startp, endp)) {
+
+			log("Startposition: " + startp + " Endposition: " + endp);
+
+			figSetIcon(startC, startI, endC, endI);
+		} else {
+			log("Dieser Zug war nicht möglich");
+		}
+	}
+
+	/**
+	 * alle leeren felder durchs backend werden leer gesetzt alle damen werden
+	 * geprüft und gesetzt
+	 * 
+	 * @param startC
+	 *          int
+	 * @param startI
+	 *          int
+	 * @param endC
+	 *          int
+	 * @param endI
+	 *          int
+	 */
+	public void figSetIcon(int startC, int startI, int endC, int endI) {
+
+		for (int zeile = buttonArray.length - 1; zeile >= 0; zeile--) {
+			for (int spalte = 0; spalte <= buttonArray[zeile].length - 1; spalte++) {
+				if (s.getBrett().getBrettFeldIndex(zeile, spalte).getIstSchwarz()) {
+					if (!s.getBrett().getBrettFeldIndex(zeile, spalte).getIstBelegt()) {
+
+						iconSetFeld(zeile, spalte);
+						log("Figur geschlagen");
+
+					} else {
+						Spielfigur temp = s.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur();
+						if (s.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur().getDame(temp)) {
+							iconSetDame(zeile, spalte);
+						}
+					}
+				}
+			}
+		}
+
+		iconSetFeld(startC, startI);
+
+		if (fig.getFarbe() == FarbEnum.SCHWARZ) {
+
+			buttonArray[endC][endI].setIcon(figurs);
+			if (fig.getDame(fig)) {
+				buttonArray[endC][endI].setIcon(dames);
+			}
+
+		} else {
+
+			buttonArray[endC][endI].setIcon(figurw);
+			if (fig.getDame(fig)) {
+				buttonArray[endC][endI].setIcon(damew);
+			}
+		}
+	}
+
+	public void iconSetDame(int x, int y) {
+		if (s.getBrett().getBrettFeldIndex(x, y).getSpielfigur().getFarbe() == FarbEnum.SCHWARZ) {
+			// TODO
+			buttonArray[x][y].setIcon(dames);
+
+		} else {
+
+			buttonArray[x][y].setIcon(damew);
+
+		}
+	}
+
+	public void iconSetFeld(int x, int y) {
+		buttonArray[x][y].setIcon(felds);
+
 	}
 
 	public void startenWeitergeben() {

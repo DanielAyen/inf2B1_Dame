@@ -6,6 +6,7 @@ public class EventHandler implements ActionListener {
 	private GUI gui;// kenntnisbeziehung herstellen!!!
 	private Spiel spiel;
 	private int i = 1;
+	private int anzahlSpiele = 0;
 
 	/**
 	 * 
@@ -23,7 +24,9 @@ public class EventHandler implements ActionListener {
 		this.gui = gui;
 
 	}
-
+/**
+ * Der action Listener verarbeitet alle aktionen
+ */
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		// try {
@@ -32,21 +35,7 @@ public class EventHandler implements ActionListener {
 		case "Ziehen":
 			String eingabe = gui.getBefehlFeld().getText();
 
-			// mit a-z xx
-			// if ((Pattern.matches("[A-Za-z]\\d[-][A-Za-z]\\d", eingabe)) ||
-			// (Pattern.matches("[A-Za-z]\\d\\d[-][A-Za-z]\\d\\d", eingabe)) ||
-			// (Pattern.matches("[A-Za-z]\\d\\[-][A-Za-z]\\d", eingabe)) ||
-			// (Pattern.matches("[A-Za-z]\\d[-][A-Za-z]\\d\\d", eingabe))) {
-			// gui.log("jup");
-			// }
 
-			// nur a-l xx
-			// if ((Pattern.matches("[a-l A-L]\\d[-][a-l A-L]\\d", eingabe)) ||
-			// (Pattern.matches("[a-l A-L]\\d\\d[-][a-l A-L]\\d\\d", eingabe)) ||
-			// (Pattern.matches("[a-l A-L]\\d\\[-][a-l A-L]\\d", eingabe)) ||
-			// (Pattern.matches("[a-l A-L]\\d[-][a-l A-L]\\d\\d", eingabe))) {
-			// gui.log("jup");
-			// }
 
 			// a=buchstabe X=zahl X=1-9 XX=1 0-2
 			// aX-aX aXX-aXX aX-aXX aXX-aX
@@ -66,8 +55,14 @@ public class EventHandler implements ActionListener {
 			break;
 
 		case "neues Spiel erstellen":
+			if (anzahlSpiele == 1) {
+				gui.log("Es läuft bereits ein Spiel (Ein neues Spiel zu erstellen solange ein anderes läuft kommt noch).");
+				break;
+			}
+			anzahlSpiele++;
 			// gui.spielAufbauen();
 			// anstatt größe wählbar zu machen erstmal nur 12x12
+
 			gui.aufbauen(12);
 			gui.spielerErstellen();
 			break;
@@ -134,8 +129,6 @@ public class EventHandler implements ActionListener {
 					gui.spielerWeitergeben(name, farbe, istKi);
 					gui.steineErstellen(farbe);
 
-				
-
 					if (istKi == false) {
 						gui.log("Ein Spieler mit dem Namen " + name + " und der Farbe " + farbe + " wurde erstellt.");
 					} else {
@@ -146,7 +139,7 @@ public class EventHandler implements ActionListener {
 					gui.log("Bitte Farbe Wählen");
 				}
 			}
-			 gui.startenWeitergeben();
+			gui.startenWeitergeben();
 			break;
 
 		case "Anzeigen":
