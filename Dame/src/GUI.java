@@ -74,10 +74,14 @@ public class GUI extends JFrame {
 	ImageIcon figurs = new ImageIcon("Bilder//FeldSSteinS.png");
 	ImageIcon figurw = new ImageIcon("Bilder//FeldSSteinW.png");
 
-	ImageIcon damew = new ImageIcon("Bilder//FeldSDameW.png");
-	ImageIcon dames = new ImageIcon("Bilder//FeldSDameS.png");
+	ImageIcon damew = new ImageIcon("Bilder//dameW.png");
+	ImageIcon dames = new ImageIcon("Bilder//dameS.png");
 
-	ImageIcon gruensteins = new ImageIcon("Bilder//FeldSSteinS2Gruen.png");
+	ImageIcon figurSG = new ImageIcon("Bilder//SteinSG.png");
+	ImageIcon figurWG = new ImageIcon("Bilder//SteinWG.png");
+
+	ImageIcon dameSG = new ImageIcon("Bilder//dameSG.png");
+	ImageIcon dameWG = new ImageIcon("Bilder//dameWG.png");
 
 	// ImageIcon greundames = new ImageIcon("Bilder//FeldSDameS.png");
 
@@ -384,7 +388,7 @@ public class GUI extends JFrame {
 							if (brett.getBrettFeldIndex(i, j).getSpielfigur().getFarbe() == farbe) {
 
 								buttonArray[i][j].setIcon(figurw);
-
+								buttonArray[i][j].setIcon(figurWG);
 							}
 						}
 					}
@@ -441,6 +445,9 @@ public class GUI extends JFrame {
 	 * zeigt ein hilfefenster
 	 */
 	public void hilfeAnz() {
+		s.getBrett().getBrettFeldIndex(7, 7).getSpielfigur().setDame(true);
+		s.getBrett().getBrettFeldIndex(4, 4).getSpielfigur().setDame(true);
+		
 		helpframe = new JFrame("Hilfe");
 		helptxt = new JTextArea(
 				"Um ein neues Spiel zu erstellen, müssen sie im Menu Spiel die Funktion Neues Spiel erstellen wählen  \nAnschließend werden sie aufgefordert zwei Spieler zu erstellen.\n Ein Spieler braucht einen Namen und eine Farbe. Sie können zwischen den Farben Schwarz und Weiß wählen.\nSobald Beide Spieler erstellt wurden, beginnt das Spiel.\nUm einen Stein zu bewegen, geben sie die zu erst die Startposition ein und dann die Endposition, z.B. B8-C7");
@@ -551,10 +558,12 @@ public class GUI extends JFrame {
 
 			if (s.getAmZug() == FarbEnum.SCHWARZ) {
 				log("Schwarz am Zug");
-				changeColors();
+//				changeColors();
+				hauptf.repaint();
 			} else {
 				log("Weiß am Zug");
-				changeColors();
+//				changeColors();
+				hauptf.repaint();
 			}
 		} else {
 			log("Dieser Zug war nicht möglich");
@@ -567,14 +576,21 @@ public class GUI extends JFrame {
 			for (int spalte = 0; spalte <= buttonArray[zeile].length - 1; spalte++) {
 
 				if (s.getBrett().getBrettFeldIndex(zeile, spalte).getIstBelegt() && s.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur().getFarbe() == s.getAmZug()) {
-					if(s.getAmZug()==FarbEnum.SCHWARZ){
-						buttonArray[zeile][spalte].setIcon(gruensteins);
-					}else{
-						
-					//	buttonArray[zeile][spalte].setIcon(gruensteinw);
-						
+					if (s.getAmZug() == FarbEnum.SCHWARZ) {
+
+						buttonArray[zeile][spalte].setIcon(figurSG);
+						if (s.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur().getDame(fig)) {
+							buttonArray[zeile][spalte].setIcon(dameSG);
+						}
+
+					} else {
+						if (s.getBrett().getBrettFeldIndex(zeile, spalte).getIstBelegt()) {
+							buttonArray[zeile][spalte].setIcon(figurWG);
+							if (s.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur().getDame(fig)) {
+								buttonArray[zeile][spalte].setIcon(dameWG);
+							}
+						}
 					}
-					
 
 				} else {
 					FarbEnum farbe = FarbEnum.SCHWARZ;
@@ -600,17 +616,17 @@ public class GUI extends JFrame {
 
 	}
 
-	public void changeColors() {
-
-		if (fuellFeld2.getBackground() == Color.GREEN) {
-
-			fuellFeld2.setBackground(Color.RED);
-			fuellFeldx.setBackground(Color.GREEN);
-		} else {
-			fuellFeld2.setBackground(Color.GREEN);
-			fuellFeldx.setBackground(Color.RED);
-		}
-	}
+//	public void changeColors() {
+//
+//		if (fuellFeld2.getBackground() == Color.GREEN) {
+//
+//			fuellFeld2.setBackground(Color.RED);
+//			fuellFeldx.setBackground(Color.GREEN);
+//		} else {
+//			fuellFeld2.setBackground(Color.GREEN);
+//			fuellFeldx.setBackground(Color.RED);
+//		}
+//	}
 
 	/**
 	 * alle leeren felder durchs backend werden leer gesetzt alle damen werden
@@ -703,8 +719,8 @@ public class GUI extends JFrame {
 			s.starten();
 			log("Das Spiel beginnt.");
 			log("Der Spieler mit der farbe: " + s.getAmZug() + " beginnt.");
-			fuellFeld2.setBackground(Color.GREEN);
-			fuellFeldx.setBackground(Color.RED);
+			fuellFeld2.setBackground(Color.LIGHT_GRAY);
+			fuellFeldx.setBackground(Color.LIGHT_GRAY);
 		} else {
 
 		}
