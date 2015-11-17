@@ -405,7 +405,7 @@ public class GUI extends JFrame {
  */
 	public void hilfeAnz() {
 		helpframe = new JFrame("Hilfe");
-		helptxt = new JTextArea("Um ein neues Spiel zu erstellen, müssen sie im Menu Spiel die Funktion Neues Spiel erstellen wählen  \nGeben sie nun die gewünschte Spielfeld größe ein. Sie haben die wahl zwischen 8x8, 10x10 und 12x12 Spielfeldern");
+		helptxt = new JTextArea("Um ein neues Spiel zu erstellen, müssen sie im Menu Spiel die Funktion Neues Spiel erstellen wählen  \nAnschließend werden sie aufgefordert zwei Spieler zu erstellen.\n Ein Spieler braucht einen Namen und eine Farbe. Sie können zwischen den Farben Schwarz und Weiß wählen.\nSobald Beide Spieler erstellt wurden, beginnt das Spiel.\nUm einen Stein zu bewegen, geben sie die zu erst die Startposition ein und dann die Endposition, z.B. B8-C7");
 		helptxt.setEditable(false);
 		helppanel = new JPanel();
 		helppanel.setLayout(new GridLayout(1, 1));
@@ -502,6 +502,11 @@ public class GUI extends JFrame {
 			log("Startposition: " + startp + " Endposition: " + endp);
 
 			figSetIcon(startC, startI, endC, endI);
+			if(s.getAmZug()== FarbEnum.SCHWARZ){
+				log("Schwarz am Zug");
+			}else{
+				log("Weiß am Zug");
+			}
 		} else {
 			log("Dieser Zug war nicht möglich");
 		}
