@@ -1037,7 +1037,7 @@ public class Spiel implements iBediener, Serializable {
 					case SCHWARZ:// müssen oben ankommen [8|10|12] 0|0=A1
 						// TODO schauen ob das für schwarz funktioniert oder ob
 						// es brettgroesse -1 heissen muss
-						if (x == brettgroesse)
+						if (x == brettgroesse-1)
 							fig.setDame(true);
 						break;
 					case WEIß:// müssen unten ankommen 0|0=A1
@@ -1947,6 +1947,7 @@ public class Spiel implements iBediener, Serializable {
 			if (zugPruefenKI == 2) {
 				figurSchlagen(zuge[0], zuge[1], zuge[2], zuge[3]);
 				setZugFurLog(zuge[0], zuge[1], zuge[2], zuge[3]);
+				dameWerden();
 				if (k1.hatGeschlagen()) {
 					int[] zugee = zuge;
 					do {
@@ -1964,6 +1965,7 @@ public class Spiel implements iBediener, Serializable {
 							if (zugdanachPruefenKI == 2) {
 								figurSchlagen(zugee[0], zugee[1], zugee[2], zugee[3]);
 								setZugFurLog(zugee[0], zugee[1], zugee[2], zugee[3]);
+								dameWerden();
 							}
 						}
 					} while (tmpZug != null);
@@ -1997,6 +1999,7 @@ public class Spiel implements iBediener, Serializable {
 			if (zugPruefenKI == 2) {
 				figurSchlagen(zuge[0], zuge[1], zuge[2], zuge[3]);
 				setZugFurLog(zuge[0], zuge[1], zuge[2], zuge[3]);
+				dameWerden();
 				if (k2.hatGeschlagen()) {
 					int[] zugee = zuge;
 					do {
@@ -2014,6 +2017,7 @@ public class Spiel implements iBediener, Serializable {
 							if (zugdanachPruefenKI == 2) {
 								figurSchlagen(zugee[0], zugee[1], zugee[2], zugee[3]);
 								setZugFurLog(zugee[0], zugee[1], zugee[2], zugee[3]);
+								dameWerden();
 							}
 						}
 					} while (tmpZug != null);
