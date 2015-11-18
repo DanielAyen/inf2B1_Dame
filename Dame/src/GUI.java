@@ -25,15 +25,15 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
- * 
+ *
  * @author B1
  *
  */
 public class GUI extends JFrame {
 
 	/**
-	 * 
-	 */
+             *
+             */
 	private static final long serialVersionUID = 1L;
 
 	private JFrame hauptf = new JFrame(" Dame Spiel der Gruppe B1 ");
@@ -62,6 +62,7 @@ public class GUI extends JFrame {
 	private JTextArea helptxt;
 	private JPanel helppanel;
 	private JButton ziehen;
+	private JButton kiziehen;
 	private int spCnt = 0;
 	Spielfigur fig;
 
@@ -98,7 +99,7 @@ public class GUI extends JFrame {
 
 	/**
 	 * zum aufbauen der variablen größe //UNBENUTZT
-	 * 
+	 *
 	 * @return true oder false
 	 */
 	public boolean spielAufbauen() {
@@ -210,7 +211,7 @@ public class GUI extends JFrame {
 
 		// RadioButtons für Art
 		Mensch = new JRadioButton("Mensch", true);
-		Ki = new JRadioButton("KI");
+		Ki = new JRadioButton("KI", true);
 
 		ButtonGroup group2 = new ButtonGroup();
 		group2.add(Mensch);
@@ -219,7 +220,7 @@ public class GUI extends JFrame {
 		panel02.add(Mensch);
 		panel02.add(Ki);
 
-		Ki.setEnabled(false);// KI ZZ nicht möglich!//TODO
+		// Ki.setEnabled(false);// KI ZZ nicht möglich!//TODO
 
 		panel02.add(button02, BorderLayout.SOUTH);
 
@@ -273,12 +274,17 @@ public class GUI extends JFrame {
 		befehlPanel.add(ziehen);
 		hauptf.add(befehlPanel, BorderLayout.EAST);
 		//
-		JTextField fuellFeld4 = new JTextField("");
-		befehlPanel.add(fuellFeld4);
-		fuellFeld4.setBackground(Color.LIGHT_GRAY);
-		fuellFeld4.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		fuellFeld4.setEnabled(false);
+		// JTextField fuellFeld4 = new JTextField("");
+		// befehlPanel.add(fuellFeld4);
+		// fuellFeld4.setBackground(Color.LIGHT_GRAY);
+		// fuellFeld4.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		// fuellFeld4.setEnabled(false);
 		//
+		kiziehen = new JButton("Ki Ziehen");
+		kiziehen.setEnabled(false);
+		kiziehen.addActionListener(eh);
+		befehlPanel.add(kiziehen);
+		hauptf.add(befehlPanel, BorderLayout.EAST);
 
 		// Linke seite
 		fuellFeld2 = new JTextField("                                                                                  ");// "12345678912345678912345678912345678912345"
@@ -353,7 +359,7 @@ public class GUI extends JFrame {
 
 	/**
 	 * erstellt die steine
-	 * 
+	 *
 	 * @param farbe
 	 *          erstellt die steine der bestimmten farbe
 	 */
@@ -401,7 +407,7 @@ public class GUI extends JFrame {
 
 	/**
 	 * baut die menuebar
-	 * 
+	 *
 	 * @return
 	 */
 	protected MenuBar getMenuOben() {
@@ -447,7 +453,7 @@ public class GUI extends JFrame {
 	public void hilfeAnz() {
 		s.getBrett().getBrettFeldIndex(7, 7).getSpielfigur().setDame(true);
 		s.getBrett().getBrettFeldIndex(4, 4).getSpielfigur().setDame(true);
-		
+
 		helpframe = new JFrame("Hilfe");
 		helptxt = new JTextArea(
 				"Um ein neues Spiel zu erstellen, müssen sie im Menu Spiel die Funktion Neues Spiel erstellen wählen  \nAnschließend werden sie aufgefordert zwei Spieler zu erstellen.\n Ein Spieler braucht einen Namen und eine Farbe. Sie können zwischen den Farben Schwarz und Weiß wählen.\nSobald Beide Spieler erstellt wurden, beginnt das Spiel.\nUm einen Stein zu bewegen, geben sie die zu erst die Startposition ein und dann die Endposition, z.B. B8-C7");
@@ -467,7 +473,7 @@ public class GUI extends JFrame {
 
 	// LOGGER
 	/**
-	 * 
+	 *
 	 * @param text
 	 *          wird im Logger gezeigt
 	 */
@@ -493,7 +499,7 @@ public class GUI extends JFrame {
 
 	/**
 	 * Um die Bildschirmbreite zu ermitteln
-	 * 
+	 *
 	 * @return
 	 */
 	public static int GetScreenWorkingWidth() {
@@ -503,7 +509,7 @@ public class GUI extends JFrame {
 
 	/**
 	 * bildschirmhöhe
-	 * 
+	 *
 	 * @return
 	 */
 	public static int GetScreenWorkingHeight() {
@@ -513,7 +519,7 @@ public class GUI extends JFrame {
 	// /////////////////////////////////////////
 	/**
 	 * übergibt an spiel
-	 * 
+	 *
 	 * @param x
 	 *          größe
 	 */
@@ -523,22 +529,22 @@ public class GUI extends JFrame {
 
 	/**
 	 * übergibt den spieler
-	 * 
+	 *
 	 * @param name
 	 * @param farbe
 	 * @param istKi
 	 */
 	public void spielerWeitergeben(String name, FarbEnum farbe, boolean istKi) {
 		s.spielerErstellen(name, farbe, istKi);
-
 	}
 
 	/**
 	 * gibt die pos weiter
-	 * 
+	 *
 	 * @param startp
 	 * @param endp
 	 */
+
 	public void posWeitergeben(String startp, String endp) {// Zug/ziehen/bewegen/..
 
 		int startC = s.wandleUmvString(startp)[0];
@@ -558,11 +564,31 @@ public class GUI extends JFrame {
 
 			if (s.getAmZug() == FarbEnum.SCHWARZ) {
 				log("Schwarz am Zug");
-//				changeColors();
+				// changeColors();
 				hauptf.repaint();
 			} else {
 				log("Weiß am Zug");
-//				changeColors();
+				// changeColors();
+				hauptf.repaint();
+			}
+		} else {
+			log("Dieser Zug war nicht möglich");
+		}
+	}
+
+	public void kiSpieleruebergeben() {
+
+		if (s.kizieh()) {
+			this.brettAktualisieren();
+			log("Dieser Zug war zu krass");
+
+			if (s.getAmZug() == FarbEnum.SCHWARZ) {
+				log("Schwarz am Zug");
+				// changeColors();
+				hauptf.repaint();
+			} else {
+				log("Weiß am Zug");
+				// changeColors();
 				hauptf.repaint();
 			}
 		} else {
@@ -616,22 +642,22 @@ public class GUI extends JFrame {
 
 	}
 
-//	public void changeColors() {
-//
-//		if (fuellFeld2.getBackground() == Color.GREEN) {
-//
-//			fuellFeld2.setBackground(Color.RED);
-//			fuellFeldx.setBackground(Color.GREEN);
-//		} else {
-//			fuellFeld2.setBackground(Color.GREEN);
-//			fuellFeldx.setBackground(Color.RED);
-//		}
-//	}
+	// public void changeColors() {
+	//
+	// if (fuellFeld2.getBackground() == Color.GREEN) {
+	//
+	// fuellFeld2.setBackground(Color.RED);
+	// fuellFeldx.setBackground(Color.GREEN);
+	// } else {
+	// fuellFeld2.setBackground(Color.GREEN);
+	// fuellFeldx.setBackground(Color.RED);
+	// }
+	// }
 
 	/**
 	 * alle leeren felder durchs backend werden leer gesetzt alle damen werden
 	 * geprüft und gesetzt
-	 * 
+	 *
 	 * @param startC
 	 *          int
 	 * @param startI
@@ -679,8 +705,41 @@ public class GUI extends JFrame {
 	}
 
 	/**
+	 * Um das Brett nach ki zug neuanzuzeigen
+	 */
+
+	public void brettAktualisieren() {
+		for (int zeile = buttonArray.length - 1; zeile >= 0; zeile--) {
+			for (int spalte = 0; spalte <= buttonArray[zeile].length - 1; spalte++) {
+				if (s.getBrett().getBrettFeldIndex(zeile, spalte).getIstSchwarz()) {
+					if (!s.getBrett().getBrettFeldIndex(zeile, spalte).getIstBelegt()) {
+
+						iconSetFeld(zeile, spalte);
+
+					} else {
+						Spielfigur fig = s.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur();
+						if (fig.getFarbe() == FarbEnum.SCHWARZ) {
+
+							buttonArray[zeile][spalte].setIcon(figurs);
+							if (fig.getDame(fig)) {
+								buttonArray[zeile][spalte].setIcon(dames);
+							}
+						} else {
+							buttonArray[zeile][spalte].setIcon(figurw);
+							if (fig.getDame(fig)) {
+								buttonArray[zeile][spalte].setIcon(damew);
+							}
+						}
+					}
+				}
+			}
+		}
+		this.highlight(s.getAmZug());
+	}
+
+	/**
 	 * dame icon setzen
-	 * 
+	 *
 	 * @param x
 	 * @param y
 	 */
@@ -698,7 +757,7 @@ public class GUI extends JFrame {
 
 	/**
 	 * feld setzten
-	 * 
+	 *
 	 * @param x
 	 * @param y
 	 */
@@ -715,6 +774,7 @@ public class GUI extends JFrame {
 		if (spCnt == 2) {
 
 			ziehen.setEnabled(true);
+			kiziehen.setEnabled(true);
 
 			s.starten();
 			log("Das Spiel beginnt.");
@@ -730,7 +790,7 @@ public class GUI extends JFrame {
 	// ///////GETTER UND SETTER ////////////////
 	/**
 	 * getter acht
-	 * 
+	 *
 	 * @return
 	 */
 	public JRadioButton getAcht() {
@@ -739,7 +799,7 @@ public class GUI extends JFrame {
 
 	/**
 	 * getter zehn
-	 * 
+	 *
 	 * @return
 	 */
 	public JRadioButton getZehn() {
@@ -748,7 +808,7 @@ public class GUI extends JFrame {
 
 	/**
 	 * getter zwölf
-	 * 
+	 *
 	 * @return
 	 */
 	public JRadioButton getZwölf() {
@@ -757,7 +817,7 @@ public class GUI extends JFrame {
 
 	/**
 	 * get brett
-	 * 
+	 *
 	 * @return
 	 */
 	public JFrame getBrettFrame() {
@@ -766,7 +826,7 @@ public class GUI extends JFrame {
 
 	/**
 	 * get name
-	 * 
+	 *
 	 * @return
 	 */
 	public JTextField getNameFeld() {
@@ -775,7 +835,7 @@ public class GUI extends JFrame {
 
 	/**
 	 * get feld
-	 * 
+	 *
 	 * @return
 	 */
 	public JTextField getBefehlFeld() {
@@ -784,7 +844,7 @@ public class GUI extends JFrame {
 
 	/**
 	 * get schwarz
-	 * 
+	 *
 	 * @return
 	 */
 	public JRadioButton getSchwarz() {
@@ -793,7 +853,7 @@ public class GUI extends JFrame {
 
 	/**
 	 * get weiß
-	 * 
+	 *
 	 * @return
 	 */
 	public JRadioButton getWeiß() {
@@ -802,7 +862,7 @@ public class GUI extends JFrame {
 
 	/**
 	 * get mensch
-	 * 
+	 *
 	 * @return
 	 */
 	public JRadioButton getMensch() {
@@ -812,7 +872,7 @@ public class GUI extends JFrame {
 
 	/**
 	 * get ki
-	 * 
+	 *
 	 * @return
 	 */
 	public JRadioButton getKi() {
@@ -822,7 +882,7 @@ public class GUI extends JFrame {
 
 	/**
 	 * get frame
-	 * 
+	 *
 	 * @return
 	 */
 	public JFrame getSpielerFrame() {
@@ -832,12 +892,22 @@ public class GUI extends JFrame {
 
 	/**
 	 * get ziehen
-	 * 
+	 *
 	 * @return
 	 */
 	public JButton getZiehen() {
 
 		return ziehen;
+	}
+
+	/**
+	 * get kiziehen
+	 *
+	 * @return
+	 */
+	public JButton getKiZiehen() {
+
+		return kiziehen;
 	}
 
 }
@@ -846,3 +916,4 @@ public class GUI extends JFrame {
 // Wenn 2 spieler erstellt und man spielt aber ein neues spiel machen will fehlt
 // das löschen der alten spieler bzw. das komplett neu aufbauen des spiels.
 // z.b. durch vollständiges ersetzten des vorhandenen mit einem neuen spiel
+

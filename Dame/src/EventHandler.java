@@ -9,7 +9,7 @@ public class EventHandler implements ActionListener {
 	private int anzahlSpiele = 0;
 
 	/**
-	 * 
+	 *
 	 * @param gui
 	 */
 	public EventHandler(GUI gui) {
@@ -17,7 +17,7 @@ public class EventHandler implements ActionListener {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param gui
 	 */
 	private void setGUI(GUI gui) {
@@ -51,6 +51,10 @@ public class EventHandler implements ActionListener {
 				gui.getBefehlFeld().setText("");
 			}
 
+			break;
+
+		case "Ki Ziehen":
+			gui.kiSpieleruebergeben();
 			break;
 
 		case "neues Spiel erstellen":

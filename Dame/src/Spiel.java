@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
@@ -5,19 +6,19 @@ import java.io.Serializable;
 import java.util.Properties;
 
 /**
- * 
+ *
  * @author Baris, Daniel, Simon
  *
  */
 public class Spiel implements iBediener, Serializable {
 
 	/**
-	 * 
-	 */
+             *
+             */
 	private static final long serialVersionUID = -1632008787864445195L;
 	/**
 	 * Attribute
-	 * 
+	 *
 	 * @param spielaufgebaut
 	 *          Boolean überprüfung ob das Spiel aufgebaut wurde oder nicht.
 	 * @param spielerAnzahl
@@ -27,27 +28,27 @@ public class Spiel implements iBediener, Serializable {
 	 * @param farbe
 	 *          Farbe der Spieler
 	 * @param Ki
-	 * 
+	 *
 	 * @param spiellaeuft
 	 *          Boolean überprüfung ob das Spiel bereits läuft oder nicht.
-	 * 
+	 *
 	 * @param schwarzvergeben
 	 *          gibt an ob die Farbe schwarz bereits vergeben ist (False==nicht
 	 *          vergeben)
-	 * 
+	 *
 	 * @param weiß
 	 *          gibt an ob die Farbe weiß bereits vergeben ist (False==nicht
 	 *          vergeben)
-	 * 
+	 *
 	 * @param brett
 	 *          das zugehörige Spielbrett
-	 * 
+	 *
 	 * @param fig
 	 *          die zugehörigen Spielfiguren
-	 * 
+	 *
 	 * @param spieler
 	 *          die zugehörigen Spieler
-	 * 
+	 *
 	 * @param spielfeld
 	 *          die zugehörigen Spielfelder
 	 */
@@ -84,187 +85,65 @@ public class Spiel implements iBediener, Serializable {
 		aufbauen(12);
 		anzeigen();
 	}
-		// ///////////////////////////////////////////
-//		try {
-//			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-//			String eingabe = "";
-//
-//			do {
-//				eingabe = reader.readLine().toLowerCase();
-//				switch (eingabe) {
-//				// TEST CASES: //
-//
-//				case "entf":
-//					brett.getBrettFeldSchachnotation('a', 11).removeSpielfigur(brett.getBrettFeldSchachnotation('a', 11).getSpielfigur());
-//					break;
-//				case "flip":
-//					if (spiellaeuft) {
-//						if (getAmZug() == FarbEnum.WEIß) {
-//							spielerHatGewonnen(FarbEnum.SCHWARZ);
-//						} else {
-//							spielerHatGewonnen(FarbEnum.WEIß);
-//						}
-//					}
-//					break;
-//
-//				case "zug":
-//					System.out.println(getAmZug());
-//					break;
-//				case "dame":
-//					brett.getBrettFeldSchachnotation('c', 5).getSpielfigur().setDame(true);
-//					break;
-//
-//				// TEST CASES ENDE //
-//
-//				case "help":
-//					System.out.println("aufbauen : Erstellt ein Spielbrett, wird zum spielen benoetigt.");
-//					System.out.println("erstellen : Erlaubt dir einen Spieler zu erstellen, es werden 2 Spieler zum spielen benoetigt.");
-//					System.out.println("start: Startet das Spiel, es wird ein erstelltes Spielbrett und zwei Spieler benoetigt.");
-//					System.out.println("beenden : Das Spiel wird geschlossen.");
-//					System.out.println("ziehen : Erlaubt dir eine Spielfigur zu bewegen. Nicht moeglich solange das Spiel nicht laeuft.");
-//					System.out.println("anzeigen : Zeigt dir das Spielbrett.");
-//					System.out.println("ser : erlaubt es dir das Spiel zu serialisieren.");
-//					System.out.println("csv : erlaubt es dir das Spiel als CSV Datei zu speichern.");
-//					System.out.println("ki ziehen : Lässt die KI ziehen.");
-//					System.out.println("anzcsv: Ausgabe der aktuellen Spielbrett-Belegung in CSV-Notation.");
-//					break;
-//
-//				// zum aufrufen der Ki
-//				case "ki ziehen":
-//					if (!spiellaeuft) {
-//						System.out.println("Spiel hat noch nicht begonnen! Zurueck in Hauptmenue");
-//						break;
-//					}
-//					if (k1 == null && k2 == null) {
-//						System.out.println("Kein Spieler ist eine KI");
-//						break;
-//					}
-//					System.out.println("Spielerfarbe eingeben (s fuer schwarz w fuer weiss)\n");
-//					String kifarbe = reader.readLine();
-//					if (!kifarbe.equals("w") && !kifarbe.equals("s")) {
-//						System.out.println("Gib bitte die Farbe an die an der Reihe ist(s/w)");
-//						break;
-//					}
-//					if (kifarbe.equals("s")) {
-//						int[] tmpZug = null;
-//
-//						if (this.getAmZug() == FarbEnum.WEIß) {
-//							System.out.println("Weiß ist an der Reihe(w)");
-//							break;
-//						}
-//						if (k1 == null) {
-//							System.out.println("Schwarz ist keine KI");
-//							break;
-//						}
-//						int[] zuge = k1.zieh();
-//						if (zuge == null) {
-//							System.out.println("KI findet keine Züge");
-//							break;
-//						}
-//						brett.display();
-//						int zugPruefenKI = zugPruefen(zuge[0], zuge[1], zuge[2], zuge[3]);
-//						// zugPruefen == 1 Laufen
-//						// zugPruefen == 2 Schlagen
-//						// zugPruefen == -1 Zug ungueltig
-//						if (zugPruefenKI == 1) {
-//							figurBewegen(zuge[0], zuge[1], zuge[2], zuge[3]);
-//							dameWerden();
-//						}
-//						if (zugPruefenKI == 2) {
-//							figurSchlagen(zuge[0], zuge[1], zuge[2], zuge[3]);
-//							if (moeglicheZuegeStartposition(zuge[2], zuge[3])[1] == 0) {
-//								break;
-//							}
-//						}
-//
-//						// FigurBewegen(zuge[0], zuge[1], zuge[2], zuge[3]);
-//
-//						// if (k1.hatGeschlagen()) {
-//						// int[] zugee = zuge;
-//						// do {
-//						// Spielfigur figur = brett.getBrettFeldIndex((zugee[2]),
-//						// (zugee[3])).getSpielfigur();
-//						// zugee = k1.getWeitereSchlaege(((char) (zugee[3] + 97)), (zugee[2]
-//						// + 1), figur);
-//						// tmpZug = zugee;
-//						//
-//						// if (zugee != null) {
-//						// figurBewegen(zugee[0], zugee[1], zugee[2], zugee[3]);
-//						// }
-//						// } while (tmpZug != null);
-//						// }
-//						brett.display();
-//						zugBeenden();
-//						k1.setHatGeschlagen(false);
-//						System.out.println("Der Spieler mit der Farbe: " + getAmZug() + " ist nun am Zug.");
-//
-//						break;
-//					}
-//
-//					if (kifarbe.equals("w")) {
-//						int[] tmpZug = null;
-//						if (this.getAmZug() == FarbEnum.SCHWARZ) {
-//							System.out.println("Schwarz ist an der Reihe (s)");
-//							break;
-//						}
-//						if (k2 == null) {
-//							System.out.println("Weiß ist keine KI");
-//							break;
-//						}
-//						int[] zuge = k2.zieh();
-//						if (zuge == null) {
-//							System.out.println("KI findet keine Züge");
-//							break;
-//						}
-//						brett.display();
-//
-//						int zugPruefenKI = zugPruefen(zuge[0], zuge[1], zuge[2], zuge[3]);
-//						// zugPruefen == 1 Laufen
-//						// zugPruefen == 2 Schlagen
-//						// zugPruefen == -1 Zug ungueltig
-//						if (zugPruefenKI == 1) {
-//							figurBewegen(zuge[0], zuge[1], zuge[2], zuge[3]);
-//							dameWerden();
-//						}
-//						if (zugPruefenKI == 2) {
-//							figurSchlagen(zuge[0], zuge[1], zuge[2], zuge[3]);
-//							if (moeglicheZuegeStartposition(zuge[2], zuge[3])[1] == 0) {
-//								break;
-//							}
-//						}
-//
-//						// if (k2.hatGeschlagen()) {
-//						// int[] zugee = zuge;
-//						// do {
-//						// Spielfigur figur = brett.getBrettFeldIndex((zugee[2]),
-//						// (zugee[3])).getSpielfigur();
-//						// zugee = k2.getWeitereSchlaege(((char) (zugee[3] + 97)), (zugee[2]
-//						// + 1), figur);
-//						// tmpZug = zugee;
-//						//
-//						// if (zugee != null) {
-//						// figurBewegen(zugee[0], zugee[1], zugee[2], zugee[3]);
-//						// }
-//						// } while (tmpZug != null);
-//						// }
-//
-//						brett.display();
-//						zugBeenden();
-//						k2.setHatGeschlagen(false);
-//						System.out.println("Der Spieler mit der Farbe: " + getAmZug() + " ist nun am Zug.");
-//					}
-//					break;
-//
-//				// zum erstellen von spielern
-//
-//				}
-//			} while (!eingabe.equals("beenden"));
-//
-//		} catch (Exception e) {
-//
-//			e.printStackTrace();
-//		}
-//	}
+
+	// ///////////////////////////////////////////
+	// try {
+	// BufferedReader reader = new BufferedReader(new
+	// InputStreamReader(System.in));
+	// String eingabe = "";
+	//
+	// do {
+	// eingabe = reader.readLine().toLowerCase();
+	// switch (eingabe) {
+	// // TEST CASES: //
+	//
+	// case "entf":
+	// brett.getBrettFeldSchachnotation('a',
+	// 11).removeSpielfigur(brett.getBrettFeldSchachnotation('a',
+	// 11).getSpielfigur());
+	// break;
+	// case "flip":
+	// if (spiellaeuft) {
+	// if (getAmZug() == FarbEnum.WEIß) {
+	// spielerHatGewonnen(FarbEnum.SCHWARZ);
+	// } else {
+	// spielerHatGewonnen(FarbEnum.WEIß);
+	// }
+	// }
+	// break;
+	//
+	// case "zug":
+	// System.out.println(getAmZug());
+	// break;
+	// case "dame":
+	// brett.getBrettFeldSchachnotation('c', 5).getSpielfigur().setDame(true);
+	// break;
+	//
+	// // TEST CASES ENDE //
+	//
+	// case "help":
+	// System.out.println("aufbauen : Erstellt ein Spielbrett, wird zum spielen benoetigt.");
+	// System.out.println("erstellen : Erlaubt dir einen Spieler zu erstellen, es werden 2 Spieler zum spielen benoetigt.");
+	// System.out.println("start: Startet das Spiel, es wird ein erstelltes Spielbrett und zwei Spieler benoetigt.");
+	// System.out.println("beenden : Das Spiel wird geschlossen.");
+	// System.out.println("ziehen : Erlaubt dir eine Spielfigur zu bewegen. Nicht moeglich solange das Spiel nicht laeuft.");
+	// System.out.println("anzeigen : Zeigt dir das Spielbrett.");
+	// System.out.println("ser : erlaubt es dir das Spiel zu serialisieren.");
+	// System.out.println("csv : erlaubt es dir das Spiel als CSV Datei zu speichern.");
+	// System.out.println("ki ziehen : Lässt die KI ziehen.");
+	// System.out.println("anzcsv: Ausgabe der aktuellen Spielbrett-Belegung in CSV-Notation.");
+	// break;
+	//
+	// // zum erstellen von spielern
+	//
+	// }
+	// } while (!eingabe.equals("beenden"));
+	//
+	// } catch (Exception e) {
+	//
+	// e.printStackTrace();
+	// }
+	// }
 
 	public boolean pruefeStartposition(String startp) {
 		startC = wandleUmvString(startp)[0];
@@ -303,7 +182,7 @@ public class Spiel implements iBediener, Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param Input
 	 * @return int den Indexwert vom Brett (Spalte)
 	 * @return -1 wenn Input (Index) ausserhalb Brett liegt
@@ -320,7 +199,7 @@ public class Spiel implements iBediener, Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param Input
 	 * @return int den Indexwert von Brett (Zeile)
 	 * @return -1 wenn Input (Index) ausserhalb vom Brett liegt
@@ -339,7 +218,7 @@ public class Spiel implements iBediener, Serializable {
 	 * gibt Anzahl Zuege in einem Array zurueck. Array [0] gibt Anzahl der
 	 * Moeglichkeiten beim laufen. Array[1] gibt Anzahl der Moeglichkeiten beim
 	 * schlagen.
-	 * 
+	 *
 	 * @param x
 	 *          Index Zeile von der Spielfigur auf Brett
 	 * @param y
@@ -464,7 +343,7 @@ public class Spiel implements iBediener, Serializable {
 
 	/**
 	 * prüft den gewollten zug
-	 * 
+	 *
 	 * @param xa
 	 *          alte x koord
 	 * @param ya
@@ -675,7 +554,6 @@ public class Spiel implements iBediener, Serializable {
 				}
 				return 1;
 			}
-
 		}
 
 		// if (diff > 2 && diffX > 0) {
@@ -1058,7 +936,7 @@ public class Spiel implements iBediener, Serializable {
 
 	/**
 	 * Methode zum entfernen einer Spielfigur vom brett/feld und vom Spieler
-	 * 
+	 *
 	 * @param spielfigur
 	 *          die zu entfernende Figur
 	 */
@@ -1091,8 +969,8 @@ public class Spiel implements iBediener, Serializable {
 	 * @param spielfigur
 	 *          wenn eine Spielfigur die Moeglichkeit hat zu schlagen und diesen
 	 *          Zug nicht wahrnimmt, wird er entfernt
-	 * 
-	 * 
+	 *
+	 *
 	 */
 	private void pusten(Spielfigur spielfigur) {
 		figurEntfernen(spielfigur);
@@ -1133,7 +1011,7 @@ public class Spiel implements iBediener, Serializable {
 			try {
 				Thread.sleep(1000);
 
-				System.err.println("\n	(╯°□°)╯︵ ┻━┻ \n");
+				System.err.println("\n  (╯°□°)╯︵ ┻━┻ \n");
 				System.out.println("Spieler " + s2.getName() + " flipped the table!");
 
 				// throw new RuntimeException("Spieler " + s2.getName() +
@@ -1151,7 +1029,7 @@ public class Spiel implements iBediener, Serializable {
 			try {
 				Thread.sleep(1000);
 
-				System.err.println("\n	(╯°□°)╯︵ ┻━┻ \n");
+				System.err.println("\n  (╯°□°)╯︵ ┻━┻ \n");
 				System.out.println(" Spieler " + s1.getName() + " flipped the table!");
 
 				// throw new RuntimeException("Spieler " + s2.getName() +
@@ -1169,7 +1047,7 @@ public class Spiel implements iBediener, Serializable {
 
 	/**
 	 * methode zum erstellen der Spielfiguren
-	 * 
+	 *
 	 * @param spieler
 	 *          der spieler wessen figuren erstellt werden
 	 * @param brett
@@ -1243,7 +1121,7 @@ public class Spiel implements iBediener, Serializable {
 	// }
 
 	/**
-	 * 
+	 *
 	 * @param daten
 	 *          uebergabe
 	 */
@@ -1252,7 +1130,7 @@ public class Spiel implements iBediener, Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return gibt daten zurueck
 	 */
 	public static iDatenzugriff getdZugriff() {
@@ -1282,7 +1160,7 @@ public class Spiel implements iBediener, Serializable {
 
 	/**
 	 * laden
-	 * 
+	 *
 	 * @return
 	 */
 	public static Spiel ladenSerialisiert(String string) {
@@ -1303,7 +1181,7 @@ public class Spiel implements iBediener, Serializable {
 
 	/**
 	 * speichert das Spiel
-	 * 
+	 *
 	 * @param string
 	 *          name der Datei
 	 */
@@ -1496,7 +1374,7 @@ public class Spiel implements iBediener, Serializable {
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
 	 * Spielbrett aufbauen
-	 * 
+	 *
 	 * @param groesse
 	 *          groesse des bretts
 	 * @return war es erfolgreich? true/false
@@ -1541,7 +1419,7 @@ public class Spiel implements iBediener, Serializable {
 
 	/**
 	 * Zum erstellen der Spieler
-	 * 
+	 *
 	 * @param name
 	 *          name des Spielers
 	 * @param farbe
@@ -1620,7 +1498,7 @@ public class Spiel implements iBediener, Serializable {
 
 	/**
 	 * zum starten des Spiels
-	 * 
+	 *
 	 * @return läuft das spiel true oder nicht false
 	 */
 	public boolean starten() {
@@ -1714,7 +1592,7 @@ public class Spiel implements iBediener, Serializable {
 					// System.out.println("Der Spieler mit der Farbe: " + getAmZug() +
 					// " ist nun am Zug.");
 					//
-					
+
 					return true;
 				}
 
@@ -1767,5 +1645,103 @@ public class Spiel implements iBediener, Serializable {
 
 	public Spielbrett getBrett() {
 		return this.brett;
+	}
+
+	public boolean kizieh() {
+		if (!spiellaeuft) {
+			System.out.println("Spiel hat noch nicht begonnen! Zurueck in Hauptmenue");
+			return false;
+		}
+		if (this.getAmZug() == FarbEnum.SCHWARZ) {
+			if (k1 == null) {
+				System.out.println("Schwarz ist keine KI");
+				return false;
+			}
+			int[] tmpZug = null;
+			int[] zuge = k1.zieh();
+			if (zuge == null) {
+				System.err.println("Ki hat keine Zugmoeglichkeiten mehr.");
+				spielerHatGewonnen(s2.getFarbe());
+				return false;
+			}
+			int zugPruefenKI = zugPruefen(zuge[0], zuge[1], zuge[2], zuge[3]);
+			if (zugPruefenKI == 1) {
+				figurBewegen(zuge[0], zuge[1], zuge[2], zuge[3]);
+				dameWerden();
+			}
+			if (zugPruefenKI == 2) {
+				figurSchlagen(zuge[0], zuge[1], zuge[2], zuge[3]);
+				if (k1.hatGeschlagen()) {
+					int[] zugee = zuge;
+					do {
+						Spielfigur figur = brett.getBrettFeldIndex((zugee[2]), (zugee[3])).getSpielfigur();
+						zugee = k1.getWeitereSchlaege(zugee[2], zugee[3], figur);
+						tmpZug = zugee;
+
+						if (zugee != null) {
+							int zugdanachPruefenKI = zugPruefen(zugee[0], zugee[1], zugee[2], zugee[3]);
+							if (zugdanachPruefenKI == 1) {
+								figurBewegen(zugee[0], zugee[1], zugee[2], zugee[3]);
+								dameWerden();
+							}
+							if (zugdanachPruefenKI == 2) {
+								figurSchlagen(zugee[0], zugee[1], zugee[2], zugee[3]);
+							}
+						}
+					} while (tmpZug != null);
+				}
+			}
+			brett.display();
+			zugBeenden();
+			k1.setHatGeschlagen(false);
+			return true;
+
+		}
+		// ---------------------------------------------------
+		if (this.getAmZug() == FarbEnum.WEIß) {
+			if (k2 == null) {
+				System.out.println("Weiß ist keine KI");
+				return false;
+			}
+			int[] tmpZug = null;
+			int[] zuge = k2.zieh();
+			if (zuge == null) {
+				System.err.println("Ki hat keine Zugmoeglichkeiten mehr.");
+				spielerHatGewonnen(s1.getFarbe());
+				return false;
+			}
+			int zugPruefenKI = zugPruefen(zuge[0], zuge[1], zuge[2], zuge[3]);
+			if (zugPruefenKI == 1) {
+				figurBewegen(zuge[0], zuge[1], zuge[2], zuge[3]);
+				dameWerden();
+			}
+			if (zugPruefenKI == 2) {
+				figurSchlagen(zuge[0], zuge[1], zuge[2], zuge[3]);
+				if (k2.hatGeschlagen()) {
+					int[] zugee = zuge;
+					do {
+						Spielfigur figur = brett.getBrettFeldIndex((zugee[2]), (zugee[3])).getSpielfigur();
+						zugee = k2.getWeitereSchlaege(zugee[2], zugee[3], figur);
+						tmpZug = zugee;
+
+						if (zugee != null) {
+							int zugdanachPruefenKI = zugPruefen(zugee[0], zugee[1], zugee[2], zugee[3]);
+							if (zugdanachPruefenKI == 1) {
+								figurBewegen(zugee[0], zugee[1], zugee[2], zugee[3]);
+								dameWerden();
+							}
+							if (zugdanachPruefenKI == 2) {
+								figurSchlagen(zugee[0], zugee[1], zugee[2], zugee[3]);
+							}
+						}
+					} while (tmpZug != null);
+				}
+			}
+			brett.display();
+			zugBeenden();
+			k2.setHatGeschlagen(false);
+			return true;
+		}
+		return false;
 	}
 }
