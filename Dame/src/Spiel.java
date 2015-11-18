@@ -1037,7 +1037,7 @@ public class Spiel implements iBediener, Serializable {
 					case SCHWARZ:// müssen oben ankommen [8|10|12] 0|0=A1
 						// TODO schauen ob das für schwarz funktioniert oder ob
 						// es brettgroesse -1 heissen muss
-						if (x == brettgroesse-1)
+						if (x == brettgroesse)
 							fig.setDame(true);
 						break;
 					case WEIß:// müssen unten ankommen 0|0=A1
