@@ -3,6 +3,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Properties;
 
 /**
@@ -77,6 +78,8 @@ public class Spiel implements iBediener, Serializable {
 	private int endC;
 	private int startI;
 	private int endI;
+	
+	private ArrayList<int []> zugFurLog;
 
 	public void spielStarten() {
 
@@ -1728,6 +1731,7 @@ public class Spiel implements iBediener, Serializable {
 							int zugdanachPruefenKI = zugPruefen(zugee[0], zugee[1], zugee[2], zugee[3]);
 							if (zugdanachPruefenKI == 1) {
 								figurBewegen(zugee[0], zugee[1], zugee[2], zugee[3]);
+								setZugFurLog(zugee[0], zugee[1], zugee[2], zugee[3]);
 								dameWerden();
 							}
 							if (zugdanachPruefenKI == 2) {
@@ -1743,5 +1747,23 @@ public class Spiel implements iBediener, Serializable {
 			return true;
 		}
 		return false;
+	}
+	
+	private void setZugFurLog(int zugee, int zugee2, int zugee3, int zugee4){
+		char a = (char)(zugee2 + 97);
+		int b = zugee;
+		char c = (char)(zugee4 + 97);
+		int d = zugee3;
+//		((char) (zielKoords[3] + 97)) + "" + (zielKoords[2] + 1)
+		String ausgabe = "Startposition: " + a + b + " Endposition: " + c + d; 
+	}
+	
+	public KI getK1(){
+		if(k1==null)return null;
+		return k1;
+	}
+	public KI getK2(){
+		if(k2==null)return null;
+		return k2;
 	}
 }
