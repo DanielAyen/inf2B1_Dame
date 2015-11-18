@@ -547,29 +547,34 @@ public class GUI extends JFrame {
 
 	public void posWeitergeben(String startp, String endp) {// Zug/ziehen/bewegen/..
 
-		int startC = s.wandleUmvString(startp)[0];
-		int startI = s.wandleUmvString(startp)[1];
-		int endC = s.wandleUmvString(endp)[0];
-		int endI = s.wandleUmvString(endp)[1];
-
-		if (s.getBrett().getBrettFeldIndex(startC, startI).getIstBelegt()) {
-			fig = s.getBrett().getBrettFeldIndex(startC, startI).getSpielfigur();
-		}
 		if (s.ziehen(startp, endp)) {
 
 			log("Startposition: " + startp + " Endposition: " + endp);
 
-			figSetIcon(startC, startI, endC, endI);
-			highlight(s.getAmZug());
+			brettAktualisieren();
 
 			if (s.getAmZug() == FarbEnum.SCHWARZ) {
 				log("Schwarz am Zug");
-				// changeColors();
-				hauptf.repaint();
+
+				if (s.getK1() != null) {
+					ziehen.setEnabled(false);
+					kiziehen.setEnabled(true);
+				} else {
+					ziehen.setEnabled(true);
+					kiziehen.setEnabled(false);
+				}
+
 			} else {
 				log("Weiß am Zug");
-				// changeColors();
-				hauptf.repaint();
+
+				if (s.getK2() != null) {
+					ziehen.setEnabled(false);
+					kiziehen.setEnabled(true);
+				} else {
+					ziehen.setEnabled(true);
+					kiziehen.setEnabled(false);
+				}
+
 			}
 		} else {
 			log("Dieser Zug war nicht möglich");
@@ -579,128 +584,47 @@ public class GUI extends JFrame {
 	public void kiSpieleruebergeben() {
 
 		if (s.kizieh()) {
+
+			if (s.getZugFurLog().size()!=0) {
+
+				for (int i = 0; i < s.getZugFurLog().size(); i++) {
+
+					log(s.getZugFurLog().get(i));
+
+				}
+				s.getZugFurLog().clear();
+
+			} else {
+
+			}
+
 			this.brettAktualisieren();
-			log("Dieser Zug war zu krass");
 
 			if (s.getAmZug() == FarbEnum.SCHWARZ) {
 				log("Schwarz am Zug");
-				// changeColors();
-				hauptf.repaint();
+
+				if (s.getK1() != null) {
+					ziehen.setEnabled(false);
+					kiziehen.setEnabled(true);
+				} else {
+					ziehen.setEnabled(true);
+					kiziehen.setEnabled(false);
+				}
+
 			} else {
 				log("Weiß am Zug");
-				// changeColors();
-				hauptf.repaint();
+
+				if (s.getK2() != null) {
+					ziehen.setEnabled(false);
+					kiziehen.setEnabled(true);
+				} else {
+					ziehen.setEnabled(true);
+					kiziehen.setEnabled(false);
+				}
+
 			}
 		} else {
 			log("Dieser Zug war nicht möglich");
-		}
-	}
-
-	private void highlight(FarbEnum amZug) {
-
-		for (int zeile = buttonArray.length - 1; zeile >= 0; zeile--) {
-			for (int spalte = 0; spalte <= buttonArray[zeile].length - 1; spalte++) {
-
-				if (s.getBrett().getBrettFeldIndex(zeile, spalte).getIstBelegt() && s.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur().getFarbe() == s.getAmZug()) {
-					if (s.getAmZug() == FarbEnum.SCHWARZ) {
-
-						buttonArray[zeile][spalte].setIcon(figurSG);
-						if (s.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur().getDame(fig)) {
-							buttonArray[zeile][spalte].setIcon(dameSG);
-						}
-
-					} else {
-						if (s.getBrett().getBrettFeldIndex(zeile, spalte).getIstBelegt()) {
-							buttonArray[zeile][spalte].setIcon(figurWG);
-							if (s.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur().getDame(fig)) {
-								buttonArray[zeile][spalte].setIcon(dameWG);
-							}
-						}
-					}
-
-				} else {
-					FarbEnum farbe = FarbEnum.SCHWARZ;
-
-					if (s.getBrett().getBrettFeldIndex(zeile, spalte).getIstSchwarz()) {
-
-						if (s.getBrett().getBrettFeldIndex(zeile, spalte).getIstBelegt()) {
-							if (s.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur().getFarbe() == farbe) {
-
-								buttonArray[zeile][spalte].setIcon(figurs);
-
-							} else {
-
-								buttonArray[zeile][spalte].setIcon(figurw);
-
-							}
-						}
-					}
-				}
-
-			}
-		}
-
-	}
-
-	// public void changeColors() {
-	//
-	// if (fuellFeld2.getBackground() == Color.GREEN) {
-	//
-	// fuellFeld2.setBackground(Color.RED);
-	// fuellFeldx.setBackground(Color.GREEN);
-	// } else {
-	// fuellFeld2.setBackground(Color.GREEN);
-	// fuellFeldx.setBackground(Color.RED);
-	// }
-	// }
-
-	/**
-	 * alle leeren felder durchs backend werden leer gesetzt alle damen werden
-	 * geprüft und gesetzt
-	 *
-	 * @param startC
-	 *          int
-	 * @param startI
-	 *          int
-	 * @param endC
-	 *          int
-	 * @param endI
-	 *          int
-	 */
-	public void figSetIcon(int startC, int startI, int endC, int endI) {
-
-		for (int zeile = buttonArray.length - 1; zeile >= 0; zeile--) {
-			for (int spalte = 0; spalte <= buttonArray[zeile].length - 1; spalte++) {
-				if (s.getBrett().getBrettFeldIndex(zeile, spalte).getIstSchwarz()) {
-					if (!s.getBrett().getBrettFeldIndex(zeile, spalte).getIstBelegt()) {
-
-						iconSetFeld(zeile, spalte);
-
-					} else {
-						Spielfigur temp = s.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur();
-						if (s.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur().getDame(temp)) {
-							iconSetDame(zeile, spalte);
-						}
-					}
-				}
-			}
-		}
-
-		iconSetFeld(startC, startI);
-
-		if (fig.getFarbe() == FarbEnum.SCHWARZ) {
-
-			buttonArray[endC][endI].setIcon(figurs);
-			if (fig.getDame(fig)) {
-				buttonArray[endC][endI].setIcon(dames);
-			}
-
-		} else {
-
-			buttonArray[endC][endI].setIcon(figurw);
-			if (fig.getDame(fig)) {
-				buttonArray[endC][endI].setIcon(damew);
-			}
 		}
 	}
 
@@ -714,56 +638,49 @@ public class GUI extends JFrame {
 				if (s.getBrett().getBrettFeldIndex(zeile, spalte).getIstSchwarz()) {
 					if (!s.getBrett().getBrettFeldIndex(zeile, spalte).getIstBelegt()) {
 
-						iconSetFeld(zeile, spalte);
+						buttonArray[zeile][spalte].setIcon(felds);
 
 					} else {
+
 						Spielfigur fig = s.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur();
+
 						if (fig.getFarbe() == FarbEnum.SCHWARZ) {
 
-							buttonArray[zeile][spalte].setIcon(figurs);
-							if (fig.getDame(fig)) {
-								buttonArray[zeile][spalte].setIcon(dames);
+							if (FarbEnum.SCHWARZ == s.getAmZug()) {
+
+								buttonArray[zeile][spalte].setIcon(figurSG);
+								if (s.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur().getDame(fig)) {
+									buttonArray[zeile][spalte].setIcon(dameSG);
+								}
+
+							} else {
+
+								buttonArray[zeile][spalte].setIcon(figurs);
+								if (fig.getDame(fig)) {
+									buttonArray[zeile][spalte].setIcon(dames);
+								}
 							}
 						} else {
-							buttonArray[zeile][spalte].setIcon(figurw);
-							if (fig.getDame(fig)) {
-								buttonArray[zeile][spalte].setIcon(damew);
+
+							if (FarbEnum.WEIß == s.getAmZug()) {
+
+								buttonArray[zeile][spalte].setIcon(figurWG);
+								if (s.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur().getDame(fig)) {
+									buttonArray[zeile][spalte].setIcon(dameWG);
+								}
+							} else {
+
+								buttonArray[zeile][spalte].setIcon(figurw);
+								if (fig.getDame(fig)) {
+									buttonArray[zeile][spalte].setIcon(damew);
+								}
 							}
 						}
 					}
 				}
 			}
 		}
-		this.highlight(s.getAmZug());
-	}
-
-	/**
-	 * dame icon setzen
-	 *
-	 * @param x
-	 * @param y
-	 */
-	public void iconSetDame(int x, int y) {
-		if (s.getBrett().getBrettFeldIndex(x, y).getSpielfigur().getFarbe() == FarbEnum.SCHWARZ) {
-			// TODO
-			buttonArray[x][y].setIcon(dames);
-
-		} else {
-
-			buttonArray[x][y].setIcon(damew);
-
-		}
-	}
-
-	/**
-	 * feld setzten
-	 *
-	 * @param x
-	 * @param y
-	 */
-	public void iconSetFeld(int x, int y) {
-		buttonArray[x][y].setIcon(felds);
-
+		hauptf.repaint();
 	}
 
 	/**
@@ -775,6 +692,16 @@ public class GUI extends JFrame {
 
 			ziehen.setEnabled(true);
 			kiziehen.setEnabled(true);
+			
+			if(s.getK1()!=null&&s.getK1().getSpieler().getFarbe()==FarbEnum.WEIß||s.getK2()!=null&&s.getK2().getSpieler().getFarbe()==FarbEnum.WEIß){
+				
+				ziehen.setEnabled(false);
+				
+			}else{
+				
+				kiziehen.setEnabled(false);
+			}
+			
 
 			s.starten();
 			log("Das Spiel beginnt.");

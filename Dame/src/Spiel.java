@@ -78,7 +78,7 @@ public class Spiel implements iBediener, Serializable {
 	private int startI;
 	private int endI;
 
-	private ArrayList<String> zugFurLog;
+	private ArrayList<String> zugFurLog = new ArrayList<String>();
 
 	public void spielStarten() {
 
@@ -1757,21 +1757,19 @@ public class Spiel implements iBediener, Serializable {
 
 	private void setZugFurLog(int zugee, int zugee2, int zugee3, int zugee4) {
 		char a = (char) (zugee2 + 97);
-		int b = zugee;
+		int b = zugee + 1;
 		char c = (char) (zugee4 + 97);
-		int d = zugee3;
+		int d = zugee3 + 1;
 		// ((char) (zielKoords[3] + 97)) + "" + (zielKoords[2] + 1)
 		String ausgabe = "Startposition: " + a + b + " Endposition: " + c + d;
+		System.out.println(ausgabe);
 		zugFurLog.add(ausgabe);
 	}
 
 	public ArrayList<String> getZugFurLog() {
-		if (zugFurLog.size() == 0) {
-			return null;
-		}
-		ArrayList<String> temp=zugFurLog;
-		zugFurLog.clear();
-		return temp;
+		
+
+	return	zugFurLog;
 
 	}
 
