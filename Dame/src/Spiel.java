@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
@@ -78,8 +77,8 @@ public class Spiel implements iBediener, Serializable {
 	private int endC;
 	private int startI;
 	private int endI;
-	
-	private ArrayList<int []> zugFurLog;
+
+	private ArrayList<String> zugFurLog;
 
 	public void spielStarten() {
 
@@ -1670,10 +1669,12 @@ public class Spiel implements iBediener, Serializable {
 			int zugPruefenKI = zugPruefen(zuge[0], zuge[1], zuge[2], zuge[3]);
 			if (zugPruefenKI == 1) {
 				figurBewegen(zuge[0], zuge[1], zuge[2], zuge[3]);
+				setZugFurLog(zuge[0], zuge[1], zuge[2], zuge[3]);
 				dameWerden();
 			}
 			if (zugPruefenKI == 2) {
 				figurSchlagen(zuge[0], zuge[1], zuge[2], zuge[3]);
+				setZugFurLog(zuge[0], zuge[1], zuge[2], zuge[3]);
 				if (k1.hatGeschlagen()) {
 					int[] zugee = zuge;
 					do {
@@ -1685,10 +1686,12 @@ public class Spiel implements iBediener, Serializable {
 							int zugdanachPruefenKI = zugPruefen(zugee[0], zugee[1], zugee[2], zugee[3]);
 							if (zugdanachPruefenKI == 1) {
 								figurBewegen(zugee[0], zugee[1], zugee[2], zugee[3]);
+								setZugFurLog(zugee[0], zugee[1], zugee[2], zugee[3]);
 								dameWerden();
 							}
 							if (zugdanachPruefenKI == 2) {
 								figurSchlagen(zugee[0], zugee[1], zugee[2], zugee[3]);
+								setZugFurLog(zugee[0], zugee[1], zugee[2], zugee[3]);
 							}
 						}
 					} while (tmpZug != null);
@@ -1716,10 +1719,12 @@ public class Spiel implements iBediener, Serializable {
 			int zugPruefenKI = zugPruefen(zuge[0], zuge[1], zuge[2], zuge[3]);
 			if (zugPruefenKI == 1) {
 				figurBewegen(zuge[0], zuge[1], zuge[2], zuge[3]);
+				setZugFurLog(zuge[0], zuge[1], zuge[2], zuge[3]);
 				dameWerden();
 			}
 			if (zugPruefenKI == 2) {
 				figurSchlagen(zuge[0], zuge[1], zuge[2], zuge[3]);
+				setZugFurLog(zuge[0], zuge[1], zuge[2], zuge[3]);
 				if (k2.hatGeschlagen()) {
 					int[] zugee = zuge;
 					do {
@@ -1736,6 +1741,7 @@ public class Spiel implements iBediener, Serializable {
 							}
 							if (zugdanachPruefenKI == 2) {
 								figurSchlagen(zugee[0], zugee[1], zugee[2], zugee[3]);
+								setZugFurLog(zugee[0], zugee[1], zugee[2], zugee[3]);
 							}
 						}
 					} while (tmpZug != null);
@@ -1748,22 +1754,36 @@ public class Spiel implements iBediener, Serializable {
 		}
 		return false;
 	}
-	
-	private void setZugFurLog(int zugee, int zugee2, int zugee3, int zugee4){
-		char a = (char)(zugee2 + 97);
+
+	private void setZugFurLog(int zugee, int zugee2, int zugee3, int zugee4) {
+		char a = (char) (zugee2 + 97);
 		int b = zugee;
-		char c = (char)(zugee4 + 97);
+		char c = (char) (zugee4 + 97);
 		int d = zugee3;
-//		((char) (zielKoords[3] + 97)) + "" + (zielKoords[2] + 1)
-		String ausgabe = "Startposition: " + a + b + " Endposition: " + c + d; 
+		// ((char) (zielKoords[3] + 97)) + "" + (zielKoords[2] + 1)
+		String ausgabe = "Startposition: " + a + b + " Endposition: " + c + d;
+		zugFurLog.add(ausgabe);
 	}
-	
-	public KI getK1(){
-		if(k1==null)return null;
+
+	public ArrayList<String> getZugFurLog() {
+		if (zugFurLog.size() == 0) {
+			return null;
+		}
+		ArrayList<String> temp=zugFurLog;
+		zugFurLog.clear();
+		return temp;
+
+	}
+
+	public KI getK1() {
+		if (k1 == null)
+			return null;
 		return k1;
 	}
-	public KI getK2(){
-		if(k2==null)return null;
+
+	public KI getK2() {
+		if (k2 == null)
+			return null;
 		return k2;
 	}
 }
