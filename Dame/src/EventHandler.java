@@ -1,5 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class EventHandler implements ActionListener {
@@ -148,6 +149,17 @@ public class EventHandler implements ActionListener {
 		case "Anzeigen":
 			gui.hilfeAnz();
 			break;
+		//
+		// case "als PDF speichern":
+		// try {
+		// gui.screenshotErstellen();
+		// gui.spielSpeichern();
+		// gui.log("Spiel wurde gespeichert (PDF)");
+		//
+		// } catch (IOException e1) {
+		// gui.log("Fehler beim speichern");// e1.printStackTrace();
+		// }
+		//	break;
 
 		default:
 			gui.log("Diese Funktion ist zu diesem Zeitpunkt nicht verfügbar.");

@@ -10,7 +10,10 @@ import java.awt.MenuBar;
 import java.awt.MenuItem;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -712,6 +715,30 @@ public class GUI extends JFrame {
 
 		}
 
+	}
+	
+	public static BufferedImage getScreenShot(Component component) {
+
+		BufferedImage image = new BufferedImage(component.getWidth(),
+				component.getHeight(), BufferedImage.TYPE_INT_RGB);
+		// ruft die Komponente der zeichnen Methoden auf
+		// Graphics Object vom Image
+		component.paint(image.getGraphics());
+		return image;
+	}
+
+	public void screenshotErstellen() {
+
+		BufferedImage img = getScreenShot(hauptf.getContentPane());
+
+		try {
+			// macht das Bild zu PNG
+			ImageIO.write(img, "png", new File("screenshotSpiel.png"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		log("Screenshot wurde erstellt.");
 	}
 
 	// ///////GETTER UND SETTER ////////////////
