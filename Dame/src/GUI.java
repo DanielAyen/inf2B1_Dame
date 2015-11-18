@@ -12,12 +12,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -67,6 +69,8 @@ public class GUI extends JFrame {
 	private JButton ziehen;
 	private JButton kiziehen;
 	private int spCnt = 0;
+	private JFrame mailFrame;
+	JTextField empfaengerFeld;
 	Spielfigur fig;
 
 	JTextField fuellFeldx;
@@ -588,7 +592,7 @@ public class GUI extends JFrame {
 
 		if (s.kizieh()) {
 
-			if (s.getZugFurLog().size()!=0) {
+			if (s.getZugFurLog().size() != 0) {
 
 				for (int i = 0; i < s.getZugFurLog().size(); i++) {
 
@@ -695,16 +699,15 @@ public class GUI extends JFrame {
 
 			ziehen.setEnabled(true);
 			kiziehen.setEnabled(true);
-			
-			if(s.getK1()!=null&&s.getK1().getSpieler().getFarbe()==FarbEnum.WEIß||s.getK2()!=null&&s.getK2().getSpieler().getFarbe()==FarbEnum.WEIß){
-				
+
+			if (s.getK1() != null && s.getK1().getSpieler().getFarbe() == FarbEnum.WEIß || s.getK2() != null && s.getK2().getSpieler().getFarbe() == FarbEnum.WEIß) {
+
 				ziehen.setEnabled(false);
-				
-			}else{
-				
+
+			} else {
+
 				kiziehen.setEnabled(false);
 			}
-			
 
 			s.starten();
 			log("Das Spiel beginnt.");
@@ -716,11 +719,10 @@ public class GUI extends JFrame {
 		}
 
 	}
-	
+
 	public static BufferedImage getScreenShot(Component component) {
 
-		BufferedImage image = new BufferedImage(component.getWidth(),
-				component.getHeight(), BufferedImage.TYPE_INT_RGB);
+		BufferedImage image = new BufferedImage(component.getWidth(), component.getHeight(), BufferedImage.TYPE_INT_RGB);
 		// ruft die Komponente der zeichnen Methoden auf
 		// Graphics Object vom Image
 		component.paint(image.getGraphics());
@@ -740,6 +742,62 @@ public class GUI extends JFrame {
 
 		log("Screenshot wurde erstellt.");
 	}
+
+	public void spielLaden() {
+		JFileChooser fc = new JFileChooser();
+		fc.showOpenDialog(null);
+	}
+
+	public void spielSpeichern() throws IOException {
+		// .Speichern("MADN Spiel", "PDF");
+	}
+
+	public void spielSpeichernCSV() throws IOException {
+		// .Speichern("MADN Spiel", "CSV");
+	}
+
+	public void spielSpeichernSER() throws IOException {
+		// .Speichern("MADN Spiel", "SER");
+	}
+
+	public void mailAbfrage() {
+		mailFrame = new JFrame();
+		mailFrame.setSize(500, 150);
+		mailFrame.setTitle("Mail");
+		mailFrame.setLocation(GetScreenWorkingWidth() / 2 - 370, GetScreenWorkingHeight() / 2 - 100);
+
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(4, 2));
+
+		// JLabel mailAdresse = new JLabel("E-Mail:");
+		// JLabel pwLabel = new JLabel("Passwort:");
+		JLabel empfaenger = new JLabel("Empfaenger E-Mail:");
+
+		// JTextField mail = new JTextField(
+		// "nur Adressen von reutlingen-university.de");
+		// JPasswordField pwField = new JPasswordField("");
+		// pwField.setEchoChar('*'); // macht * bei Passworteingabe
+		empfaengerFeld = new JTextField("");
+
+		JButton senden = new JButton("senden");
+		senden.addActionListener(eh);
+
+		// panel.add(mailAdresse);
+		// panel.add(mail);
+		// panel.add(pwLabel);
+		// panel.add(pwField);
+		panel.add(empfaenger);
+		panel.add(empfaengerFeld);
+		panel.add(senden);
+
+		mailFrame.add(panel);
+		mailFrame.setResizable(false);
+		mailFrame.setVisible(true);
+	}
+
+	// public void mailSenden(){
+	// bediener.mailSenden();
+	// }
 
 	// ///////GETTER UND SETTER ////////////////
 	/**
@@ -862,6 +920,10 @@ public class GUI extends JFrame {
 	public JButton getKiZiehen() {
 
 		return kiziehen;
+	}
+
+	public String getEmpfaenger() {
+		return empfaengerFeld.getText();
 	}
 
 }
