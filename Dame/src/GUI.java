@@ -322,55 +322,94 @@ public class GUI extends JFrame {
 	 */
 	public void feldButtons() {
 		boolean ss = false;
-		if (feldgroesse == 8) {
-			ss = false;
-		}
-		if (feldgroesse == 10) {
-			ss = false;
-		}
+
 		if (feldgroesse == 12) {
 			ss = true;
+		} else {
+			ss = false;
 		}
+
 		int cnt = 0;
-		for (int zeile = buttonArray.length - 1; zeile >= 0; zeile--) {
-			for (int spalte = 0; spalte < buttonArray[zeile].length; spalte++) {
-				buttonArray[zeile][spalte] = new JButton("");
-				buttonArray[zeile][spalte].setMargin(new Insets(0, 0, 0, 0));
-				// buttonArray[zeile][spalte].setSize(50, 50);
-				// buttonArray[zeile][spalte].setBounds(70 * zeile, 70 * spalte, 70,
-				// 70);
-				String id = "" + (char) (65 + spalte) + (zeile + 1);
-				buttonArray[zeile][spalte].setToolTipText(id);
+		if (feldgroesse == 12) {
+			for (int zeile = 0; zeile < buttonArray.length; zeile++) {
+				for (int spalte = 0; spalte < buttonArray[zeile].length; spalte++) {
+					buttonArray[zeile][spalte] = new JButton("");
+					buttonArray[zeile][spalte].setMargin(new Insets(0, 0, 0, 0));
+					// buttonArray[zeile][spalte].setSize(50, 50);
+					// buttonArray[zeile][spalte].setBounds(70 * zeile, 70 * spalte, 70,
+					// 70);
+					String id = "" + (char) (65 + spalte) + (zeile + 1);
+					buttonArray[zeile][spalte].setToolTipText(id);
 
-				// buttonArray[zeile][spalte].addMouseListener(new MouseAdapter() {
-				//
-				// @Override
-				// public void mouseEntered(MouseEvent me) {
-				// log("luck ");
-				//
-				// }
-				// });
+					// buttonArray[zeile][spalte].addMouseListener(new MouseAdapter() {
+					//
+					// @Override
+					// public void mouseEntered(MouseEvent me) {
+					// log("luck ");
+					//
+					// }
+					// });
 
-				// TODO
-				// buttonArray[i][j].addActionListener(eh);
-				// //////// MUSS WIEDER REIN WENN ÜBER BUTTON DRUCK!!
+					// TODO
+					// buttonArray[i][j].addActionListener(eh);
+					// //////// MUSS WIEDER REIN WENN ÜBER BUTTON DRUCK!!
 
-				cnt++;
-				if (ss == false) {
+					cnt++;
+					if (ss == false) {
 
-					buttonArray[zeile][spalte].setIcon(feldw);
+						buttonArray[zeile][spalte].setIcon(feldw);
 
-				} else {
-					buttonArray[zeile][spalte].setIcon(felds);
-				}
-				ss = !ss;
-				if (cnt == feldgroesse) {
+					} else {
+						buttonArray[zeile][spalte].setIcon(felds);
+					}
 					ss = !ss;
-					cnt = 0;
+					if (cnt == feldgroesse) {
+						ss = !ss;
+						cnt = 0;
+					}
+				}
+			}
+
+		} else {
+			for (int zeile = buttonArray.length - 1; zeile >= 0; zeile--) {
+				for (int spalte = 0; spalte < buttonArray[zeile].length; spalte++) {
+					buttonArray[zeile][spalte] = new JButton("");
+					buttonArray[zeile][spalte].setMargin(new Insets(0, 0, 0, 0));
+					// buttonArray[zeile][spalte].setSize(50, 50);
+					// buttonArray[zeile][spalte].setBounds(70 * zeile, 70 * spalte, 70,
+					// 70);
+					String id = "" + (char) (65 + spalte) + (zeile + 1);
+					buttonArray[zeile][spalte].setToolTipText(id);
+
+					// buttonArray[zeile][spalte].addMouseListener(new MouseAdapter() {
+					//
+					// @Override
+					// public void mouseEntered(MouseEvent me) {
+					// log("luck ");
+					//
+					// }
+					// });
+
+					// TODO
+					// buttonArray[i][j].addActionListener(eh);
+					// //////// MUSS WIEDER REIN WENN ÜBER BUTTON DRUCK!!
+
+					cnt++;
+					if (ss == false) {
+
+						buttonArray[zeile][spalte].setIcon(feldw);
+
+					} else {
+						buttonArray[zeile][spalte].setIcon(felds);
+					}
+					ss = !ss;
+					if (cnt == feldgroesse) {
+						ss = !ss;
+						cnt = 0;
+					}
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -467,7 +506,6 @@ public class GUI extends JFrame {
 	 * zeigt ein hilfefenster
 	 */
 	public void hilfeAnz() {
-
 
 		helpframe = new JFrame("Hilfe");
 		helptxt = new JTextArea(
@@ -648,7 +686,7 @@ public class GUI extends JFrame {
 	 */
 
 	public void brettAktualisieren() {
-		for (int zeile = buttonArray.length - 1; zeile >= 0; zeile--) {
+		for (int zeile = 0; zeile <= buttonArray.length - 1; zeile++) {
 			for (int spalte = 0; spalte <= buttonArray[zeile].length - 1; spalte++) {
 				if (s.getBrett().getBrettFeldIndex(zeile, spalte).getIstSchwarz()) {
 					if (!s.getBrett().getBrettFeldIndex(zeile, spalte).getIstBelegt()) {

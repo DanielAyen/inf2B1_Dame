@@ -73,13 +73,13 @@ public class EventHandler implements ActionListener {
 				break;
 			}
 			anzahlSpiele++;
-//			gui.spielAufbauen();
+			// gui.spielAufbauen();
 			// anstatt größe wählbar zu machen erstmal nur 12x12
 			gui.spielerErstellen();
-//			 gui.aufbauen(12);
+			// gui.aufbauen(12);
 
 			break;
-			
+
 		case "Weiter":
 
 			if (gui.getAcht().isSelected() == true) {

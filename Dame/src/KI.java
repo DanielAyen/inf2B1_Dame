@@ -1,4 +1,3 @@
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
@@ -103,13 +102,19 @@ public abstract class KI implements Serializable {
 
 		ArrayList<ArrayList<int[]>> alleSchlaege = new ArrayList<ArrayList<int[]>>();
 		ArrayList<ArrayList<int[]>> alleZuege = new ArrayList<ArrayList<int[]>>();
+		ArrayList<ArrayList<int[]>> alleDameWerden = new ArrayList<ArrayList<int[]>>();
+
 		for (int zeile = 0; zeile < brett.getBrettGroesse(); zeile++) {
 			for (int spalte = 0; spalte < brett.getBrettGroesse(); spalte++) {
 				Spielfeld feld = brett.getBrettFeldIndex(zeile, spalte);
 				if (feld.getIstSchwarz() && feld.getIstBelegt()) {
 					Spielfigur figur = feld.getSpielfigur();
 					if (figur.getFarbe() == spieler.getFarbe()) {
+
 						ArrayList<int[]> schlaege = this.getSchlaege(zeile, spalte, figur);
+						ArrayList<int[]> dameWerdenZuege = this.getDameWerden(zeile, spalte, figur);
+						ArrayList<int[]> zuege = this.getZuege(zeile, spalte, figur);
+
 						if (!schlaege.isEmpty()) {
 							for (int k = 0; k <= schlaege.size() - 1; k++) {
 								int[] zugZielKoords1 = schlaege.get(k);
@@ -119,18 +124,27 @@ public abstract class KI implements Serializable {
 								}
 								alleSchlaege.add(schlaege);
 							}
-						} else {
-							ArrayList<int[]> zuege = this.getZuege(zeile, spalte, figur);
-							if (!zuege.isEmpty()) {
-								for (int k = 0; k <= zuege.size() - 1; k++) {
+						}
+						if (dameWerdenZuege != null) {
+							for (int k = 0; k <= dameWerdenZuege.size() - 1; k++) {
 
-									int[] zugZielKoords2 = zuege.get(k);
-									if (zugZielKoords2 != null) {
-										zugZielKoords2[2] = zeile;
-										zugZielKoords2[3] = spalte;
-									}
-									alleZuege.add(zuege);
+								int[] zugZielKoords2 = dameWerdenZuege.get(k);
+								if (zugZielKoords2 != null) {
+									zugZielKoords2[2] = zeile;
+									zugZielKoords2[3] = spalte;
 								}
+								alleDameWerden.add(dameWerdenZuege);
+							}
+						}
+						if (!zuege.isEmpty()) {
+							for (int k = 0; k <= zuege.size() - 1; k++) {
+
+								int[] zugZielKoords2 = zuege.get(k);
+								if (zugZielKoords2 != null) {
+									zugZielKoords2[2] = zeile;
+									zugZielKoords2[3] = spalte;
+								}
+								alleZuege.add(zuege);
 							}
 						}
 					}
@@ -140,6 +154,10 @@ public abstract class KI implements Serializable {
 		if (!alleSchlaege.isEmpty()) {
 			this.setHatGeschlagen(true);
 			return alleSchlaege;
+		}
+		if (!alleDameWerden.isEmpty()) {
+			this.setHatGeschlagen(false);
+			return alleDameWerden;
 		}
 		if (!alleZuege.isEmpty()) {
 			this.setHatGeschlagen(false);
@@ -180,6 +198,7 @@ public abstract class KI implements Serializable {
 						if (zugFeld2.getIstBelegt() == false) {
 							int[] koordSchlagen = { (tmpx1 + 2), (tmpy1 + 2), 0, 0 };
 							dameSchlaege.add(koordSchlagen);
+							this.setHatGeschlagen(true);
 							break;
 						} else {
 							break;
@@ -206,6 +225,7 @@ public abstract class KI implements Serializable {
 						if (zugFeld2.getIstBelegt() == false) {
 							int[] koordSchlagen = { (tmpx2 + 2), (tmpy2 - 2), 0, 0 };
 							dameSchlaege.add(koordSchlagen);
+							this.setHatGeschlagen(true);
 							break;
 						} else {
 							break;
@@ -232,6 +252,7 @@ public abstract class KI implements Serializable {
 						if (zugFeld2.getIstBelegt() == false) {
 							int[] koordSchlagen = { (tmpx3 - 2), (tmpy3 + 2), 0, 0 };
 							dameSchlaege.add(koordSchlagen);
+							this.setHatGeschlagen(true);
 							break;
 						} else {
 							break;
@@ -258,6 +279,7 @@ public abstract class KI implements Serializable {
 						if (zugFeld2.getIstBelegt() == false) {
 							int[] koordSchlagen = { (tmpx4 - 2), (tmpy4 - 2), 0, 0 };
 							dameSchlaege.add(koordSchlagen);
+							this.setHatGeschlagen(true);
 							break;
 						} else {
 							break;
@@ -364,7 +386,7 @@ public abstract class KI implements Serializable {
 					Spielfeld zugFeld1 = brett.getBrettFeldIndex(zeile + 1, (spalte + 1));
 					if (zugFeld1.getIstBelegt() == false) {
 						int[] koordZiehen = { (zeile + (1)), (spalte + 1), 0, 0 };
-						zuge.add(koordZiehen);
+						dameZuge.add(koordZiehen);
 					}
 				}
 
@@ -420,6 +442,31 @@ public abstract class KI implements Serializable {
 			}
 			return zuge;
 		}
+	}
+
+	private ArrayList<int[]> getDameWerden(int zeile, int spalte, Spielfigur figur) {
+		ArrayList<int[]> dameWerden = new ArrayList<int[]>();
+
+		if (zeile + this.zugRichtung() == 0 || zeile + this.zugRichtung() == (brett.getBrettGroesse() - 1)) {
+			// ist schräger schritt nach VORNE RECHTS möglich?
+			if (spalte + 1 <= brett.getBrettGroesse() - 1) {
+				Spielfeld zugFeld1 = brett.getBrettFeldIndex(zeile + this.zugRichtung(), (spalte + 1));
+				if (zugFeld1.getIstBelegt() == false) {
+					int[] koordZiehen = { (zeile + (this.zugRichtung())), (spalte + 1), 0, 0 };
+					dameWerden.add(koordZiehen);
+				}
+			}
+			// ist schräger schritt nach VORNE LINKS möglich?
+			if (spalte - 1 >= 0) {
+				Spielfeld zugFeld2 = brett.getBrettFeldIndex(zeile + this.zugRichtung(), (spalte - 1));
+				if (zugFeld2.getIstBelegt() == false) {
+					int[] koordZiehen = { (zeile + (this.zugRichtung())), (spalte - 1), 0, 0 };
+					dameWerden.add(koordZiehen);
+				}
+				return dameWerden;
+			}
+		}
+		return null;
 	}
 
 	/**
