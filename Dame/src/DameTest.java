@@ -6,6 +6,32 @@
 public class DameTest {
 
 	public static void main(String[] args) {
+		
+		
+		
+
+
+		iBediener spiel = new Spiel();
+
+		GUI g = new GUI(12);
+		
+
+		
+		
+		
+
+		
+		
+		
+
+		
+		
+		
+
+		
+		
+		
+		
 		/*
 		 * System.out.println(Spieler.getAnzahl()); try{ Spieler s1 = new
 		 * Spieler("werwer", FarbEnum.SCHWARZ,false); Spieler s2 = new
@@ -19,11 +45,7 @@ public class DameTest {
 		 * b1.display();
 		 */
 
-		System.out.println("________________________________________________________________________");
-
-		iBediener spiel = new Spiel();
-
-		GUI g = new GUI();
+		
 		
 		// Spielbrett b1 = new Spielbrett(12);
 		// Spiel spiel1 = new Spiel();

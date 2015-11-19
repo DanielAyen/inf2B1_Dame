@@ -3,11 +3,15 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.MediaTracker;
 import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -42,9 +46,8 @@ public class GUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private JFrame hauptf = new JFrame(" Dame Spiel der Gruppe B1 ");
-	private JPanel hauptp = new JPanel(new GridLayout(12, 12, 0, 0));
-	private JButton[][] buttonArray = new JButton[12][12];
-	private JTextArea ta = new JTextArea(5, 20);// fuer die Loggerfeld groesse
+
+	private JTextArea ta = new JTextArea(10, 20);// fuer die Loggerfeld groesse
 	private JPanel panel02 = new JPanel(new BorderLayout());
 	private JPanel logger = new JPanel();
 	private JScrollPane scroller;
@@ -60,7 +63,8 @@ public class GUI extends JFrame {
 	private JRadioButton Mensch;
 	private JRadioButton Ki;
 	private JTextField nameFeld;
-	private JTextField befehlFeld = new JTextField("                                                 ");// 12345678912345678912345678912345678912345
+	private JTextField befehlFeld = new JTextField("1234567891234567891234");// 12345678912345678912345678912345678912345/
+
 	private Spiel s = new Spiel();
 	private int aufbaucnt = 1;
 	private JFrame helpframe;
@@ -72,6 +76,10 @@ public class GUI extends JFrame {
 	private JFrame mailFrame;
 	JTextField empfaengerFeld;
 	Spielfigur fig;
+
+	private int feldgroesse;// TODO
+	private JPanel hauptp;
+	private JButton[][] buttonArray;
 
 	JTextField fuellFeldx;
 	JTextField fuellFeld2;
@@ -86,22 +94,22 @@ public class GUI extends JFrame {
 	ImageIcon dames = new ImageIcon("Bilder//dameS.png");
 
 	ImageIcon figurSG = new ImageIcon("Bilder//SteinSG.png");
-	ImageIcon figurWG = new ImageIcon("Bilder//SteinWG.png");
+	ImageIcon figurWG = new ImageIcon("Bilder//SteinWG2.png");
 
 	ImageIcon dameSG = new ImageIcon("Bilder//dameSG.png");
 	ImageIcon dameWG = new ImageIcon("Bilder//dameWG.png");
 
-	// ImageIcon greundames = new ImageIcon("Bilder//FeldSDameS.png");
-
 	/**
 	 * Konstruktor für die GUI
 	 */
-	public GUI() {
+	public GUI(int groesse) {
 		super();
-
+		feldgroesse = groesse;
 		eh = new EventHandler(this);
 
 		spielAnzeigen();
+		aufbauen(feldgroesse);
+		//
 	}
 
 	/**
@@ -126,7 +134,7 @@ public class GUI extends JFrame {
 			brettFrame.add(panel02, BorderLayout.CENTER);
 			button01.addActionListener(eh);
 			brettFrame.setLocation(GetScreenWorkingWidth() / 2 - 370, GetScreenWorkingHeight() / 2 - 100);
-
+			brettFrame.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 			Acht = new JRadioButton("8x8");
 			Zehn = new JRadioButton("10x10");
 			Zwölf = new JRadioButton("12x12", true);
@@ -227,8 +235,6 @@ public class GUI extends JFrame {
 		panel02.add(Mensch);
 		panel02.add(Ki);
 
-		// Ki.setEnabled(false);// KI ZZ nicht möglich!//TODO
-
 		panel02.add(button02, BorderLayout.SOUTH);
 
 		spielerFrame.setVisible(true);
@@ -237,7 +243,7 @@ public class GUI extends JFrame {
 	/**
 	 * baut das brett auf un zeigt alles an
 	 */
-	public void spielAnzeigen() {
+	public void spielAnzeigen() {// TODO
 		// LOGGER PANE HINTERGRUND LIGHT_GRAY
 		logger.setBackground(Color.LIGHT_GRAY);
 		logger.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
@@ -249,20 +255,12 @@ public class GUI extends JFrame {
 		scroller = new JScrollPane(ta);
 		logger.add(new JLabel("Log-Fenster:"), BorderLayout.NORTH);
 		logger.add(scroller, BorderLayout.CENTER);
-		hauptf.add(logger, BorderLayout.SOUTH);
+		hauptf.add(logger, BorderLayout.WEST);
 
 		hauptf.setLocation(GetScreenWorkingWidth() / 9, GetScreenWorkingHeight() / 50);
-		hauptf.setSize(GetScreenWorkingWidth() - 450, GetScreenWorkingHeight() - 50);
+		hauptf.setSize(GetScreenWorkingWidth() - 450, GetScreenWorkingHeight() - 60);
 		hauptf.setMenuBar(this.getMenuOben()); // erstellt Menue oben
 
-		feldButtons();// erstellt alle Buttons
-		for (int zeile = buttonArray.length - 1; zeile >= 0; zeile--) {
-			for (int spalte = 0; spalte <= buttonArray[zeile].length - 1; spalte++) {
-				hauptp.add(buttonArray[zeile][spalte]);
-			}
-		}
-
-		hauptf.add(hauptp, BorderLayout.CENTER);
 		// rechte seite
 		JPanel befehlPanel = new JPanel(new GridLayout(2, 1));
 		//
@@ -294,12 +292,14 @@ public class GUI extends JFrame {
 		hauptf.add(befehlPanel, BorderLayout.EAST);
 
 		// Linke seite
-		fuellFeld2 = new JTextField("                                                                                  ");// "12345678912345678912345678912345678912345"
+		fuellFeld2 = new JTextField("123456789123456789");// "12345678912345678912345678912345678912345"/
+
 		fuellFeld2.setEnabled(false);
 		fuellFeld2.setBackground(Color.LIGHT_GRAY);
 		fuellFeld2.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 
-		fuellFeldx = new JTextField("                                                                                  ");// "12345678912345678912345678912345678912345"
+		fuellFeldx = new JTextField("123456789123456789");// "12345678912345678912345678912345678912345"/
+
 		fuellFeldx.setEnabled(false);
 		fuellFeldx.setBackground(Color.LIGHT_GRAY);
 		fuellFeldx.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
@@ -307,8 +307,9 @@ public class GUI extends JFrame {
 		linksPanel.add(fuellFeld2);
 		linksPanel.add(fuellFeldx);
 
-		hauptf.add(linksPanel, BorderLayout.WEST);
-		//
+		// hauptf.add(linksPanel, BorderLayout.WEST);
+		setfeldgroesse(feldgroesse);
+
 		hauptf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		hauptf.setVisible(true);
 		hauptf.setResizable(false);
@@ -320,15 +321,24 @@ public class GUI extends JFrame {
 	 * baut die buttons auf
 	 */
 	public void feldButtons() {
-
-		boolean ss = true;
+		boolean ss = false;
+		if (feldgroesse == 8) {
+			ss = false;
+		}
+		if (feldgroesse == 10) {
+			ss = false;
+		}
+		if (feldgroesse == 12) {
+			ss = true;
+		}
 		int cnt = 0;
-		for (int zeile = 0; zeile < buttonArray.length; zeile++) {
+		for (int zeile = buttonArray.length - 1; zeile >= 0; zeile--) {
 			for (int spalte = 0; spalte < buttonArray[zeile].length; spalte++) {
 				buttonArray[zeile][spalte] = new JButton("");
 				buttonArray[zeile][spalte].setMargin(new Insets(0, 0, 0, 0));
-				buttonArray[zeile][spalte].setSize(20, 20);
-
+				// buttonArray[zeile][spalte].setSize(50, 50);
+				// buttonArray[zeile][spalte].setBounds(70 * zeile, 70 * spalte, 70,
+				// 70);
 				String id = "" + (char) (65 + spalte) + (zeile + 1);
 				buttonArray[zeile][spalte].setToolTipText(id);
 
@@ -336,7 +346,7 @@ public class GUI extends JFrame {
 				//
 				// @Override
 				// public void mouseEntered(MouseEvent me) {
-				// log("suck ");
+				// log("luck ");
 				//
 				// }
 				// });
@@ -344,7 +354,6 @@ public class GUI extends JFrame {
 				// TODO
 				// buttonArray[i][j].addActionListener(eh);
 				// //////// MUSS WIEDER REIN WENN ÜBER BUTTON DRUCK!!
-				// TODO
 
 				cnt++;
 				if (ss == false) {
@@ -355,7 +364,7 @@ public class GUI extends JFrame {
 					buttonArray[zeile][spalte].setIcon(felds);
 				}
 				ss = !ss;
-				if (cnt == 12) {
+				if (cnt == feldgroesse) {
 					ss = !ss;
 					cnt = 0;
 				}
@@ -490,7 +499,7 @@ public class GUI extends JFrame {
 			ta.setText(ta.getText() + text);
 			first = true;
 		} else {
-			ta.setText(ta.getText() + "\n" + text);
+			ta.setText(ta.getText() + "\n––––––––––––––––––––––––––––––––––\n" + text);
 			// Wenn etwas im Logger
 			// gezeigt
 			// werden soll einfach
@@ -711,7 +720,7 @@ public class GUI extends JFrame {
 
 			s.starten();
 			log("Das Spiel beginnt.");
-			log("Der Spieler mit der farbe: " + s.getAmZug() + " beginnt.");
+			log(s.getAmZug() + " beginnt.");
 			fuellFeld2.setBackground(Color.LIGHT_GRAY);
 			fuellFeldx.setBackground(Color.LIGHT_GRAY);
 		} else {
@@ -924,6 +933,38 @@ public class GUI extends JFrame {
 
 	public String getEmpfaenger() {
 		return empfaengerFeld.getText();
+	}
+
+	public JButton[][] getButtonArray() {
+		return buttonArray;
+	}
+
+	public JPanel getHauptp() {
+		return hauptp;
+	}
+
+	public JFrame getHauptf() {
+		return hauptf;
+	}
+
+	public void setfeldgroesse(int groesse) {
+		feldgroesse = groesse;
+		buttonArray = new JButton[feldgroesse][feldgroesse];
+		hauptp = new JPanel(new GridLayout(feldgroesse, feldgroesse, 0, 0));
+		hauptp.setOpaque(true);
+		hauptp.setVisible(true);
+
+		feldButtons();
+
+		for (int zeile = buttonArray.length - 1; zeile >= 0; zeile--) {
+			for (int spalte = 0; spalte <= buttonArray[zeile].length - 1; spalte++) {
+				buttonArray[zeile][spalte].setBackground(Color.white);
+				hauptp.add(buttonArray[zeile][spalte]);
+			}
+		}
+		hauptf.add(hauptp, BorderLayout.CENTER);
+		hauptp.repaint();
+		hauptf.repaint();
 	}
 
 }

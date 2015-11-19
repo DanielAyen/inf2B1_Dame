@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -48,7 +49,7 @@ public class EventHandler implements ActionListener {
 			// a=buchstabe X=zahl X=1-9 XX=1 0-2
 			// aX-aX aXX-aXX aX-aXX aXX-aX
 			if ((Pattern.matches("[a-l A-L][1-9][-][a-l A-L][1-9]", eingabe)) || (Pattern.matches("[a-l A-L][1][0-2][-][a-l A-L][1][0-2]", eingabe)) || (Pattern.matches("[a-l A-L][1][0-2][-][a-l A-L][1-9]", eingabe)) || (Pattern.matches("[a-l A-L][1-9][-][a-l A-L][1][0-2]", eingabe))) {
-				gui.log("Korrekte Eingabe ( " + eingabe + " ) ");
+				gui.log("Eingabe: ( " + eingabe + " ) ");
 				String[] list = eingabe.split("-");
 
 				gui.posWeitergeben(list[0], list[1]);
@@ -72,24 +73,38 @@ public class EventHandler implements ActionListener {
 				break;
 			}
 			anzahlSpiele++;
-			// gui.spielAufbauen();
+//			gui.spielAufbauen();
 			// anstatt größe wählbar zu machen erstmal nur 12x12
-
-			gui.aufbauen(12);
 			gui.spielerErstellen();
-			break;
+//			 gui.aufbauen(12);
 
+			break;
+			
 		case "Weiter":
 
 			if (gui.getAcht().isSelected() == true) {
+
 				gui.aufbauen(8);
 				gui.log("Gewählte Größe: 8");
-			} else if (gui.getZehn().isSelected() == true) {
+				gui.setfeldgroesse(8);
+				gui.spielerErstellen();
+
+			}
+			if (gui.getZehn().isSelected() == true) {
+
 				gui.aufbauen(10);
 				gui.log("Gewählte Größe: 10");
-			} else if (gui.getZwölf().isSelected() == true) {
+				gui.setfeldgroesse(10);
+				gui.spielerErstellen();
+
+			}
+			if (gui.getZwölf().isSelected() == true) {
+
 				gui.aufbauen(12);
 				gui.log("Gewählte Größe: 12");
+				gui.setfeldgroesse(12);
+				gui.spielerErstellen();
+
 			}
 
 			gui.getBrettFrame().dispose();
@@ -101,7 +116,7 @@ public class EventHandler implements ActionListener {
 			boolean istKi = false;
 			name = gui.getNameFeld().getText();
 			if (name.length() < 2) {
-				gui.log("Der Spielername ist zu kurz!");
+				gui.log("Der Name ist zu kurz!");
 			} else {
 				// Radio Button Abfrage Farbe
 				if (gui.getSchwarz().isSelected() == true || gui.getWeiß().isSelected() == true) {
@@ -142,13 +157,13 @@ public class EventHandler implements ActionListener {
 					gui.steineErstellen(farbe);
 
 					if (istKi == false) {
-						gui.log("Ein Spieler mit dem Namen " + name + " und der Farbe " + farbe + " wurde erstellt.");
+						gui.log("Mensch " + name + " mit der Farbe\n" + farbe + " erstellt.");
 					} else {
-						gui.log("Eine KI mit dem Namen " + name + " und der Farbe " + farbe + " wurde erstellt.");
+						gui.log("KI " + name + " mit der Farbe\n" + farbe + " erstellt.");
 					}
 
 				} else {
-					gui.log("Bitte Farbe Wählen");
+					gui.log(" Farbe wählen!");
 				}
 			}
 			gui.startenWeitergeben();
@@ -258,7 +273,7 @@ public class EventHandler implements ActionListener {
 			break;
 
 		default:
-			gui.log("Diese Funktion ist zu diesem Zeitpunkt nicht verfügbar.");
+			gui.log("Nicht verfügbar.");
 			break;
 		}
 		// } catch (Exception e) {
