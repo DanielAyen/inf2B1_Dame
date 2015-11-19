@@ -467,8 +467,7 @@ public class GUI extends JFrame {
 	 * zeigt ein hilfefenster
 	 */
 	public void hilfeAnz() {
-		s.getBrett().getBrettFeldIndex(7, 7).getSpielfigur().setDame(true);
-		s.getBrett().getBrettFeldIndex(4, 4).getSpielfigur().setDame(true);
+
 
 		helpframe = new JFrame("Hilfe");
 		helptxt = new JTextArea(
