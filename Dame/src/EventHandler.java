@@ -139,7 +139,13 @@ public class EventHandler implements ActionListener {
 
 		case "neues Spiel erstellen":
 			if (anzahlSpiele == 1) {
-				gui.log("Es läuft bereits ein Spiel (Ein neues Spiel zu erstellen solange ein anderes läuft kommt noch).");
+
+				gui.loeschen();
+				anzahlSpiele--;
+				i = 1;
+				klickcnt = 0;
+				gui.log("Neues Spiel aufgebaut.");
+				gui.spielerErstellen();
 				break;
 			}
 			anzahlSpiele++;

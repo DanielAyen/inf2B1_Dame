@@ -196,6 +196,17 @@ public class Spieler implements Serializable {
 		return schwarzvergeben;
 	}
 
+	public void spielerLoeschen() {
+		this.farbe = null;
+		this.schwarzvergeben = false;
+		this.weißvergeben = false;
+		this.setIstAmZug(false);
+		this.setName(null);
+		figuren.clear();
+		this.istKi = false;
+		this.anzSpieler = 0;
+	}
+
 	/**
 	 * 
 	 * @param farbe
@@ -241,9 +252,10 @@ public class Spieler implements Serializable {
 		return "Spieler: " + this.getName() + " mit der Farbe: " + this.getFarbe();
 
 	}
-	public boolean getIstKi(){
+
+	public boolean getIstKi() {
 		return istKi;
-		
+
 	}
 
 }

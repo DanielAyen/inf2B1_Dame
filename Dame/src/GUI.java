@@ -29,6 +29,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollBar;
@@ -67,7 +68,7 @@ public class GUI extends JFrame {
 	private JRadioButton Ki;
 	private JTextField nameFeld;
 	private JTextField befehlFeld = new JTextField("     ");// 12345678912345678912345678912345678912345/
-
+	private int ziehenAuswahl;
 	private Spiel s = new Spiel();
 	private int aufbaucnt = 1;
 	private JFrame helpframe;
@@ -604,30 +605,76 @@ public class GUI extends JFrame {
 
 			brettAktualisieren();
 
-			if (s.getAmZug() == FarbEnum.SCHWARZ) {
+			if (s.kannWeiterZiehen()) {
+				Object[] options = { "JA", "NEIN" };
+				ziehenAuswahl = JOptionPane.showOptionDialog(hauptf, "Willst du weiter ziehen oder nicht?", "Ziehen oder nicht?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 
-				log("Schwarz am Zug");
+				if (ziehenAuswahl == 0) {
+					log("Bitte erneut ziehen.");
 
-				if (s.getK1() != null) {
-					ziehen.setEnabled(false);
-					kiziehen.setEnabled(true);
+					s.willWeiterZiehen();
+
+					ziehenAuswahl = 0;
 				} else {
-					ziehen.setEnabled(true);
-					kiziehen.setEnabled(false);
+					log("Du wurdest gepustet.");
+
+					s.willNichtWeiterZiehen();
+
+					if (s.getAmZug() == FarbEnum.SCHWARZ) {
+
+						log("Schwarz am Zug");
+
+						if (s.getK1() != null) {
+							ziehen.setEnabled(false);
+							kiziehen.setEnabled(true);
+						} else {
+							ziehen.setEnabled(true);
+							kiziehen.setEnabled(false);
+						}
+
+					} else {
+						log("Weiß am Zug");
+
+						if (s.getK2() != null) {
+							ziehen.setEnabled(false);
+							kiziehen.setEnabled(true);
+						} else {
+							ziehen.setEnabled(true);
+							kiziehen.setEnabled(false);
+						}
+						brettAktualisieren();
+						ziehenAuswahl = 0;
+					}
 				}
 
 			} else {
-				log("Weiß am Zug");
 
-				if (s.getK2() != null) {
-					ziehen.setEnabled(false);
-					kiziehen.setEnabled(true);
+				if (s.getAmZug() == FarbEnum.SCHWARZ) {
+
+					log("Schwarz am Zug");
+
+					if (s.getK1() != null) {
+						ziehen.setEnabled(false);
+						kiziehen.setEnabled(true);
+					} else {
+						ziehen.setEnabled(true);
+						kiziehen.setEnabled(false);
+					}
+
 				} else {
-					ziehen.setEnabled(true);
-					kiziehen.setEnabled(false);
+					log("Weiß am Zug");
+
+					if (s.getK2() != null) {
+						ziehen.setEnabled(false);
+						kiziehen.setEnabled(true);
+					} else {
+						ziehen.setEnabled(true);
+						kiziehen.setEnabled(false);
+					}
 				}
 
 			}
+			brettAktualisieren();
 		} else {
 			log("Dieser Zug war nicht möglich");
 		}
@@ -999,8 +1046,25 @@ public class GUI extends JFrame {
 	public FarbEnum ggetAmZug() {
 		return s.getAmZug();
 	}
-	public Spielbrett getBrett(){
-			return s.getBrett();
+
+	public Spielbrett getBrett() {
+		return s.getBrett();
+	}
+
+	public void loeschen() {
+		s.allesLoeschen();
+		spielerFrame.dispose();
+		spCnt = 0;
+		aufbauen(feldgroesse);
+		brettAktualisieren();
+		ziehen.setEnabled(false);
+		kiziehen.setEnabled(false);
+		logClear();
+		for (int zeile = 0; zeile < buttonArray.length; zeile++) {
+			for (int spalte = 0; spalte < buttonArray[zeile].length; spalte++) {
+				buttonArray[zeile][spalte].setEnabled(false);
+			}
+		}
 	}
 
 	public void setfeldgroesse(int groesse) {
@@ -1024,9 +1088,3 @@ public class GUI extends JFrame {
 	}
 
 }
-// TODO
-// Schachnotation erstellen
-// Wenn 2 spieler erstellt und man spielt aber ein neues spiel machen will fehlt
-// das löschen der alten spieler bzw. das komplett neu aufbauen des spiels.
-// z.b. durch vollständiges ersetzten des vorhandenen mit einem neuen spiel
-
