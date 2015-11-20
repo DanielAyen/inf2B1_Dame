@@ -80,6 +80,7 @@ public class GUI extends JFrame {
 	private JFrame mailFrame;
 	JTextField empfaengerFeld;
 	Spielfigur fig;
+	private int anzahlzüge;
 
 	private int feldgroesse;// TODO
 	private JPanel hauptp;
@@ -598,7 +599,7 @@ public class GUI extends JFrame {
 	public void posWeitergeben(String startp, String endp) {// Zug/ziehen/bewegen/..
 
 		if (s.ziehen(startp, endp)) {
-
+			anzahlzüge++;
 			log("Startposition: " + startp + " Endposition: " + endp);
 
 			brettAktualisieren();
@@ -682,6 +683,7 @@ public class GUI extends JFrame {
 	public void kiSpieleruebergeben() {
 
 		if (s.kizieh()) {
+			anzahlzüge++;
 
 			if (s.getZugFurLog().size() != 0) {
 
@@ -901,9 +903,13 @@ public class GUI extends JFrame {
 	public void gewonnen(Spieler sp) {
 
 		if (sp != null) {
+
+			ziehen.setEnabled(false);
+			kiziehen.setEnabled(false);
+			
 			log(" (╯°□°)╯︵ ┻━┻");
 
-			JOptionPane.showMessageDialog(hauptf, " \t\t\t\t(╯°□°)╯︵ ┻━┻\nSpieler " + sp.getName() + " hat gewonnen!", "Ein Spieler hat das Spiel gewonnen!", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(hauptf, " \t\t\t\t(╯°□°)╯︵ ┻━┻\nSpieler " + sp.getName() + " hat gewonnen!\n Es wurden " + anzahlzüge + "  Züge gemacht.", "Ein Spieler hat das Spiel gewonnen!", JOptionPane.WARNING_MESSAGE);
 
 			loeschen();
 
@@ -916,19 +922,21 @@ public class GUI extends JFrame {
 	}
 
 	public void loeschen() {
-		s.allesLoeschen();
-		spielerFrame.dispose();
-		spCnt = 0;
-		aufbauen(feldgroesse);
-		brettAktualisieren();
 		ziehen.setEnabled(false);
 		kiziehen.setEnabled(false);
-		logClear();
 		for (int zeile = 0; zeile < buttonArray.length; zeile++) {
 			for (int spalte = 0; spalte < buttonArray[zeile].length; spalte++) {
 				buttonArray[zeile][spalte].setEnabled(false);
 			}
 		}
+		s.allesLoeschen();
+		spielerFrame.dispose();
+		spCnt = 0;
+		anzahlzüge = 0;
+		aufbauen(feldgroesse);
+		brettAktualisieren();
+
+		logClear();
 	}
 
 	public void setfeldgroesse(int groesse) {
