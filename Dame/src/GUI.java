@@ -1,9 +1,12 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
@@ -63,7 +66,7 @@ public class GUI extends JFrame {
 	private JRadioButton Mensch;
 	private JRadioButton Ki;
 	private JTextField nameFeld;
-	private JTextField befehlFeld = new JTextField("1234567891234567891234");// 12345678912345678912345678912345678912345/
+	private JTextField befehlFeld = new JTextField("     ");// 12345678912345678912345678912345678912345/
 
 	private Spiel s = new Spiel();
 	private int aufbaucnt = 1;
@@ -81,8 +84,11 @@ public class GUI extends JFrame {
 	private JPanel hauptp;
 	private JButton[][] buttonArray;
 
-	JTextField fuellFeldx;
-	JTextField fuellFeld2;
+	private JTextField fuellFeldx;
+	private JTextField fuellFeld2;
+
+	private GridBagLayout gbl = new GridBagLayout();
+	private GridBagConstraints gbc = new GridBagConstraints();
 
 	ImageIcon felds = new ImageIcon("Bilder//felds.png");
 	ImageIcon feldw = new ImageIcon("Bilder//feldw.png");
@@ -98,6 +104,8 @@ public class GUI extends JFrame {
 
 	ImageIcon dameSG = new ImageIcon("Bilder//dameSG.png");
 	ImageIcon dameWG = new ImageIcon("Bilder//dameWG.png");
+
+	ImageIcon furinier = new ImageIcon("Bilder//furnier2.jpg");
 
 	/**
 	 * Konstruktor für die GUI
@@ -258,62 +266,54 @@ public class GUI extends JFrame {
 		hauptf.add(logger, BorderLayout.WEST);
 
 		hauptf.setLocation(GetScreenWorkingWidth() / 9, GetScreenWorkingHeight() / 50);
-		hauptf.setSize(GetScreenWorkingWidth() - 450, GetScreenWorkingHeight() - 60);
+		hauptf.setSize(GetScreenWorkingWidth() - 450, GetScreenWorkingHeight() - 90);
 		hauptf.setMenuBar(this.getMenuOben()); // erstellt Menue oben
 
 		// rechte seite
-		JPanel befehlPanel = new JPanel(new GridLayout(2, 1));
-		//
-		befehlPanel.add(befehlFeld);
 
 		//
-		JTextField fuellFeld3 = new JTextField("");
-		befehlPanel.add(fuellFeld3);
-		fuellFeld3.setBackground(Color.LIGHT_GRAY);
-		fuellFeld3.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		fuellFeld3.setEnabled(false);
-		//
+		JLabel lbl = new JLabel();
+		lbl.setIcon(furinier);
+		lbl.setBackground(Color.white);
+		lbl.setLayout(gbl);
+		lbl.add(befehlFeld);
+
 		ziehen = new JButton("Ziehen");
 		ziehen.setEnabled(false);
 		ziehen.addActionListener(eh);
-		befehlPanel.add(ziehen);
-		hauptf.add(befehlPanel, BorderLayout.EAST);
-		//
-		// JTextField fuellFeld4 = new JTextField("");
-		// befehlPanel.add(fuellFeld4);
-		// fuellFeld4.setBackground(Color.LIGHT_GRAY);
-		// fuellFeld4.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		// fuellFeld4.setEnabled(false);
-		//
+		lbl.add(ziehen);
+
 		kiziehen = new JButton("Ki Ziehen");
 		kiziehen.setEnabled(false);
 		kiziehen.addActionListener(eh);
-		befehlPanel.add(kiziehen);
-		hauptf.add(befehlPanel, BorderLayout.EAST);
+		lbl.add(kiziehen);
+		hauptf.add(lbl, BorderLayout.EAST);
 
-		// Linke seite
-		fuellFeld2 = new JTextField("123456789123456789");// "12345678912345678912345678912345678912345"/
+		befehlFeld.setPreferredSize(new Dimension(200, 20));
+		befehlFeld.setMinimumSize(new Dimension(100, 20));
+		gbc.gridx = 2;
+		gbc.gridy = 0;
 
-		fuellFeld2.setEnabled(false);
-		fuellFeld2.setBackground(Color.LIGHT_GRAY);
-		fuellFeld2.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		JLabel lbl2 = new JLabel(" Hier Start- und Endpositon eingeben. ");
+		lbl.add(lbl2, gbc);
+		gbc.gridy++;
+		lbl.add(befehlFeld, gbc);
+		gbc.gridy++;
+		lbl.add(ziehen, gbc);
+		gbc.gridy++;
+		lbl.add(new JLabel(" "), gbc);
+		gbc.gridy++;
+		JLabel lbl3 = new JLabel(" Ki ziehen lassen. ");
+		lbl.add(lbl3, gbc);
+		gbc.gridy++;
+		lbl.add(kiziehen, gbc);
+		gbc.gridy++;
 
-		fuellFeldx = new JTextField("123456789123456789");// "12345678912345678912345678912345678912345"/
-
-		fuellFeldx.setEnabled(false);
-		fuellFeldx.setBackground(Color.LIGHT_GRAY);
-		fuellFeldx.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		JPanel linksPanel = new JPanel(new GridLayout(2, 0));
-		linksPanel.add(fuellFeld2);
-		linksPanel.add(fuellFeldx);
-
-		// hauptf.add(linksPanel, BorderLayout.WEST);
 		setfeldgroesse(feldgroesse);
 
 		hauptf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		hauptf.setVisible(true);
 		hauptf.setResizable(false);
-		// addComponentsToPane(hauptf.getContentPane());
 
 	}
 
@@ -758,8 +758,6 @@ public class GUI extends JFrame {
 			s.starten();
 			log("Das Spiel beginnt.");
 			log(s.getAmZug() + " beginnt.");
-			fuellFeld2.setBackground(Color.LIGHT_GRAY);
-			fuellFeldx.setBackground(Color.LIGHT_GRAY);
 		} else {
 
 		}
@@ -995,7 +993,7 @@ public class GUI extends JFrame {
 
 		for (int zeile = buttonArray.length - 1; zeile >= 0; zeile--) {
 			for (int spalte = 0; spalte <= buttonArray[zeile].length - 1; spalte++) {
-				buttonArray[zeile][spalte].setBackground(Color.white);
+				buttonArray[zeile][spalte].setBackground( new Color(250, 225, 175,227));
 				hauptp.add(buttonArray[zeile][spalte]);
 			}
 		}
