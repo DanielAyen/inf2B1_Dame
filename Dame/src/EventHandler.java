@@ -133,7 +133,7 @@ public class EventHandler implements ActionListener {
 
 			break;
 
-		case "Ki Ziehen":
+		case "Ki ziehen":
 			gui.kiSpieleruebergeben();
 			break;
 

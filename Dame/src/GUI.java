@@ -282,7 +282,7 @@ public class GUI extends JFrame {
 		ziehen.addActionListener(eh);
 		lbl.add(ziehen);
 
-		kiziehen = new JButton("Ki Ziehen");
+		kiziehen = new JButton("Ki ziehen");
 		kiziehen.setEnabled(false);
 		kiziehen.addActionListener(eh);
 		lbl.add(kiziehen);
@@ -906,7 +906,7 @@ public class GUI extends JFrame {
 
 			ziehen.setEnabled(false);
 			kiziehen.setEnabled(false);
-			
+
 			log(" (╯°□°)╯︵ ┻━┻");
 
 			JOptionPane.showMessageDialog(hauptf, " \t\t\t\t(╯°□°)╯︵ ┻━┻\nSpieler " + sp.getName() + " hat gewonnen!\n Es wurden " + anzahlzüge + "  Züge gemacht.", "Ein Spieler hat das Spiel gewonnen!", JOptionPane.WARNING_MESSAGE);
