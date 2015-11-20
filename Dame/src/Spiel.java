@@ -65,6 +65,7 @@ public class Spiel implements iBediener, Serializable {
 	private boolean geschlagen = false;
 	private boolean kannWeiterSchlagen = false;
 	private int counter = 0;
+	private Spieler gewonnenerSpieler = null;
 
 	private Spielbrett brett;
 	private Spieler spieler;
@@ -1106,45 +1107,21 @@ public class Spiel implements iBediener, Serializable {
 	private void spielerHatGewonnen(FarbEnum farbe) {
 
 		if (s1.getFarbe() == farbe) {
-
+			gewonnenerSpieler = s1;
 			System.out.println("Spieler " + s1.getName() + " hat das Spiel gewonnen!");
-			try {
-				Thread.sleep(1000);
-
-				System.err.println("\n  (╯°□°)╯︵ ┻━┻ \n");
-				System.out.println("Spieler " + s2.getName() + " flipped the table!");
-
-				// throw new RuntimeException("Spieler " + s2.getName() +
-				// " flipped the table!");
-
-			} catch (InterruptedException e) {
-
-			}
-
-			System.exit(0);
 
 		} else {
-
+			gewonnenerSpieler = s2;
 			System.out.println("Spieler " + s2.getName() + " hat das Spiel gewonnen!");
-			try {
-				Thread.sleep(1000);
-
-				System.err.println("\n  (╯°□°)╯︵ ┻━┻ \n");
-				System.out.println(" Spieler " + s1.getName() + " flipped the table!");
-
-				// throw new RuntimeException("Spieler " + s2.getName() +
-				// " flipped the table!");
-
-			} catch (InterruptedException e) {
-
-			}
-
-			System.exit(0);
 
 		}
 
 	}
 
+	public Spieler getGewonnenerSpieler(){
+		return gewonnenerSpieler;
+	}
+	
 	/**
 	 * methode zum erstellen der Spielfiguren
 	 *
@@ -1826,7 +1803,7 @@ public class Spiel implements iBediener, Serializable {
 			// private Spielbrett brett;
 			// Spieler spieler=null;
 			// FarbEnum farbeAmZug = null;
-
+			gewonnenerSpieler = null;
 			s1.spielerLoeschen();
 			s2.spielerLoeschen();
 			brett.brettLoeschen();
