@@ -525,8 +525,7 @@ public class Spiel implements iBediener, Serializable {
 		// return 1 figur bewegen
 		// return 2 figur schlagen
 		// return -1 Zug nicht gueltig
-		
-		
+
 		Spielfigur fig = brett.getBrettFeldIndex(xa, ya).getSpielfigur();
 		FarbEnum farbe = fig.getFarbe();
 
@@ -557,7 +556,7 @@ public class Spiel implements iBediener, Serializable {
 		}
 
 		if (!fig.getDame(fig)) {
-			if (farbe == FarbEnum.SCHWARZ && xa > xn && tempX==1&&tempY==1) {
+			if (farbe == FarbEnum.SCHWARZ && xa > xn && tempX == 1 && tempY == 1) {
 
 				if (!brett.getBrettFeldIndex(xn, yn).getIstBelegt()) {
 					System.err.println("Nach hinten ziehen ist mit einem Stein nicht erlaubt!ssiilikkSchwarz");
@@ -568,7 +567,7 @@ public class Spiel implements iBediener, Serializable {
 		}
 
 		if (!fig.getDame(fig)) {
-			if (farbe == FarbEnum.WEIß && xa < xn && tempX==1&&tempY==1) {
+			if (farbe == FarbEnum.WEIß && xa < xn && tempX == 1 && tempY == 1) {
 
 				if (!brett.getBrettFeldIndex(xn, yn).getIstBelegt()) {
 					System.err.println("Nach hinten ziehen ist mit einem Stein nicht erlaubt!ssssssilllliiikkWeiss");
@@ -576,8 +575,8 @@ public class Spiel implements iBediener, Serializable {
 				}
 			}
 		}
-		
-		//Spielfigur fig = brett.getBrettFeldIndex(xa, ya).getSpielfigur();
+
+		// Spielfigur fig = brett.getBrettFeldIndex(xa, ya).getSpielfigur();
 
 		int hitX = (xa + xn) / 2;
 		int hitY = (ya + yn) / 2;
@@ -1143,10 +1142,10 @@ public class Spiel implements iBediener, Serializable {
 
 	}
 
-	public Spieler getGewonnenerSpieler(){
+	public Spieler getGewonnenerSpieler() {
 		return gewonnenerSpieler;
 	}
-	
+
 	/**
 	 * methode zum erstellen der Spielfiguren
 	 *
@@ -1878,14 +1877,14 @@ public class Spiel implements iBediener, Serializable {
 				dameWerden();
 			}
 			if (zugPruefenKI == 2) {
-				figurSchlagen(zuge[0], zuge[1], zuge[2], zuge[3]);
-				setZugFurLog(zuge[0], zuge[1], zuge[2], zuge[3]);
-				Spielfigur figur = brett.getBrettFeldIndex((zuge[2]), (zuge[3])).getSpielfigur();
-				if(!figur.getDame(figur)){
-					if(zuge[2]==0 || zuge[2]==brett.getBrettGroesse()-1 ){
+				Spielfigur figur = brett.getBrettFeldIndex((zuge[0]), (zuge[1])).getSpielfigur();
+				if (!figur.getDame(figur)) {
+					if (zuge[2] == 0 || zuge[2] == brett.getBrettGroesse() - 1) {
 						k1.setHatGeschlagen(false);
 					}
 				}
+				figurSchlagen(zuge[0], zuge[1], zuge[2], zuge[3]);
+				setZugFurLog(zuge[0], zuge[1], zuge[2], zuge[3]);
 				dameWerden();
 			}
 			if (k1.hatGeschlagen()) {
@@ -1903,12 +1902,20 @@ public class Spiel implements iBediener, Serializable {
 							dameWerden();
 						}
 						if (zugdanachPruefenKI == 2) {
+							Spielfigur figure = brett.getBrettFeldIndex((zugee[0]), (zugee[1])).getSpielfigur();
+							if (!figur.getDame(figure)) {
+								System.out.println("ich bin keine dame");
+								if (zugee[2] == 0 || zugee[2] == brett.getBrettGroesse() - 1) {
+									k1.setHatGeschlagen(false);
+									System.out.println("ich werde anhalten");
+								}
+							}
 							figurSchlagen(zugee[0], zugee[1], zugee[2], zugee[3]);
 							setZugFurLog(zugee[0], zugee[1], zugee[2], zugee[3]);
 							dameWerden();
 						}
 					}
-				} while (tmpZug != null);
+				} while (tmpZug != null && k1.hatGeschlagen());
 
 			}
 			brett.display();
@@ -1937,14 +1944,14 @@ public class Spiel implements iBediener, Serializable {
 				dameWerden();
 			}
 			if (zugPruefenKI == 2) {
-				figurSchlagen(zuge[0], zuge[1], zuge[2], zuge[3]);
-				setZugFurLog(zuge[0], zuge[1], zuge[2], zuge[3]);
-				Spielfigur figur = brett.getBrettFeldIndex((zuge[2]), (zuge[3])).getSpielfigur();
-				if(!figur.getDame(figur)){
-					if(zuge[2]==0 || zuge[2]==brett.getBrettGroesse()-1 ){
+				Spielfigur figur = brett.getBrettFeldIndex((zuge[0]), (zuge[1])).getSpielfigur();
+				if (!figur.getDame(figur)) {
+					if (zuge[2] == 0 || zuge[2] == brett.getBrettGroesse() - 1) {
 						k2.setHatGeschlagen(false);
 					}
 				}
+				figurSchlagen(zuge[0], zuge[1], zuge[2], zuge[3]);
+				setZugFurLog(zuge[0], zuge[1], zuge[2], zuge[3]);
 				dameWerden();
 			}
 			if (k2.hatGeschlagen()) {
@@ -1962,12 +1969,20 @@ public class Spiel implements iBediener, Serializable {
 							dameWerden();
 						}
 						if (zugdanachPruefenKI == 2) {
+							Spielfigur figure = brett.getBrettFeldIndex((zugee[0]), (zugee[1])).getSpielfigur();
+							if (!figur.getDame(figure)) {
+								System.out.println("ich bin keine dame");
+								if (zugee[2] == 0 || zugee[2] == brett.getBrettGroesse() - 1) {
+									k2.setHatGeschlagen(false);
+									System.out.println("ich werde anhalten");
+								}
+							}
 							figurSchlagen(zugee[0], zugee[1], zugee[2], zugee[3]);
 							setZugFurLog(zugee[0], zugee[1], zugee[2], zugee[3]);
 							dameWerden();
 						}
 					}
-				} while (tmpZug != null);
+				} while (tmpZug != null && k2.hatGeschlagen());
 
 			}
 			brett.display();
