@@ -9,6 +9,8 @@ public class EventHandler implements ActionListener {
 	private GUI gui;// kenntnisbeziehung herstellen!!!
 	private int i = 1;
 	private int anzahlSpiele = 0;
+	private int klickcnt = 0;
+	private String startp;
 
 	/**
 	 *
@@ -27,13 +29,81 @@ public class EventHandler implements ActionListener {
 
 	}
 
+	private boolean prüfen(int zeile, int spalte) {
+
+		if (!gui.getBrett().getBrettFeldIndex(zeile, spalte).getIstSchwarz()) {
+			// gui.log("Nur schwarze Felder möglich.");
+
+			klickcnt = 0;
+			gui.log("Nur schwarze Felder möglich.\nNeue Startposition wählen.");
+
+			return false;
+		}
+
+		if (gui.getBrett().getBrettFeldIndex(zeile, spalte).getIstBelegt() && klickcnt == 1) {
+			// gui.log("Auf Figuren steigen geht nicht!");
+
+			klickcnt = 0;
+			gui.log("Auf Figuren steigen geht nicht!\nNeue Startposition wählen.");
+
+			return false;
+		}
+
+		if (gui.getBrett().getBrettFeldIndex(zeile, spalte).getIstBelegt() && gui.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur().getFarbe() != gui.ggetAmZug() && klickcnt == 0) {
+			// gui.log("Nimm deine eigenen Figuren!");
+
+			klickcnt = 0;
+			gui.log("Nimm deine eigenen Figuren!\nNeue Startposition wählen.");
+
+			return false;
+		}
+
+		if (!gui.getBrett().getBrettFeldIndex(zeile, spalte).getIstBelegt() && klickcnt == 0) {
+			// gui.log("Es ist keine Figur auf dem Feld!");
+
+			klickcnt = 0;
+			gui.log("Es ist keine Figur auf dem Feld!\nNeue Startposition wählen.");
+
+			return false;
+		}
+		return true;
+	}
+
 	/**
 	 * Der action Listener verarbeitet alle aktionen
 	 */
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		// try {
+
 		switch (ae.getActionCommand()) {
+
+		case "":
+
+			if (gui.getK1() != null && gui.getK1().getSpieler().getFarbe() == gui.ggetAmZug() || gui.getK2() != null && gui.getK2().getSpieler().getFarbe() == gui.ggetAmZug()) {
+				gui.log("Für die KI ziehen geht nicht!");
+			} else {
+
+				for (int zeile = gui.getButtonArray().length - 1; zeile >= 0; zeile--) {
+					for (int spalte = 0; spalte < gui.getButtonArray()[zeile].length; spalte++) {
+
+						if (ae.getSource() == gui.getButtonArray()[zeile][spalte]) {
+
+							if (prüfen(zeile, spalte)) {
+								gui.log("Gedrücktes Feld: " + gui.getButtonArray()[zeile][spalte].getToolTipText());
+								klickcnt++;
+								if (klickcnt == 2) {
+									gui.posWeitergeben(startp, gui.getButtonArray()[zeile][spalte].getToolTipText());
+									klickcnt = 0;
+									startp = null;
+								}
+								startp = gui.getButtonArray()[zeile][spalte].getToolTipText();
+
+							}
+						}
+					}
+				}
+			}
+			break;
 
 		case "Spiel laden":
 			gui.spielLaden();

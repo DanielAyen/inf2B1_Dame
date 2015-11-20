@@ -340,7 +340,8 @@ public class GUI extends JFrame {
 					// 70);
 					String id = "" + (char) (65 + spalte) + (zeile + 1);
 					buttonArray[zeile][spalte].setToolTipText(id);
-
+					buttonArray[zeile][spalte].addActionListener(eh);
+					buttonArray[zeile][spalte].setEnabled(false);
 					// buttonArray[zeile][spalte].addMouseListener(new MouseAdapter() {
 					//
 					// @Override
@@ -349,10 +350,7 @@ public class GUI extends JFrame {
 					//
 					// }
 					// });
-
 					// TODO
-					// buttonArray[i][j].addActionListener(eh);
-					// //////// MUSS WIEDER REIN WENN ÜBER BUTTON DRUCK!!
 
 					cnt++;
 					if (ss == false) {
@@ -607,6 +605,7 @@ public class GUI extends JFrame {
 			brettAktualisieren();
 
 			if (s.getAmZug() == FarbEnum.SCHWARZ) {
+
 				log("Schwarz am Zug");
 
 				if (s.getK1() != null) {
@@ -742,6 +741,13 @@ public class GUI extends JFrame {
 	public void startenWeitergeben() {
 		spCnt++;
 		if (spCnt == 2) {
+
+			for (int zeile = 0; zeile < buttonArray.length; zeile++) {
+				for (int spalte = 0; spalte < buttonArray[zeile].length; spalte++) {
+
+					buttonArray[zeile][spalte].setEnabled(true);
+				}
+			}
 
 			ziehen.setEnabled(true);
 			kiziehen.setEnabled(true);
@@ -982,6 +988,21 @@ public class GUI extends JFrame {
 		return hauptf;
 	}
 
+	public KI getK1() {
+		return s.getK1();
+	}
+
+	public KI getK2() {
+		return s.getK2();
+	}
+
+	public FarbEnum ggetAmZug() {
+		return s.getAmZug();
+	}
+	public Spielbrett getBrett(){
+			return s.getBrett();
+	}
+
 	public void setfeldgroesse(int groesse) {
 		feldgroesse = groesse;
 		buttonArray = new JButton[feldgroesse][feldgroesse];
@@ -993,7 +1014,7 @@ public class GUI extends JFrame {
 
 		for (int zeile = buttonArray.length - 1; zeile >= 0; zeile--) {
 			for (int spalte = 0; spalte <= buttonArray[zeile].length - 1; spalte++) {
-				buttonArray[zeile][spalte].setBackground( new Color(250, 225, 175,227));
+				buttonArray[zeile][spalte].setBackground(new Color(250, 225, 175, 227));
 				hauptp.add(buttonArray[zeile][spalte]);
 			}
 		}
