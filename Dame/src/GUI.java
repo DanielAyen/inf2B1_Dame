@@ -678,6 +678,7 @@ public class GUI extends JFrame {
 		} else {
 			log("Dieser Zug war nicht möglich");
 		}
+
 	}
 
 	public void kiSpieleruebergeben() {
@@ -732,6 +733,9 @@ public class GUI extends JFrame {
 	 */
 
 	public void brettAktualisieren() {
+
+		gewonnen(s.getGewonnenerSpieler());
+
 		for (int zeile = 0; zeile <= buttonArray.length - 1; zeile++) {
 			for (int spalte = 0; spalte <= buttonArray[zeile].length - 1; spalte++) {
 				if (s.getBrett().getBrettFeldIndex(zeile, spalte).getIstSchwarz()) {
@@ -896,6 +900,59 @@ public class GUI extends JFrame {
 	// bediener.mailSenden();
 	// }
 
+	public void gewonnen(Spieler sp) {
+
+		if (sp != null) {
+			log(" (╯°□°)╯︵ ┻━┻");
+
+			JOptionPane.showMessageDialog(hauptf, " \t\t\t\t(╯°□°)╯︵ ┻━┻\nSpieler " + sp.getName() + " hat gewonnen!", "Ein Spieler hat das Spiel gewonnen!", JOptionPane.WARNING_MESSAGE);
+
+			loeschen();
+
+		}
+
+		else {
+			return;
+		}
+
+	}
+
+	public void loeschen() {
+		s.allesLoeschen();
+		spielerFrame.dispose();
+		spCnt = 0;
+		aufbauen(feldgroesse);
+		brettAktualisieren();
+		ziehen.setEnabled(false);
+		kiziehen.setEnabled(false);
+		logClear();
+		for (int zeile = 0; zeile < buttonArray.length; zeile++) {
+			for (int spalte = 0; spalte < buttonArray[zeile].length; spalte++) {
+				buttonArray[zeile][spalte].setEnabled(false);
+			}
+		}
+	}
+
+	public void setfeldgroesse(int groesse) {
+		feldgroesse = groesse;
+		buttonArray = new JButton[feldgroesse][feldgroesse];
+		hauptp = new JPanel(new GridLayout(feldgroesse, feldgroesse, 0, 0));
+		hauptp.setOpaque(true);
+		hauptp.setVisible(true);
+
+		feldButtons();
+
+		for (int zeile = buttonArray.length - 1; zeile >= 0; zeile--) {
+			for (int spalte = 0; spalte <= buttonArray[zeile].length - 1; spalte++) {
+				buttonArray[zeile][spalte].setBackground(new Color(250, 225, 175, 227));
+				hauptp.add(buttonArray[zeile][spalte]);
+			}
+		}
+		hauptf.add(hauptp, BorderLayout.CENTER);
+		hauptp.repaint();
+		hauptf.repaint();
+	}
+
 	// ///////GETTER UND SETTER ////////////////
 	/**
 	 * getter acht
@@ -1049,42 +1106,6 @@ public class GUI extends JFrame {
 
 	public Spielbrett getBrett() {
 		return s.getBrett();
-	}
-
-	public void loeschen() {
-		s.allesLoeschen();
-		spielerFrame.dispose();
-		spCnt = 0;
-		aufbauen(feldgroesse);
-		brettAktualisieren();
-		ziehen.setEnabled(false);
-		kiziehen.setEnabled(false);
-		logClear();
-		for (int zeile = 0; zeile < buttonArray.length; zeile++) {
-			for (int spalte = 0; spalte < buttonArray[zeile].length; spalte++) {
-				buttonArray[zeile][spalte].setEnabled(false);
-			}
-		}
-	}
-
-	public void setfeldgroesse(int groesse) {
-		feldgroesse = groesse;
-		buttonArray = new JButton[feldgroesse][feldgroesse];
-		hauptp = new JPanel(new GridLayout(feldgroesse, feldgroesse, 0, 0));
-		hauptp.setOpaque(true);
-		hauptp.setVisible(true);
-
-		feldButtons();
-
-		for (int zeile = buttonArray.length - 1; zeile >= 0; zeile--) {
-			for (int spalte = 0; spalte <= buttonArray[zeile].length - 1; spalte++) {
-				buttonArray[zeile][spalte].setBackground(new Color(250, 225, 175, 227));
-				hauptp.add(buttonArray[zeile][spalte]);
-			}
-		}
-		hauptf.add(hauptp, BorderLayout.CENTER);
-		hauptp.repaint();
-		hauptf.repaint();
 	}
 
 }

@@ -231,7 +231,7 @@ public class EventHandler implements ActionListener {
 
 					gui.spielerWeitergeben(name, farbe, istKi);
 					gui.steineErstellen(farbe);
-
+					gui.startenWeitergeben();
 					if (istKi == false) {
 						gui.log("Mensch " + name + " mit der Farbe\n" + farbe + " erstellt.");
 					} else {
@@ -242,7 +242,7 @@ public class EventHandler implements ActionListener {
 					gui.log(" Farbe wählen!");
 				}
 			}
-			gui.startenWeitergeben();
+			
 			break;
 
 		case "Anzeigen":
