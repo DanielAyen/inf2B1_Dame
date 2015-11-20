@@ -141,11 +141,13 @@ public class EventHandler implements ActionListener {
 			if (anzahlSpiele == 1) {
 
 				gui.loeschen();
+				gui.log("Neues Spiel wird erstellt.");
 				anzahlSpiele--;
 				i = 1;
 				klickcnt = 0;
 				gui.log("Neues Spiel aufgebaut.");
 				gui.spielerErstellen();
+				anzahlSpiele++;
 				break;
 			}
 			anzahlSpiele++;
@@ -242,7 +244,7 @@ public class EventHandler implements ActionListener {
 					gui.log(" Farbe wählen!");
 				}
 			}
-			
+
 			break;
 
 		case "Anzeigen":
