@@ -182,7 +182,7 @@ public abstract class KI implements Serializable {
 			int tmpx4 = zeile;
 			int tmpy4 = spalte;
 			// ist schräger schritt nach OBEN RECHTS möglich?
-			while (tmpx1 + 2 > 0 && tmpx1 + 2 <= (brett.getBrettGroesse() - 1) && (tmpy1 + 2) < brett.getBrettGroesse()) {
+			while (tmpx1 + 2 <= (brett.getBrettGroesse() - 1) && (tmpy1 + 2) < brett.getBrettGroesse()) {
 				Spielfeld zugFeld1 = brett.getBrettFeldIndex(tmpx1 + 1, (tmpy1 + 1));
 				if (zugFeld1.getIstBelegt() == true) {
 					Spielfigur figurAufBelegtemFeld = zugFeld1.getSpielfigur();
@@ -210,7 +210,7 @@ public abstract class KI implements Serializable {
 			}
 
 			// ist schräger schritt nach OBEN LINKS möglich?
-			while (tmpx2 + 2 > 0 && tmpx2 + 2 <= (brett.getBrettGroesse() - 1) && tmpy2 - 2 >= 0) {
+			while (tmpx2 + 2 <= (brett.getBrettGroesse() - 1) && tmpy2 - 2 >= 0) {
 				Spielfeld zugFeld1 = brett.getBrettFeldIndex(tmpx2 + 1, (tmpy2 - 1));
 				if (zugFeld1.getIstBelegt() == true) {
 					Spielfigur figurAufBelegtemFeld = zugFeld1.getSpielfigur();
@@ -237,7 +237,7 @@ public abstract class KI implements Serializable {
 			}
 			// wäre ein schritt nach UNTEN noch im spielbrett?
 			// ist schräger schritt nach UNTEN RECHTS möglich?
-			while (tmpx3 - 2 > 0 && tmpx3 - 2 <= (brett.getBrettGroesse() - 1) && (tmpy3 + 2) < brett.getBrettGroesse()) {
+			while (tmpx3 - 2 >= 0 && (tmpy3 + 2) < brett.getBrettGroesse()) {
 				Spielfeld zugFeld1 = brett.getBrettFeldIndex(tmpx3 - 1, (tmpy3 + 1));
 				if (zugFeld1.getIstBelegt() == true) {
 					Spielfigur figurAufBelegtemFeld = zugFeld1.getSpielfigur();
@@ -264,7 +264,7 @@ public abstract class KI implements Serializable {
 			}
 
 			// ist schräger schritt nach UNTEN LINKS möglich?
-			while (tmpx4 - 2 > 0 && tmpx4 - 2 <= (brett.getBrettGroesse() - 1) && tmpy4 - 2 >= 0) {
+			while (tmpx4 - 2 > 0 && tmpy4 - 2 >= 0) {
 				Spielfeld zugFeld1 = brett.getBrettFeldIndex(tmpx4 - 1, (tmpy4 - 1));
 				if (zugFeld1.getIstBelegt() == true) {
 					Spielfigur figurAufBelegtemFeld = zugFeld1.getSpielfigur();
