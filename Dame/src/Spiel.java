@@ -63,6 +63,8 @@ public class Spiel implements iBediener, Serializable {
 	private boolean schwarzvergeben = false;
 	private boolean weissvergeben = false;
 	private boolean geschlagen = false;
+	private boolean kannWeiterSchlagen=false;
+	private int counter=0;
 
 	private Spielbrett brett;
 	private Spieler spieler;
@@ -1092,6 +1094,7 @@ public class Spiel implements iBediener, Serializable {
 	 * zug beenden
 	 */
 	private void zugBeenden() {// TODO
+		geschlagen=false;
 		if (getAmZug() == FarbEnum.SCHWARZ) {
 			setAmZug(FarbEnum.WEIß);
 		} else {
@@ -1615,130 +1618,223 @@ public class Spiel implements iBediener, Serializable {
 		}
 
 	}
-
+	
 	public boolean ziehen(String startp, String endp) {
-
 		if (!spiellaeuft) {
-			System.err.println("Spiel hat noch nicht begonnen! Zurueck in Hauptmenue");
+			System.err
+					.println("Spiel hat noch nicht begonnen! Zurueck in Hauptmenue");
 			return false;
 		} else {
 			brett.display();
+			kannWeiterSchlagen = false;
 
-			// Startposition fragen
+			// Diese Methode schreibt alle Figuren die schlagen
+			// koennen in die FigurDieSchlagenKoennen ArrayList
+			ermittleAlleSpielfiguren();
 
+			// splittet den String zb.A1 in char und int und
+			// ueberprueft auf Gueltigkeit
 			if (pruefeStartposition(startp) == false) {
 				return false;
 			}
-			int[] tmp = moeglicheZuegeStartposition(startC, startI);
-			int tempZuegeLaufen = tmp[0];
-			int tempZuegeSchlagen = tmp[1];
-			System.out.println("Anzahl Zuege Laufen: " + tempZuegeLaufen + " Anzahl Zuege Schlagen: " + tempZuegeSchlagen);
 
-			if (s1.getAlleFiguren().size() == 1 && s1.getFarbe() == getAmZug() && (tempZuegeLaufen == 0 && tempZuegeSchlagen == 0)) {
+			// Wenn geschlagen und nochmals ziehen eingegeben wurde,
+			// wird die Eingabe Startposition auf Gueltigkeit
+			// ueberpruft, heisst Startposition muss die Endposition
+			// vom letzten Zug sein
+			if (geschlagen == true
+					&& (startC != startCNS || startI != startINS)) {
+				// System.out.println("startC: " + startC
+				// + " |startCNS: " + startCNS + " / startI: "
+				// + startI + "|startINS: " + startINS);
+				System.out.println("Du  musst mit der Figur "
+						+ brett.gibBrettFeldSchachnotation(startINS, startCNS)
+						+ " ziehen");
+				startC = 0;
+				startI = 0;
+				return false;
+			}
+
+			// speichert die moeglichen Zuege int tmpS. [0] fuer
+			// Laufen, [1 fuer Schlagen]
+			int[] tmpS = moeglicheZuegeStartposition(startC, startI);
+			int tempZuegeLaufen = tmpS[0];
+			int tempZuegeSchlagen = tmpS[1];
+			System.out.println("Anzahl Zuege Laufen: " + tempZuegeLaufen + " "
+					+ FigurenLaufen.toString() + "\nAnzahl Zuege Schlagen: "
+					+ tempZuegeSchlagen + " " + FigurenSchlagen.toString());
+
+			// Wenn eine Spielfigur uebrig und keine gueltigen Zuege
+			// mehr vorhanden, dann hat Spieler 2 gewonnen
+			if (s1.getAlleFiguren().size() == 1 && s1.getFarbe() == getAmZug()
+					&& (tempZuegeLaufen == 0 && tempZuegeSchlagen == 0)) {
 				// spieler 2 gewinnt
 				System.err.println("Du hast keine Zugmoeglichkeiten mehr.");
 				spielerHatGewonnen(s2.getFarbe());
 				return false;
 			}
-			if (s2.getAlleFiguren().size() == 1 && s2.getFarbe() == getAmZug() && (tempZuegeLaufen == 0 && tempZuegeSchlagen == 0)) {
+
+			// Wenn eine Spielfigur uebrig und keine gueltigen Zuege
+			// mehr vorhanden, dann hat Spieler 1 gewonnen
+			if (s2.getAlleFiguren().size() == 1 && s2.getFarbe() == getAmZug()
+					&& (tempZuegeLaufen == 0 && tempZuegeSchlagen == 0)) {
 				// spieler 1 gewinnt
 				System.err.println("Du hast keine Zugmoeglichkeiten mehr.");
 				spielerHatGewonnen(s1.getFarbe());
 				return false;
 			}
+
+			// Wenn von der eingegebenen Startposition keine Zuege
+			// moeglich
 			if ((tempZuegeLaufen == 0 && tempZuegeSchlagen == 0)) {
-				System.err.println("Mit dieser Figur sind keine Zuege moeglich!");
+				System.err
+						.println("Mit dieser Figur sind keine Zuege moeglich! zurueck ins Menue");
 				System.out.println("Gib ziehen ein.");
 				return false;
 			}
 
-			// Endpos fragen
-			System.out.println("Eingegebene Startposition: " + brett.getBrettFeldIndex(startC, startI).getId() + "\n");
+			System.out.println("Eingegebene Startposition: "
+					+ brett.getBrettFeldIndex(startC, startI).getId() + "\n");
 
-			endC = wandleUmvString(endp)[0];
-			endI = wandleUmvString(endp)[1];
-			if (wandleUmvString(endp)[2] == -1) {
-				System.err.println("Falsche Eingabe, zurueck im Menü");
+			// splittet den String zb.A1 in char und int und
+			// ueberprueft auf Gueltigkeit
+			if (pruefeEndposition(endp) == false) {
 				return false;
 			}
 
-			System.out.println("Eingegebene Endposition: " + brett.getBrettFeldIndex(endC, endI).getId() + "\n");
+			System.out.println("Eingegebene Endposition: "
+					+ brett.getBrettFeldIndex(endC, endI).getId() + "\n");
 
+			// Ueberprueft den Zug auf Gueltigkeit
 			int zugPruefen = zugPruefen(startC, startI, endC, endI);
 			// zugPruefen == 1 Laufen
 			// zugPruefen == 2 Schlagen
 			// zugPruefen == -1 Zug ungueltig
+
 			if (zugPruefen == 1) {
-				figurBewegen(startC, startI, endC, endI);
-				dameWerden();
-				//
-				// zugBeenden();
-				// System.out.println("Der Spieler mit der Farbe: " + getAmZug() +
-				// " ist nun am Zug.");
-				// s
-				zugBeenden();
-				return true;
-			}
-			if (zugPruefen == 2) {
-				figurSchlagen(startC, startI, endC, endI);
-				if (moeglicheZuegeStartposition(endC, endI)[1] == 0) {
+				// TODO
+				if (geschlagen == true) {
 
-					dameWerden();
-					//
-					// zugBeenden();
-					// System.out.println("Der Spieler mit der Farbe: " + getAmZug() +
-					// " ist nun am Zug.");
-					//
-
-					return true;
+					int anzFDSK = FigurDieSchlagenKoennen.size();
+					for (int i = 0; i < anzFDSK; i++) {
+						if (endC == FigurDieSchlagenKoennen.get(i).getPosX()
+								&& endI == FigurDieSchlagenKoennen.get(i)
+										.getPosY()) {
+							counter++;
+						}
+					}
+					if (counter > 0) {
+						geschlagen = false;
+						counter = 0;
+						figurBewegen(startC, startI, endC, endI);
+						dameWerden();
+					} else {
+						System.out.println(geschlagen);
+						System.out.println("Du darfst mit der Figur "
+								+ brett.gibBrettFeldSchachnotation(startINS,
+										startCNS) + " nurnoch schlagen!");
+						// System.out.println("startC: " + startC
+						// + " |startCNS: " + startCNS +
+						// " / startI: "
+						// + startI + "|startINS: " + startINS);
+						System.out.println("Gib ziehen ein.");
+						return false;
+					}
 				}
 
-				// geschlagen true braucht eigene methode
+				// TODO
 
-				// if (geschlagen == true) {
-				// if (moeglicheZuegeStartposition(endC, endI)[1] != 0) {
-				// System.out.println("Weiterziehen (w) oder beenden (b)?");
-				// String entscheidung = reader.readLine();
-				//
-				// if (entscheidung.equals("w")) {
-				// startC = endC;
-				// startI = endI;
-				// // TODO ziehen nur mit der Bedingung zu
-				// // schlagen
-				// System.out.println("Sie duerfen nochmals ziehen. Geben sie die Endposition ein");
-				// geschlagen = false;
-				//
-				// break;
-				// }
-				// if (entscheidung.equals("b")) {
-				// System.out.println("Die Figur " + brett.getBrettFeldIndex(endC,
-				// endI).getSpielfigur() + " wird entfernt(Pusten)!");
-				// pusten(brett.getBrettFeldIndex(endC, endI).getSpielfigur());
-				// startC = 0;
-				// startI = 0;
-				// endC = 0;
-				// endI = 0;
-				// zugBeenden();
-				// System.out.println("Der Spieler mit der Farbe: " + getAmZug() +
-				// " ist nun am Zug.");
-				// geschlagen = false;
-				// break;
-				// }
-				// }
-				// }
+				if (geschlagen == false) {
+					figurBewegen(startC, startI, endC, endI);
+					dameWerden();
+				}
 
+				// Diese Abfrage muss erfolgen weil Dame kann laufen
+				// und schlagen
+				if (geschlagen == true
+						&& moeglicheZuegeStartposition(endC, endI)[1] != 0) {
+					kannWeiterSchlagen = true;
+					brett.display();
+
+				}
+				if (geschlagen == false && FigurDieSchlagenKoennen.size() != 0) {
+					System.out.println("Die Figur an der Stelle "
+							+ brett.gibBrettFeldSchachnotation(
+									FigurDieSchlagenKoennen.get(0).getPosY(),
+									FigurDieSchlagenKoennen.get(0).getPosX())
+							+ " wird gepustet");
+					pusten(FigurDieSchlagenKoennen.get(0));
+				}
+				zugBeenden();
+				dameWerden();
+				brett.display();
+				System.out.println("Der Spieler mit der Farbe: " + getAmZug()
+						+ " ist nun am Zug.");
+				System.out.println("Gib ziehen ein");
+				return true;
 			}
+
+			if (zugPruefen == 2) {
+				figurSchlagen(startC, startI, endC, endI);
+
+				if (geschlagen == true
+						&& moeglicheZuegeStartposition(endC, endI)[1] != 0) {
+					kannWeiterSchlagen = true;
+					brett.display();
+				}
+
+				dameWerden();
+				zugBeenden();
+				brett.display();
+				System.out.println("Der Spieler mit der Farbe: " + getAmZug()
+						+ " ist nun am Zug.");
+				System.out.println("Gib ziehen ein");
+				return true;
+			}
+
 			if (zugPruefen == -1) {
-				System.out.println("Ungueltiger Zug, versuchs noch einmal.");
+				System.out.println("Gib nochmals ziehen ein.");
 				return false;
 			}
-
-			brett.display();
-			System.out.println("Der Spieler mit der Farbe: " + getAmZug() + " ist nun am Zug.");
-			System.out.println("Gib ziehen ein.");
-			return true;
 		}
+		return false;
+	
+		
 	}
+
+	public boolean kannWeiterZiehen() {
+		if (kannWeiterSchlagen == true) {
+			return true;
+		} else
+			return false;
+	}
+
+	public void willWeiterZiehen() {
+		startCNS = endC;
+		startINS = endI;
+		dameWerden();
+		brett.display();
+		System.out.println("Du darfst nochmals ziehen. Gib ziehen ein");
+	}
+
+	public void willNichtWeiterZiehen() {
+		System.out.println("Die Figur "
+				+ brett.gibBrettFeldSchachnotation(endI, endC)
+				+ " wird entfernt(Pusten)!");
+		pusten(brett.getBrettFeldIndex(endC, endI).getSpielfigur());
+		startC = 0;
+		startI = 0;
+		endC = 0;
+		endI = 0;
+		// Zug beenden setzt geschlagen auf false
+		zugBeenden();
+		dameWerden();
+		brett.display();
+		System.out.println("Der Spieler mit der Farbe: " + getAmZug()
+				+ " ist nun am Zug.");
+		System.out.println("Gib ziehen ein.");
+	}
+	
 
 	public Spielbrett getBrett() {
 		return this.brett;
