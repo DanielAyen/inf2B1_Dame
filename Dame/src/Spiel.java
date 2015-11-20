@@ -525,6 +525,10 @@ public class Spiel implements iBediener, Serializable {
 		// return 1 figur bewegen
 		// return 2 figur schlagen
 		// return -1 Zug nicht gueltig
+		
+		
+		Spielfigur fig = brett.getBrettFeldIndex(xa, ya).getSpielfigur();
+		FarbEnum farbe = fig.getFarbe();
 
 		int diffX = brett.getBrettFeldIndex(xa, ya).getPosX() - brett.getBrettFeldIndex(xn, yn).getPosX();
 		int diffY = brett.getBrettFeldIndex(xa, ya).getPosY() - brett.getBrettFeldIndex(xn, yn).getPosY();
@@ -552,7 +556,28 @@ public class Spiel implements iBediener, Serializable {
 			return -1;
 		}
 
-		Spielfigur fig = brett.getBrettFeldIndex(xa, ya).getSpielfigur();
+		if (!fig.getDame(fig)) {
+			if (farbe == FarbEnum.SCHWARZ && xa > xn && tempX==1&&tempY==1) {
+
+				if (!brett.getBrettFeldIndex(xn, yn).getIstBelegt()) {
+					System.err.println("Nach hinten ziehen ist mit einem Stein nicht erlaubt!ssiilikkSchwarz");
+					return -1;
+				}
+
+			}
+		}
+
+		if (!fig.getDame(fig)) {
+			if (farbe == FarbEnum.WEIß && xa < xn && tempX==1&&tempY==1) {
+
+				if (!brett.getBrettFeldIndex(xn, yn).getIstBelegt()) {
+					System.err.println("Nach hinten ziehen ist mit einem Stein nicht erlaubt!ssssssilllliiikkWeiss");
+					return -1;
+				}
+			}
+		}
+		
+		//Spielfigur fig = brett.getBrettFeldIndex(xa, ya).getSpielfigur();
 
 		int hitX = (xa + xn) / 2;
 		int hitY = (ya + yn) / 2;
