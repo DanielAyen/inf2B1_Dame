@@ -1880,6 +1880,12 @@ public class Spiel implements iBediener, Serializable {
 			if (zugPruefenKI == 2) {
 				figurSchlagen(zuge[0], zuge[1], zuge[2], zuge[3]);
 				setZugFurLog(zuge[0], zuge[1], zuge[2], zuge[3]);
+				Spielfigur figur = brett.getBrettFeldIndex((zuge[2]), (zuge[3])).getSpielfigur();
+				if(!figur.getDame(figur)){
+					if(zuge[2]==0 || zuge[2]==brett.getBrettGroesse()-1 ){
+						k1.setHatGeschlagen(false);
+					}
+				}
 				dameWerden();
 			}
 			if (k1.hatGeschlagen()) {
@@ -1933,6 +1939,12 @@ public class Spiel implements iBediener, Serializable {
 			if (zugPruefenKI == 2) {
 				figurSchlagen(zuge[0], zuge[1], zuge[2], zuge[3]);
 				setZugFurLog(zuge[0], zuge[1], zuge[2], zuge[3]);
+				Spielfigur figur = brett.getBrettFeldIndex((zuge[2]), (zuge[3])).getSpielfigur();
+				if(!figur.getDame(figur)){
+					if(zuge[2]==0 || zuge[2]==brett.getBrettGroesse()-1 ){
+						k2.setHatGeschlagen(false);
+					}
+				}
 				dameWerden();
 			}
 			if (k2.hatGeschlagen()) {
