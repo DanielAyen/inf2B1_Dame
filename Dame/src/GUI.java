@@ -85,9 +85,6 @@ public class GUI extends JFrame {
 	private JPanel hauptp;
 	private JButton[][] buttonArray;
 
-	private JTextField fuellFeldx;
-	private JTextField fuellFeld2;
-
 	private GridBagLayout gbl = new GridBagLayout();
 	private GridBagConstraints gbc = new GridBagConstraints();
 
@@ -379,7 +376,8 @@ public class GUI extends JFrame {
 					// 70);
 					String id = "" + (char) (65 + spalte) + (zeile + 1);
 					buttonArray[zeile][spalte].setToolTipText(id);
-
+					buttonArray[zeile][spalte].addActionListener(eh);
+					buttonArray[zeile][spalte].setEnabled(false);
 					// buttonArray[zeile][spalte].addMouseListener(new MouseAdapter() {
 					//
 					// @Override
