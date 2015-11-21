@@ -133,6 +133,11 @@ public class EventHandler implements ActionListener {
 
 			break;
 
+		case "Zug beenden":
+		
+		gui.zugBeenden();
+		break;
+			
 		case "Ki ziehen":
 			gui.kiSpieleruebergeben();
 			break;

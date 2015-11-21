@@ -496,18 +496,23 @@ public class GUI extends JFrame {
 		hilfe.add(Anzeigen);
 		Anzeigen.addActionListener(eh);
 		menueLeiste.add(hilfe);
-
+		MenuItem Zugbeenden = new MenuItem("Zug beenden");
+		hilfe.add(Zugbeenden);
+		Zugbeenden.addActionListener(eh);
 		return menueLeiste;
 	}
 
 	/**
 	 * zeigt ein hilfefenster
 	 */
+	MenuItem Anzeigen = new MenuItem("Anzeigen");
+
 	public void hilfeAnz() {
 
 		helpframe = new JFrame("Hilfe");
+		helpframe.setLocation(GetScreenWorkingWidth() / 2 - 370, GetScreenWorkingHeight() / 2 - 100);
 		helptxt = new JTextArea(
-				"Um ein neues Spiel zu erstellen, müssen sie im Menu Spiel die Funktion Neues Spiel erstellen wählen  \nAnschließend werden sie aufgefordert zwei Spieler zu erstellen.\n Ein Spieler braucht einen Namen und eine Farbe. Sie können zwischen den Farben Schwarz und Weiß wählen.\nSobald Beide Spieler erstellt wurden, beginnt das Spiel.\nUm einen Stein zu bewegen, geben sie die zu erst die Startposition ein und dann die Endposition, z.B. B8-C7");
+				"Um ein neues Spiel zu erstellen, müssen sie im Menu Spiel die Funktion Neues Spiel erstellen wählen  \nAnschließend werden sie aufgefordert zwei Spieler zu erstellen.\nEin Spieler braucht einen Namen und eine Farbe. Sie können zwischen den Farben Schwarz und Weiß wählen.\nSobald Beide Spieler erstellt wurden, beginnt das Spiel.\nUm einen Stein zu bewegen, geben sie die zu erst die Startposition ein und dann die Endposition, z.B. B8-C7");
 		helptxt.setEditable(false);
 		helppanel = new JPanel();
 		helppanel.setLayout(new GridLayout(1, 1));
@@ -1112,6 +1117,11 @@ public class GUI extends JFrame {
 
 	public Spielbrett getBrett() {
 		return s.getBrett();
+	}
+	
+	public void zugBeenden(){
+		s.zugBeenden();
+		brettAktualisieren();
 	}
 
 }

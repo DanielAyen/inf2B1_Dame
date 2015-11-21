@@ -1118,7 +1118,7 @@ public class Spiel implements iBediener, Serializable {
 	/**
 	 * zug beenden
 	 */
-	private void zugBeenden() {// TODO
+	public void zugBeenden() {// TODO
 		geschlagen = false;
 		if (getAmZug() == FarbEnum.SCHWARZ) {
 			setAmZug(FarbEnum.WEIß);
@@ -1904,10 +1904,8 @@ public class Spiel implements iBediener, Serializable {
 						if (zugdanachPruefenKI == 2) {
 							Spielfigur figure = brett.getBrettFeldIndex((zugee[0]), (zugee[1])).getSpielfigur();
 							if (!figur.getDame(figure)) {
-								System.out.println("ich bin keine dame");
 								if (zugee[2] == 0 || zugee[2] == brett.getBrettGroesse() - 1) {
 									k1.setHatGeschlagen(false);
-									System.out.println("ich werde anhalten");
 								}
 							}
 							figurSchlagen(zugee[0], zugee[1], zugee[2], zugee[3]);
@@ -1971,10 +1969,8 @@ public class Spiel implements iBediener, Serializable {
 						if (zugdanachPruefenKI == 2) {
 							Spielfigur figure = brett.getBrettFeldIndex((zugee[0]), (zugee[1])).getSpielfigur();
 							if (!figur.getDame(figure)) {
-								System.out.println("ich bin keine dame");
 								if (zugee[2] == 0 || zugee[2] == brett.getBrettGroesse() - 1) {
 									k2.setHatGeschlagen(false);
-									System.out.println("ich werde anhalten");
 								}
 							}
 							figurSchlagen(zugee[0], zugee[1], zugee[2], zugee[3]);
