@@ -445,10 +445,11 @@ public abstract class KI implements Serializable {
 	}
 
 	/**
-	 * Überprüft ob ein Stein kurz davor ist Dame zu werden, und gibt diesen dann priorisiert weiter 
+	 * Überprüft ob ein Stein kurz davor ist Dame zu werden, und gibt diesen dann
+	 * priorisiert weiter
 	 *
 	 */
-	
+
 	private ArrayList<int[]> getDameWerden(int zeile, int spalte, Spielfigur figur) {
 		ArrayList<int[]> dameWerden = new ArrayList<int[]>();
 

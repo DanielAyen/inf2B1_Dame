@@ -12,7 +12,7 @@ public class DameTest {
 		
 		iBediener spiel = new Spiel();
 
-		GUI g = new GUI(12);
+		GUI g = new GUI(8);
 			
 		
 		

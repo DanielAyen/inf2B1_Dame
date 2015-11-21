@@ -1830,6 +1830,13 @@ public class Spiel implements iBediener, Serializable {
 			gewonnenerSpieler = null;
 			s1.spielerLoeschen();
 			s2.spielerLoeschen();
+			if (k1 != null) {
+				k1 = null;
+			}
+			if (k2 != null) {
+				k2 = null;
+			}
+
 			brett.brettLoeschen();
 			// k1 = null;
 			// k2 = null;

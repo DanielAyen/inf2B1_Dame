@@ -122,7 +122,7 @@ public class GUI extends JFrame {
 	/**
 	 * zum aufbauen der variablen größe //UNBENUTZT
 	 *
-	 * @return true oder false
+	 * @return true oder falseloeschen
 	 */
 	public boolean spielAufbauen() {
 		if (aufbaucnt != 0) {
@@ -1118,8 +1118,8 @@ public class GUI extends JFrame {
 	public Spielbrett getBrett() {
 		return s.getBrett();
 	}
-	
-	public void zugBeenden(){
+
+	public void zugBeenden() {
 		s.zugBeenden();
 		brettAktualisieren();
 	}
