@@ -69,7 +69,8 @@ public class GUI extends JFrame {
 	private JTextField nameFeld;
 	private JTextField befehlFeld = new JTextField("     ");// 12345678912345678912345678912345678912345/
 	private int ziehenAuswahl;
-	private Spiel s = new Spiel();
+	private iBediener ib = new Spiel();
+	//	private Spiel s = new Spiel();
 	private int aufbaucnt = 1;
 	private JFrame helpframe;
 	private JTextArea helptxt;
@@ -417,7 +418,7 @@ public class GUI extends JFrame {
 	 *          erstellt die steine der bestimmten farbe
 	 */
 	public void steineErstellen(FarbEnum farbe) {
-		Spielbrett brett = s.getBrett();
+		Spielbrett brett = ib.getBrett();
 
 		if (farbe == FarbEnum.SCHWARZ) {
 
@@ -580,7 +581,7 @@ public class GUI extends JFrame {
 	 *          größe
 	 */
 	public void aufbauen(int x) {
-		s.aufbauen(x);
+		ib.aufbauen(x);
 	}
 
 	/**
@@ -591,7 +592,7 @@ public class GUI extends JFrame {
 	 * @param istKi
 	 */
 	public void spielerWeitergeben(String name, FarbEnum farbe, boolean istKi) {
-		s.spielerErstellen(name, farbe, istKi);
+		ib.spielerErstellen(name, farbe, istKi);
 	}
 
 	/**
@@ -603,32 +604,32 @@ public class GUI extends JFrame {
 
 	public void posWeitergeben(String startp, String endp) {// Zug/ziehen/bewegen/..
 
-		if (s.ziehen(startp, endp)) {
+		if (ib.ziehen(startp, endp)) {
 			anzahlzüge++;
 			log("Startposition: " + startp + " Endposition: " + endp);
 
 			brettAktualisieren();
 
-			if (s.kannWeiterZiehen()) {
+			if (ib.kannWeiterZiehen()) {
 				Object[] options = { "JA", "NEIN" };
 				ziehenAuswahl = JOptionPane.showOptionDialog(hauptf, "Willst du weiter ziehen oder nicht?", "Ziehen oder nicht?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 
 				if (ziehenAuswahl == 0) {
 					log("Bitte erneut ziehen.");
 
-					s.willWeiterZiehen();
+					ib.willWeiterZiehen();
 
 					ziehenAuswahl = 0;
 				} else {
 					log("Du wurdest gepustet.");
 
-					s.willNichtWeiterZiehen();
+					ib.willNichtWeiterZiehen();
 
-					if (s.getAmZug() == FarbEnum.SCHWARZ) {
+					if (ib.getAmZug() == FarbEnum.SCHWARZ) {
 
 						log("Schwarz am Zug");
 
-						if (s.getK1() != null) {
+						if (ib.getK1() != null) {
 							ziehen.setEnabled(false);
 							kiziehen.setEnabled(true);
 						} else {
@@ -639,7 +640,7 @@ public class GUI extends JFrame {
 					} else {
 						log("Weiß am Zug");
 
-						if (s.getK2() != null) {
+						if (ib.getK2() != null) {
 							ziehen.setEnabled(false);
 							kiziehen.setEnabled(true);
 						} else {
@@ -653,11 +654,11 @@ public class GUI extends JFrame {
 
 			} else {
 
-				if (s.getAmZug() == FarbEnum.SCHWARZ) {
+				if (ib.getAmZug() == FarbEnum.SCHWARZ) {
 
 					log("Schwarz am Zug");
 
-					if (s.getK1() != null) {
+					if (ib.getK1() != null) {
 						ziehen.setEnabled(false);
 						kiziehen.setEnabled(true);
 					} else {
@@ -668,7 +669,7 @@ public class GUI extends JFrame {
 				} else {
 					log("Weiß am Zug");
 
-					if (s.getK2() != null) {
+					if (ib.getK2() != null) {
 						ziehen.setEnabled(false);
 						kiziehen.setEnabled(true);
 					} else {
@@ -687,17 +688,17 @@ public class GUI extends JFrame {
 
 	public void kiSpieleruebergeben() {
 
-		if (s.kizieh()) {
+		if (ib.kizieh()) {
 			anzahlzüge++;
 
-			if (s.getZugFurLog().size() != 0) {
+			if (ib.getZugFurLog().size() != 0) {
 
-				for (int i = 0; i < s.getZugFurLog().size(); i++) {
+				for (int i = 0; i < ib.getZugFurLog().size(); i++) {
 
-					log(s.getZugFurLog().get(i));
+					log(ib.getZugFurLog().get(i));
 
 				}
-				s.getZugFurLog().clear();
+				ib.getZugFurLog().clear();
 
 			} else {
 
@@ -705,10 +706,10 @@ public class GUI extends JFrame {
 
 			this.brettAktualisieren();
 
-			if (s.getAmZug() == FarbEnum.SCHWARZ) {
+			if (ib.getAmZug() == FarbEnum.SCHWARZ) {
 				log("Schwarz am Zug");
 
-				if (s.getK1() != null) {
+				if (ib.getK1() != null) {
 					ziehen.setEnabled(false);
 					kiziehen.setEnabled(true);
 				} else {
@@ -719,7 +720,7 @@ public class GUI extends JFrame {
 			} else {
 				log("Weiß am Zug");
 
-				if (s.getK2() != null) {
+				if (ib.getK2() != null) {
 					ziehen.setEnabled(false);
 					kiziehen.setEnabled(true);
 				} else {
@@ -739,25 +740,25 @@ public class GUI extends JFrame {
 
 	public void brettAktualisieren() {
 
-		gewonnen(s.getGewonnenerSpieler());
+		gewonnen(ib.getGewonnenerSpieler());
 
 		for (int zeile = 0; zeile <= buttonArray.length - 1; zeile++) {
 			for (int spalte = 0; spalte <= buttonArray[zeile].length - 1; spalte++) {
-				if (s.getBrett().getBrettFeldIndex(zeile, spalte).getIstSchwarz()) {
-					if (!s.getBrett().getBrettFeldIndex(zeile, spalte).getIstBelegt()) {
+				if (ib.getBrett().getBrettFeldIndex(zeile, spalte).getIstSchwarz()) {
+					if (!ib.getBrett().getBrettFeldIndex(zeile, spalte).getIstBelegt()) {
 
 						buttonArray[zeile][spalte].setIcon(felds);
 
 					} else {
 
-						Spielfigur fig = s.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur();
+						Spielfigur fig = ib.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur();
 
 						if (fig.getFarbe() == FarbEnum.SCHWARZ) {
 
-							if (FarbEnum.SCHWARZ == s.getAmZug()) {
+							if (FarbEnum.SCHWARZ == ib.getAmZug()) {
 
 								buttonArray[zeile][spalte].setIcon(figurSG);
-								if (s.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur().getDame(fig)) {
+								if (ib.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur().getDame(fig)) {
 									buttonArray[zeile][spalte].setIcon(dameSG);
 								}
 
@@ -770,10 +771,10 @@ public class GUI extends JFrame {
 							}
 						} else {
 
-							if (FarbEnum.WEIß == s.getAmZug()) {
+							if (FarbEnum.WEIß == ib.getAmZug()) {
 
 								buttonArray[zeile][spalte].setIcon(figurWG);
-								if (s.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur().getDame(fig)) {
+								if (ib.getBrett().getBrettFeldIndex(zeile, spalte).getSpielfigur().getDame(fig)) {
 									buttonArray[zeile][spalte].setIcon(dameWG);
 								}
 							} else {
@@ -808,7 +809,7 @@ public class GUI extends JFrame {
 			ziehen.setEnabled(true);
 			kiziehen.setEnabled(true);
 
-			if (s.getK1() != null && s.getK1().getSpieler().getFarbe() == FarbEnum.WEIß || s.getK2() != null && s.getK2().getSpieler().getFarbe() == FarbEnum.WEIß) {
+			if (ib.getK1() != null && ib.getK1().getSpieler().getFarbe() == FarbEnum.WEIß || ib.getK2() != null && ib.getK2().getSpieler().getFarbe() == FarbEnum.WEIß) {
 
 				ziehen.setEnabled(false);
 
@@ -817,9 +818,9 @@ public class GUI extends JFrame {
 				kiziehen.setEnabled(false);
 			}
 
-			s.starten();
+			ib.starten();
 			log("Das Spiel beginnt.");
-			log(s.getAmZug() + " beginnt.");
+			log(ib.getAmZug() + " beginnt.");
 		} else {
 
 		}
@@ -934,7 +935,7 @@ public class GUI extends JFrame {
 				buttonArray[zeile][spalte].setEnabled(false);
 			}
 		}
-		s.allesLoeschen();
+		ib.allesLoeschen();
 		spielerFrame.dispose();
 		spCnt = 0;
 		anzahlzüge = 0;
@@ -1104,23 +1105,23 @@ public class GUI extends JFrame {
 	}
 
 	public KI getK1() {
-		return s.getK1();
+		return ib.getK1();
 	}
 
 	public KI getK2() {
-		return s.getK2();
+		return ib.getK2();
 	}
 
 	public FarbEnum ggetAmZug() {
-		return s.getAmZug();
+		return ib.getAmZug();
 	}
 
 	public Spielbrett getBrett() {
-		return s.getBrett();
+		return ib.getBrett();
 	}
 
 	public void zugBeenden() {
-		s.zugBeenden();
+		ib.zugBeenden();
 		brettAktualisieren();
 	}
 
