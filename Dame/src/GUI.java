@@ -513,7 +513,7 @@ public class GUI extends JFrame {
 
 		ib.getBrett().getBrettFeldIndex(4, 4).getSpielfigur().setDame(true);
 		ib.getBrett().getBrettFeldIndex(7, 7).getSpielfigur().setDame(true);
-		ib.getBrett().getBrettFeldIndex(12, 12).getSpielfigur().setDame(true);
+		ib.getBrett().getBrettFeldIndex(11, 11).getSpielfigur().setDame(true);
 		ib.getBrett().getBrettFeldIndex(1, 1).getSpielfigur().setDame(true);
 		
 		
