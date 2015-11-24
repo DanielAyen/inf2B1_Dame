@@ -863,7 +863,7 @@ public class GUI extends JFrame {
 	}
 
 	public void spielSpeichernCSV() throws IOException {
-		ib.peichern("MADN Spiel", "CSV");
+		ib.speichern("MADN Spiel", "CSV");
 	}
 
 	public void spielSpeichernSER() throws IOException {
