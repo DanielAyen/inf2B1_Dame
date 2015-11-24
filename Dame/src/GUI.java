@@ -71,7 +71,7 @@ public class GUI extends JFrame {
 	private JTextField befehlFeld = new JTextField("     ");// 12345678912345678912345678912345678912345/
 	private int ziehenAuswahl;
 	private iBediener ib = new Spiel();
-	//	private Spiel s = new Spiel();
+	// private Spiel s = new Spiel();
 	private int aufbaucnt = 1;
 	private JFrame helpframe;
 	private JTextArea helptxt;
@@ -683,6 +683,7 @@ public class GUI extends JFrame {
 			brettAktualisieren();
 		} else {
 			log("Dieser Zug war nicht möglich");
+			brettAktualisieren();
 		}
 
 	}
@@ -732,6 +733,7 @@ public class GUI extends JFrame {
 			}
 		} else {
 			log("Dieser Zug war nicht möglich");
+			brettAktualisieren();
 		}
 	}
 
@@ -857,15 +859,15 @@ public class GUI extends JFrame {
 	}
 
 	public void spielSpeichern() throws IOException {
-		 ib.speichern("MADN Spiel", "PDF");
+		ib.speichern("MADN Spiel", "PDF");
 	}
 
 	public void spielSpeichernCSV() throws IOException {
-		 ib.peichern("MADN Spiel", "CSV");
+		ib.peichern("MADN Spiel", "CSV");
 	}
 
 	public void spielSpeichernSER() throws IOException {
-		 ib.speichern("MADN Spiel", "SER");
+		ib.speichern("MADN Spiel", "SER");
 	}
 
 	public void mailAbfrage() {
@@ -1127,7 +1129,7 @@ public class GUI extends JFrame {
 	}
 
 	public JFrame getMailFrame() {
-		
+
 		return mailFrame;
 	}
 
