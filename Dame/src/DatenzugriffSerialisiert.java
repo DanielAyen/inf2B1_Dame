@@ -24,7 +24,7 @@ public class DatenzugriffSerialisiert implements iDatenzugriff, Serializable {
 	public void speichern(String dateiname, String dateiende, Object o) {
 		ObjectOutputStream oos = null;
 		try {
-			oos = new ObjectOutputStream(new FileOutputStream( "SpielSerialisiert.ser"));
+			oos = new ObjectOutputStream(new FileOutputStream( "DameSER.ser"));
 			oos.writeObject(o);
 		} catch (FileNotFoundException e) {
 			//!// System.err.println("konnte 'out.ser' nicht erzeugen");
@@ -47,7 +47,7 @@ public class DatenzugriffSerialisiert implements iDatenzugriff, Serializable {
 		Object s=null;
 		ObjectInputStream ois = null;
 		try{
-			ois = new ObjectInputStream ( new FileInputStream ("SpielSerialisiert.ser"));
+			ois = new ObjectInputStream ( new FileInputStream ("DameSER.ser"));
 		
 			try {
 				s = ois.readObject();
@@ -75,36 +75,6 @@ public class DatenzugriffSerialisiert implements iDatenzugriff, Serializable {
 
 
 		
-	public Object laden(String dateiname, String dateiende) {
-		Object s=null;
-		ObjectInputStream ois = null;
-		try{
-			ois = new ObjectInputStream ( new FileInputStream ("SpielSerialisiert.ser"));
-		
-			try {
-				s = ois.readObject();
-				//!// System.out.println("Spiel geladen");
-				return s;
-				
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-		}
-		catch (FileNotFoundException e) {
-			//!// System.err.println("konnte 'out.ser' nicht finden");
-		} catch (IOException e) {
-			//!// System.err.println("Fehler bei der Ein-/Ausgabe" + e);
-
-		} finally {
-			try {
-				ois.close();
-			} catch (Exception e) {
-				//!// System.err.println("Fehler beim Schliessen der Datei");
-			}
-		}
-		return null;
-	}
-
-
+	
 		
 	}

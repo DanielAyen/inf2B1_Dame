@@ -119,6 +119,7 @@ public class EventHandler implements ActionListener {
 		case "Serialisiert speichern":
 			try {
 				gui.spielSpeichernSER();
+				gui.log("Spiel wurde gespeichert (SER)");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -305,24 +306,24 @@ public class EventHandler implements ActionListener {
 			});
 
 			// if (anhangPfad1 == null) { // pdf & ser
-			// p.put("anhangPfad1", "MADN Spiel PDF.pdf");
+			// p.put("anhangPfad1", "DamePDF.pdf");
 			// } else {
 			// p.put("anhangPfad1", anhangPfad1);
 			// }
 			// if (anhangName1 == null) {
-			// p.put("anhangName1", "MADN Spiel PDF");
+			// p.put("anhangName1", "DamePDF");
 			// } else {
 			// p.put("anhangName1", anhangName1);
 			// }
 			// if ("SpielSerialisiert.ser" == null) {
 			// p.put("anhangPfad2", "");
 			// } else {
-			// p.put("anhangPfad2", "SpielSerialisiert.ser");
+			// p.put("anhangPfad2", "DameSER.ser");
 			// }
 			// if ("MADN Spiel Serialisiert" == null) {
 			// p.put("anhangNam2", "");
 			// } else {
-			// p.put("anhangNam2", "MADN Spiel Serialisiert");
+			// p.put("anhangNam2", "DameSER");
 			// }
 
 			try {
@@ -331,30 +332,29 @@ public class EventHandler implements ActionListener {
 				message.setFrom(new InternetAddress("madnb4@gmail.com"));
 				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(an));
 				message.setSubject("Dame - Spielstand");
-
 				Multipart mp = new MimeMultipart();
 				MimeBodyPart text = new MimeBodyPart();
 				text.setText("Lieber Spieler! \nIm Anhang findest du deinen Spielstand als PDF oder in serialisierter Form. \nViel Spass weiterhin beim Spielen.");
 
-				// MimeBodyPart anhangPDF = new MimeBodyPart();
-				// try {
-				// anhangPDF.attachFile("MADN Spiel PDF.pdf");
-				// } catch (IOException e) {
-				// gui.log("Fehler beim PDF anhaengen");
-				// // e.printStackTrace();
-				// }
-				//
-				// MimeBodyPart anhangSer = new MimeBodyPart();
-				// try {
-				// anhangSer.attachFile("SpielSerialisiert.ser");
-				// } catch (IOException e) {
-				// gui.log("Fehler beim SER anhaengen");
-				// // e.printStackTrace();
-				// }
+				 MimeBodyPart anhangPDF = new MimeBodyPart();
+				 try {
+				 anhangPDF.attachFile("DamePDF.pdf");
+				 } catch (IOException e) {
+				 gui.log("Fehler beim PDF anhaengen");
+				 // e.printStackTrace();
+				 }
+				
+				 MimeBodyPart anhangSer = new MimeBodyPart();
+				 try {
+				 anhangSer.attachFile("DameSER.ser");
+				 } catch (IOException e) {
+				 gui.log("Fehler beim SER anhaengen");
+				 // e.printStackTrace();
+				 }
 
 				mp.addBodyPart(text);
-				// mp.addBodyPart(anhangPDF);
-				// mp.addBodyPart(anhangSer);
+				 mp.addBodyPart(anhangPDF);
+				 mp.addBodyPart(anhangSer);
 
 				message.setContent(mp);
 

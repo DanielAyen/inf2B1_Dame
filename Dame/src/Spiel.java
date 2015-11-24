@@ -1553,7 +1553,7 @@ public void Speichern(String dateiname, String dateiende)
 
 					int anzFDSK = FigurDieSchlagenKoennen.size();
 					for (int i = 0; i < anzFDSK; i++) {
-						if (endC == FigurDieSchlagenKoennen.get(i).getPosX() && endI == FigurDieSchlagenKoennen.get(i).getPosY()) {
+						if (startCNS == FigurDieSchlagenKoennen.get(i).getPosX() && startINS == FigurDieSchlagenKoennen.get(i).getPosY()) {
 							counter++;
 						}
 					}
@@ -1586,6 +1586,7 @@ public void Speichern(String dateiname, String dateiende)
 				if (geschlagen == true && moeglicheZuegeStartposition(endC, endI)[1] != 0) {
 					kannWeiterSchlagen = true;
 					brett.display();
+					return true;
 
 				}
 				if (geschlagen == false && FigurDieSchlagenKoennen.size() != 0) {

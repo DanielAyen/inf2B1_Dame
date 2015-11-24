@@ -6,8 +6,11 @@ import java.io.InputStreamReader;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfName;
+import com.itextpdf.text.pdf.PdfNumber;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -32,17 +35,19 @@ public class DatenzugriffPDF implements iDatenzugriff {
 	public void speichern(String dateiname, String dateiende, Object o)
 			throws IOException {
 
-		Document doc = new Document();
+		Document doc = new Document(PageSize.LETTER.rotate());
 		try{
-		PdfWriter.getInstance(doc, new FileOutputStream("MADN Spiel PDF.pdf"));
+		PdfWriter.getInstance(doc, new FileOutputStream("DamePDF.pdf"));
 		doc.open();
 
-		Paragraph p = new Paragraph ("Mensch ärgere dich nicht - Spielstand \n"); //Ueberschrift in der PDF
+		Paragraph p = new Paragraph ("Dame - Spielstand \n"); //Ueberschrift in der PDF
 		doc.add(p);
 		Image screenshot = Image.getInstance("screenshotSpiel.png"); //liest den Screenshot ein
-		screenshot.scaleAbsolute(660f, 520f); // setzt Bild auf bestimmte Groesse
-		
+		screenshot.scaleAbsolute(750f, 420f); // setzt Bild auf bestimmte Groesse
+
         doc.add(screenshot);
+        
+       
 
 //		logger.log("PDF wurde erstellt. Projekt bitte refreshen.");
 		doc.close();}
