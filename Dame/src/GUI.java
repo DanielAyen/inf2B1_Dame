@@ -511,6 +511,14 @@ public class GUI extends JFrame {
 
 	public void hilfeAnz() {
 
+		ib.getBrett().getBrettFeldIndex(4, 4).getSpielfigur().setDame(true);
+		ib.getBrett().getBrettFeldIndex(7, 7).getSpielfigur().setDame(true);
+		ib.getBrett().getBrettFeldIndex(12, 12).getSpielfigur().setDame(true);
+		ib.getBrett().getBrettFeldIndex(1, 1).getSpielfigur().setDame(true);
+		
+		
+		
+
 		helpframe = new JFrame("Hilfe");
 		helpframe.setLocation(GetScreenWorkingWidth() / 2 - 370, GetScreenWorkingHeight() / 2 - 100);
 		helptxt = new JTextArea(
