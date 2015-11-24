@@ -859,15 +859,15 @@ public class GUI extends JFrame {
 	}
 
 	public void spielSpeichern() throws IOException {
-		ib.speichern("MADN Spiel", "PDF");
+		ib.Speichern("Dame", "PDF");
 	}
 
 	public void spielSpeichernCSV() throws IOException {
-		ib.speichern("MADN Spiel", "CSV");
+		ib.Speichern("Dame", "CSV");
 	}
 
 	public void spielSpeichernSER() throws IOException {
-		ib.speichern("MADN Spiel", "SER");
+		ib.Speichern("Dame", "SER");
 	}
 
 	public void mailAbfrage() {

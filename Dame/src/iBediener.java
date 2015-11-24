@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 /**
  * 
@@ -52,5 +53,7 @@ public interface iBediener {
 	public void allesLoeschen();
 
 	public void zugBeenden();
+	
+	void Speichern(String dateiname, String dateiende) throws IOException;
 
 }

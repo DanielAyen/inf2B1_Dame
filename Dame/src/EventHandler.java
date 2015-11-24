@@ -115,6 +115,14 @@ public class EventHandler implements ActionListener {
 				}
 			}
 			break;
+			
+		case "Serialisiert speichern":
+			try {
+				gui.spielSpeichernSER();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
 
 		case "Spiel laden":
 			gui.spielLaden();

@@ -1,73 +1,110 @@
-
-import java.io.File;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.io.Serializable;
 
-public class DatenzugriffSerialisiert implements iDatenzugriff {
-	private ObjectOutputStream objectOut = null;
-	private ObjectInputStream objectIn = null;
 
-	public void speichern(File f, Object o) throws IOException {
+public class DatenzugriffSerialisiert implements iDatenzugriff, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Spiel spiel;
+
+//	public DatenzugriffSerialisiert(Spiel spiel) {
+//		this.spiel = spiel;
+//	}
+
+	@Override
+	public void speichern(String dateiname, String dateiende, Object o) {
+		ObjectOutputStream oos = null;
 		try {
-			objectOut.writeObject(o);
+			oos = new ObjectOutputStream(new FileOutputStream( "SpielSerialisiert.ser"));
+			oos.writeObject(o);
 		} catch (FileNotFoundException e) {
-			System.err.println("Konnte Datei nicht erzeugen.");
+			//!// System.err.println("konnte 'out.ser' nicht erzeugen");
 		} catch (IOException e) {
-			System.err.println("Fehler bei Ein-/Ausgabe: " + e);
-		} catch (Exception e) {
-			System.err.println("Fehler beim Schließen");
+			//!// System.err.println("Fehler bei der Ein-/Ausgabe" + e);
+
+		} finally {
+			try {
+				oos.close();
+			} catch (Exception e) {
+				//!// System.err.println("Fehler beim Schliessen der Datei");
+			}
 		}
 	}
-
-	public Object laden(File f) throws IOException {
-
-		try {
-			Object m = objectIn.readObject();
-			return m;
+	
+	
+	
+	@Override
+	public Object laden(String dateiname) {
+		Object s=null;
+		ObjectInputStream ois = null;
+		try{
+			ois = new ObjectInputStream ( new FileInputStream ("SpielSerialisiert.ser"));
+		
+			try {
+				s = ois.readObject();
+				//!// System.out.println("Spiel geladen");
+				return s;
+				
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		catch (FileNotFoundException e) {
+			//!// System.err.println("konnte 'out.ser' nicht finden");
 		} catch (IOException e) {
-			System.err.println("Fehler bei Ein-/Ausgabe: " + e);
-		} catch (ClassNotFoundException e) {
-			System.err.println("Class not found");
+			//!// System.err.println("Fehler bei der Ein-/Ausgabe" + e);
+
+		} finally {
+			try {
+				ois.close();
+			} catch (Exception e) {
+				//!// System.err.println("Fehler beim Schliessen der Datei");
+			}
 		}
 		return null;
 	}
 
-	public void oeffnen(File f) {
-		try {
-			boolean zumLesen = (f.length() != 0);
-			if (zumLesen) {
-				objectIn = new ObjectInputStream(new FileInputStream(f));
-			} else {
-				objectOut = new ObjectOutputStream(new FileOutputStream(f));
+
+		
+	public Object laden(String dateiname, String dateiende) {
+		Object s=null;
+		ObjectInputStream ois = null;
+		try{
+			ois = new ObjectInputStream ( new FileInputStream ("SpielSerialisiert.ser"));
+		
+			try {
+				s = ois.readObject();
+				//!// System.out.println("Spiel geladen");
+				return s;
+				
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
 			}
-		} catch (FileNotFoundException e) {
-			System.err.println("File not found");
+		}
+		catch (FileNotFoundException e) {
+			//!// System.err.println("konnte 'out.ser' nicht finden");
 		} catch (IOException e) {
-			System.err.println("Fehler bei Ein-/Ausgabe: " + e);
-		}
-	}
+			//!// System.err.println("Fehler bei der Ein-/Ausgabe" + e);
 
-	public void schliessen(File f) {
-		if (objectIn != null) {
+		} finally {
 			try {
-				objectIn.close(); //
+				ois.close();
 			} catch (Exception e) {
-				System.err.println("Fehler beim Schließen");
+				//!// System.err.println("Fehler beim Schliessen der Datei");
 			}
 		}
-		if (objectOut != null) {
-			try {
-				objectOut.close(); // 
-			} catch (Exception e) {
-				System.err.println("Fehler beim Schließen");
-			}
-		}
-
+		return null;
 	}
-}
+
+
+		
+	}
