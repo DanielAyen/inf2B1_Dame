@@ -15,6 +15,7 @@ import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
 import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -856,15 +857,15 @@ public class GUI extends JFrame {
 	}
 
 	public void spielSpeichern() throws IOException {
-		// .Speichern("MADN Spiel", "PDF");
+		 ib.speichern("MADN Spiel", "PDF");
 	}
 
 	public void spielSpeichernCSV() throws IOException {
-		// .Speichern("MADN Spiel", "CSV");
+		 ib.peichern("MADN Spiel", "CSV");
 	}
 
 	public void spielSpeichernSER() throws IOException {
-		// .Speichern("MADN Spiel", "SER");
+		 ib.speichern("MADN Spiel", "SER");
 	}
 
 	public void mailAbfrage() {
@@ -1123,6 +1124,11 @@ public class GUI extends JFrame {
 	public void zugBeenden() {
 		ib.zugBeenden();
 		brettAktualisieren();
+	}
+
+	public JFrame getMailFrame() {
+		
+		return mailFrame;
 	}
 
 }

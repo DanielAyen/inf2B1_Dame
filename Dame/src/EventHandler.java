@@ -5,6 +5,17 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+
 public class EventHandler implements ActionListener {
 	private GUI gui;// kenntnisbeziehung herstellen!!!
 	private int i = 1;
@@ -134,10 +145,10 @@ public class EventHandler implements ActionListener {
 			break;
 
 		case "Zug beenden":
-		
-		gui.zugBeenden();
-		break;
-			
+
+			gui.zugBeenden();
+			break;
+
 		case "Ki ziehen":
 			gui.kiSpieleruebergeben();
 			break;
@@ -255,114 +266,105 @@ public class EventHandler implements ActionListener {
 		case "Anzeigen":
 			gui.hilfeAnz();
 			break;
-		//
-		// case "als PDF speichern":
-		// try {
-		// gui.screenshotErstellen();
-		// gui.spielSpeichern();
-		// gui.log("Spiel wurde gespeichert (PDF)");
-		//
-		// } catch (IOException e1) {
-		// gui.log("Fehler beim speichern");// e1.printStackTrace();
-		// }
-		// break;
+
+		case "als PDF speichern":
+			try {
+				gui.screenshotErstellen();
+				gui.spielSpeichern();
+				gui.log("Spiel wurde gespeichert (PDF)");
+
+			} catch (IOException e1) {
+				gui.log("Fehler beim speichern");// e1.printStackTrace();
+			}
+			break;
 
 		case "senden":
-			// String an = gui.getEmpfaenger();
-			//
-			// final String username = "madnb4@gmail.com";
-			// final String password = "DanielJudithVerena";
-			//
-			// Properties p = new Properties();
-			// p.put("mail.smtp.auth", "true");
-			// p.put("mail.smtp.starttls.enable", "true");
-			// p.put("mail.smtp.host", "smtp.gmail.com");
-			// p.put("mail.smtp.port", "587");
-			//
-			// Session session = Session.getInstance(p,
-			// new javax.mail.Authenticator() {
-			// protected PasswordAuthentication getPasswordAuthentication() {
-			// return new PasswordAuthentication(username,
-			// password);
+			String an = gui.getEmpfaenger();
+
+			final String username = "madnb4@gmail.com";
+			final String password = "DanielJudithVerena";
+
+			Properties p = new Properties();
+			p.put("mail.smtp.auth", "true");
+			p.put("mail.smtp.starttls.enable", "true");
+			p.put("mail.smtp.host", "smtp.gmail.com");
+			p.put("mail.smtp.port", "587");
+
+			Session session = Session.getInstance(p, new javax.mail.Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(username, password);
+				}
+			});
+
+			// if (anhangPfad1 == null) { // pdf & ser
+			// p.put("anhangPfad1", "MADN Spiel PDF.pdf");
+			// } else {
+			// p.put("anhangPfad1", anhangPfad1);
 			// }
-			// });
-			//
-			// // if (anhangPfad1 == null) { // pdf & ser
-			// // p.put("anhangPfad1", "MADN Spiel PDF.pdf");
-			// // } else {
-			// // p.put("anhangPfad1", anhangPfad1);
-			// // }
-			// // if (anhangName1 == null) {
-			// // p.put("anhangName1", "MADN Spiel PDF");
-			// // } else {
-			// // p.put("anhangName1", anhangName1);
-			// // }
-			// // if ("SpielSerialisiert.ser" == null) {
-			// // p.put("anhangPfad2", "");
-			// // } else {
-			// // p.put("anhangPfad2", "SpielSerialisiert.ser");
-			// // }
-			// // if ("MADN Spiel Serialisiert" == null) {
-			// // p.put("anhangNam2", "");
-			// // } else {
-			// // p.put("anhangNam2", "MADN Spiel Serialisiert");
-			// // }
-			//
-			// try {
-			//
-			// Message message = new MimeMessage(session);
-			// message.setFrom(new InternetAddress("madnb4@gmail.com"));
-			// message.setRecipients(Message.RecipientType.TO,
-			// InternetAddress.parse(an));
-			// message.setSubject("Mensch aergere dich nicht - Spielstand");
-			//
-			// Multipart mp = new MimeMultipart();
-			// MimeBodyPart text = new MimeBodyPart();
-			// text.setText("Lieber Spieler! \nIm Anhang findest du deinen Spielstand als PDF oder in serialisierter Form. \nViel Spass weiterhin beim Spielen.");
-			//
-			// MimeBodyPart anhangPDF = new MimeBodyPart();
-			// try {
-			// anhangPDF.attachFile("MADN Spiel PDF.pdf");
-			// } catch (IOException e) {
-			// gui.log("Fehler beim PDF anhaengen");
-			// //e.printStackTrace();
+			// if (anhangName1 == null) {
+			// p.put("anhangName1", "MADN Spiel PDF");
+			// } else {
+			// p.put("anhangName1", anhangName1);
 			// }
-			//
-			// MimeBodyPart anhangSer = new MimeBodyPart();
-			// try {
-			// anhangSer.attachFile("SpielSerialisiert.ser");
-			// } catch (IOException e) {
-			// gui.log("Fehler beim SER anhaengen");
-			// //e.printStackTrace();
+			// if ("SpielSerialisiert.ser" == null) {
+			// p.put("anhangPfad2", "");
+			// } else {
+			// p.put("anhangPfad2", "SpielSerialisiert.ser");
 			// }
-			//
-			// mp.addBodyPart(text);
-			// mp.addBodyPart(anhangPDF);
-			// mp.addBodyPart(anhangSer);
-			//
-			// message.setContent(mp);
-			//
-			// Transport.send(message);
-			//
-			//
-			//
-			// } catch (MessagingException e) {
-			// gui.log("Fehler beim senden");
-			// //throw new RuntimeException(e);
+			// if ("MADN Spiel Serialisiert" == null) {
+			// p.put("anhangNam2", "");
+			// } else {
+			// p.put("anhangNam2", "MADN Spiel Serialisiert");
 			// }
-			//
-			// gui.log("E-Mail wurde gesendet.");
-			// gui.getMailFrame().dispose();
+
+			try {
+
+				Message message = new MimeMessage(session);
+				message.setFrom(new InternetAddress("madnb4@gmail.com"));
+				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(an));
+				message.setSubject("Dame - Spielstand");
+
+				Multipart mp = new MimeMultipart();
+				MimeBodyPart text = new MimeBodyPart();
+				text.setText("Lieber Spieler! \nIm Anhang findest du deinen Spielstand als PDF oder in serialisierter Form. \nViel Spass weiterhin beim Spielen.");
+
+				// MimeBodyPart anhangPDF = new MimeBodyPart();
+				// try {
+				// anhangPDF.attachFile("MADN Spiel PDF.pdf");
+				// } catch (IOException e) {
+				// gui.log("Fehler beim PDF anhaengen");
+				// // e.printStackTrace();
+				// }
+				//
+				// MimeBodyPart anhangSer = new MimeBodyPart();
+				// try {
+				// anhangSer.attachFile("SpielSerialisiert.ser");
+				// } catch (IOException e) {
+				// gui.log("Fehler beim SER anhaengen");
+				// // e.printStackTrace();
+				// }
+
+				mp.addBodyPart(text);
+				// mp.addBodyPart(anhangPDF);
+				// mp.addBodyPart(anhangSer);
+
+				message.setContent(mp);
+
+				Transport.send(message);
+
+			} catch (MessagingException e) {
+				gui.log("Fehler beim senden");
+				throw new RuntimeException(e);
+			}
+
+			gui.log("E-Mail wurde gesendet.");
+			gui.getMailFrame().dispose();
 			break;
 
 		default:
 			gui.log("Nicht verfügbar.");
 			break;
 		}
-		// } catch (Exception e) {
-		// gui.log(e.getMessage());
-		//
-		// }
 
 	}
 }

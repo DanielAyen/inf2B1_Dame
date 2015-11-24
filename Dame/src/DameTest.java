@@ -7,37 +7,9 @@ public class DameTest {
 
 	public static void main(String[] args) {
 
-		
-		
-		
 		iBediener spiel = new Spiel();
 
-		GUI g = new GUI(8);
-			
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		GUI g = new GUI(12);
 
 		/*
 		 * System.out.println(Spieler.getAnzahl()); try{ Spieler s1 = new
