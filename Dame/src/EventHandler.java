@@ -116,6 +116,7 @@ public class EventHandler implements ActionListener {
 			}
 			break;
 
+
 		case "Serialisiert speichern":
 			try {
 				gui.spielSpeichernSER();
@@ -132,6 +133,11 @@ public class EventHandler implements ActionListener {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			break;
+			
+		case "Brett aktualisieren":
+			gui.log("aktualisiert");
+			gui.brettAktualisieren();
 			break;
 
 		case "Spiel laden":

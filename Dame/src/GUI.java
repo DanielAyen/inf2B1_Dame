@@ -16,6 +16,8 @@ import java.awt.MenuBar;
 import java.awt.MenuItem;
 import java.awt.Toolkit;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -37,6 +39,8 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.plaf.FileChooserUI;
 
 /**
  *
@@ -84,7 +88,9 @@ public class GUI extends JFrame {
 	Spielfigur fig;
 	private int anzahlzüge;
 
-	private int feldgroesse;// TODO
+	JFileChooser fc;
+
+	private int feldgroesse;
 	private JPanel hauptp;
 	private JButton[][] buttonArray;
 
@@ -252,7 +258,7 @@ public class GUI extends JFrame {
 	/**
 	 * baut das brett auf un zeigt alles an
 	 */
-	public void spielAnzeigen() {// TODO
+	public void spielAnzeigen() {
 		// LOGGER PANE HINTERGRUND LIGHT_GRAY
 		logger.setBackground(Color.LIGHT_GRAY);
 		logger.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
@@ -264,7 +270,8 @@ public class GUI extends JFrame {
 		scroller = new JScrollPane(ta);
 		logger.add(new JLabel("Log-Fenster:"), BorderLayout.NORTH);
 		logger.add(scroller, BorderLayout.CENTER);
-		hauptf.add(logger, BorderLayout.WEST);//////////////////////////////////////////////////////////////////////////BEI ABGABE SOUTH REIN
+		hauptf.add(logger, BorderLayout.WEST);// ////////////////////////////////////////////////////////////////////////BEI
+																					// ABGABE SOUTH REIN
 
 		hauptf.setLocation(GetScreenWorkingWidth() / 9, GetScreenWorkingHeight() / 50);
 		hauptf.setSize(GetScreenWorkingWidth() - 450, GetScreenWorkingHeight() - 90);
@@ -351,7 +358,6 @@ public class GUI extends JFrame {
 					//
 					// }
 					// });
-					// TODO
 
 					cnt++;
 					if (ss == false) {
@@ -389,10 +395,6 @@ public class GUI extends JFrame {
 					//
 					// }
 					// });
-
-					// TODO
-					// buttonArray[i][j].addActionListener(eh);
-					// //////// MUSS WIEDER REIN WENN ÜBER BUTTON DRUCK!!
 
 					cnt++;
 					if (ss == false) {
@@ -501,6 +503,9 @@ public class GUI extends JFrame {
 		MenuItem Zugbeenden = new MenuItem("Zug beenden");
 		hilfe.add(Zugbeenden);
 		Zugbeenden.addActionListener(eh);
+		MenuItem aktualisieren = new MenuItem("Brett aktualisieren");
+		hilfe.add(aktualisieren);
+		aktualisieren.addActionListener(eh);
 		return menueLeiste;
 	}
 
@@ -515,9 +520,6 @@ public class GUI extends JFrame {
 		ib.getBrett().getBrettFeldIndex(7, 7).getSpielfigur().setDame(true);
 		ib.getBrett().getBrettFeldIndex(11, 11).getSpielfigur().setDame(true);
 		ib.getBrett().getBrettFeldIndex(1, 1).getSpielfigur().setDame(true);
-		
-		
-		
 
 		helpframe = new JFrame("Hilfe");
 		helpframe.setLocation(GetScreenWorkingWidth() / 2 - 370, GetScreenWorkingHeight() / 2 - 100);
@@ -861,9 +863,33 @@ public class GUI extends JFrame {
 		log("Screenshot wurde erstellt.");
 	}
 
-	public void spielLaden() {
-		JFileChooser fc = new JFileChooser();
-		fc.showOpenDialog(null);
+	public void spielLaden() {// TODO
+		fc = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter(".csv .ser", "csv", "ser");
+		fc.setFileFilter(filter);
+
+		fc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+
+		int status = fc.showOpenDialog(null);
+
+		if (status == JFileChooser.APPROVE_OPTION) {
+			log("bestätigt, lädt...");
+			File selectedFile = fc.getSelectedFile();
+			log(selectedFile.getParent());
+			log(selectedFile.getName());
+//if(speichern){
+//	log("erfolgreich");
+//}else{
+//	log("das war wohl nix");
+//}
+			// selectedFile.
+		} else if (status == JFileChooser.CANCEL_OPTION) {
+			log("abgebrochen");
+
+		}
 	}
 
 	public void spielSpeichern() throws IOException {
@@ -1139,6 +1165,10 @@ public class GUI extends JFrame {
 	public JFrame getMailFrame() {
 
 		return mailFrame;
+	}
+
+	public JFileChooser getFC() {
+		return fc;
 	}
 
 }
