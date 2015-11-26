@@ -4,22 +4,15 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Insets;
-import java.awt.MediaTracker;
 import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
-import java.awt.Toolkit;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -40,7 +33,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.plaf.FileChooserUI;
 
 /**
  *
@@ -880,11 +872,16 @@ public class GUI extends JFrame {
 			File selectedFile = fc.getSelectedFile();
 			log(selectedFile.getParent());
 			log(selectedFile.getName());
-//if(speichern){
-//	log("erfolgreich");
-//}else{
-//	log("das war wohl nix");
-//}
+			// if(laden){
+			// In laden dann alleslöschen
+			// neu aufbauen und erstllen
+			// gui bescheidgeben dann aktuali..
+			// log("erfolgreich");
+			// brettAktualisieren();
+
+			// }else{
+			// log("das war wohl nix");
+			// }
 			// selectedFile.
 		} else if (status == JFileChooser.CANCEL_OPTION) {
 			log("abgebrochen");
@@ -964,6 +961,9 @@ public class GUI extends JFrame {
 
 	}
 
+	/**
+	 * loescht alles nötige aus spiel und gui um ein neues spiel zu ermöglichen
+	 */
 	public void loeschen() {
 		ziehen.setEnabled(false);
 		kiziehen.setEnabled(false);
