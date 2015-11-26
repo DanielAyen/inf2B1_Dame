@@ -115,11 +115,20 @@ public class EventHandler implements ActionListener {
 				}
 			}
 			break;
-			
+
 		case "Serialisiert speichern":
 			try {
 				gui.spielSpeichernSER();
 				gui.log("Spiel wurde gespeichert (SER)");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+
+		case "als CSV speichern":
+			try {
+				gui.spielSpeichernCSV();
+				gui.log("Spiel wurde gespeichert (CSV)");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -336,25 +345,25 @@ public class EventHandler implements ActionListener {
 				MimeBodyPart text = new MimeBodyPart();
 				text.setText("Lieber Spieler! \nIm Anhang findest du deinen Spielstand als PDF oder in serialisierter Form. \nViel Spass weiterhin beim Spielen.");
 
-				 MimeBodyPart anhangPDF = new MimeBodyPart();
-				 try {
-				 anhangPDF.attachFile("DamePDF.pdf");
-				 } catch (IOException e) {
-				 gui.log("Fehler beim PDF anhaengen");
-				 // e.printStackTrace();
-				 }
-				
-				 MimeBodyPart anhangSer = new MimeBodyPart();
-				 try {
-				 anhangSer.attachFile("DameSER.ser");
-				 } catch (IOException e) {
-				 gui.log("Fehler beim SER anhaengen");
-				 // e.printStackTrace();
-				 }
+				MimeBodyPart anhangPDF = new MimeBodyPart();
+				try {
+					anhangPDF.attachFile("DamePDF.pdf");
+				} catch (IOException e) {
+					gui.log("Fehler beim PDF anhaengen");
+					// e.printStackTrace();
+				}
+
+				MimeBodyPart anhangSer = new MimeBodyPart();
+				try {
+					anhangSer.attachFile("DameSER.ser");
+				} catch (IOException e) {
+					gui.log("Fehler beim SER anhaengen");
+					// e.printStackTrace();
+				}
 
 				mp.addBodyPart(text);
-				 mp.addBodyPart(anhangPDF);
-				 mp.addBodyPart(anhangSer);
+				mp.addBodyPart(anhangPDF);
+				mp.addBodyPart(anhangSer);
 
 				message.setContent(mp);
 
