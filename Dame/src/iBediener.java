@@ -1,26 +1,28 @@
+
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
 /**
- * 
+ *
  * @author Baris, Daniel, Simon, Hannes
  *
  */
 public interface iBediener {
-	
 
 	/**
-	 * Methode spielStarten
-	 * Startet das Spiel
+	 * Methode spielStarten Startet das Spiel
 	 */
-	
+
 	public void spielStarten();
-	
+
 	public Spielbrett getBrett();
-	
+
 	/**
-	 * Methode aufbauen
-	 * erstellt das Spielbrett
-	 * @param x - Die Spielfeldgröße
+	 * Methode aufbauen erstellt das Spielbrett
+	 * 
+	 * @param x
+	 *          - Die Spielfeldgröße
 	 * @return True wenn spiel aufgebaut wurde.
 	 */
 
@@ -53,7 +55,8 @@ public interface iBediener {
 	public void allesLoeschen();
 
 	public void zugBeenden();
-	
+
 	void Speichern(String dateiname, String dateiende) throws IOException;
 
+	public boolean laden(File f);
 }

@@ -13,9 +13,9 @@ import java.util.Properties;
 public interface iDatenzugriff {
 
 	
-	void speichern(String dateiname, String dateiende, Object o) throws IOException;
+	void speichern(Object o) throws IOException;
 	
-	Object laden(String dateiname);
+	Object laden(File f) throws IOException;
 
 	
 	

@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -14,8 +15,8 @@ import java.util.Properties;
 public class Spiel implements iBediener, Serializable {
 
 	/**
-             *
-             */
+                 *
+                 */
 	private static final long serialVersionUID = -1632008787864445195L;
 	/**
 	 * Attribute
@@ -57,6 +58,7 @@ public class Spiel implements iBediener, Serializable {
 	private static iDatenzugriff daten;
 	private DatenzugriffSerialisiert ser = new DatenzugriffSerialisiert();
 	private DatenzugriffPDF p = new DatenzugriffPDF();
+	private DatenzugriffCSV csv = new DatenzugriffCSV();
 	private boolean spielAufgebaut = false;
 	private int spielerAnzahl = 0;
 	private String name;
@@ -78,6 +80,7 @@ public class Spiel implements iBediener, Serializable {
 	private KI_Dame k1;
 	private KI_Dame k2;
 	private String dateiname = "csv";
+	private GUI gui;
 
 	private int startC;
 	private int endC;
@@ -196,7 +199,8 @@ public class Spiel implements iBediener, Serializable {
 		int[] gueltig = new int[3];
 		if (Input.length() > 1 && Input.length() < 4 && (IstBuchstabe(Input.substring(0, 1).toCharArray()) > -1) && (IstZahl(Input.substring(1, Input.length())) > -1)) {
 			// System.out.println("Alles-OK");
-			// System.out.println(IstBuchstabe(Input.substring(0, 1).toCharArray()) +
+			// System.out.println(IstBuchstabe(Input.substring(0,
+			// 1).toCharArray()) +
 			// "  " + IstZahl(Input.substring(1, Input.length())));
 			gueltig[0] = IstZahl(Input.substring(1, Input.length()));
 			gueltig[1] = IstBuchstabe(Input.substring(0, 1).toCharArray());
@@ -244,7 +248,7 @@ public class Spiel implements iBediener, Serializable {
 	 * gibt Anzahl Zuege in einem Array zurueck. Array [0] gibt Anzahl der
 	 * Moeglichkeiten beim laufen. Array[1] gibt Anzahl der Moeglichkeiten beim
 	 * schlagen.
-	 * 
+	 *
 	 * @param x
 	 *          Index Zeile von der Spielfigur auf Brett
 	 * @param y
@@ -512,7 +516,7 @@ public class Spiel implements iBediener, Serializable {
 
 	/**
 	 * prueft den gewollten zug
-	 * 
+	 *
 	 * @param xa
 	 *          alte x koord
 	 * @param ya
@@ -522,7 +526,7 @@ public class Spiel implements iBediener, Serializable {
 	 * @param yn
 	 *          neue y koord
 	 * @return int
-	 * 
+	 *
 	 */
 	private int zugPruefen(int xa, int ya, int xn, int yn) {
 		// return 1 figur bewegen
@@ -934,7 +938,7 @@ public class Spiel implements iBediener, Serializable {
 	/**
 	 * Ermittelt alle Spielfiguren eines Spielers auf dem Brett. Schreibt diese in
 	 * die ArrayList FigurDieSchlagenKoennen.
-	 * 
+	 *
 	 */
 	private void ermittleAlleSpielfiguren() {
 
@@ -1096,8 +1100,8 @@ public class Spiel implements iBediener, Serializable {
 	 * @param spielfigur
 	 *          wenn eine Spielfigur die Moeglichkeit hat zu schlagen und diesen
 	 *          Zug nicht wahrnimmt, wird er entfernt
-	 * 
-	 * 
+	 *
+	 *
 	 */
 	private void pusten(Spielfigur spielfigur) {
 		figurEntfernen(spielfigur);
@@ -1106,7 +1110,7 @@ public class Spiel implements iBediener, Serializable {
 	/**
 	 * setzt den derzeitigen Spieler der am zug ist
 	 */
-	private void setAmZug(FarbEnum farbe) {
+	public void setAmZug(FarbEnum farbe) {
 		farbeAmZug = farbe;
 	}
 
@@ -1241,42 +1245,94 @@ public class Spiel implements iBediener, Serializable {
 		return daten;
 	}
 
-	
+	/**
+	 * speichert das Spiel
+	 *
+	 * @param string
+	 *          name der Datei
+	 */
 
-	 /**
- * speichert das Spiel
-*
-* @param string
-*          name der Datei
-*/
-@Override
-public void Speichern(String dateiname, String dateiende)
-		throws IOException {
-	dateiende = dateiende.toLowerCase(); //groß klein schreibung
-	switch (dateiende){
-//	case "csv":
-//	break;
+	public void Speichern(String dateiname, String dateiende) throws IOException {
+		dateiende = dateiende.toLowerCase(); // groß klein schreibung
+		switch (dateiende) {
+		case "csv":
+			try {
+				// setdZugriff(new DatenzugriffCSV());
+				// File f = new File(dateiname + ".csv");
+				Object o;
 
-	case "ser":
-		ser.speichern(dateiname,dateiende,this);
-		break;
-	case "pdf": 
-		p.speichern(dateiname, dateiende, null);
-		break;
+				String brett = this.brett.getBrettGroesse() + ";\n";
+				o = brett;
+
+				o = o + this.s1.getName() + ";" + this.s1.getFarbe() + ";" + this.s1.getIstKi() + ";\n" + this.s2.getName() + ";" + this.s2.getFarbe() + ";" + this.s2.getIstKi() + ";\n";
+				// String farbes=s1.getFarbe() + ";" ;
+				// o= o+farbes;
+				for (Spielfigur s : s1.getAlleFiguren()) {
+					String figurs = s.getIdS() + ";";
+					String posx = s.getPosX() + ";";
+					String posy = s.getPosY() + ";";
+					String dame = s.getDame(s) + ";";
+					o = o + figurs + posx + posy + dame;
+
+				}
+				o = o + "\n";
+				// String farbew=s2.getFarbe() + ";";
+				// o= o+farbew;
+				for (Spielfigur w : s2.getAlleFiguren()) {
+					String figurw = w.getIdW() + ";";
+					String posx = w.getPosX() + ";";
+					String posy = w.getPosY() + ";";
+					String dame = w.getDame(w) + ";";
+					o = o + figurw + posx + posy + dame;
+				}
+				o = o + "\n";
+				String amZug = this.getAmZug() + ";";
+				o = o + amZug;
+				csv.speichern(o);
+				break;
+			} catch (Exception e) {
+				System.out.println("Speichern CSV fehlgeschlagen.");
+			}
+			break;
+
+		case "ser":
+			ser.speichern(dateiname, dateiende, this);
+			break;
+		case "pdf":
+			p.speichern(dateiname, dateiende, null);
+			break;
+		}
 	}
-}
 
+	@Override
+	public boolean laden(File f) {
+		String s = f.getName();
+		if (s.endsWith(".csv")) {
+			this.ladenCSV(f);
+			return true;
+		} else if (s.endsWith(".ser")) {
+			return true;
+		} else {
+			System.out.println("NOP");
+			return false;
+		}
+	}
 
+	// TODO laden CSV
+	public void ladenCSV(File f) {
+		System.out.println("1!");
+		try {
+			System.out.println("2!");
 
-
-
-
-
-
-
-
-
-
+			// getdZugriff();
+			String filename = f + "";
+			System.out.println(filename);
+			System.out.println("ghjkl");
+			csv.laden(f);
+		} catch (Exception e) {
+			System.out.println("Laden fehlgeschlagen!");
+		}
+	}
 
 	/*
 	 * System.out.println("Spielernamen eingeben\n"); name = reader.readLine();

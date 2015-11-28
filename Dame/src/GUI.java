@@ -4,15 +4,22 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.MediaTracker;
 import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
+import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +40,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.plaf.FileChooserUI;
 
 /**
  *
@@ -42,8 +50,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class GUI extends JFrame {
 
 	/**
-             *
-             */
+                 *
+                 */
 	private static final long serialVersionUID = 1L;
 
 	private JFrame hauptf = new JFrame(" Dame Spiel der Gruppe B1 ");
@@ -336,13 +344,15 @@ public class GUI extends JFrame {
 					buttonArray[zeile][spalte] = new JButton("");
 					buttonArray[zeile][spalte].setMargin(new Insets(0, 0, 0, 0));
 					// buttonArray[zeile][spalte].setSize(50, 50);
-					// buttonArray[zeile][spalte].setBounds(70 * zeile, 70 * spalte, 70,
+					// buttonArray[zeile][spalte].setBounds(70 * zeile, 70 *
+					// spalte, 70,
 					// 70);
 					String id = "" + (char) (65 + spalte) + (zeile + 1);
 					buttonArray[zeile][spalte].setToolTipText(id);
 					buttonArray[zeile][spalte].addActionListener(eh);
 					buttonArray[zeile][spalte].setEnabled(false);
-					// buttonArray[zeile][spalte].addMouseListener(new MouseAdapter() {
+					// buttonArray[zeile][spalte].addMouseListener(new
+					// MouseAdapter() {
 					//
 					// @Override
 					// public void mouseEntered(MouseEvent me) {
@@ -373,13 +383,15 @@ public class GUI extends JFrame {
 					buttonArray[zeile][spalte] = new JButton("");
 					buttonArray[zeile][spalte].setMargin(new Insets(0, 0, 0, 0));
 					// buttonArray[zeile][spalte].setSize(50, 50);
-					// buttonArray[zeile][spalte].setBounds(70 * zeile, 70 * spalte, 70,
+					// buttonArray[zeile][spalte].setBounds(70 * zeile, 70 *
+					// spalte, 70,
 					// 70);
 					String id = "" + (char) (65 + spalte) + (zeile + 1);
 					buttonArray[zeile][spalte].setToolTipText(id);
 					buttonArray[zeile][spalte].addActionListener(eh);
 					buttonArray[zeile][spalte].setEnabled(false);
-					// buttonArray[zeile][spalte].addMouseListener(new MouseAdapter() {
+					// buttonArray[zeile][spalte].addMouseListener(new
+					// MouseAdapter() {
 					//
 					// @Override
 					// public void mouseEntered(MouseEvent me) {
@@ -872,16 +884,11 @@ public class GUI extends JFrame {
 			File selectedFile = fc.getSelectedFile();
 			log(selectedFile.getParent());
 			log(selectedFile.getName());
-			// if(laden){
-			// In laden dann alleslöschen
-			// neu aufbauen und erstllen
-			// gui bescheidgeben dann aktuali..
-			// log("erfolgreich");
-			// brettAktualisieren();
-
-			// }else{
-			// log("das war wohl nix");
-			// }
+			if (ib.laden(selectedFile)) {
+				log("erfolgreich");
+			} else {
+				log("das war wohl nix");
+			}
 			// selectedFile.
 		} else if (status == JFileChooser.CANCEL_OPTION) {
 			log("abgebrochen");
@@ -961,9 +968,6 @@ public class GUI extends JFrame {
 
 	}
 
-	/**
-	 * loescht alles nötige aus spiel und gui um ein neues spiel zu ermöglichen
-	 */
 	public void loeschen() {
 		ziehen.setEnabled(false);
 		kiziehen.setEnabled(false);
