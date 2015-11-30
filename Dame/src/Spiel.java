@@ -1310,6 +1310,7 @@ public class Spiel implements iBediener, Serializable {
 			this.ladenCSV(s);
 			return true;
 		} else if (s.endsWith(".ser")) {
+			this.laden(s);
 			return true;
 		} else {
 			System.out.println("NOP");
