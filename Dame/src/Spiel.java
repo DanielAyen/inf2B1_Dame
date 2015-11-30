@@ -1488,6 +1488,13 @@ public class Spiel implements iBediener, Serializable {
 		}
 //TODO
 	}
+	
+	public void ladenSER(String dateiname){
+		
+		GUI g = new GUI(12);
+		g = (GUI) ser.laden(dateiname);
+		g.startenWeitergeben();
+	}
 
 	/*
 	 * System.out.println("Spielernamen eingeben\n"); name = reader.readLine();
