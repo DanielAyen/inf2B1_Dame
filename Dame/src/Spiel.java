@@ -1398,7 +1398,22 @@ public class Spiel implements iBediener, Serializable {
 					s2.getAlleFiguren().clear();
 				}
 			}
+			this.anzeigen();
+			
+			
+			for (int i = 0; i < brett.getBrettGroesse(); i++) {
+				for (int j = 0; j < brett.getBrettGroesse(); j++) {
 
+					if (brett.getBrettFeldIndex(i, j).getIstSchwarz()) {
+						if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
+							brett.getBrettFeldIndex(i, j).removeSpielfigur(brett.getBrettFeldIndex(i, j).getSpielfigur());
+						}
+					}
+				}
+			}
+			
+			
+			this.anzeigen();
 			String figurenZ[] = o.get(3);
 			{
 				System.out.println("In 4");
@@ -1424,10 +1439,11 @@ public class Spiel implements iBediener, Serializable {
 					figur.setPosX(x);
 					figur.setPosY(y);
 					figur.setIdS(IdS);
+					brett.getBrettFeldIndex(x,y).setSpielfigur(figur);
 					s1.getAlleFiguren().add(figur);
 				}
 			}
-
+			this.anzeigen();
 			String figurenZZ[] = o.get(4);
 			{
 				System.out.println("In 5");
@@ -1453,10 +1469,11 @@ public class Spiel implements iBediener, Serializable {
 					figur.setPosX(x);
 					figur.setPosY(y);
 					figur.setIdW(IdW);
+					brett.getBrettFeldIndex(x,y).setSpielfigur(figur);
 					s2.getAlleFiguren().add(figur);
 				}
 			}
-
+			this.anzeigen();
 			String dran[] = o.get(5);
 			{
 				System.out.println("In 6");
@@ -1476,17 +1493,16 @@ public class Spiel implements iBediener, Serializable {
 		}
 		this.anzeigen();
 //TODO
-		for (int i = 0; i < brett.getBrettGroesse() - 1; i++) {
-			for (int j = 0; j < brett.getBrettGroesse() - 1; i++) {
-
-				if (brett.getBrettFeldIndex(i, j).getIstSchwarz()) {
-					if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
-						brett.getBrettFeldIndex(i, j).removeSpielfigur(brett.getBrettFeldIndex(i, j).getSpielfigur());
-					}
-				}
-
-			}
-		}
+//		for (int i = 0; i < brett.getBrettGroesse() - 1; i++) {
+//			for (int j = 0; j < brett.getBrettGroesse() - 1; i++) {
+//
+//				if (brett.getBrettFeldIndex(i, j).getIstSchwarz()) {
+//					if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
+//						brett.getBrettFeldIndex(i, j).removeSpielfigur(brett.getBrettFeldIndex(i, j).getSpielfigur());
+//					}
+//				}
+//			}
+//		}
 //TODO
 	}
 	

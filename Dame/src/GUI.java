@@ -885,6 +885,25 @@ public class GUI extends JFrame {
 			log(selectedFile.getParent());
 			log(selectedFile.getName());
 			if (ib.laden(selectedFile.getName())) {
+				
+//				-----------------------------
+				ziehen.setEnabled(true);
+				kiziehen.setEnabled(true);
+
+				if (ib.getK1() != null && ib.getK1().getSpieler().getFarbe() == FarbEnum.WEIß || ib.getK2() != null && ib.getK2().getSpieler().getFarbe() == FarbEnum.WEIß) {
+
+					ziehen.setEnabled(false);
+
+				} else {
+
+					kiziehen.setEnabled(false);
+				}
+				brettAktualisieren();
+				log("Das Spiel geht weiter.");
+				log(ib.getAmZug() + " macht weiter.");
+//				------------------------------
+//				TODO haupf.repaint() ????
+				brettAktualisieren();
 				log("erfolgreich");
 			} else {
 				log("das war wohl nix");
