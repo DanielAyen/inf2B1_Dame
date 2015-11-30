@@ -1333,13 +1333,13 @@ public class Spiel implements iBediener, Serializable {
 			ArrayList<String[]> o = (ArrayList<String[]>) csv.laden(dateiname);
 
 			System.out.println("Löschen?");
-			if(this.starten()){
-			this.allesLoeschen();
+			if (this.starten()) {
+				this.allesLoeschen();
 			}
 			System.out.println("Gelöscht");
 			this.spielStarten();
 
-//			Abfrage welche Brettgröße gespeichert war
+			// Abfrage welche Brettgröße gespeichert war
 			System.out.println("Vor groese");
 			String brettGroese[] = o.get(0);
 			System.out.println("In 1");
@@ -1368,10 +1368,10 @@ public class Spiel implements iBediener, Serializable {
 					istKi = true;
 				}
 				this.spielerErstellen(spielerZ[0], farbe, istKi);
-				if(farbe == FarbEnum.SCHWARZ){
-				s1.getAlleFiguren().clear();
-				}else{
-				s2.getAlleFiguren().clear();
+				if (farbe == FarbEnum.SCHWARZ) {
+					s1.getAlleFiguren().clear();
+				} else {
+					s2.getAlleFiguren().clear();
 				}
 			}
 
@@ -1391,11 +1391,11 @@ public class Spiel implements iBediener, Serializable {
 					istKi = true;
 				}
 				this.spielerErstellen(spielerZZ[0], farbe, istKi);
-				if(farbe == FarbEnum.SCHWARZ){
+				if (farbe == FarbEnum.SCHWARZ) {
 					s1.getAlleFiguren().clear();
-					}else{
+				} else {
 					s2.getAlleFiguren().clear();
-					}				
+				}
 			}
 
 			String figurenZ[] = o.get(3);
@@ -1403,7 +1403,7 @@ public class Spiel implements iBediener, Serializable {
 				System.out.println("In 4");
 
 				for (int i = 0; i < figurenZ.length; i = i + 4) {
-					
+
 					int IdS = Integer.parseInt(figurenZ[i]);
 					int x = Integer.parseInt(figurenZ[i + 1]);
 					int y = Integer.parseInt(figurenZ[i + 2]);
@@ -1459,7 +1459,7 @@ public class Spiel implements iBediener, Serializable {
 			String dran[] = o.get(5);
 			{
 				System.out.println("In 6");
-				if (dran[0].equals("SCHWARZ"))  {
+				if (dran[0].equals("SCHWARZ")) {
 					farbe = FarbEnum.SCHWARZ;
 				} else {
 					farbe = FarbEnum.WEIß;
@@ -1474,6 +1474,19 @@ public class Spiel implements iBediener, Serializable {
 			System.out.println("Laden fehlgeschlagen!");
 		}
 		this.anzeigen();
+//TODO
+		for (int i = 0; i < brett.getBrettGroesse() - 1; i++) {
+			for (int j = 0; j < brett.getBrettGroesse() - 1; i++) {
+
+				if (brett.getBrettFeldIndex(i, j).getIstSchwarz()) {
+					if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
+						brett.getBrettFeldIndex(i, j).removeSpielfigur(brett.getBrettFeldIndex(i, j).getSpielfigur());
+					}
+				}
+
+			}
+		}
+//TODO
 	}
 
 	/*
