@@ -84,6 +84,14 @@ public class Spielfigur implements Serializable {
 		return this.idS;
 	}
 
+	public void setIdS(int IdS) {
+		this.idS = IdS;
+	}
+
+	public void setIdW(int IdW) {
+		this.idW = IdW;
+	}
+
 	public void setPosX(int posX) {
 		this.posX = posX;
 
@@ -115,27 +123,27 @@ public class Spielfigur implements Serializable {
 
 	@Override
 	public String toString() {
-			if (getFarbe() == FarbEnum.SCHWARZ) {
-				if (istDame == true) {
-					if (this.idS < 10) {
-						return "{S}";
-					} else
-						return "{S}";
-				} else if (this.idS < 10) {
-					return "(s)";
+		if (getFarbe() == FarbEnum.SCHWARZ) {
+			if (istDame == true) {
+				if (this.idS < 10) {
+					return "{S}";
 				} else
-					return "(s)";
-			} else {
-				if (istDame == true) {
-					if (this.idW < 10) {
-						return "{W}";
-					} else
-						return "{W}";
+					return "{S}";
+			} else if (this.idS < 10) {
+				return "(s)";
+			} else
+				return "(s)";
+		} else {
+			if (istDame == true) {
+				if (this.idW < 10) {
+					return "{W}";
+				} else
+					return "{W}";
 
-				} else if (this.idW < 10) {
-					return "(w)";
-				} else
-					return "(w)";
-			}
+			} else if (this.idW < 10) {
+				return "(w)";
+			} else
+				return "(w)";
 		}
+	}
 }

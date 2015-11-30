@@ -21,7 +21,7 @@ public class DatenzugriffSerialisiert implements iDatenzugriff, Serializable {
 //	}
 
 	@Override
-	public void speichern(String dateiname, String dateiende, Object o) {
+	public void speichern(Object o) {
 		ObjectOutputStream oos = null;
 		try {
 			oos = new ObjectOutputStream(new FileOutputStream( "DameSER.ser"));

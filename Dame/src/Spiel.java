@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -1296,19 +1295,19 @@ public class Spiel implements iBediener, Serializable {
 			break;
 
 		case "ser":
-			ser.speichern(dateiname, dateiende, this);
+			ser.speichern(dateiname);
 			break;
 		case "pdf":
-			p.speichern(dateiname, dateiende, null);
+			p.speichern(dateiname);
 			break;
 		}
 	}
 
 	@Override
-	public boolean laden(File f) {
-		String s = f.getName();
+	public boolean laden(String dateiname) {
+		String s = dateiname;
 		if (s.endsWith(".csv")) {
-			this.ladenCSV(f);
+			this.ladenCSV(s);
 			return true;
 		} else if (s.endsWith(".ser")) {
 			return true;
@@ -1319,19 +1318,162 @@ public class Spiel implements iBediener, Serializable {
 	}
 
 	// TODO laden CSV
-	public void ladenCSV(File f) {
-		System.out.println("1!");
-		try {
-			System.out.println("2!");
+	@SuppressWarnings("unchecked")
+	public void ladenCSV(String dateiname) {
+		// String f = dateiname;
+		// TODO kann sein, dass arraylist da mit 10 initalisiert auf 6 runter muss
+		// und derzeit fehler wirft
+		// ArrayList<String[]> o = new ArrayList<String[]>();
+		FarbEnum farbe;
+		boolean istKi;
 
-			// getdZugriff();
-			String filename = f + "";
-			System.out.println(filename);
-			System.out.println("ghjkl");
-			csv.laden(f);
-		} catch (Exception e) {
+		try {
+			System.out.println(dateiname);
+			System.out.println("vor zuweisung");
+			ArrayList<String[]> o = (ArrayList<String[]>) csv.laden(dateiname);
+
+			System.out.println("Löschen?");
+			if(this.starten()){
+			this.allesLoeschen();
+			}
+			System.out.println("Gelöscht");
+			this.spielStarten();
+
+//			Abfrage welche Brettgröße gespeichert war
+			System.out.println("Vor groese");
+			String brettGroese[] = o.get(0);
+			System.out.println("In 1");
+			if (brettGroese[0].equals("12")) {
+				this.aufbauen(12);
+			}
+			if (brettGroese[0].equals("10")) {
+				this.aufbauen(10);
+			}
+			if (brettGroese[0].equals("8")) {
+				this.aufbauen(8);
+			}
+
+			String spielerZ[] = o.get(1);
+			System.out.println("In 2");
+			{
+				if (spielerZ[1].equals("SCHWARZ")) {
+					farbe = FarbEnum.SCHWARZ;
+				} else {
+					farbe = FarbEnum.WEIß;
+				}
+
+				if (spielerZ[2].equals("false")) {
+					istKi = false;
+				} else {
+					istKi = true;
+				}
+				this.spielerErstellen(spielerZ[0], farbe, istKi);
+				if(farbe == FarbEnum.SCHWARZ){
+				s1.getAlleFiguren().clear();
+				}else{
+				s2.getAlleFiguren().clear();
+				}
+			}
+
+			String spielerZZ[] = o.get(2);
+			System.out.println("In 3");
+
+			{
+				if (spielerZZ[1].equals("WEIß")) {
+					farbe = FarbEnum.WEIß;
+				} else {
+					farbe = FarbEnum.SCHWARZ;
+				}
+
+				if (spielerZZ[2].equals("false")) {
+					istKi = false;
+				} else {
+					istKi = true;
+				}
+				this.spielerErstellen(spielerZZ[0], farbe, istKi);
+				if(farbe == FarbEnum.SCHWARZ){
+					s1.getAlleFiguren().clear();
+					}else{
+					s2.getAlleFiguren().clear();
+					}				
+			}
+
+			String figurenZ[] = o.get(3);
+			{
+				System.out.println("In 4");
+
+				for (int i = 0; i < figurenZ.length; i = i + 4) {
+					
+					int IdS = Integer.parseInt(figurenZ[i]);
+					int x = Integer.parseInt(figurenZ[i + 1]);
+					int y = Integer.parseInt(figurenZ[i + 2]);
+					boolean dame;
+					if (figurenZ[i + 3].equals("false")) {
+						dame = false;
+					} else {
+						dame = true;
+					}
+					System.out.println("In 4 nach dame prüfung");
+					System.out.println(IdS);
+					// System.out.println(x);
+					// System.out.println(y);
+					// System.out.println(dame);
+
+					Spielfigur figur = new Spielfigur(FarbEnum.SCHWARZ, dame);
+					figur.setPosX(x);
+					figur.setPosY(y);
+					figur.setIdS(IdS);
+					s1.getAlleFiguren().add(figur);
+				}
+			}
+
+			String figurenZZ[] = o.get(4);
+			{
+				System.out.println("In 5");
+
+				for (int i = 0; i < figurenZZ.length; i = i + 4) {
+
+					int IdW = Integer.parseInt(figurenZZ[i]);
+					int x = Integer.parseInt(figurenZZ[i + 1]);
+					int y = Integer.parseInt(figurenZZ[i + 2]);
+					boolean dame;
+					if (figurenZZ[i + 3].equals("false")) {
+						dame = false;
+					} else {
+						dame = true;
+					}
+					System.out.println("In 5 nach dame prüfung");
+					System.out.println(IdW);
+					// System.out.println(x);
+					// System.out.println(y);
+					// System.out.println(dame);
+
+					Spielfigur figur = new Spielfigur(FarbEnum.WEIß, dame);
+					figur.setPosX(x);
+					figur.setPosY(y);
+					figur.setIdW(IdW);
+					s2.getAlleFiguren().add(figur);
+				}
+			}
+
+			String dran[] = o.get(5);
+			{
+				System.out.println("In 6");
+				if (dran[0].equals("SCHWARZ"))  {
+					farbe = FarbEnum.SCHWARZ;
+				} else {
+					farbe = FarbEnum.WEIß;
+				}
+				this.starten();
+				this.setAmZug(farbe);
+				this.anzeigen();
+			}
+			this.anzeigen();
+		} catch (IOException e) {
+			System.out.println(e);
 			System.out.println("Laden fehlgeschlagen!");
 		}
+		this.anzeigen();
 	}
 
 	/*

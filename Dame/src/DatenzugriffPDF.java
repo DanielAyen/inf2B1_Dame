@@ -32,7 +32,7 @@ public class DatenzugriffPDF implements iDatenzugriff {
 	 * @throws IOException
 	 */
 	@Override
-	public void speichern(String dateiname, String dateiende, Object o)
+	public void speichern(Object o)
 			throws IOException {
 
 		Document doc = new Document(PageSize.LETTER.rotate());

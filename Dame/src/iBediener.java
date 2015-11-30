@@ -58,5 +58,5 @@ public interface iBediener {
 
 	void Speichern(String dateiname, String dateiende) throws IOException;
 
-	public boolean laden(File f);
+	public boolean laden(String dateiname);
 }

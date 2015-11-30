@@ -13,7 +13,7 @@ public abstract class KI implements Serializable {
                                              *
                                              */
 	private static final long serialVersionUID = -1632008787864445195L;
-	private Spieler spieler;
+	public Spieler spieler;
 	private Spielbrett brett;
 	private boolean schlag = false;
 

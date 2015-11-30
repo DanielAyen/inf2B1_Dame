@@ -884,7 +884,7 @@ public class GUI extends JFrame {
 			File selectedFile = fc.getSelectedFile();
 			log(selectedFile.getParent());
 			log(selectedFile.getName());
-			if (ib.laden(selectedFile)) {
+			if (ib.laden(selectedFile.getName())) {
 				log("erfolgreich");
 			} else {
 				log("das war wohl nix");
