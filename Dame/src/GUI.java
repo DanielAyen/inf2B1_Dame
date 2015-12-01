@@ -270,8 +270,8 @@ public class GUI extends JFrame {
 		scroller = new JScrollPane(ta);
 		logger.add(new JLabel("Log-Fenster:"), BorderLayout.NORTH);
 		logger.add(scroller, BorderLayout.CENTER);
-		hauptf.add(logger, BorderLayout.WEST);// ////////////////////////////////////////////////////////////////////////BEI
-																					// ABGABE SOUTH REIN
+		hauptf.add(logger, BorderLayout.SOUTH);// ////////////////////////////////////////////////////////////////////////BEI
+																					// ABGABE SOUTH REIN// WEST  //TODO //TODO
 
 		hauptf.setLocation(GetScreenWorkingWidth() / 9, GetScreenWorkingHeight() / 50);
 		hauptf.setSize(GetScreenWorkingWidth() - 450, GetScreenWorkingHeight() - 90);
