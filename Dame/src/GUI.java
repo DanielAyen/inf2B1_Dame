@@ -270,8 +270,9 @@ public class GUI extends JFrame {
 		scroller = new JScrollPane(ta);
 		logger.add(new JLabel("Log-Fenster:"), BorderLayout.NORTH);
 		logger.add(scroller, BorderLayout.CENTER);
-		hauptf.add(logger, BorderLayout.SOUTH);// ////////////////////////////////////////////////////////////////////////BEI
-																					// ABGABE SOUTH REIN// WEST  //TODO //TODO
+		hauptf.add(logger, BorderLayout.WEST);// ////////////////////////////////////////////////////////////////////////BEI
+																					// ABGABE SOUTH REIN// WEST //TODO
+																					// //TODO
 
 		hauptf.setLocation(GetScreenWorkingWidth() / 9, GetScreenWorkingHeight() / 50);
 		hauptf.setSize(GetScreenWorkingWidth() - 450, GetScreenWorkingHeight() - 90);
@@ -922,14 +923,16 @@ public class GUI extends JFrame {
 					ziehenAuswahl = 0;
 				}
 
-//				if (ib.getK1() != null && ib.getK1().getSpieler().getFarbe() == FarbEnum.WEIß || ib.getK2() != null && ib.getK2().getSpieler().getFarbe() == FarbEnum.WEIß) {
-//
-//					ziehen.setEnabled(false);
-//
-//				} else {
-//
-//					kiziehen.setEnabled(false);
-//				}
+				// if (ib.getK1() != null && ib.getK1().getSpieler().getFarbe() ==
+				// FarbEnum.WEIß || ib.getK2() != null &&
+				// ib.getK2().getSpieler().getFarbe() == FarbEnum.WEIß) {
+				//
+				// ziehen.setEnabled(false);
+				//
+				// } else {
+				//
+				// kiziehen.setEnabled(false);
+				// }
 				brettAktualisieren();
 				log("Das Spiel geht weiter.");
 				log(ib.getAmZug() + " macht weiter.");
@@ -1029,7 +1032,7 @@ public class GUI extends JFrame {
 			}
 		}
 		ib.allesLoeschen();
-		spielerFrame.dispose();
+		spielerFrame.dispose();// TODO wieso noch hier??
 		spCnt = 0;
 		anzahlzüge = 0;
 		aufbauen(feldgroesse);
@@ -1228,3 +1231,6 @@ public class GUI extends JFrame {
 	}
 
 }
+
+// TODO
+// DIALOG FELD STATT BUTTON
