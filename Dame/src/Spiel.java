@@ -1464,7 +1464,8 @@ public class Spiel implements iBediener, Serializable {
 					// System.out.println(y);
 					// System.out.println(dame);
 
-					Spielfigur figur = new Spielfigur(FarbEnum.WEIß, dame);
+					Spielfigur figur = new Spielfigur(FarbEnum.WEIß, false);
+					figur.setDame(dame);
 					figur.setPosX(x);
 					figur.setPosY(y);
 					figur.setIdW(IdW);
