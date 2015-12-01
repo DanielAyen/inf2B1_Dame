@@ -885,25 +885,58 @@ public class GUI extends JFrame {
 			log(selectedFile.getParent());
 			log(selectedFile.getName());
 			if (ib.laden(selectedFile.getName())) {
-				
-//				-----------------------------
-				ziehen.setEnabled(true);
-				kiziehen.setEnabled(true);
 
-				if (ib.getK1() != null && ib.getK1().getSpieler().getFarbe() == FarbEnum.WEIß || ib.getK2() != null && ib.getK2().getSpieler().getFarbe() == FarbEnum.WEIß) {
+				// -----------------------------
+				// ziehen.setEnabled(true);
+				// kiziehen.setEnabled(true);
 
-					ziehen.setEnabled(false);
+				for (int zeile = 0; zeile < buttonArray.length; zeile++) {
+					for (int spalte = 0; spalte < buttonArray[zeile].length; spalte++) {
+						buttonArray[zeile][spalte].setEnabled(true);
+					}
+				}
+
+				if (ib.getAmZug() == FarbEnum.SCHWARZ) {
+
+					log("Schwarz am Zug");
+
+					if (ib.getK1() != null) {
+						ziehen.setEnabled(false);
+						kiziehen.setEnabled(true);
+					} else {
+						ziehen.setEnabled(true);
+						kiziehen.setEnabled(false);
+					}
 
 				} else {
+					log("Weiß am Zug");
 
-					kiziehen.setEnabled(false);
+					if (ib.getK2() != null) {
+						ziehen.setEnabled(false);
+						kiziehen.setEnabled(true);
+					} else {
+						ziehen.setEnabled(true);
+						kiziehen.setEnabled(false);
+					}
+					brettAktualisieren();
+					ziehenAuswahl = 0;
 				}
+
+//				if (ib.getK1() != null && ib.getK1().getSpieler().getFarbe() == FarbEnum.WEIß || ib.getK2() != null && ib.getK2().getSpieler().getFarbe() == FarbEnum.WEIß) {
+//
+//					ziehen.setEnabled(false);
+//
+//				} else {
+//
+//					kiziehen.setEnabled(false);
+//				}
 				brettAktualisieren();
 				log("Das Spiel geht weiter.");
 				log(ib.getAmZug() + " macht weiter.");
-//				------------------------------
-//				TODO haupf.repaint() ????
+				// ------------------------------
+
 				brettAktualisieren();
+				hauptf.repaint();
 				log("erfolgreich");
 			} else {
 				log("das war wohl nix");
