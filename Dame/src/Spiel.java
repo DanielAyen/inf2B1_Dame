@@ -1399,8 +1399,7 @@ public class Spiel implements iBediener, Serializable {
 				}
 			}
 			this.anzeigen();
-			
-			
+
 			for (int i = 0; i < brett.getBrettGroesse(); i++) {
 				for (int j = 0; j < brett.getBrettGroesse(); j++) {
 
@@ -1411,8 +1410,7 @@ public class Spiel implements iBediener, Serializable {
 					}
 				}
 			}
-			
-			
+
 			this.anzeigen();
 			String figurenZ[] = o.get(3);
 			{
@@ -1433,13 +1431,14 @@ public class Spiel implements iBediener, Serializable {
 					System.out.println(IdS);
 					// System.out.println(x);
 					// System.out.println(y);
-					// System.out.println(dame);
 
-					Spielfigur figur = new Spielfigur(FarbEnum.SCHWARZ, dame);
+					Spielfigur figur = new Spielfigur(FarbEnum.SCHWARZ, false);
+					figur.setDame(dame);
+					System.out.println(figur.getDame(figur));
 					figur.setPosX(x);
 					figur.setPosY(y);
 					figur.setIdS(IdS);
-					brett.getBrettFeldIndex(x,y).setSpielfigur(figur);
+					brett.getBrettFeldIndex(x, y).setSpielfigur(figur);
 					s1.getAlleFiguren().add(figur);
 				}
 			}
@@ -1469,7 +1468,7 @@ public class Spiel implements iBediener, Serializable {
 					figur.setPosX(x);
 					figur.setPosY(y);
 					figur.setIdW(IdW);
-					brett.getBrettFeldIndex(x,y).setSpielfigur(figur);
+					brett.getBrettFeldIndex(x, y).setSpielfigur(figur);
 					s2.getAlleFiguren().add(figur);
 				}
 			}
@@ -1492,22 +1491,23 @@ public class Spiel implements iBediener, Serializable {
 			System.out.println("Laden fehlgeschlagen!");
 		}
 		this.anzeigen();
-//TODO
-//		for (int i = 0; i < brett.getBrettGroesse() - 1; i++) {
-//			for (int j = 0; j < brett.getBrettGroesse() - 1; i++) {
-//
-//				if (brett.getBrettFeldIndex(i, j).getIstSchwarz()) {
-//					if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
-//						brett.getBrettFeldIndex(i, j).removeSpielfigur(brett.getBrettFeldIndex(i, j).getSpielfigur());
-//					}
-//				}
-//			}
-//		}
-//TODO
+		// TODO
+		// for (int i = 0; i < brett.getBrettGroesse() - 1; i++) {
+		// for (int j = 0; j < brett.getBrettGroesse() - 1; i++) {
+		//
+		// if (brett.getBrettFeldIndex(i, j).getIstSchwarz()) {
+		// if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
+		// brett.getBrettFeldIndex(i, j).removeSpielfigur(brett.getBrettFeldIndex(i,
+		// j).getSpielfigur());
+		// }
+		// }
+		// }
+		// }
+		// TODO
 	}
-	
-	public void ladenSER(String dateiname){
-		
+
+	public void ladenSER(String dateiname) {
+
 		GUI g = new GUI(12);
 		g = (GUI) ser.laden(dateiname);
 		g.startenWeitergeben();
