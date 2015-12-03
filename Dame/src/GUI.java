@@ -203,6 +203,7 @@ public class GUI extends JFrame {
 	 * spieler erstellen fenster
 	 */
 	public void spielerErstellen() {
+		if(spCnt==2)	loeschen();
 		befehlFeld.setText("");
 		JButton button02 = new JButton("OK");
 		spielerFrame = new JFrame("Spieler erstellen");
@@ -873,6 +874,7 @@ public class GUI extends JFrame {
 		int status = fc.showOpenDialog(null);
 
 		if (status == JFileChooser.APPROVE_OPTION) {
+		
 			log("bestätigt, lädt...");
 			File selectedFile = fc.getSelectedFile();
 			log(selectedFile.getAbsolutePath());
@@ -913,6 +915,7 @@ public class GUI extends JFrame {
 					}
 					brettAktualisieren();
 					ziehenAuswahl = 0;
+					
 				}
 
 				// if (ib.getK1() != null && ib.getK1().getSpieler().getFarbe() ==
@@ -931,12 +934,13 @@ public class GUI extends JFrame {
 				// ------------------------------
 
 				brettAktualisieren();
+				spCnt=2;
 				hauptf.repaint();
 				log("erfolgreich");
 			} else {
 				log("das war wohl nix");
 			}
-			// selectedFile.
+		
 		} else if (status == JFileChooser.CANCEL_OPTION) {
 			log("abgebrochen");
 
@@ -1050,7 +1054,7 @@ public class GUI extends JFrame {
 			}
 		}
 		ib.allesLoeschen();
-		spielerFrame.dispose();// TODO wieso noch hier??
+
 		spCnt = 0;
 		anzahlzüge = 0;
 		aufbauen(feldgroesse);
