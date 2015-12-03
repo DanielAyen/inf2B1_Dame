@@ -1309,7 +1309,7 @@ public class Spiel implements iBediener, Serializable {
 			break;
 
 		case "ser":
-			ser.speichern(null, pfad);
+			ser.speichern(this, pfad);
 			break;
 		case "pdf":
 			p.speichern(null, pfad);
@@ -1520,11 +1520,20 @@ public class Spiel implements iBediener, Serializable {
 		// TODO
 	}
 
-	public void ladenSER(String dateiname) {
+	public Spiel ladenSER(File selectedFile) {
 
-		GUI g = new GUI(12);
-		g = (GUI) ser.laden(dateiname);
-		g.startenWeitergeben();
+		this.allesLoeschen();
+		Spiel s = new Spiel();
+		s.aufbauen(12);
+		System.out.println(selectedFile.getName());
+		System.out.println(s);
+		System.out.println(selectedFile.getAbsolutePath());
+		System.out.println(ser.laden(selectedFile));
+		s = (Spiel) ser.laden(selectedFile) ;
+		if(s == null){
+			System.out.println("Ist null");
+		}
+		return s;
 	}
 
 	/*
