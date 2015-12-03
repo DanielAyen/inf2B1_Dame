@@ -973,18 +973,6 @@ public class GUI extends JFrame {
 
 	}
 
-	public void spielSpeichern() throws IOException {
-		ib.Speichern("Dame", "PDF");
-	}
-
-	public void spielSpeichernCSV() throws IOException {
-		ib.Speichern();
-	}
-
-	public void spielSpeichernSER() throws IOException {
-		ib.Speichern("Dame", "SER");
-	}
-
 	public void mailAbfrage() {
 		mailFrame = new JFrame();
 		mailFrame.setSize(500, 150);
