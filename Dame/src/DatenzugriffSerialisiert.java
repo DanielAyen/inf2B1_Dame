@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -7,7 +8,6 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
 
-
 public class DatenzugriffSerialisiert implements iDatenzugriff, Serializable {
 
 	/**
@@ -16,65 +16,58 @@ public class DatenzugriffSerialisiert implements iDatenzugriff, Serializable {
 	private static final long serialVersionUID = 1L;
 	private Spiel spiel;
 
-//	public DatenzugriffSerialisiert(Spiel spiel) {
-//		this.spiel = spiel;
-//	}
+	// public DatenzugriffSerialisiert(Spiel spiel) {
+	// this.spiel = spiel;
+	// }
 
 	@Override
-	public void speichern(Object o) {
+	public void speichern(Object o, String pfad) {
 		ObjectOutputStream oos = null;
 		try {
-			oos = new ObjectOutputStream(new FileOutputStream( "DameSER.ser"));
+			oos = new ObjectOutputStream(new FileOutputStream(pfad));
 			oos.writeObject(o);
 		} catch (FileNotFoundException e) {
-			//!// System.err.println("konnte 'out.ser' nicht erzeugen");
+			// !// System.err.println("konnte 'out.ser' nicht erzeugen");
 		} catch (IOException e) {
-			//!// System.err.println("Fehler bei der Ein-/Ausgabe" + e);
+			// !// System.err.println("Fehler bei der Ein-/Ausgabe" + e);
 
 		} finally {
 			try {
 				oos.close();
 			} catch (Exception e) {
-				//!// System.err.println("Fehler beim Schliessen der Datei");
+				// !// System.err.println("Fehler beim Schliessen der Datei");
 			}
 		}
 	}
-	
-	
-	
+
 	@Override
-	public Object laden(String dateiname) {
-		Object s=null;
+	public Object laden(File selectedFile) {
+		Object s = null;
 		ObjectInputStream ois = null;
-		try{
-			ois = new ObjectInputStream ( new FileInputStream ("DameSER.ser"));
-		
+		try {
+			ois = new ObjectInputStream(new FileInputStream(selectedFile.getAbsoluteFile()));
+
 			try {
 				s = ois.readObject();
-				//!// System.out.println("Spiel geladen");
+				// !// System.out.println("Spiel geladen");
 				return s;
-				
+
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-		}
-		catch (FileNotFoundException e) {
-			//!// System.err.println("konnte 'out.ser' nicht finden");
+		} catch (FileNotFoundException e) {
+			// !// System.err.println("konnte 'out.ser' nicht finden");
 		} catch (IOException e) {
-			//!// System.err.println("Fehler bei der Ein-/Ausgabe" + e);
+			// !// System.err.println("Fehler bei der Ein-/Ausgabe" + e);
 
 		} finally {
 			try {
 				ois.close();
 			} catch (Exception e) {
-				//!// System.err.println("Fehler beim Schliessen der Datei");
+				// !// System.err.println("Fehler beim Schliessen der Datei");
 			}
 		}
 		return null;
 	}
 
-
-		
-	
-		
-	}
+}

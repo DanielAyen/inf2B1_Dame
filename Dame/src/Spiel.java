@@ -1309,10 +1309,10 @@ public class Spiel implements iBediener, Serializable {
 			break;
 
 		case "ser":
-			ser.speichern(dateiname);
+			ser.speichern(null, pfad);
 			break;
 		case "pdf":
-			p.speichern(dateiname);
+			p.speichern(null, pfad);
 			break;
 		}
 	}
