@@ -1251,8 +1251,21 @@ public class Spiel implements iBediener, Serializable {
 	 *          name der Datei
 	 */
 
-	public void Speichern(String dateiname, String dateiende) throws IOException {
-		dateiende = dateiende.toLowerCase(); // groß klein schreibung
+	public void Speichern(File selectedFile) throws IOException {
+		String dateiende = null;
+		String pfad = selectedFile.getAbsolutePath();
+
+		String name = selectedFile.getName();
+
+		if (name.toLowerCase().endsWith(".csv")) {
+			dateiende = "csv";
+		} else if (name.toLowerCase().endsWith(".pdf")) {
+			dateiende = "pdf";
+		}
+		if (name.toLowerCase().endsWith(".ser")) {
+			dateiende = "ser";
+		}
+
 		switch (dateiende) {
 		case "csv":
 			try {
@@ -1287,7 +1300,8 @@ public class Spiel implements iBediener, Serializable {
 				o = o + "\n";
 				String amZug = this.getAmZug() + ";";
 				o = o + amZug;
-				csv.speichern(o);
+
+				csv.speichern(o, pfad);
 				break;
 			} catch (Exception e) {
 				System.out.println("Speichern CSV fehlgeschlagen.");
@@ -1304,13 +1318,13 @@ public class Spiel implements iBediener, Serializable {
 	}
 
 	@Override
-	public boolean laden(String dateiname) {
-		String s = dateiname;
+	public boolean laden(File selectedFile) {
+		String s = selectedFile.getName().toLowerCase();
 		if (s.endsWith(".csv")) {
-			this.ladenCSV(s);
+			this.ladenCSV(selectedFile);
 			return true;
 		} else if (s.endsWith(".ser")) {
-			this.laden(s);
+			this.laden(selectedFile);
 			return true;
 		} else {
 			System.out.println("NOP");
@@ -1320,7 +1334,7 @@ public class Spiel implements iBediener, Serializable {
 
 	// TODO laden CSV
 	@SuppressWarnings("unchecked")
-	public void ladenCSV(String dateiname) {
+	public void ladenCSV(File selectedFile) {
 		// String f = dateiname;
 		// TODO kann sein, dass arraylist da mit 10 initalisiert auf 6 runter muss
 		// und derzeit fehler wirft
@@ -1329,9 +1343,8 @@ public class Spiel implements iBediener, Serializable {
 		boolean istKi;
 
 		try {
-			System.out.println(dateiname);
-			System.out.println("vor zuweisung");
-			ArrayList<String[]> o = (ArrayList<String[]>) csv.laden(dateiname);
+
+			ArrayList<String[]> o = (ArrayList<String[]>) csv.laden(selectedFile);
 
 			System.out.println("Löschen?");
 			if (this.starten()) {

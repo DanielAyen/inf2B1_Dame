@@ -116,25 +116,6 @@ public class EventHandler implements ActionListener {
 			}
 			break;
 
-
-		case "Serialisiert speichern":
-			try {
-				gui.spielSpeichernSER();
-				gui.log("Spiel wurde gespeichert (SER)");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			break;
-
-		case "als CSV speichern":
-			try {
-				gui.spielSpeichernCSV();
-				gui.log("Spiel wurde gespeichert (CSV)");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			break;
-			
 		case "Brett aktualisieren":
 			gui.log("aktualisiert");
 			gui.brettAktualisieren();
@@ -287,19 +268,19 @@ public class EventHandler implements ActionListener {
 
 			break;
 
-		case "Anzeigen":
-			gui.hilfeAnz();
+		case "Spiel speichern":
+
+			try {
+				gui.speichernChooser();
+			} catch (IOException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+
 			break;
 
-		case "als PDF speichern":
-			try {
-				gui.screenshotErstellen();
-				gui.spielSpeichern();
-				gui.log("Spiel wurde gespeichert (PDF)");
-
-			} catch (IOException e1) {
-				gui.log("Fehler beim speichern");// e1.printStackTrace();
-			}
+		case "Anzeigen":
+			gui.hilfeAnz();
 			break;
 
 		case "senden":

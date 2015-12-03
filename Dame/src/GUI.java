@@ -481,17 +481,9 @@ public class GUI extends JFrame {
 		MenuItem neu = new MenuItem("neues Spiel erstellen"); // Unterknopf 2
 		spiel.add(neu);
 		neu.addActionListener(eh);
-		MenuItem speichern = new MenuItem("als PDF speichern");
-		spiel.add(speichern);
-		speichern.addActionListener(eh);
-		menueLeiste.add(spiel);
-		MenuItem speichernCSV = new MenuItem("als CSV speichern");
-		spiel.add(speichernCSV);
-		speichernCSV.addActionListener(eh);
-		menueLeiste.add(spiel);
-		MenuItem speichernSER = new MenuItem("Serialisiert speichern");
-		spiel.add(speichernSER);
-		speichernSER.addActionListener(eh);
+		MenuItem Spielspeichern = new MenuItem("Spiel speichern");
+		spiel.add(Spielspeichern);
+		Spielspeichern.addActionListener(eh);
 		menueLeiste.add(spiel);
 
 		Menu mail = new Menu("Mail");
@@ -883,9 +875,9 @@ public class GUI extends JFrame {
 		if (status == JFileChooser.APPROVE_OPTION) {
 			log("bestätigt, lädt...");
 			File selectedFile = fc.getSelectedFile();
-			log(selectedFile.getParent());
+			log(selectedFile.getAbsolutePath());
 			log(selectedFile.getName());
-			if (ib.laden(selectedFile.getName())) {
+			if (ib.laden(selectedFile)) {
 
 				// -----------------------------
 				// ziehen.setEnabled(true);
@@ -951,12 +943,38 @@ public class GUI extends JFrame {
 		}
 	}
 
+	public void speichernChooser() throws IOException {
+
+		// JFileChooser-Objekt erstellen
+		JFileChooser sChooser = new JFileChooser("Speichern");
+		// Dialog zum Speichern von Dateien anzeigen
+		int status = sChooser.showSaveDialog(null);
+		sChooser.setDialogType(JFileChooser.SAVE_DIALOG);
+
+		if (status == JFileChooser.APPROVE_OPTION) {
+			log("bestätigt, speichert...");
+			File selectedFile = sChooser.getSelectedFile();
+			log(selectedFile.getParent());
+			log(selectedFile.getName());
+			if (selectedFile.getName().toLowerCase().endsWith(".pdf")) {
+				screenshotErstellen();
+				log("Screenshot erstellt...");
+			}
+			ib.Speichern(selectedFile);
+
+		} else if (status == JFileChooser.CANCEL_OPTION) {
+			log("abgebrochen");
+
+		}
+
+	}
+
 	public void spielSpeichern() throws IOException {
 		ib.Speichern("Dame", "PDF");
 	}
 
 	public void spielSpeichernCSV() throws IOException {
-		ib.Speichern("Dame", "CSV");
+		ib.Speichern();
 	}
 
 	public void spielSpeichernSER() throws IOException {

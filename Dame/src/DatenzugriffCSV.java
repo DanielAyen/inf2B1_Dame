@@ -24,9 +24,9 @@ public class DatenzugriffCSV implements iDatenzugriff {
 	 * @throws IOException
 	 */
 
-	public Object laden(String dateiname) throws IOException {
+	public Object laden(File selectedFile) throws IOException {
 		System.out.println("Reader wird erstellt");
-		reader = new BufferedReader(new FileReader("csvspeicher.csv"));
+		reader = new BufferedReader(new FileReader(selectedFile.getAbsoluteFile()));
 		System.out.println("Eine Arraylist wird jetzt erstellt");
 		ArrayList<String[]> csv = new ArrayList<String[]>();
 		if (reader == null) {
@@ -65,10 +65,10 @@ public class DatenzugriffCSV implements iDatenzugriff {
 	}
 
 	@Override
-	public void speichern(Object o) throws IOException {
+	public void speichern(Object o, String pfad) throws IOException {
 
 		try {
-			writer = new PrintWriter(new FileWriter("csvspeicher.csv"));
+			writer = new PrintWriter(new FileWriter(pfad));
 			// } catch (Exception e) {
 			// // !// System.err.println("Kein String übergeben");}
 		} catch (NullPointerException e) {

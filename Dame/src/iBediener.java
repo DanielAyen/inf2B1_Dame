@@ -1,4 +1,3 @@
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,7 +55,7 @@ public interface iBediener {
 
 	public void zugBeenden();
 
-	void Speichern(String dateiname, String dateiende) throws IOException;
+	void Speichern(File selectedFile) throws IOException;
 
-	public boolean laden(String dateiname);
+	public boolean laden(File selectedFile);
 }
