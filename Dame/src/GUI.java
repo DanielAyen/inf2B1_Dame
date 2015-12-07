@@ -636,7 +636,7 @@ public class GUI extends JFrame {
 					ib.willNichtWeiterZiehen();
 
 					if (ib.getAmZug() == FarbEnum.SCHWARZ) {
-
+if(spCnt!=0)
 						log("Schwarz am Zug");
 
 						if (ib.getK1() != null) {
@@ -647,7 +647,8 @@ public class GUI extends JFrame {
 							kiziehen.setEnabled(false);
 						}
 
-					} else {
+					} else if (ib.getAmZug() == FarbEnum.WEIß) {
+						if(spCnt!=0)
 						log("Weiß am Zug");
 
 						if (ib.getK2() != null) {
@@ -665,7 +666,7 @@ public class GUI extends JFrame {
 			} else {
 
 				if (ib.getAmZug() == FarbEnum.SCHWARZ) {
-
+					if(spCnt!=0)
 					log("Schwarz am Zug");
 
 					if (ib.getK1() != null) {
@@ -676,8 +677,8 @@ public class GUI extends JFrame {
 						kiziehen.setEnabled(false);
 					}
 
-				} else {
-					log("Weiß am Zug");
+				} else if (ib.getAmZug() == FarbEnum.WEIß) {
+					if(spCnt!=0) log("Weiß am Zug");
 
 					if (ib.getK2() != null) {
 						ziehen.setEnabled(false);
@@ -718,7 +719,7 @@ public class GUI extends JFrame {
 			this.brettAktualisieren();
 
 			if (ib.getAmZug() == FarbEnum.SCHWARZ) {
-				log("Schwarz am Zug");
+				if(spCnt!=0)	log("Schwarz am Zug");
 
 				if (ib.getK1() != null) {
 					ziehen.setEnabled(false);
@@ -728,8 +729,8 @@ public class GUI extends JFrame {
 					kiziehen.setEnabled(false);
 				}
 
-			} else {
-				log("Weiß am Zug");
+			} else if (ib.getAmZug() == FarbEnum.WEIß) {
+				if(spCnt!=0)	log("Weiß am Zug");
 
 				if (ib.getK2() != null) {
 					ziehen.setEnabled(false);
@@ -801,6 +802,7 @@ public class GUI extends JFrame {
 				}
 			}
 		}
+
 		hauptf.repaint();
 	}
 
@@ -893,7 +895,7 @@ public class GUI extends JFrame {
 				}
 
 				if (ib.getAmZug() == FarbEnum.SCHWARZ) {
-
+					if(spCnt!=0)
 					log("Schwarz am Zug");
 
 					if (ib.getK1() != null) {
@@ -904,8 +906,8 @@ public class GUI extends JFrame {
 						kiziehen.setEnabled(false);
 					}
 
-				} else {
-					log("Weiß am Zug");
+				} else if (ib.getAmZug() == FarbEnum.WEIß) {
+					if(spCnt!=0)		log("Weiß am Zug");
 
 					if (ib.getK2() != null) {
 						ziehen.setEnabled(false);
@@ -953,7 +955,7 @@ public class GUI extends JFrame {
 					}
 
 					if (ib.getAmZug() == FarbEnum.SCHWARZ) {
-
+						if(spCnt!=0)
 						log("Schwarz am Zug");
 
 						if (ib.getK1() != null) {
@@ -964,8 +966,8 @@ public class GUI extends JFrame {
 							kiziehen.setEnabled(false);
 						}
 
-					} else {
-						log("Weiß am Zug");
+					} else if (ib.getAmZug() == FarbEnum.WEIß) {
+						if(spCnt!=0)			log("Weiß am Zug");
 
 						if (ib.getK2() != null) {
 							ziehen.setEnabled(false);
@@ -992,7 +994,9 @@ public class GUI extends JFrame {
 	}
 
 	public void speichernChooser() throws IOException {
-
+if(spCnt==0){
+	log("Es gibt nichts zu speichern!");
+}else{
 		// JFileChooser-Objekt erstellen
 		JFileChooser sChooser = new JFileChooser("Speichern");
 		FileNameExtensionFilter filter = new FileNameExtensionFilter(".csv .ser .pdf", "csv", "ser", "pdf");
@@ -1016,7 +1020,7 @@ public class GUI extends JFrame {
 		} else if (status == JFileChooser.CANCEL_OPTION) {
 			log("abgebrochen");
 
-		}
+		}}
 
 	}
 
@@ -1071,7 +1075,6 @@ public class GUI extends JFrame {
 			JOptionPane.showMessageDialog(hauptf, " \t\t\t\t(╯°□°)╯︵ ┻━┻\nSpieler " + sp.getName() + " hat gewonnen!\n Es wurden " + anzahlzüge + "  Züge gemacht.", "Ein Spieler hat das Spiel gewonnen!", JOptionPane.WARNING_MESSAGE);
 
 			loeschen();
-
 		}
 
 		else {
