@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -21,8 +22,10 @@ import com.itextpdf.text.pdf.PdfWriter;
  * Die Klasse DatenzugriffPDF erzeugt eine PDF
  *
  */
-public class DatenzugriffPDF implements iDatenzugriff {
+public class DatenzugriffPDF implements iDatenzugriff, Serializable {
 	// private iMeldung logger;
+
+	private static final long serialVersionUID = -1632008787864445195L;
 
 	/**
 	 * speichert / schreibt die PDF
@@ -61,7 +64,7 @@ public class DatenzugriffPDF implements iDatenzugriff {
 	 */
 	@Override
 	public Object laden(File selectedFile) {
-		return selectedFile.getName();
+		return selectedFile;
 	}
 
 }

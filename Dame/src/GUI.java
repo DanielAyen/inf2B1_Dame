@@ -203,7 +203,8 @@ public class GUI extends JFrame {
 	 * spieler erstellen fenster
 	 */
 	public void spielerErstellen() {
-		if(spCnt==2)	loeschen();
+		if (spCnt == 2)
+			loeschen();
 		befehlFeld.setText("");
 		JButton button02 = new JButton("OK");
 		spielerFrame = new JFrame("Spieler erstellen");
@@ -874,12 +875,11 @@ public class GUI extends JFrame {
 		int status = fc.showOpenDialog(null);
 
 		if (status == JFileChooser.APPROVE_OPTION) {
-		
 			log("bestätigt, lädt...");
 			File selectedFile = fc.getSelectedFile();
 			log(selectedFile.getAbsolutePath());
 			log(selectedFile.getName());
-			if (ib.laden(selectedFile)) {
+			if (ib.laden(selectedFile) == "ok") {
 
 				// -----------------------------
 				// ziehen.setEnabled(true);
@@ -915,10 +915,10 @@ public class GUI extends JFrame {
 					}
 					brettAktualisieren();
 					ziehenAuswahl = 0;
-					
 				}
 
-				// if (ib.getK1() != null && ib.getK1().getSpieler().getFarbe() ==
+				// if (ib.getK1() != null && ib.getK1().getSpieler().getFarbe()
+				// ==
 				// FarbEnum.WEIß || ib.getK2() != null &&
 				// ib.getK2().getSpieler().getFarbe() == FarbEnum.WEIß) {
 				//
@@ -934,16 +934,59 @@ public class GUI extends JFrame {
 				// ------------------------------
 
 				brettAktualisieren();
-				spCnt=2;
 				hauptf.repaint();
 				log("erfolgreich");
-			} else {
+			} else if (ib.laden(selectedFile) != null) {
+				// ib.allesLoeschen();
+				ib = (iBediener) ib.laden(selectedFile);
+				{
+
+					// -----------------------------
+					// ziehen.setEnabled(true);
+					// kiziehen.setEnabled(true);
+
+					for (int zeile = 0; zeile < buttonArray.length; zeile++) {
+						for (int spalte = 0; spalte < buttonArray[zeile].length; spalte++) {
+							buttonArray[zeile][spalte].setEnabled(true);
+						}
+					}
+
+					if (ib.getAmZug() == FarbEnum.SCHWARZ) {
+
+						log("Schwarz am Zug");
+
+						if (ib.getK1() != null) {
+							ziehen.setEnabled(false);
+							kiziehen.setEnabled(true);
+						} else {
+							ziehen.setEnabled(true);
+							kiziehen.setEnabled(false);
+						}
+
+					} else {
+						log("Weiß am Zug");
+
+						if (ib.getK2() != null) {
+							ziehen.setEnabled(false);
+							kiziehen.setEnabled(true);
+						} else {
+							ziehen.setEnabled(true);
+							kiziehen.setEnabled(false);
+						}
+						brettAktualisieren();
+						ziehenAuswahl = 0;
+					}
+				}
+				brettAktualisieren();
+				log("Das Spiel geht weiter.");
+				log(ib.getAmZug() + " macht weiter.");
+				hauptf.repaint();
+				log("erfolgreich");
+			} else if (ib.laden(selectedFile) == null) {
 				log("das war wohl nix");
 			}
-		
 		} else if (status == JFileChooser.CANCEL_OPTION) {
 			log("abgebrochen");
-
 		}
 	}
 
@@ -951,6 +994,9 @@ public class GUI extends JFrame {
 
 		// JFileChooser-Objekt erstellen
 		JFileChooser sChooser = new JFileChooser("Speichern");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter(".csv .ser .pdf", "csv", "ser", "pdf");
+		sChooser.setFileFilter(filter);
+
 		// Dialog zum Speichern von Dateien anzeigen
 		int status = sChooser.showSaveDialog(null);
 		sChooser.setDialogType(JFileChooser.SAVE_DIALOG);

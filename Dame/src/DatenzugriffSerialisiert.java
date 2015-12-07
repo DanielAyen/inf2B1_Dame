@@ -13,8 +13,7 @@ public class DatenzugriffSerialisiert implements iDatenzugriff, Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	private Spiel spiel;
+	private static final long serialVersionUID = -1632008787864445195L;
 
 	// public DatenzugriffSerialisiert(Spiel spiel) {
 	// this.spiel = spiel;
@@ -22,52 +21,42 @@ public class DatenzugriffSerialisiert implements iDatenzugriff, Serializable {
 
 	@Override
 	public void speichern(Object o, String pfad) {
-		ObjectOutputStream oos = null;
-		try {
-			oos = new ObjectOutputStream(new FileOutputStream(pfad));
-			oos.writeObject(o);
-		} catch (FileNotFoundException e) {
-			// !// System.err.println("konnte 'out.ser' nicht erzeugen");
-		} catch (IOException e) {
-			// !// System.err.println("Fehler bei der Ein-/Ausgabe" + e);
 
-		} finally {
-			try {
-				oos.close();
-			} catch (Exception e) {
-				// !// System.err.println("Fehler beim Schliessen der Datei");
-			}
+		try {
+			FileOutputStream out = new FileOutputStream(pfad);
+			ObjectOutputStream obout = new ObjectOutputStream(out);
+			obout.writeObject(o);
+			if (obout != null)
+				obout.close();
+		} catch (FileNotFoundException e) {
+			System.err.println("Konnte Datei nicht erzeugen.");
+		} catch (IOException e) {
+			System.err.println("Fehler bei Ein-/Ausgabe: " + e);
+		} catch (Exception e) {
+			System.err.println("Fehler beim Schließen");
 		}
 	}
 
 	@Override
 	public Object laden(File selectedFile) {
-		Object s = null;
-		ObjectInputStream ois = null;
+
 		try {
-			ois = new ObjectInputStream(new FileInputStream(selectedFile.getAbsoluteFile()));
-
-			try {
-				s = ois.readObject();
-				// !// System.out.println("Spiel geladen");
-				return s;
-
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-		} catch (FileNotFoundException e) {
-			// !// System.err.println("konnte 'out.ser' nicht finden");
+			System.out.println("1");
+			FileInputStream fin = new FileInputStream(selectedFile.getAbsoluteFile());
+			System.out.println("2");
+			ObjectInputStream oin = new ObjectInputStream(fin);
+			System.out.println("3");
+			Object o = oin.readObject();
+			System.out.println("4");
+			if (oin != null)
+				oin.close();
+			System.out.println("5");
+			return o;
 		} catch (IOException e) {
-			// !// System.err.println("Fehler bei der Ein-/Ausgabe" + e);
-
-		} finally {
-			try {
-				ois.close();
-			} catch (Exception e) {
-				// !// System.err.println("Fehler beim Schliessen der Datei");
-			}
+			System.err.println("Fehler bei Ein-/Ausgabe: " + e);
+		} catch (ClassNotFoundException e) {
+			System.err.println("Class not found");
 		}
 		return null;
 	}
-
 }

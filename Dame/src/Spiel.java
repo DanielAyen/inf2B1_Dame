@@ -1318,17 +1318,17 @@ public class Spiel implements iBediener, Serializable {
 	}
 
 	@Override
-	public boolean laden(File selectedFile) {
+	public Object laden(File selectedFile) {
 		String s = selectedFile.getName().toLowerCase();
 		if (s.endsWith(".csv")) {
 			this.ladenCSV(selectedFile);
-			return true;
+			return "ok";
 		} else if (s.endsWith(".ser")) {
-			this.laden(selectedFile);
-			return true;
+			Object a = this.ladenSER(selectedFile);
+			return a;
 		} else {
 			System.out.println("NOP");
-			return false;
+			return null;
 		}
 	}
 
@@ -1522,19 +1522,13 @@ public class Spiel implements iBediener, Serializable {
 
 	public Spiel ladenSER(File selectedFile) {
 
-		this.allesLoeschen();
-		Spiel s = new Spiel();
-		s.aufbauen(12);
-		System.out.println(selectedFile.getName());
-		System.out.println(s);
-		System.out.println(selectedFile.getAbsolutePath());
-		System.out.println(ser.laden(selectedFile));
-		s = (Spiel) ser.laden(selectedFile) ;
-		if(s == null){
-			System.out.println("Ist null");
-		}
-		return s;
-	}
+		System.out.println("1: "+selectedFile.getName());
+		System.out.println("2: "+selectedFile.getAbsolutePath());
+//		System.out.println("3: "+ser.laden(selectedFile));
+		
+		Spiel spiel = (Spiel) ser.laden(selectedFile);
+		return spiel;
+ 	}
 
 	/*
 	 * System.out.println("Spielernamen eingeben\n"); name = reader.readLine();

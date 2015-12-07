@@ -7,8 +7,6 @@ public class DameTest {
 
 	public static void main(String[] args) {
 
-		iBediener spiel = new Spiel();
-
 		GUI g = new GUI(12);
 
 		/*

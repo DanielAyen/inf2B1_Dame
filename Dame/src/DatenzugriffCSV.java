@@ -7,11 +7,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class DatenzugriffCSV implements iDatenzugriff {
-	private BufferedReader reader = null;
-	private PrintWriter writer = null;
+public class DatenzugriffCSV implements iDatenzugriff, Serializable {
+
+	private static final long serialVersionUID = -1632008787864445195L;
+	private transient BufferedReader reader = null;
+	private transient PrintWriter writer = null;
 	Spiel s;
 	Spieler s2;
 	Spieler s1;
@@ -48,19 +51,6 @@ public class DatenzugriffCSV implements iDatenzugriff {
 		} catch (IOException e) {
 			System.err.println("Fehler bei Ein-/Ausgabe: " + e);
 			return null;
-		}
-	}
-
-	public void schliessen(File f) throws IOException {
-		try {
-			if (reader != null) {
-				reader.close();
-			}
-		} catch (IOException e) {
-			System.err.println("Fehler bei Ein-/Ausgabe: " + e);
-		}
-		if (writer != null) {
-			writer.close();
 		}
 	}
 

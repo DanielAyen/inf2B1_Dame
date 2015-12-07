@@ -57,5 +57,5 @@ public interface iBediener {
 
 	void Speichern(File selectedFile) throws IOException;
 
-	public boolean laden(File selectedFile);
+	public Object laden(File selectedFile);
 }
