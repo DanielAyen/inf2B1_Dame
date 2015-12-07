@@ -98,11 +98,11 @@ public class Spieler implements Serializable {
 	public int spielerPrüfen(String name, FarbEnum farbe) {
 
 		if (name == null) {
-			System.out.println("Du musst einen Namen übergeben");
+			// System.out.println("Du musst einen Namen übergeben");
 			return 1;
 		} else {
 			if (name.length() < 2) {
-				System.out.println("Name zu kurz!");
+				// System.out.println("Name zu kurz!");
 				return 2;
 			} else if ((farbe == FarbEnum.SCHWARZ && schwarzvergeben == false)) {
 				return 0;
@@ -110,7 +110,7 @@ public class Spieler implements Serializable {
 				if ((farbe == FarbEnum.WEIß && weißvergeben == false)) {
 					return 0;
 				} else {
-					System.out.println("Farbe schon vergeben!\n");
+					// System.out.println("Farbe schon vergeben!\n");
 					return 3;
 				}
 			}

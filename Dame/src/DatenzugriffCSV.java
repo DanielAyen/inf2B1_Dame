@@ -28,25 +28,25 @@ public class DatenzugriffCSV implements iDatenzugriff, Serializable {
 	 */
 
 	public Object laden(File selectedFile) throws IOException {
-		System.out.println("Reader wird erstellt");
+		// System.out.println("Reader wird erstellt");
 		reader = new BufferedReader(new FileReader(selectedFile.getAbsoluteFile()));
-		System.out.println("Eine Arraylist wird jetzt erstellt");
+		// System.out.println("Eine Arraylist wird jetzt erstellt");
 		ArrayList<String[]> csv = new ArrayList<String[]>();
 		if (reader == null) {
 			throw new RuntimeException("Der Reader ist nicht offen");
 		}
-		System.out.println("Reader auf, los gehts");
+		// System.out.println("Reader auf, los gehts");
 		try {
-			System.out.println("Ich trye");
+			// System.out.println("Ich trye");
 			String line;
 			line = reader.readLine();
-			System.out.println("Jetzt wird gewhilt");
+			// System.out.println("Jetzt wird gewhilt");
 			while (line != null) {
 				String[] gesplittet = line.split(";");
 				csv.add(gesplittet);
 				line = reader.readLine();
 			}
-			System.out.println("Ich reTÖRNE");
+			// System.out.println("Ich reTÖRNE");
 			return csv;
 		} catch (IOException e) {
 			System.err.println("Fehler bei Ein-/Ausgabe: " + e);

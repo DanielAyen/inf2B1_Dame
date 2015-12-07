@@ -65,8 +65,8 @@ public abstract class KI implements Serializable {
 		if (zug != null) {
 			int limit = zug.size();
 			int i = this.zufall(limit);
-			// System.out.println("Limit: " + limit);
-			// System.out.println("Zufallszahl: " + i);
+			// // System.out.println("Limit: " + limit);
+			// // System.out.println("Zufallszahl: " + i);
 			ArrayList<int[]> zugZiel = zug.get(i);
 
 			// int s3 = (int) bla[i];
@@ -75,18 +75,18 @@ public abstract class KI implements Serializable {
 
 			int limit2 = zugZiel.size();
 			int i2 = this.zufall(limit2);
-			// System.out.println("Limit2: " + limit2);
-			// System.out.println("Zufallszahl2: " + i2);
+			// // System.out.println("Limit2: " + limit2);
+			// // System.out.println("Zufallszahl2: " + i2);
 
 			int zielKoords[] = zugZiel.get(i2);
 			// for (int l = 0; l <= zielKoords.length - 1; l++) {
-			// System.out.println(zielKoords[l]);
+			// // System.out.println(zielKoords[l]);
 			// }
 
 			// ------------------------------------------------------------------------
 			int rueckgabeZieh[] = { (zielKoords[2]), (zielKoords[3]), (zielKoords[0]), (zielKoords[1]) };
 			// ------------------------------------------------------------------------
-			System.out.println(((char) (zielKoords[3] + 97)) + "" + (zielKoords[2] + 1) + " nach " + ((char) (zielKoords[1] + 97)) + "" + (zielKoords[0] + 1));
+			// System.out.println(((char) (zielKoords[3] + 97)) + "" + (zielKoords[2] + 1) + " nach " + ((char) (zielKoords[1] + 97)) + "" + (zielKoords[0] + 1));
 			return rueckgabeZieh;
 		} else {
 			return null;
@@ -484,7 +484,7 @@ public abstract class KI implements Serializable {
 	 * @return
 	 */
 	public int[] getWeitereSchlaege(int zeile, int spalte, Spielfigur figur) {
-		System.out.println("ich suche weitere schlaege");
+		// System.out.println("ich suche weitere schlaege");
 		ArrayList<ArrayList<int[]>> alleWeiterenSchlaege = new ArrayList<ArrayList<int[]>>();
 		ArrayList<int[]> weitereSchlaege = this.getSchlaege(zeile, spalte, figur);
 		int[] rueckgabeWeitere = { 0, 0, 0, 0 };
@@ -515,7 +515,7 @@ public abstract class KI implements Serializable {
 			rueckgabeWeitere[2] = (zielKoords[0]);
 			rueckgabeWeitere[3] = (zielKoords[1]);
 			// ------------------------------------------------------------------------
-			System.out.println(((char) (zielKoords[3] + 97)) + "" + (zielKoords[2] + 1) + " nach " + ((char) (zielKoords[1] + 97)) + "" + (zielKoords[0] + 1));
+			// System.out.println(((char) (zielKoords[3] + 97)) + "" + (zielKoords[2] + 1) + " nach " + ((char) (zielKoords[1] + 97)) + "" + (zielKoords[0] + 1));
 			return rueckgabeWeitere;
 		}
 		return null;

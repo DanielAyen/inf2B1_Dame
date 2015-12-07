@@ -879,7 +879,8 @@ public class GUI extends JFrame {
 			File selectedFile = fc.getSelectedFile();
 			log(selectedFile.getAbsolutePath());
 			log(selectedFile.getName());
-			if (ib.laden(selectedFile) == "ok") {
+			Object t = ib.laden(selectedFile);
+			if (t == "ok") {
 
 				// -----------------------------
 				// ziehen.setEnabled(true);
@@ -936,9 +937,9 @@ public class GUI extends JFrame {
 				brettAktualisieren();
 				hauptf.repaint();
 				log("erfolgreich");
-			} else if (ib.laden(selectedFile) != null) {
+			} else if (t != null) {
 				// ib.allesLoeschen();
-				ib = (iBediener) ib.laden(selectedFile);
+				ib = (iBediener) t;
 				{
 
 					// -----------------------------

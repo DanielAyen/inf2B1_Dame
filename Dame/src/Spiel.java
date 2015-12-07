@@ -99,9 +99,9 @@ public class Spiel implements iBediener, Serializable {
 	public void spielStarten() {
 
 		// ///////////////////////////////////////////
-		System.out.println("Bitte gebe die gewuenschte Spielbrett Groesse ein. ( 8 , 10 , 12 )");
+		// System.out.println("Bitte gebe die gewuenschte Spielbrett Groesse ein. ( 8 , 10 , 12 )");
 		aufbauen(12);
-		anzeigen();
+//		anzeigen();
 	}
 
 	// ///////////////////////////////////////////
@@ -131,7 +131,7 @@ public class Spiel implements iBediener, Serializable {
 	// break;
 	//
 	// case "zug":
-	// System.out.println(getAmZug());
+	// // System.out.println(getAmZug());
 	// break;
 	// case "dame":
 	// brett.getBrettFeldSchachnotation('c', 5).getSpielfigur().setDame(true);
@@ -140,16 +140,16 @@ public class Spiel implements iBediener, Serializable {
 	// // TEST CASES ENDE //
 	//
 	// case "help":
-	// System.out.println("aufbauen : Erstellt ein Spielbrett, wird zum spielen benoetigt.");
-	// System.out.println("erstellen : Erlaubt dir einen Spieler zu erstellen, es werden 2 Spieler zum spielen benoetigt.");
-	// System.out.println("start: Startet das Spiel, es wird ein erstelltes Spielbrett und zwei Spieler benoetigt.");
-	// System.out.println("beenden : Das Spiel wird geschlossen.");
-	// System.out.println("ziehen : Erlaubt dir eine Spielfigur zu bewegen. Nicht moeglich solange das Spiel nicht laeuft.");
-	// System.out.println("anzeigen : Zeigt dir das Spielbrett.");
-	// System.out.println("ser : erlaubt es dir das Spiel zu serialisieren.");
-	// System.out.println("csv : erlaubt es dir das Spiel als CSV Datei zu speichern.");
-	// System.out.println("ki ziehen : Lässt die KI ziehen.");
-	// System.out.println("anzcsv: Ausgabe der aktuellen Spielbrett-Belegung in CSV-Notation.");
+	// // System.out.println("aufbauen : Erstellt ein Spielbrett, wird zum spielen benoetigt.");
+	// // System.out.println("erstellen : Erlaubt dir einen Spieler zu erstellen, es werden 2 Spieler zum spielen benoetigt.");
+	// // System.out.println("start: Startet das Spiel, es wird ein erstelltes Spielbrett und zwei Spieler benoetigt.");
+	// // System.out.println("beenden : Das Spiel wird geschlossen.");
+	// // System.out.println("ziehen : Erlaubt dir eine Spielfigur zu bewegen. Nicht moeglich solange das Spiel nicht laeuft.");
+	// // System.out.println("anzeigen : Zeigt dir das Spielbrett.");
+	// // System.out.println("ser : erlaubt es dir das Spiel zu serialisieren.");
+	// // System.out.println("csv : erlaubt es dir das Spiel als CSV Datei zu speichern.");
+	// // System.out.println("ki ziehen : Lässt die KI ziehen.");
+	// // System.out.println("anzcsv: Ausgabe der aktuellen Spielbrett-Belegung in CSV-Notation.");
 	// break;
 	//
 	// // zum erstellen von spielern
@@ -197,8 +197,8 @@ public class Spiel implements iBediener, Serializable {
 	public int[] wandleUmvString(String Input) {
 		int[] gueltig = new int[3];
 		if (Input.length() > 1 && Input.length() < 4 && (IstBuchstabe(Input.substring(0, 1).toCharArray()) > -1) && (IstZahl(Input.substring(1, Input.length())) > -1)) {
-			// System.out.println("Alles-OK");
-			// System.out.println(IstBuchstabe(Input.substring(0,
+			// // System.out.println("Alles-OK");
+			// // System.out.println(IstBuchstabe(Input.substring(0,
 			// 1).toCharArray()) +
 			// "  " + IstZahl(Input.substring(1, Input.length())));
 			gueltig[0] = IstZahl(Input.substring(1, Input.length()));
@@ -206,7 +206,7 @@ public class Spiel implements iBediener, Serializable {
 			return gueltig;
 		} else
 			gueltig[2] = -1;
-		System.out.println("Falsche Eingabe");
+		// System.out.println("Falsche Eingabe");
 		return gueltig;
 	}
 
@@ -353,23 +353,23 @@ public class Spiel implements iBediener, Serializable {
 		// Laufen & Schlagen Dame - Dame kann mehr als ein Schritt laufen
 
 		if (fig.getDame(fig)) {
-			// System.out.println("ich bin dame1");
+			// // System.out.println("ich bin dame1");
 			int[] ur = Rek_Dame_Moeglich(x, y, "ur", 0, 0);
-			// System.out.println("Passt");
+			// // System.out.println("Passt");
 			laufen += ur[0];
 			schlagen += ur[1];
 
-			// System.out.println("ich bin dame2");
+			// // System.out.println("ich bin dame2");
 			int[] ul = Rek_Dame_Moeglich(x, y, "ul", 0, 0);
 			laufen += ul[0];
 			schlagen += ul[1];
 
-			// System.out.println("ich bin dame3");
+			// // System.out.println("ich bin dame3");
 			int[] ol = Rek_Dame_Moeglich(x, y, "ol", 0, 0);
 			laufen += ol[0];
 			schlagen += ol[1];
 
-			// System.out.println("ich bin dame4");
+			// // System.out.println("ich bin dame4");
 			int[] or = Rek_Dame_Moeglich(x, y, "or", 0, 0);
 			laufen += or[0];
 			schlagen += or[1];
@@ -440,7 +440,7 @@ public class Spiel implements iBediener, Serializable {
 			if (x + 1 <= brett.getBrettGroesse() - 1 && y - 1 >= 0) {
 				// 2.Pruefung: schauen ob ne Figur drauf ist. Ist keine Figur
 				// drauf
-				System.out.println("oben links belegt: " + brett.getBrettFeldIndex(x + 1, y - 1).getIstBelegt());
+				// System.out.println("oben links belegt: " + brett.getBrettFeldIndex(x + 1, y - 1).getIstBelegt());
 				if (!brett.getBrettFeldIndex(x + 1, y - 1).getIstBelegt()) {
 					FigurenLaufen.add(brett.getBrettFeldIndex(x + 1, y - 1).getId());
 					// Rekursionsaufruf mit laufen++
@@ -448,7 +448,7 @@ public class Spiel implements iBediener, Serializable {
 					return amk;
 					// 3.Pruefung: wenn Feld belegt vom Gegner
 				} else if (brett.getBrettFeldIndex(x + 1, y - 1).getIstBelegt() && brett.getBrettFeldIndex(x + 1, y - 1).getSpielfigur().getFarbe() != getAmZug()) {
-					System.out.println("oben links belegt: " + brett.getBrettFeldIndex(x + 1, y - 1).getIstBelegt());
+					// System.out.println("oben links belegt: " + brett.getBrettFeldIndex(x + 1, y - 1).getIstBelegt());
 					// 4.Pruefung: wenn Feld dahinter innerhalb Brett & wenn
 					// Feld dahinter frei
 					if (x + 2 <= brett.getBrettGroesse() - 1 && y - 2 >= 0 && !brett.getBrettFeldIndex(x + 2, y - 2).getIstBelegt()) {
@@ -503,12 +503,12 @@ public class Spiel implements iBediener, Serializable {
 	 */
 	public void spielBauen(int x) {
 		if (spielAufgebaut == true) {
-			System.out.println("Spielbrett wurde bereits aufgebaut!");
+			// System.out.println("Spielbrett wurde bereits aufgebaut!");
 		} else {
 			spielAufgebaut = true;
 			brett = new Spielbrett(x);
-			System.out.println("Das Spielbrett wurde aufgebaut!\n");
-			brett.display();
+			// System.out.println("Das Spielbrett wurde aufgebaut!\n");
+			// brett.display();
 		}
 
 	}
@@ -547,17 +547,17 @@ public class Spiel implements iBediener, Serializable {
 		tempY = Math.abs(diffY);
 
 		if (!brett.getBrettFeldIndex(xn, yn).getIstSchwarz()) {
-			System.out.println("Dieser Zug ist nicht gültig. Du kannst nur auf schwarze Felder springen!");
+			// System.out.println("Dieser Zug ist nicht gültig. Du kannst nur auf schwarze Felder springen!");
 			return -1;
 		}
 
 		if (tempX != tempY) {
-			System.out.println("Dieser Zug ist nicht gültig. Du darfts nicht querbeet durchs Feld springen!");
+			// System.out.println("Dieser Zug ist nicht gültig. Du darfts nicht querbeet durchs Feld springen!");
 			return -1;
 
 		}
 		if (brett.getBrettFeldIndex(xn, yn).getIstBelegt()) {
-			System.out.println("Dieser Zug ist nicht gültig. Du kannst keine andere Figur besteigen!");
+			// System.out.println("Dieser Zug ist nicht gültig. Du kannst keine andere Figur besteigen!");
 			return -1;
 		}
 
@@ -806,12 +806,12 @@ public class Spiel implements iBediener, Serializable {
 			if (diffX < 0 && diffY < 0) {
 
 				int j = alteY + 1;
-				// System.out.println("Angefangen zu laufen oben rechts");
+				// // System.out.println("Angefangen zu laufen oben rechts");
 				for (int i = alteX + 1; i <= neueX; i++) {
 					if (!brett.getBrettFeldIndex(i, j).getIstBelegt()) {
 						brett.getBrettFeldIndex(i, j).setSpielfigur(brett.getBrettFeldIndex(i - 1, j - 1).getSpielfigur());
 						brett.getBrettFeldIndex(i - 1, j - 1).removeSpielfigur(brett.getBrettFeldIndex(i - 1, j - 1).getSpielfigur());
-						// System.out.println("naechstes feld. wenn nicht ende weiterlaufe");
+						// // System.out.println("naechstes feld. wenn nicht ende weiterlaufe");
 					} else {
 						figurSchlagen(i - 1, j - 1, i + 1, j + 1);
 						// nach der figurSchlagen Methode wird die Spielfigur
@@ -831,7 +831,7 @@ public class Spiel implements iBediener, Serializable {
 
 				int j = alteY - 1;
 				for (int i = alteX + 1; i <= neueX; i++) {
-					// System.out.println("laufen nach oben links");
+					// // System.out.println("laufen nach oben links");
 					if (!brett.getBrettFeldIndex(i, j).getIstBelegt()) {
 						brett.getBrettFeldIndex(i, j).setSpielfigur(brett.getBrettFeldIndex(i - 1, j + 1).getSpielfigur());
 						brett.getBrettFeldIndex(i - 1, j + 1).removeSpielfigur(brett.getBrettFeldIndex(i - 1, j + 1).getSpielfigur());
@@ -853,7 +853,7 @@ public class Spiel implements iBediener, Serializable {
 
 				int j = alteY + 1;
 				for (int i = alteX - 1; i >= neueX; i--) {
-					// System.out.println("laufen nach unten rechts");
+					// // System.out.println("laufen nach unten rechts");
 					if (!brett.getBrettFeldIndex(i, j).getIstBelegt()) {
 						brett.getBrettFeldIndex(i, j).setSpielfigur(brett.getBrettFeldIndex(i + 1, j - 1).getSpielfigur());
 						brett.getBrettFeldIndex(i + 1, j - 1).removeSpielfigur(brett.getBrettFeldIndex(i + 1, j - 1).getSpielfigur());
@@ -875,7 +875,7 @@ public class Spiel implements iBediener, Serializable {
 
 				int j = alteY - 1;
 				for (int i = alteX - 1; i >= neueX; i--) {
-					// System.out.println("Laufen nach unten links");
+					// // System.out.println("Laufen nach unten links");
 					if (!brett.getBrettFeldIndex(i, j).getIstBelegt()) {
 						brett.getBrettFeldIndex(i, j).setSpielfigur(brett.getBrettFeldIndex(i + 1, j + 1).getSpielfigur());
 						brett.getBrettFeldIndex(i + 1, j + 1).removeSpielfigur(brett.getBrettFeldIndex(i + 1, j + 1).getSpielfigur());
@@ -985,80 +985,80 @@ public class Spiel implements iBediener, Serializable {
 					brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
 					geschlagen = true;
 				} else {
-					System.out.println("Eigene Figuren schlagen geht nicht!");
+					// System.out.println("Eigene Figuren schlagen geht nicht!");
 					zugBeenden();
 				}
 			} else {
-				System.out.println("Du darfst nich ueber ein leeres Feld springen.");
+				// System.out.println("Du darfst nich ueber ein leeres Feld springen.");
 				zugBeenden();
 			}
 		}
 		// RICHTUNG NACH OBEN LINKS
 		if (diffX < 0 && diffY > 0) {
-			// System.out.println("nach oben links s1");
+			// // System.out.println("nach oben links s1");
 			if (brett.getBrettFeldIndex(alteX + 1, alteY - 1).getIstBelegt()) {
 				if (brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur().getFarbe() != getAmZug()) {
 					// prüfen ob feld zwischen alt und neu leer ist wenn
 					// nicht dann
 					// farbe prüfen (Wenn alles korrekt die
 					// figurEntfernen()aufrufen)
-					// System.out.println("nach oben links s2");
+					// // System.out.println("nach oben links s2");
 					figurEntfernen(brett.getBrettFeldIndex(alteX + 1, alteY - 1).getSpielfigur());
 					brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
 					brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
 					geschlagen = true;
 				} else {
-					System.out.println("Eigene Figuren schlagen geht nicht!");
+					// System.out.println("Eigene Figuren schlagen geht nicht!");
 					zugBeenden();
 				}
 			} else {
-				System.out.println("Du darfst nich ueber ein leeres Feld springen.");
+				// System.out.println("Du darfst nich ueber ein leeres Feld springen.");
 				zugBeenden();
 			}
 		}
 		// RICHTUNG NACH UNTEN RECHTS
 		if (diffX > 0 && diffY < 0) {
-			// System.out.println("nach unten rechts s1");
+			// // System.out.println("nach unten rechts s1");
 			if (brett.getBrettFeldIndex(alteX - 1, alteY + 1).getIstBelegt()) {
 				if (brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur().getFarbe() != getAmZug()) {
 					// prüfen ob feld zwischen alt und neu leer ist wenn
 					// nicht dann
 					// farbe prüfen (Wenn alles korrekt die
 					// figurEntfernen()aufrufen)
-					// System.out.println("nach unten rechts s2");
+					// // System.out.println("nach unten rechts s2");
 					figurEntfernen(brett.getBrettFeldIndex(alteX - 1, alteY + 1).getSpielfigur());
 					brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
 					brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
 					geschlagen = true;
 				} else {
-					System.out.println("Eigene Figuren schlagen geht nicht!");
+					// System.out.println("Eigene Figuren schlagen geht nicht!");
 					zugBeenden();
 				}
 			} else {
-				System.out.println("Du darfst nich ueber ein leeres Feld springen.");
+				// System.out.println("Du darfst nich ueber ein leeres Feld springen.");
 				zugBeenden();
 			}
 		}
 		// RICHTUNG NACH UNTEN LINKS
 		if (diffX > 0 && diffY > 0) {
-			// System.out.println("nach unten links s1");
+			// // System.out.println("nach unten links s1");
 			if (brett.getBrettFeldIndex(alteX - 1, alteY - 1).getIstBelegt()) {
 				if (brett.getBrettFeldIndex(alteX - 1, alteY - 1).getSpielfigur().getFarbe() != getAmZug()) {
 					// prüfen ob feld zwischen alt und neu leer ist wenn
 					// nicht dann
 					// farbe prüfen (Wenn alles korrekt die
 					// figurEntfernen()aufrufen)
-					// System.out.println("nach unten links s2");
+					// // System.out.println("nach unten links s2");
 					figurEntfernen(brett.getBrettFeldIndex(alteX - 1, alteY - 1).getSpielfigur());
 					brett.getBrettFeldIndex(alteX, alteY).removeSpielfigur(fig);
 					brett.getBrettFeldIndex(neueX, neueY).setSpielfigur(fig);
 					geschlagen = true;
 				} else {
-					System.out.println("Eigene Figuren schlagen geht nicht!");
+					// System.out.println("Eigene Figuren schlagen geht nicht!");
 					zugBeenden();
 				}
 			} else {
-				System.out.println("Du darfst nich ueber ein leeres Feld springen.");
+				// System.out.println("Du darfst nich ueber ein leeres Feld springen.");
 				zugBeenden();
 			}
 		}
@@ -1138,11 +1138,11 @@ public class Spiel implements iBediener, Serializable {
 
 		if (s1.getFarbe() == farbe) {
 			gewonnenerSpieler = s1;
-			System.out.println("Spieler " + s1.getName() + " hat das Spiel gewonnen!");
+			// System.out.println("Spieler " + s1.getName() + " hat das Spiel gewonnen!");
 
 		} else {
 			gewonnenerSpieler = s2;
-			System.out.println("Spieler " + s2.getName() + " hat das Spiel gewonnen!");
+			// System.out.println("Spieler " + s2.getName() + " hat das Spiel gewonnen!");
 
 		}
 
@@ -1304,7 +1304,7 @@ public class Spiel implements iBediener, Serializable {
 				csv.speichern(o, pfad);
 				break;
 			} catch (Exception e) {
-				System.out.println("Speichern CSV fehlgeschlagen.");
+				// System.out.println("Speichern CSV fehlgeschlagen.");
 			}
 			break;
 
@@ -1327,7 +1327,7 @@ public class Spiel implements iBediener, Serializable {
 			Object a = this.ladenSER(selectedFile);
 			return a;
 		} else {
-			System.out.println("NOP");
+			// System.out.println("NOP");
 			return null;
 		}
 	}
@@ -1346,17 +1346,17 @@ public class Spiel implements iBediener, Serializable {
 
 			ArrayList<String[]> o = (ArrayList<String[]>) csv.laden(selectedFile);
 
-			System.out.println("Löschen?");
+			// System.out.println("Löschen?");
 			if (this.starten()) {
 				this.allesLoeschen();
 			}
-			System.out.println("Gelöscht");
+			// System.out.println("Gelöscht");
 			this.spielStarten();
 
 			// Abfrage welche Brettgröße gespeichert war
-			System.out.println("Vor groese");
+			// System.out.println("Vor groese");
 			String brettGroese[] = o.get(0);
-			System.out.println("In 1");
+			// System.out.println("In 1");
 			if (brettGroese[0].equals("12")) {
 				this.aufbauen(12);
 			}
@@ -1368,7 +1368,7 @@ public class Spiel implements iBediener, Serializable {
 			}
 
 			String spielerZ[] = o.get(1);
-			System.out.println("In 2");
+			// System.out.println("In 2");
 			{
 				if (spielerZ[1].equals("SCHWARZ")) {
 					farbe = FarbEnum.SCHWARZ;
@@ -1390,7 +1390,7 @@ public class Spiel implements iBediener, Serializable {
 			}
 
 			String spielerZZ[] = o.get(2);
-			System.out.println("In 3");
+			// System.out.println("In 3");
 
 			{
 				if (spielerZZ[1].equals("WEIß")) {
@@ -1411,7 +1411,7 @@ public class Spiel implements iBediener, Serializable {
 					s2.getAlleFiguren().clear();
 				}
 			}
-			this.anzeigen();
+			// this.anzeigen();
 
 			for (int i = 0; i < brett.getBrettGroesse(); i++) {
 				for (int j = 0; j < brett.getBrettGroesse(); j++) {
@@ -1424,10 +1424,10 @@ public class Spiel implements iBediener, Serializable {
 				}
 			}
 
-			this.anzeigen();
+			// this.anzeigen();
 			String figurenZ[] = o.get(3);
 			{
-				System.out.println("In 4");
+				// System.out.println("In 4");
 
 				for (int i = 0; i < figurenZ.length; i = i + 4) {
 
@@ -1440,14 +1440,14 @@ public class Spiel implements iBediener, Serializable {
 					} else {
 						dame = true;
 					}
-					System.out.println("In 4 nach dame prüfung");
-					System.out.println(IdS);
-					// System.out.println(x);
-					// System.out.println(y);
+					// System.out.println("In 4 nach dame prüfung");
+					// System.out.println(IdS);
+					// // System.out.println(x);
+					// // System.out.println(y);
 
 					Spielfigur figur = new Spielfigur(FarbEnum.SCHWARZ, false);
 					figur.setDame(dame);
-					System.out.println(figur.getDame(figur));
+					// System.out.println(figur.getDame(figur));
 					figur.setPosX(x);
 					figur.setPosY(y);
 					figur.setIdS(IdS);
@@ -1455,10 +1455,10 @@ public class Spiel implements iBediener, Serializable {
 					s1.getAlleFiguren().add(figur);
 				}
 			}
-			this.anzeigen();
+			// this.anzeigen();
 			String figurenZZ[] = o.get(4);
 			{
-				System.out.println("In 5");
+				// System.out.println("In 5");
 
 				for (int i = 0; i < figurenZZ.length; i = i + 4) {
 
@@ -1471,11 +1471,11 @@ public class Spiel implements iBediener, Serializable {
 					} else {
 						dame = true;
 					}
-					System.out.println("In 5 nach dame prüfung");
-					System.out.println(IdW);
-					// System.out.println(x);
-					// System.out.println(y);
-					// System.out.println(dame);
+					// System.out.println("In 5 nach dame prüfung");
+					// System.out.println(IdW);
+					// // System.out.println(x);
+					// // System.out.println(y);
+					// // System.out.println(dame);
 
 					Spielfigur figur = new Spielfigur(FarbEnum.WEIß, false);
 					figur.setDame(dame);
@@ -1486,10 +1486,10 @@ public class Spiel implements iBediener, Serializable {
 					s2.getAlleFiguren().add(figur);
 				}
 			}
-			this.anzeigen();
+			// this.anzeigen();
 			String dran[] = o.get(5);
 			{
-				System.out.println("In 6");
+				// System.out.println("In 6");
 				if (dran[0].equals("SCHWARZ")) {
 					farbe = FarbEnum.SCHWARZ;
 				} else {
@@ -1497,14 +1497,14 @@ public class Spiel implements iBediener, Serializable {
 				}
 				this.starten();
 				this.setAmZug(farbe);
-				this.anzeigen();
+				// this.anzeigen();
 			}
-			this.anzeigen();
+			// this.anzeigen();
 		} catch (IOException e) {
-			System.out.println(e);
-			System.out.println("Laden fehlgeschlagen!");
+			// System.out.println(e);
+			// System.out.println("Laden fehlgeschlagen!");
 		}
-		this.anzeigen();
+		// this.anzeigen();
 		// TODO
 		// for (int i = 0; i < brett.getBrettGroesse() - 1; i++) {
 		// for (int j = 0; j < brett.getBrettGroesse() - 1; i++) {
@@ -1522,42 +1522,42 @@ public class Spiel implements iBediener, Serializable {
 
 	public Spiel ladenSER(File selectedFile) {
 
-		System.out.println("1: "+selectedFile.getName());
-		System.out.println("2: "+selectedFile.getAbsolutePath());
-//		System.out.println("3: "+ser.laden(selectedFile));
+		// System.out.println("1: "+selectedFile.getName());
+		// System.out.println("2: "+selectedFile.getAbsolutePath());
+//		// System.out.println("3: "+ser.laden(selectedFile));
 		
 		Spiel spiel = (Spiel) ser.laden(selectedFile);
 		return spiel;
  	}
 
 	/*
-	 * System.out.println("Spielernamen eingeben\n"); name = reader.readLine();
-	 * System.out.println("spielerfarbe eingeben (s für schwarz w für weiß)" );
+	 * // System.out.println("Spielernamen eingeben\n"); name = reader.readLine();
+	 * // System.out.println("spielerfarbe eingeben (s für schwarz w für weiß)" );
 	 * 
 	 * do { farbe = reader.readLine(); // farben switch switch (farbe) {
 	 * 
 	 * // case 1 farbe case "s":
 	 * 
-	 * System.out.println(
+	 * // System.out.println(
 	 * "ist der Spieler eine Ki oder ein Mensch? (m für Mensch k für Ki)" ); do {
 	 * ki = reader.readLine(); // innerrer ki switch switch (ki) { // case 1 ki
 	 * case "m": Spieler s1 = new Spieler(name, FarbEnum.SCHWARZ, false); break;
 	 * // case 2 ki case "k": Spieler s2 = new Spieler(name, FarbEnum.SCHWARZ,
 	 * true); break; // default für ki default:
-	 * System.out.println("weder k noch m eingeben."); } } while (!ki.equals("m")
+	 * // System.out.println("weder k noch m eingeben."); } } while (!ki.equals("m")
 	 * || (!ki.equals("k")));
 	 * 
-	 * break; // case 2 farbe case "w": System.out.println(
+	 * break; // case 2 farbe case "w": // System.out.println(
 	 * "ist der Spieler eine Ki oder ein Mensch? (m für Mensch k für Ki)" ); ki =
 	 * reader.readLine(); // innerer ki switch do { switch (ki) { // case 1 ki
 	 * case "m": Spieler s1 = new Spieler(name, FarbEnum.SCHWARZ, false); break;
 	 * // case 2 ki case "k": Spieler s2 = new Spieler(name, FarbEnum.SCHWARZ,
 	 * true); break; // default für ki default:
-	 * System.out.println("weder k noch m eingeben."); } } while (!ki.equals("m")
+	 * // System.out.println("weder k noch m eingeben."); } } while (!ki.equals("m")
 	 * || (!ki.equals("k"))); break;
 	 * 
 	 * // default für farbe default:
-	 * System.out.println("weder s noch w eingeben.");
+	 * // System.out.println("weder s noch w eingeben.");
 	 * 
 	 * } } while (!farbe.equals("w") || (!farbe.equals("s")));
 	 */
@@ -1580,7 +1580,7 @@ public class Spiel implements iBediener, Serializable {
 	 */
 	public boolean aufbauen(int groesse) {
 		if (spielAufgebaut) {
-			System.out.println("Das Spielbrett wurde bereits aufgebaut!");
+			// System.out.println("Das Spielbrett wurde bereits aufgebaut!");
 			return false;
 		}
 
@@ -1594,7 +1594,7 @@ public class Spiel implements iBediener, Serializable {
 			spielBauen(12);
 			return true;
 		} else {
-			System.out.println("Fehlerhafte Eingabe, bitte nur 8 , 10 oder 12 eingeben. Zurueck im Hauptmenue.\n");
+			// System.out.println("Fehlerhafte Eingabe, bitte nur 8 , 10 oder 12 eingeben. Zurueck im Hauptmenue.\n");
 			return false;
 		}
 
@@ -1603,18 +1603,18 @@ public class Spiel implements iBediener, Serializable {
 	/**
 	 * Spielbrett anzeigen
 	 */
-	public void anzeigen() {
-
-		if (spielAufgebaut) {
-			brett.display();
-			System.out.println("\n");
-
-		} else {
-			System.out.println("Du kannst kein Brett anzeigen das nicht existiert! Nutze aufbauen um ein Brett zu erstellen.");
-			return;
-		}
-
-	}
+//	public void anzeigen() {
+//
+//		if (spielAufgebaut) {
+//			// brett.display();
+//			// System.out.println("\n");
+//
+//		} else {
+//			// System.out.println("Du kannst kein Brett anzeigen das nicht existiert! Nutze aufbauen um ein Brett zu erstellen.");
+//			return;
+//		}
+//
+//	}
 
 	/**
 	 * Zum erstellen der Spieler
@@ -1630,21 +1630,21 @@ public class Spiel implements iBediener, Serializable {
 	public boolean spielerErstellen(String name, FarbEnum farbe, boolean istKi) {
 
 		if (!spielAufgebaut) {
-			System.out.println("Du musst zuerst ein Spielbrett aufbauen!");
+			// System.out.println("Du musst zuerst ein Spielbrett aufbauen!");
 			return false;
 		}
 		if (spielerAnzahl == 2) {
-			System.out.println("Es gibt bereits zwei Spieler.");
+			// System.out.println("Es gibt bereits zwei Spieler.");
 			return false;
 		}
 
 		if (name == null || name.length() < 2) {
-			System.out.println("Name war fehlerhaft.");
+			// System.out.println("Name war fehlerhaft.");
 			return false;
 		}
 
 		if (farbe == FarbEnum.SCHWARZ && schwarzvergeben == true || farbe == FarbEnum.WEIß && weissvergeben == true) {
-			System.out.println("Farbe bereits vergeben.");
+			// System.out.println("Farbe bereits vergeben.");
 			return false;
 		}
 
@@ -1655,8 +1655,8 @@ public class Spiel implements iBediener, Serializable {
 				s1 = new Spieler(name, FarbEnum.SCHWARZ, false);
 				schwarzvergeben = true;
 				spielerAnzahl++;
-				System.out.println(s1);
-				System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
+				// System.out.println(s1);
+				// System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
 				erstelleFiguren(s1, brett);
 				return true;
 			} else {
@@ -1664,8 +1664,8 @@ public class Spiel implements iBediener, Serializable {
 				k1 = new KI_Dame(s1, brett);
 				spielerAnzahl++;
 				schwarzvergeben = true;
-				System.out.println(k1);
-				System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
+				// System.out.println(k1);
+				// System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
 				erstelleFiguren(s1, brett);
 				return true;
 			}
@@ -1676,8 +1676,8 @@ public class Spiel implements iBediener, Serializable {
 				s2 = new Spieler(name, FarbEnum.WEIß, false);
 				weissvergeben = true;
 				spielerAnzahl++;
-				System.out.println(s2);
-				System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
+				// System.out.println(s2);
+				// System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
 				erstelleFiguren(s2, brett);
 				return true;
 			} else {
@@ -1685,8 +1685,8 @@ public class Spiel implements iBediener, Serializable {
 				k2 = new KI_Dame(s2, brett);
 				weissvergeben = true;
 				spielerAnzahl++;
-				System.out.println(k2);
-				System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
+				// System.out.println(k2);
+				// System.out.println("Derzeitige Spieleranzahl:" + Spieler.getAnzahl());
 				erstelleFiguren(s2, brett);
 				return true;
 			}
@@ -1705,10 +1705,10 @@ public class Spiel implements iBediener, Serializable {
 		if (spielAufgebaut == true && spielerAnzahl == 2) {
 			spiellaeuft = true;
 
-			System.out.println("Das Spiel beginnt!");
+			// System.out.println("Das Spiel beginnt!");
 
 			setAmZug(FarbEnum.WEIß);
-			System.out.println("Der Spieler mit der Farbe " + getAmZug() + " beginnt");
+			// System.out.println("Der Spieler mit der Farbe " + getAmZug() + " beginnt");
 			// TODO
 			return true;
 		} else {
@@ -1723,7 +1723,7 @@ public class Spiel implements iBediener, Serializable {
 			System.err.println("Spiel hat noch nicht begonnen! Zurueck in Hauptmenue");
 			return false;
 		} else {
-			brett.display();
+			// brett.display();
 			kannWeiterSchlagen = false;
 
 			// Diese Methode schreibt alle Figuren die schlagen
@@ -1741,10 +1741,10 @@ public class Spiel implements iBediener, Serializable {
 			// ueberpruft, heisst Startposition muss die Endposition
 			// vom letzten Zug sein
 			if (geschlagen == true && (startC != startCNS || startI != startINS)) {
-				// System.out.println("startC: " + startC
+				// // System.out.println("startC: " + startC
 				// + " |startCNS: " + startCNS + " / startI: "
 				// + startI + "|startINS: " + startINS);
-				System.out.println("Du  musst mit der Figur " + brett.gibBrettFeldSchachnotation(startINS, startCNS) + " ziehen");
+				// System.out.println("Du  musst mit der Figur " + brett.gibBrettFeldSchachnotation(startINS, startCNS) + " ziehen");
 				startC = 0;
 				startI = 0;
 				return false;
@@ -1755,7 +1755,7 @@ public class Spiel implements iBediener, Serializable {
 			int[] tmpS = moeglicheZuegeStartposition(startC, startI);
 			int tempZuegeLaufen = tmpS[0];
 			int tempZuegeSchlagen = tmpS[1];
-			System.out.println("Anzahl Zuege Laufen: " + tempZuegeLaufen + " " + FigurenLaufen.toString() + "\nAnzahl Zuege Schlagen: " + tempZuegeSchlagen + " " + FigurenSchlagen.toString());
+			// System.out.println("Anzahl Zuege Laufen: " + tempZuegeLaufen + " " + FigurenLaufen.toString() + "\nAnzahl Zuege Schlagen: " + tempZuegeSchlagen + " " + FigurenSchlagen.toString());
 
 			// Wenn eine Spielfigur uebrig und keine gueltigen Zuege
 			// mehr vorhanden, dann hat Spieler 2 gewonnen
@@ -1779,11 +1779,11 @@ public class Spiel implements iBediener, Serializable {
 			// moeglich
 			if ((tempZuegeLaufen == 0 && tempZuegeSchlagen == 0)) {
 				System.err.println("Mit dieser Figur sind keine Zuege moeglich! zurueck ins Menue");
-				System.out.println("Gib ziehen ein.");
+				// System.out.println("Gib ziehen ein.");
 				return false;
 			}
 
-			System.out.println("Eingegebene Startposition: " + brett.getBrettFeldIndex(startC, startI).getId() + "\n");
+			// System.out.println("Eingegebene Startposition: " + brett.getBrettFeldIndex(startC, startI).getId() + "\n");
 
 			// splittet den String zb.A1 in char und int und
 			// ueberprueft auf Gueltigkeit
@@ -1791,7 +1791,7 @@ public class Spiel implements iBediener, Serializable {
 				return false;
 			}
 
-			System.out.println("Eingegebene Endposition: " + brett.getBrettFeldIndex(endC, endI).getId() + "\n");
+			// System.out.println("Eingegebene Endposition: " + brett.getBrettFeldIndex(endC, endI).getId() + "\n");
 
 			// Ueberprueft den Zug auf Gueltigkeit
 			int zugPruefen = zugPruefen(startC, startI, endC, endI);
@@ -1815,13 +1815,13 @@ public class Spiel implements iBediener, Serializable {
 						figurBewegen(startC, startI, endC, endI);
 						dameWerden();
 					} else {
-						System.out.println(geschlagen);
-						System.out.println("Du darfst mit der Figur " + brett.gibBrettFeldSchachnotation(startINS, startCNS) + " nurnoch schlagen!");
-						// System.out.println("startC: " + startC
+						// System.out.println(geschlagen);
+						// System.out.println("Du darfst mit der Figur " + brett.gibBrettFeldSchachnotation(startINS, startCNS) + " nurnoch schlagen!");
+						// // System.out.println("startC: " + startC
 						// + " |startCNS: " + startCNS +
 						// " / startI: "
 						// + startI + "|startINS: " + startINS);
-						System.out.println("Gib ziehen ein.");
+						// System.out.println("Gib ziehen ein.");
 						return false;
 					}
 				}
@@ -1837,19 +1837,19 @@ public class Spiel implements iBediener, Serializable {
 				// und schlagen
 				if (geschlagen == true && moeglicheZuegeStartposition(endC, endI)[1] != 0) {
 					kannWeiterSchlagen = true;
-					brett.display();
+					// brett.display();
 					return true;
 
 				}
 				if (geschlagen == false && FigurDieSchlagenKoennen.size() != 0) {
-					System.out.println("Die Figur an der Stelle " + brett.gibBrettFeldSchachnotation(FigurDieSchlagenKoennen.get(0).getPosY(), FigurDieSchlagenKoennen.get(0).getPosX()) + " wird gepustet");
+					// System.out.println("Die Figur an der Stelle " + brett.gibBrettFeldSchachnotation(FigurDieSchlagenKoennen.get(0).getPosY(), FigurDieSchlagenKoennen.get(0).getPosX()) + " wird gepustet");
 					pusten(FigurDieSchlagenKoennen.get(0));
 				}
 				zugBeenden();
 				dameWerden();
-				brett.display();
-				System.out.println("Der Spieler mit der Farbe: " + getAmZug() + " ist nun am Zug.");
-				System.out.println("Gib ziehen ein");
+				// brett.display();
+				// System.out.println("Der Spieler mit der Farbe: " + getAmZug() + " ist nun am Zug.");
+				// System.out.println("Gib ziehen ein");
 				return true;
 			}
 
@@ -1858,19 +1858,19 @@ public class Spiel implements iBediener, Serializable {
 
 				if (geschlagen == true && moeglicheZuegeStartposition(endC, endI)[1] != 0) {
 					kannWeiterSchlagen = true;
-					brett.display();
+					// brett.display();
 				} else {
 					dameWerden();
 					zugBeenden();
-					brett.display();
-					System.out.println("Der Spieler mit der Farbe: " + getAmZug() + " ist nun am Zug.");
-					System.out.println("Gib ziehen ein");
+					// brett.display();
+					// System.out.println("Der Spieler mit der Farbe: " + getAmZug() + " ist nun am Zug.");
+					// System.out.println("Gib ziehen ein");
 				}
 				return true;
 			}
 
 			if (zugPruefen == -1) {
-				System.out.println("Gib nochmals ziehen ein.");
+				// System.out.println("Gib nochmals ziehen ein.");
 				return false;
 			}
 		}
@@ -1889,12 +1889,12 @@ public class Spiel implements iBediener, Serializable {
 		startCNS = endC;
 		startINS = endI;
 		dameWerden();
-		brett.display();
-		System.out.println("Du darfst nochmals ziehen. Gib ziehen ein");
+		// brett.display();
+		// System.out.println("Du darfst nochmals ziehen. Gib ziehen ein");
 	}
 
 	public void willNichtWeiterZiehen() {
-		System.out.println("Die Figur " + brett.gibBrettFeldSchachnotation(endI, endC) + " wird entfernt(Pusten)!");
+		// System.out.println("Die Figur " + brett.gibBrettFeldSchachnotation(endI, endC) + " wird entfernt(Pusten)!");
 		pusten(brett.getBrettFeldIndex(endC, endI).getSpielfigur());
 		startC = 0;
 		startI = 0;
@@ -1903,16 +1903,16 @@ public class Spiel implements iBediener, Serializable {
 		// Zug beenden setzt geschlagen auf false
 		zugBeenden();
 		dameWerden();
-		brett.display();
-		System.out.println("Der Spieler mit der Farbe: " + getAmZug() + " ist nun am Zug.");
-		System.out.println("Gib ziehen ein.");
+		// brett.display();
+		// System.out.println("Der Spieler mit der Farbe: " + getAmZug() + " ist nun am Zug.");
+		// System.out.println("Gib ziehen ein.");
 	}
 
 	public void allesLoeschen() {
 		if (s1 == null || s2 == null) {
 			return;
 		} else {
-			System.out.println("Neues Spiel.");
+			// System.out.println("Neues Spiel.");
 			spielAufgebaut = false;
 			spielerAnzahl = 0;
 			// name=null;
@@ -1961,12 +1961,12 @@ public class Spiel implements iBediener, Serializable {
 
 	public boolean kizieh() {
 		if (!spiellaeuft) {
-			System.out.println("Spiel hat noch nicht begonnen! Zurueck in Hauptmenue");
+			// System.out.println("Spiel hat noch nicht begonnen! Zurueck in Hauptmenue");
 			return false;
 		}
 		if (this.getAmZug() == FarbEnum.SCHWARZ) {
 			if (k1 == null) {
-				System.out.println("Schwarz ist keine KI");
+				// System.out.println("Schwarz ist keine KI");
 				return false;
 			}
 			int[] tmpZug = null;
@@ -2022,7 +2022,7 @@ public class Spiel implements iBediener, Serializable {
 				} while (tmpZug != null && k1.hatGeschlagen());
 
 			}
-			brett.display();
+			// brett.display();
 			zugBeenden();
 			k1.setHatGeschlagen(false);
 			return true;
@@ -2031,7 +2031,7 @@ public class Spiel implements iBediener, Serializable {
 		// ---------------------------------------------------
 		if (this.getAmZug() == FarbEnum.WEIß) {
 			if (k2 == null) {
-				System.out.println("Weiß ist keine KI");
+				// System.out.println("Weiß ist keine KI");
 				return false;
 			}
 			int[] tmpZug = null;
@@ -2087,7 +2087,7 @@ public class Spiel implements iBediener, Serializable {
 				} while (tmpZug != null && k2.hatGeschlagen());
 
 			}
-			brett.display();
+			// brett.display();
 			zugBeenden();
 			k2.setHatGeschlagen(false);
 			return true;
@@ -2102,7 +2102,7 @@ public class Spiel implements iBediener, Serializable {
 		int d = zugee3 + 1;
 		// ((char) (zielKoords[3] + 97)) + "" + (zielKoords[2] + 1)
 		String ausgabe = "Startposition: " + a + b + " Endposition: " + c + d;
-		System.out.println(ausgabe);
+		// System.out.println(ausgabe);
 		zugFurLog.add(ausgabe);
 	}
 
