@@ -167,18 +167,18 @@ public class Spiel implements iBediener, Serializable {
 		startC = wandleUmvString(startp)[0];
 		startI = wandleUmvString(startp)[1];
 		if (wandleUmvString(startp)[2] == -1) {
-			System.err.println("Falsche Eingabe, zurueck ins Menü");
+			//system.err.println("Falsche Eingabe, zurueck ins Menü");
 			return false;
 		}
 
 		// überprüft ob Startposition belegt ist
 		if (!brett.getBrettFeldIndex(startC, startI).getIstBelegt()) {
-			System.err.println("Du brauchst eine Figur um zu ziehen! zurueck ins Menü");
+			//system.err.println("Du brauchst eine Figur um zu ziehen! zurueck ins Menü");
 			return false;
 		}
 		// überprüft ob Figur an der Startpsotion die eigene ist
 		if (brett.getBrettFeldIndex(startC, startI).getSpielfigur().getFarbe() != getAmZug()) {
-			System.err.println("Du kannst nur mit deinen Figuren ziehen! zurueck ins Menü");
+			//system.err.println("Du kannst nur mit deinen Figuren ziehen! zurueck ins Menü");
 			return false;
 		}
 		return true;
@@ -188,7 +188,7 @@ public class Spiel implements iBediener, Serializable {
 		endC = wandleUmvString(endp)[0];
 		endI = wandleUmvString(endp)[1];
 		if (wandleUmvString(endp)[2] == -1) {
-			System.err.println("Falsche Eingabe, Gib nochmal ziehen ein");
+			//system.err.println("Falsche Eingabe, Gib nochmal ziehen ein");
 			return false;
 		}
 		return true;
@@ -565,7 +565,7 @@ public class Spiel implements iBediener, Serializable {
 			if (farbe == FarbEnum.SCHWARZ && xa > xn && tempX == 1 && tempY == 1) {
 
 				if (!brett.getBrettFeldIndex(xn, yn).getIstBelegt()) {
-					System.err.println("Nach hinten ziehen ist mit einem Stein nicht erlaubt!ssiilikkSchwarz");
+					//system.err.println("Nach hinten ziehen ist mit einem Stein nicht erlaubt!ssiilikkSchwarz");
 					return -1;
 				}
 
@@ -576,7 +576,7 @@ public class Spiel implements iBediener, Serializable {
 			if (farbe == FarbEnum.WEIß && xa < xn && tempX == 1 && tempY == 1) {
 
 				if (!brett.getBrettFeldIndex(xn, yn).getIstBelegt()) {
-					System.err.println("Nach hinten ziehen ist mit einem Stein nicht erlaubt!ssssssilllliiikkWeiss");
+					//system.err.println("Nach hinten ziehen ist mit einem Stein nicht erlaubt!ssssssilllliiikkWeiss");
 					return -1;
 				}
 			}
@@ -599,7 +599,7 @@ public class Spiel implements iBediener, Serializable {
 
 		// Wenn Stein mehr als ein Feld laufen will
 		if (!fig.getDame(fig) && tempX >= 2 && tempY >= 2) {
-			System.err.println("Du kannst mit einer Figur nicht mehr als ein Feld ziehen!");
+			//system.err.println("Du kannst mit einer Figur nicht mehr als ein Feld ziehen!");
 			return -1;
 		}
 
@@ -622,15 +622,15 @@ public class Spiel implements iBediener, Serializable {
 					if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
 						// wenn etwas auf dem feld ist.
 						if (brett.getBrettFeldIndex(i, j).getSpielfigur().getFarbe() == getAmZug()) {
-							System.err.println("Eigene Figuren schlagen geht nicht.");
+							//system.err.println("Eigene Figuren schlagen geht nicht.");
 							return -1;
 						}
 						if (brett.getBrettFeldIndex(i + 1, j + 1).getIstBelegt()) {
-							System.err.println("Zwei Figuren aufeinmal ueberspringen geht nicht.");
+							//system.err.println("Zwei Figuren aufeinmal ueberspringen geht nicht.");
 							return -1;
 						}
 						if (!brett.getBrettFeldIndex(neueX - 1, neueY - 1).getIstBelegt()) {
-							System.err.println("Du kannst nachdem du geschlagen hast nicht einfach weiter gehen.");
+							//system.err.println("Du kannst nachdem du geschlagen hast nicht einfach weiter gehen.");
 							return -1;
 						}
 
@@ -648,15 +648,15 @@ public class Spiel implements iBediener, Serializable {
 					if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
 						// wenn etwas auf dem feld ist.
 						if (brett.getBrettFeldIndex(i, j).getSpielfigur().getFarbe() == getAmZug()) {
-							System.err.println("Eigene Figuren schlagen geht nicht.");
+							//system.err.println("Eigene Figuren schlagen geht nicht.");
 							return -1;
 						}
 						if (brett.getBrettFeldIndex(i + 1, j - 1).getIstBelegt()) {
-							System.err.println("Zwei Figuren aufeinmal ueberspringen geht nicht.");
+							//system.err.println("Zwei Figuren aufeinmal ueberspringen geht nicht.");
 							return -1;
 						}
 						if (!brett.getBrettFeldIndex(neueX - 1, neueY + 1).getIstBelegt()) {
-							System.err.println("Du kannst nachdem du geschlagen hast nicht einfach weiter gehen.");
+							//system.err.println("Du kannst nachdem du geschlagen hast nicht einfach weiter gehen.");
 							return -1;
 						}
 
@@ -675,15 +675,15 @@ public class Spiel implements iBediener, Serializable {
 					if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
 						// wenn etwas auf dem feld ist.
 						if (brett.getBrettFeldIndex(i, j).getSpielfigur().getFarbe() == getAmZug()) {
-							System.err.println("Eigene Figuren schlagen geht nicht.");
+							//system.err.println("Eigene Figuren schlagen geht nicht.");
 							return -1;
 						}
 						if (brett.getBrettFeldIndex(i - 1, j + 1).getIstBelegt()) {
-							System.err.println("Zwei Figuren aufeinmal ueberspringen geht nicht.");
+							//system.err.println("Zwei Figuren aufeinmal ueberspringen geht nicht.");
 							return -1;
 						}
 						if (!brett.getBrettFeldIndex(neueX + 1, neueY - 1).getIstBelegt()) {
-							System.err.println("Du kannst nachdem du geschlagen hast nicht einfach weiter gehen.");
+							//system.err.println("Du kannst nachdem du geschlagen hast nicht einfach weiter gehen.");
 							return -1;
 						}
 
@@ -702,15 +702,15 @@ public class Spiel implements iBediener, Serializable {
 					if (brett.getBrettFeldIndex(i, j).getIstBelegt()) {
 						// wenn etwas auf dem feld ist.
 						if (brett.getBrettFeldIndex(i, j).getSpielfigur().getFarbe() == getAmZug()) {
-							System.err.println("Eigene Figuren schlagen geht nicht.");
+							//system.err.println("Eigene Figuren schlagen geht nicht.");
 							return -1;
 						}
 						if (brett.getBrettFeldIndex(i - 1, j - 1).getIstBelegt()) {
-							System.err.println("Zwei Figuren aufeinmal ueberspringen geht nicht.");
+							//system.err.println("Zwei Figuren aufeinmal ueberspringen geht nicht.");
 							return -1;
 						}
 						if (!brett.getBrettFeldIndex(neueX + 1, neueY + 1).getIstBelegt()) {
-							System.err.println("Du kannst nachdem du geschlagen hast nicht einfach weiter gehen.");
+							//system.err.println("Du kannst nachdem du geschlagen hast nicht einfach weiter gehen.");
 							return -1;
 						}
 					}
@@ -756,7 +756,7 @@ public class Spiel implements iBediener, Serializable {
 				if ((xa > xn || xa < xn) && diffX > 0) {
 
 					if (!brett.getBrettFeldIndex(xn, yn).getIstBelegt()) {
-						System.err.println("Nach hinten ziehen ist mit einem Stein nicht erlaubt!");
+						//system.err.println("Nach hinten ziehen ist mit einem Stein nicht erlaubt!");
 						break;
 					}
 
@@ -773,7 +773,7 @@ public class Spiel implements iBediener, Serializable {
 				if ((xa < xn || xa > xn) && diffX > 0) {
 
 					if (!brett.getBrettFeldIndex(xn, yn).getIstBelegt()) {
-						System.err.println("Nach hinten ziehen ist mit einem Stein nicht erlaubt!");
+						//system.err.println("Nach hinten ziehen ist mit einem Stein nicht erlaubt!");
 						break;
 					}
 				}
@@ -1712,7 +1712,7 @@ public class Spiel implements iBediener, Serializable {
 			// TODO
 			return true;
 		} else {
-			System.err.println("Das Spiel kann noch nicht gestartet werden!!");
+			////system.err.println("Das Spiel kann noch nicht gestartet werden!!");
 			return false;
 		}
 
@@ -1720,7 +1720,7 @@ public class Spiel implements iBediener, Serializable {
 
 	public boolean ziehen(String startp, String endp) {
 		if (!spiellaeuft) {
-			System.err.println("Spiel hat noch nicht begonnen! Zurueck in Hauptmenue");
+			////system.err.println("Spiel hat noch nicht begonnen! Zurueck in Hauptmenue");
 			return false;
 		} else {
 			// brett.display();
@@ -1761,7 +1761,7 @@ public class Spiel implements iBediener, Serializable {
 			// mehr vorhanden, dann hat Spieler 2 gewonnen
 			if (s1.getAlleFiguren().size() == 1 && s1.getFarbe() == getAmZug() && (tempZuegeLaufen == 0 && tempZuegeSchlagen == 0)) {
 				// spieler 2 gewinnt
-				System.err.println("Du hast keine Zugmoeglichkeiten mehr.");
+				//system.err.println("Du hast keine Zugmoeglichkeiten mehr.");
 				spielerHatGewonnen(s2.getFarbe());
 				return false;
 			}
@@ -1770,7 +1770,7 @@ public class Spiel implements iBediener, Serializable {
 			// mehr vorhanden, dann hat Spieler 1 gewonnen
 			if (s2.getAlleFiguren().size() == 1 && s2.getFarbe() == getAmZug() && (tempZuegeLaufen == 0 && tempZuegeSchlagen == 0)) {
 				// spieler 1 gewinnt
-				System.err.println("Du hast keine Zugmoeglichkeiten mehr.");
+				//system.err.println("Du hast keine Zugmoeglichkeiten mehr.");
 				spielerHatGewonnen(s1.getFarbe());
 				return false;
 			}
@@ -1778,7 +1778,7 @@ public class Spiel implements iBediener, Serializable {
 			// Wenn von der eingegebenen Startposition keine Zuege
 			// moeglich
 			if ((tempZuegeLaufen == 0 && tempZuegeSchlagen == 0)) {
-				System.err.println("Mit dieser Figur sind keine Zuege moeglich! zurueck ins Menue");
+				//system.err.println("Mit dieser Figur sind keine Zuege moeglich! zurueck ins Menue");
 				// System.out.println("Gib ziehen ein.");
 				return false;
 			}
@@ -1972,7 +1972,7 @@ public class Spiel implements iBediener, Serializable {
 			int[] tmpZug = null;
 			int[] zuge = k1.zieh();
 			if (zuge == null) {
-				System.err.println("Ki hat keine Zugmoeglichkeiten mehr.");
+				//system.err.println("Ki hat keine Zugmoeglichkeiten mehr.");
 				spielerHatGewonnen(s2.getFarbe());
 				return false;
 			}
@@ -2037,7 +2037,7 @@ public class Spiel implements iBediener, Serializable {
 			int[] tmpZug = null;
 			int[] zuge = k2.zieh();
 			if (zuge == null) {
-				System.err.println("Ki hat keine Zugmoeglichkeiten mehr.");
+				//system.err.println("Ki hat keine Zugmoeglichkeiten mehr.");
 				spielerHatGewonnen(s1.getFarbe());
 				return false;
 			}
